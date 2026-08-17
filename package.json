@@ -1,0 +1,27 @@
+{
+  "name": "placeprep",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Company-specific placement preparation platform",
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "concurrently -n server,client -c blue,magenta \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:server": "npm --workspace server run dev",
+    "dev:client": "npm --workspace client run dev",
+    "build": "npm --workspace server run build && npm --workspace client run build",
+    "start": "npm --workspace server run start",
+    "db:reset": "npm --workspace server run db:reset",
+    "db:seed": "npm --workspace server run db:seed",
+    "test": "npm --workspace server run test",
+    "typecheck": "npm --workspace server run typecheck && npm --workspace client run typecheck"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

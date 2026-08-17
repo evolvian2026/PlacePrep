@@ -1,0 +1,383 @@
+/**
+ * API-level tests. These drive the real Express app over HTTP against an
+ * isolated database file, so routing, validation, auth and RBAC are covered as
+ * well as the engines underneath them.
+ */
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import type { Server } from 'node:http';
+import { after, before, describe, it } from 'node:test';
+
+// The config module reads these at import time, so they must be set first.
+const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'placeprep-api-'));
+process.env.PP_DATA_DIR = tempDir;
+process.env.PP_DATABASE_FILE = path.join(tempDir, 'test.db');
+process.env.PP_CODE_ENGINE_ENABLED = 'false';
+
+const { db } = await import('../src/db/index.js');
+const { seed } = await import('../src/db/seed/index.js');
+const { createApp } = await import('../src/app.js');
+
+let server: Server;
+let base: string;
+let studentToken = '';
+let adminToken = '';
+
+interface Response<T> {
+  status: number;
+  body: T;
+}
+
+async function call<T>(
+  method: string,
+  path: string,
+  options: { body?: unknown; token?: string } = {},
+): Promise<Response<T>> {
+  const headers: Record<string, string> = {};
+  if (options.token) headers.Authorization = `Bearer ${options.token}`;
+  if (options.body !== undefined) headers['Content-Type'] = 'application/json';
+
+  const response = await fetch(`${base}${path}`, {
+    method,
+    headers,
+    body: options.body === undefined ? undefined : JSON.stringify(options.body),
+  });
+  const text = await response.text();
+  return { status: response.status, body: (text ? JSON.parse(text) : null) as T };
+}
+
+before(async () => {
+  seed(db());
+  const app = createApp();
+  await new Promise<void>((resolve) => {
+    server = app.listen(0, () => resolve());
+  });
+  const address = server.address();
+  const port = typeof address === 'object' && address ? address.port : 0;
+  base = `http://127.0.0.1:${port}/api`;
+
+  const student = await call<{ token: string }>('POST', '/auth/login', {
+    body: { email: 'student@placeprep.dev', password: 'Passw0rd!' },
+  });
+  studentToken = student.body.token;
+
+  const admin = await call<{ token: string }>('POST', '/auth/login', {
+    body: { email: 'admin@placeprep.dev', password: 'Passw0rd!' },
+  });
+  adminToken = admin.body.token;
+});
+
+after(async () => {
+  await new Promise<void>((resolve) => server.close(() => resolve()));
+  db().close();
+  fs.rmSync(tempDir, { recursive: true, force: true });
+});
+
+describe('auth', () => {
+  it('rejects a bad password', async () => {
+    const response = await call('POST', '/auth/login', {
+      body: { email: 'student@placeprep.dev', password: 'wrong' },
+    });
+    assert.equal(response.status, 401);
+  });
+
+  it('rejects a malformed email with a validation error', async () => {
+    const response = await call<{ error: { code: string } }>('POST', '/auth/login', {
+      body: { email: 'not-an-email', password: 'whatever' },
+    });
+    assert.equal(response.status, 400);
+    assert.equal(response.body.error.code, 'bad_request');
+  });
+
+  it('registers a new student and returns a usable token', async () => {
+    const response = await call<{ token: string; user: { role: string; email: string } }>('POST', '/auth/register', {
+      body: { name: 'Test Student', email: 'new.student@example.com', password: 'sufficientlyLong1' },
+    });
+    assert.equal(response.status, 201);
+    assert.equal(response.body.user.role, 'student');
+
+    const me = await call<{ user: { email: string } }>('GET', '/auth/me', { token: response.body.token });
+    assert.equal(me.body.user.email, 'new.student@example.com');
+  });
+
+  it('refuses a duplicate email', async () => {
+    const response = await call('POST', '/auth/register', {
+      body: { name: 'Duplicate', email: 'student@placeprep.dev', password: 'sufficientlyLong1' },
+    });
+    assert.equal(response.status, 409);
+  });
+});
+
+describe('access control', () => {
+  it('requires a token for the dashboard', async () => {
+    const response = await call('GET', '/dashboard');
+    assert.equal(response.status, 401);
+  });
+
+  it('blocks students from the admin API', async () => {
+    const response = await call('GET', '/admin/overview', { token: studentToken });
+    assert.equal(response.status, 403);
+  });
+
+  it('allows an admin through', async () => {
+    const response = await call<{ counts: { companies: number } }>('GET', '/admin/overview', { token: adminToken });
+    assert.equal(response.status, 200);
+    assert.ok(response.body.counts.companies > 0);
+  });
+
+  it('stops a student reading another student\'s attempt', async () => {
+    const start = await call<{ attemptId: number }>('POST', '/mock-tests/tcs-quick-mock/start', {
+      token: studentToken,
+    });
+    const other = await call<{ token: string }>('POST', '/auth/login', {
+      body: { email: 'priya@placeprep.dev', password: 'Passw0rd!' },
+    });
+    const response = await call('GET', `/attempts/${start.body.attemptId}`, { token: other.body.token });
+    assert.equal(response.status, 403);
+  });
+});
+
+describe('companies', () => {
+  it('lists published companies', async () => {
+    const response = await call<{ companies: unknown[]; total: number }>('GET', '/companies');
+    assert.equal(response.status, 200);
+    assert.ok(response.body.total >= 10);
+  });
+
+  it('filters by type', async () => {
+    const response = await call<{ companies: { companyType: string }[] }>('GET', '/companies?type=product');
+    assert.ok(response.body.companies.length > 0);
+    assert.ok(response.body.companies.every((company) => company.companyType === 'product'));
+  });
+
+  it('returns a full roadmap with rounds, sections and topics', async () => {
+    const response = await call<{
+      rounds: { sections: { topics: unknown[] }[]; topics: unknown[] }[];
+      insights: { provenance: string }[];
+      disclaimer: string;
+    }>('GET', '/companies/tcs', { token: studentToken });
+
+    assert.equal(response.status, 200);
+    assert.equal(response.body.rounds.length, 4);
+    assert.ok(response.body.rounds[0].sections.length > 0);
+    assert.ok(response.body.rounds[0].topics.length > 0);
+    // Provenance must always be present — this is the honesty guarantee.
+    assert.ok(response.body.insights.every((insight) => insight.provenance));
+    assert.ok(response.body.disclaimer.length > 0);
+  });
+
+  it('404s an unknown company', async () => {
+    const response = await call('GET', '/companies/not-a-real-company');
+    assert.equal(response.status, 404);
+  });
+
+  it('tracks a company as a target', async () => {
+    const response = await call<{ ok: boolean }>('PUT', '/companies/infosys/track', {
+      token: studentToken,
+      body: { status: 'preparing', isPrimaryTarget: true },
+    });
+    assert.equal(response.status, 200);
+
+    const dashboard = await call<{ companies: { slug: string; isPrimaryTarget: boolean }[] }>('GET', '/dashboard', {
+      token: studentToken,
+    });
+    const infosys = dashboard.body.companies.find((company) => company.slug === 'infosys');
+    assert.ok(infosys?.isPrimaryTarget);
+  });
+});
+
+describe('practice', () => {
+  it('never returns the answer key with the question list', async () => {
+    const response = await call<{ questions: unknown[] }>('GET', '/practice/questions?limit=5', {
+      token: studentToken,
+    });
+    const serialised = JSON.stringify(response.body);
+    assert.ok(!serialised.includes('isCorrect'));
+    assert.ok(!serialised.includes('whyWrong'));
+  });
+
+  it('grades an answer and returns the explanation', async () => {
+    const list = await call<{ questions: { id: number; options: { label: string }[] }[] }>(
+      'GET',
+      '/practice/questions?limit=1&questionType=mcq',
+      { token: studentToken },
+    );
+    const question = list.body.questions[0];
+
+    const response = await call<{ isCorrect: boolean; correctLabels: string[]; explanation: string | null }>(
+      'POST',
+      '/practice/answer',
+      { token: studentToken, body: { questionId: question.id, selectedLabels: [question.options[0].label] } },
+    );
+
+    assert.equal(response.status, 200);
+    assert.ok(response.body.correctLabels.length > 0);
+    assert.equal(typeof response.body.isCorrect, 'boolean');
+  });
+
+  it('rejects an answer for a question that does not exist', async () => {
+    const response = await call('POST', '/practice/answer', {
+      token: studentToken,
+      body: { questionId: 999999, selectedLabels: ['A'] },
+    });
+    assert.equal(response.status, 404);
+  });
+});
+
+describe('mock test lifecycle over HTTP', () => {
+  it('starts, answers, submits and reports', async () => {
+    const start = await call<{
+      attemptId: number;
+      paper: { sections: { questions: { questionId: number; options: { label: string }[] }[] }[] };
+    }>('POST', '/mock-tests/infosys-quick-mock/start', { token: studentToken });
+
+    assert.equal(start.status, 201);
+    const questions = start.body.paper.sections.flatMap((section) => section.questions);
+    assert.ok(questions.length > 0);
+
+    const save = await call<{ count: number }>('POST', `/attempts/${start.body.attemptId}/answers`, {
+      token: studentToken,
+      body: {
+        answers: questions.slice(0, 5).map((question) => ({
+          questionId: question.questionId,
+          selectedLabels: [question.options[0].label],
+        })),
+      },
+    });
+    assert.equal(save.body.count, 5);
+
+    const submit = await call<{
+      attempt: { status: string; percentage: number; skippedCount: number };
+      report: { sections: unknown[]; recommendations: unknown[] };
+    }>('POST', `/attempts/${start.body.attemptId}/submit`, { token: studentToken, body: {} });
+
+    assert.equal(submit.status, 200);
+    assert.equal(submit.body.attempt.status, 'submitted');
+    assert.ok(submit.body.attempt.skippedCount > 0, 'unanswered questions should count as skipped');
+    assert.ok(submit.body.report.sections.length > 0);
+
+    const result = await call<{ review: { detail: { explanation: string | null } | null }[] }>(
+      'GET',
+      `/attempts/${start.body.attemptId}/result`,
+      { token: studentToken },
+    );
+    assert.equal(result.status, 200);
+    // Explanations are only released after submission.
+    assert.ok(result.body.review.length > 0);
+  });
+});
+
+describe('roadmap', () => {
+  it('generates a plan for a tracked company', async () => {
+    const response = await call<{
+      plan: { horizonDays: number; items: { dayIndex: number }[]; rationale: string };
+      priorities: { reasons: string[] }[];
+    }>('GET', '/roadmap?companySlug=infosys&horizonDays=7', { token: studentToken });
+
+    assert.equal(response.status, 200);
+    assert.equal(response.body.plan.horizonDays, 7);
+    assert.ok(response.body.plan.items.length >= 7);
+    assert.ok(response.body.plan.rationale.length > 0);
+    assert.ok(response.body.priorities[0].reasons.length > 0, 'priorities must be explainable');
+  });
+
+  it('rejects a plan request for an unknown company', async () => {
+    const response = await call('GET', '/roadmap?companySlug=nope', { token: studentToken });
+    assert.equal(response.status, 404);
+  });
+});
+
+describe('admin content management', () => {
+  it('creates, edits and deletes a company', async () => {
+    const created = await call<{ company: { id: number; slug: string } }>('POST', '/admin/companies', {
+      token: adminToken,
+      body: { name: 'Test Corp', companyType: 'product', difficulty: 'hard', eligibleBranches: ['CSE'] },
+    });
+    assert.equal(created.status, 201);
+
+    const patched = await call('PATCH', `/admin/companies/${created.body.company.id}`, {
+      token: adminToken,
+      body: { difficulty: 'easy' },
+    });
+    assert.equal(patched.status, 200);
+
+    const deleted = await call('DELETE', `/admin/companies/${created.body.company.id}`, { token: adminToken });
+    assert.equal(deleted.status, 200);
+  });
+
+  it('imports questions from CSV and reports per-row errors', async () => {
+    const csv = [
+      'body,topicSlug,difficulty,optionA,optionB,correct,explanation',
+      '"What is 2 + 2?",number-systems,easy,4,5,A,"Basic arithmetic."',
+      '"Broken row",no-such-topic,easy,1,2,A,"Should fail."',
+      '"No correct label",number-systems,easy,1,2,Z,"Should fail."',
+    ].join('\n');
+
+    const response = await call<{ report: { inserted: number; errors: { row: number }[] } }>(
+      'POST',
+      '/admin/questions/import',
+      { token: adminToken, body: { format: 'csv', content: csv } },
+    );
+
+    assert.equal(response.status, 200);
+    assert.equal(response.body.report.inserted, 1);
+    assert.equal(response.body.report.errors.length, 2, 'both bad rows should be reported individually');
+  });
+
+  it('leaves nothing behind on a dry run', async () => {
+    const before = await call<{ total: number }>('GET', '/admin/questions?limit=1', { token: adminToken });
+    const csv = 'body,topicSlug,difficulty,optionA,optionB,correct\n"Dry run question",number-systems,easy,1,2,A';
+
+    await call('POST', '/admin/questions/import', {
+      token: adminToken,
+      body: { format: 'csv', content: csv, dryRun: true },
+    });
+
+    const after = await call<{ total: number }>('GET', '/admin/questions?limit=1', { token: adminToken });
+    assert.equal(after.body.total, before.body.total);
+  });
+
+  it('archives rather than deletes a question that has been answered', async () => {
+    const list = await call<{ questions: { id: number; usage: { attempts: number } }[] }>(
+      'GET',
+      '/admin/questions?limit=100',
+      { token: adminToken },
+    );
+    const answered = list.body.questions.find((question) => question.usage.attempts > 0);
+    if (!answered) return; // nothing answered yet in this run
+
+    const response = await call<{ archived: boolean }>('DELETE', `/admin/questions/${answered.id}`, {
+      token: adminToken,
+    });
+    assert.equal(response.body.archived, true);
+  });
+
+  it('reports a shortfall when previewing an unsatisfiable selection rule', async () => {
+    const response = await call<{ matched: number; shortfall: number }>('POST', '/admin/mock-tests/preview-rule', {
+      token: adminToken,
+      // 200 is the endpoint's cap; the system-design pool is far smaller.
+      body: { rule: { categories: ['system_design'] }, count: 200 },
+    });
+    assert.equal(response.status, 200);
+    assert.ok(response.body.shortfall > 0, 'an impossible rule must report a shortfall, not silently succeed');
+  });
+});
+
+describe('code engine when disabled', () => {
+  it('refuses execution rather than pretending to run', async () => {
+    const problems = await call<{ problems: { problemId: number }[] }>('GET', '/coding/problems');
+    const response = await call<{ error: { message: string } }>('POST', '/coding/execute', {
+      token: studentToken,
+      body: {
+        problemId: problems.body.problems[0].problemId,
+        language: 'python',
+        sourceCode: 'print(1)',
+        mode: 'run',
+      },
+    });
+    assert.equal(response.status, 400);
+    assert.match(response.body.error.message, /disabled/i);
+  });
+});

@@ -1,0 +1,327 @@
+import type { RoundType } from '../../types.js';
+import type { McqSeed } from './types.js';
+
+const HR: RoundType[] = ['hr_interview', 'managerial', 'group_discussion'];
+
+/**
+ * HR and behavioural readiness checks. These are "best response" items — they
+ * train judgement about what a strong answer looks like rather than testing
+ * recall, which is what makes an HR round preparable at all.
+ */
+export const BEHAVIOURAL_QUESTIONS: McqSeed[] = [
+  {
+    id: 'HR-0001',
+    body: 'You are asked "Tell me about yourself" at the start of an HR round. Which response structure is strongest?',
+    topic: 'hr-interview',
+    subtopic: 'self-introduction',
+    difficulty: 'easy',
+    expectedSeconds: 60,
+    roundTypes: HR,
+    frequentlyAsked: true,
+    options: [
+      {
+        body: 'Present role or academic focus → two relevant achievements with outcomes → why this role interests you (60–90 seconds).',
+        correct: true,
+      },
+      {
+        body: 'A chronological account starting from schooling and covering every year.',
+        whyWrong: 'This buries the relevant material and typically overruns the interviewer’s attention.',
+      },
+      {
+        body: 'A list of your hobbies and family background.',
+        whyWrong: 'The question is a professional opener; personal detail belongs later and only if asked.',
+      },
+      {
+        body: 'A recitation of your resume line by line.',
+        whyWrong: 'The interviewer already has the resume — the answer should add framing and emphasis.',
+      },
+    ],
+    explanation:
+      'A strong opener is short, forward-looking and relevant: who you are professionally, two pieces of concrete evidence, and a bridge to why you are in this interview. Aim for 60–90 seconds.',
+    concept: 'Present → evidence → future. Rehearse it out loud until it fits inside 90 seconds.',
+  },
+  {
+    id: 'HR-0002',
+    body: 'What does the STAR method stand for when answering behavioural questions?',
+    topic: 'leadership-principles',
+    subtopic: 'star-method',
+    difficulty: 'easy',
+    expectedSeconds: 40,
+    roundTypes: HR,
+    frequentlyAsked: true,
+    options: [
+      { body: 'Situation, Task, Action, Result', correct: true },
+      { body: 'Story, Theme, Answer, Reflection', whyWrong: 'This is not the standard framework and omits the measurable result.' },
+      { body: 'Situation, Timeline, Analysis, Review', whyWrong: 'The framework centres on the action *you* took, which this omits.' },
+      { body: 'Strategy, Tactics, Assessment, Retrospective', whyWrong: 'This is a planning framework, not an interview answer structure.' },
+    ],
+    explanation:
+      'STAR keeps a behavioural answer concrete: set the Situation briefly, state your Task, spend most of the answer on the Action you personally took, and close with a quantified Result.',
+    concept: 'Roughly 10% situation, 10% task, 60% action, 20% result.',
+  },
+  {
+    id: 'HR-0003',
+    body: 'Asked "What is your greatest weakness?", which answer is most credible?',
+    topic: 'hr-interview',
+    subtopic: 'behavioural-questions',
+    difficulty: 'medium',
+    expectedSeconds: 55,
+    roundTypes: HR,
+    frequentlyAsked: true,
+    options: [
+      {
+        body: 'A genuine, non-disqualifying weakness plus the specific corrective step you have taken and its effect.',
+        correct: true,
+      },
+      {
+        body: '"I am a perfectionist and I work too hard."',
+        whyWrong: 'This is a well-worn humblebrag; interviewers read it as evasion rather than self-awareness.',
+      },
+      {
+        body: '"I have no weaknesses I can think of."',
+        whyWrong: 'This signals a lack of self-reflection, which is itself a concern.',
+      },
+      {
+        body: 'A weakness that is central to the job, stated without any mitigation.',
+        whyWrong: 'Honesty is good, but naming a disqualifying gap with no remediation gives the interviewer no reason to proceed.',
+      },
+    ],
+    explanation:
+      'The question tests self-awareness and the ability to improve. Name something real but peripheral, then show the concrete action you took and the measurable improvement.',
+  },
+  {
+    id: 'HR-0004',
+    body: 'A teammate has not delivered their module two days before an important demo. What is the most professional first step?',
+    topic: 'hr-interview',
+    subtopic: 'situational-questions',
+    difficulty: 'medium',
+    expectedSeconds: 60,
+    roundTypes: HR,
+    options: [
+      {
+        body: 'Speak to them directly to understand the blocker and agree on a plan, escalating only if the timeline is still at risk.',
+        correct: true,
+      },
+      {
+        body: 'Report them to the manager immediately without speaking to them.',
+        whyWrong: 'Escalating before a direct conversation damages trust and often misdiagnoses the problem.',
+      },
+      {
+        body: 'Quietly rewrite their module yourself the night before.',
+        whyWrong: 'This hides the risk, duplicates effort and leaves the underlying problem unaddressed.',
+      },
+      {
+        body: 'Do nothing, since it is not your assigned responsibility.',
+        whyWrong: 'Shared deliverables imply shared risk; ignoring it fails the team.',
+      },
+    ],
+    explanation:
+      'Interviewers look for ownership plus proportionality: understand first, help if you can, and escalate transparently when the deadline is genuinely threatened — not as a first move, and not never.',
+  },
+  {
+    id: 'HR-0005',
+    body: 'Asked "Why do you want to join our company?", which answer is strongest?',
+    topic: 'hr-interview',
+    subtopic: 'company-specific-questions',
+    difficulty: 'medium',
+    expectedSeconds: 55,
+    roundTypes: HR,
+    frequentlyAsked: true,
+    options: [
+      {
+        body: 'Two specifics about the company’s work or engineering culture linked to your own experience and goals.',
+        correct: true,
+      },
+      {
+        body: '"It is a big brand and the package is good."',
+        whyWrong: 'Compensation-only motivation suggests you would leave for the next offer, and it applies to any employer.',
+      },
+      {
+        body: '"I applied everywhere and this one called back."',
+        whyWrong: 'Honest but signals no particular interest, which weakens the case for hiring you.',
+      },
+      {
+        body: 'A recitation of the company’s founding year, revenue and headcount.',
+        whyWrong: 'Facts anyone can look up show research but not fit — the answer must connect to you.',
+      },
+    ],
+    explanation:
+      'A strong answer proves you researched something specific — a product, a team, a technology, a published engineering practice — and connects it to work you have actually done or want to do.',
+  },
+  {
+    id: 'HR-0006',
+    body: 'The interviewer asks whether you are willing to relocate. You have a strong preference but would accept relocation. What is the best response?',
+    topic: 'hr-interview',
+    subtopic: 'situational-questions',
+    difficulty: 'easy',
+    expectedSeconds: 50,
+    roundTypes: HR,
+    options: [
+      {
+        body: 'State your willingness clearly, then mention your preference as a preference rather than a condition.',
+        correct: true,
+      },
+      {
+        body: 'Say you will go anywhere, even though you intend to negotiate later.',
+        whyWrong: 'Committing to something you plan to renege on damages trust once the offer stage arrives.',
+      },
+      {
+        body: 'Refuse to answer until the offer is made.',
+        whyWrong: 'Declining to answer a routine logistics question reads as evasive.',
+      },
+      {
+        body: 'List every city you would refuse, in detail.',
+        whyWrong: 'Leading with constraints frames you as difficult to place before any rapport exists.',
+      },
+    ],
+    explanation:
+      'Answer the question asked — yes or no — and then add nuance. Being clear and honest about flexibility is better than either over-promising or stonewalling.',
+  },
+  {
+    id: 'HR-0007',
+    body: 'Which is the best way to describe a project on your resume during an interview?',
+    topic: 'projects-resume',
+    difficulty: 'medium',
+    expectedSeconds: 60,
+    roundTypes: HR,
+    frequentlyAsked: true,
+    options: [
+      {
+        body: 'The problem it solved, your specific contribution, one technical decision you made and why, and the measurable outcome.',
+        correct: true,
+      },
+      {
+        body: 'A list of every technology and library used.',
+        whyWrong: 'A stack list says nothing about your reasoning or contribution.',
+      },
+      {
+        body: 'A description of what the team built, using "we" throughout.',
+        whyWrong: 'The interviewer needs to know what *you* did; "we" obscures your role.',
+      },
+      {
+        body: 'The number of lines of code and files in the repository.',
+        whyWrong: 'Volume is not a measure of quality or impact.',
+      },
+    ],
+    explanation:
+      'Interviewers probe for ownership and judgement. Naming a decision, the alternative you rejected, and the reason is what distinguishes a real contributor from a bystander.',
+    concept: 'Be ready for "why did you choose X over Y?" on every technology in your resume.',
+  },
+  {
+    id: 'HR-0008',
+    body: 'Asked "Where do you see yourself in five years?", which answer works best for a campus hire?',
+    topic: 'hr-interview',
+    subtopic: 'behavioural-questions',
+    difficulty: 'easy',
+    expectedSeconds: 50,
+    roundTypes: HR,
+    options: [
+      {
+        body: 'A direction of technical growth and increasing responsibility that is plausible within this kind of role.',
+        correct: true,
+      },
+      {
+        body: '"Running my own startup."',
+        whyWrong: 'Honest, but it tells the interviewer you plan to leave; if it is true, frame the skills you want to build here.',
+      },
+      {
+        body: '"In your job."',
+        whyWrong: 'Intended as humour, it usually lands as either arrogant or flippant.',
+      },
+      {
+        body: '"I have not thought about it."',
+        whyWrong: 'This suggests a lack of direction, which is the opposite of what the question probes.',
+      },
+    ],
+    explanation:
+      'The question tests whether your trajectory is compatible with the role. A specific, growth-oriented answer that fits the job is stronger than either a vague one or one that points away from the company.',
+  },
+  {
+    id: 'HR-0009',
+    body: 'During a group discussion, two participants are talking over each other and the discussion has stalled. What is the highest-value contribution?',
+    topic: 'group-discussion',
+    difficulty: 'medium',
+    expectedSeconds: 60,
+    roundTypes: HR,
+    options: [
+      {
+        body: 'Summarise the two positions, name the point of disagreement, and propose the next question the group should settle.',
+        correct: true,
+      },
+      { body: 'Raise your voice to be heard over both of them.', whyWrong: 'Volume is scored as aggression, not leadership.' },
+      { body: 'Stay silent until the moderator intervenes.', whyWrong: 'Silence in a group discussion is usually scored as non-participation.' },
+      { body: 'Side with whoever spoke most recently to move things along.', whyWrong: 'Agreeing without adding reasoning contributes no content.' },
+    ],
+    explanation:
+      'Group discussions reward structuring behaviour: synthesising, naming the real disagreement and redirecting the group. That is visible leadership without dominance.',
+  },
+  {
+    id: 'HR-0010',
+    body: 'You realise mid-interview that you gave an incorrect technical answer ten minutes ago. What should you do?',
+    topic: 'hr-interview',
+    subtopic: 'situational-questions',
+    difficulty: 'medium',
+    expectedSeconds: 55,
+    roundTypes: HR,
+    options: [
+      {
+        body: 'Say so plainly, give the corrected answer, and continue.',
+        correct: true,
+      },
+      { body: 'Say nothing and hope it was not noticed.', whyWrong: 'Interviewers usually did notice, and the silence removes your chance to demonstrate self-correction.' },
+      { body: 'Apologise at length and explain why you were nervous.', whyWrong: 'A long apology spends time on the error rather than on the correct answer.' },
+      { body: 'Argue that your first answer was defensible.', whyWrong: 'Defending a known error is worse than the error itself.' },
+    ],
+    explanation:
+      'Catching and correcting your own mistake is a positive signal — it shows you keep thinking and that you value correctness over appearing right.',
+  },
+  {
+    id: 'HR-0011',
+    body: 'Which question is a good one to ask the interviewer when invited to ask questions?',
+    topic: 'hr-interview',
+    subtopic: 'company-specific-questions',
+    difficulty: 'easy',
+    expectedSeconds: 45,
+    roundTypes: HR,
+    options: [
+      {
+        body: '"What does the first six months look like for someone in this role, and how is success measured?"',
+        correct: true,
+      },
+      { body: '"How many leaves do I get?"', whyWrong: 'A reasonable question, but for the offer stage rather than the interview.' },
+      { body: '"Did I pass?"', whyWrong: 'This puts the interviewer in an awkward position and cannot be answered on the spot.' },
+      { body: '"Nothing, I am fine."', whyWrong: 'Declining entirely wastes a chance to show genuine interest.' },
+    ],
+    explanation:
+      'Good closing questions are about the work, the team and how performance is judged. They signal that you are evaluating fit seriously, not just seeking any offer.',
+  },
+  {
+    id: 'HR-0012',
+    body: 'Asked to describe a time you failed, what should the answer centre on?',
+    topic: 'leadership-principles',
+    subtopic: 'star-method',
+    difficulty: 'medium',
+    expectedSeconds: 60,
+    roundTypes: HR,
+    options: [
+      {
+        body: 'A real failure you owned, what you changed as a result, and evidence the change worked later.',
+        correct: true,
+      },
+      {
+        body: 'A failure caused entirely by someone else on the team.',
+        whyWrong: 'Blame-shifting defeats the purpose of the question, which is to observe ownership.',
+      },
+      {
+        body: 'A trivial failure with no consequences.',
+        whyWrong: 'A stakes-free example gives the interviewer nothing to assess.',
+      },
+      {
+        body: 'A claim that you have never failed at anything significant.',
+        whyWrong: 'This reads as either inexperience or a lack of reflection.',
+      },
+    ],
+    explanation:
+      'The interviewer is testing accountability and learning speed. The strongest version has a real cost, your own contribution to it, a specific change, and proof the change held.',
+  },
+];
