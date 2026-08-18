@@ -6,6 +6,7 @@ import { badRequest, conflict, handler, notFound, parse } from '../lib/http.js';
 import { json, parseCsv, pct, round, slugify, stringify } from '../lib/util.js';
 import { attachUser, requireAdmin, requireFaculty, requireRole } from '../middleware/auth.js';
 import { findQuestions, loadOptions, selectForRule } from '../engines/question-engine.js';
+import { sectorFor } from '../db/seed/sectors.js';
 import type { Difficulty, SelectionRule } from '../types.js';
 
 export const adminRouter = Router();
@@ -120,10 +121,10 @@ adminRouter.post(
     const info = db()
       .prepare(
         `INSERT INTO companies (
-           slug, name, logo_text, logo_url, brand_color, company_type, industry, description, difficulty,
+           slug, name, logo_text, logo_url, brand_color, company_type, industry, sector, description, difficulty,
            hiring_frequency, eligible_branches, eligible_years, min_cgpa, ctc_min_lpa, ctc_max_lpa,
            roles_offered, locations, expected_prep_weeks, is_published, sort_order
-         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       )
       .run(
         slug,
@@ -133,6 +134,10 @@ adminRouter.post(
         input.brandColor ?? '#2563eb',
         input.companyType,
         input.industry ?? null,
+        // Derived, never hand-entered: the directory's sector facet filters on
+        // an exact match, so a company saved without one drops out of every
+        // sector view.
+        sectorFor(input.industry),
         input.description ?? null,
         input.difficulty,
         input.hiringFrequency ?? null,
@@ -180,6 +185,9 @@ adminRouter.patch(
     for (const [key, column] of Object.entries(map)) {
       if (key in input) columns[column] = (input as Record<string, unknown>)[key] ?? null;
     }
+    // Industry drives sector, so they must move together — otherwise editing a
+    // company's industry silently leaves it filed under the old sector.
+    if ('industry' in input) columns.sector = sectorFor(input.industry);
     if ('slug' in input && input.slug) columns.slug = slugify(input.slug);
     if ('eligibleBranches' in input) columns.eligible_branches = stringify(input.eligibleBranches);
     if ('eligibleYears' in input) columns.eligible_years = stringify(input.eligibleYears);

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../lib/api';
 import { useApi, useMutation } from '../../lib/hooks';
@@ -40,19 +40,27 @@ interface MockTest {
   inProgressAttemptId: number | null;
 }
 
+const PAGE_SIZE = 60;
+
 export default function MockTests() {
   const navigate = useNavigate();
   const [scope, setScope] = useState('');
   const [companySlug, setCompanySlug] = useState('');
   const [search, setSearch] = useState('');
   const [confirming, setConfirming] = useState<MockTest | null>(null);
+  // The catalogue holds close to two thousand mocks; the grid grows a page at
+  // a time rather than mounting a card for every one of them.
+  const [limit, setLimit] = useState(PAGE_SIZE);
 
   const { data: companyData } = useApi<{ companies: { slug: string; name: string }[] }>('/companies');
-  const { data, loading, error, reload } = useApi<{ tests: MockTest[] }>('/mock-tests', {
+  const { data, loading, error, reload } = useApi<{ tests: MockTest[]; total: number }>('/mock-tests', {
     scope: scope || undefined,
     companySlug: companySlug || undefined,
     search: search || undefined,
+    limit,
   });
+
+  useEffect(() => setLimit(PAGE_SIZE), [scope, companySlug, search]);
 
   const start = useMutation(async (test: MockTest) => {
     const result = await api<{ attemptId: number }>(`/mock-tests/${test.slug}/start`, { method: 'POST' });
@@ -61,6 +69,7 @@ export default function MockTests() {
   });
 
   const tests = data?.tests ?? [];
+  const total = data?.total ?? tests.length;
   const scopes: MockTest['scope'][] = ['quick', 'sectional', 'round', 'company'];
 
   return (
@@ -175,6 +184,17 @@ export default function MockTests() {
             ))}
           </div>
         )
+      ) : null}
+
+      {data && !loading && tests.length < total ? (
+        <div className="flex items-center justify-center gap-3">
+          <span className="text-sm ink-muted">
+            Showing {tests.length} of {total} mock tests
+          </span>
+          <Button variant="secondary" size="sm" onClick={() => setLimit((n) => n + PAGE_SIZE)}>
+            Show more
+          </Button>
+        </div>
       ) : null}
 
       <Modal

@@ -412,6 +412,52 @@ describe('every company is usable, not just the hand-researched ones', () => {
   });
 });
 
+describe('admin-created companies stay visible in the directory', () => {
+  let createdId: number;
+
+  it('derives a sector on create, so the company is not filtered out', async () => {
+    const created = await call<{ company: { id: number; slug: string; sector: string | null } }>(
+      'POST',
+      '/admin/companies',
+      {
+        token: adminToken,
+        body: {
+          name: 'Sector Check Ltd',
+          companyType: 'product',
+          industry: 'Banking Software',
+          difficulty: 'moderate',
+          ctcMinLpa: 8,
+          ctcMaxLpa: 16,
+        },
+      },
+    );
+    assert.equal(created.status, 201);
+    createdId = created.body.company.id;
+    assert.equal(created.body.company.sector, 'Software Products');
+
+    const listed = await call<{ companies: { slug: string }[] }>(
+      'GET',
+      '/companies?sector=Software%20Products',
+      { token: studentToken },
+    );
+    assert.ok(
+      listed.body.companies.some((company) => company.slug === created.body.company.slug),
+      'a newly created company must appear under its sector filter',
+    );
+  });
+
+  it('moves the company when its industry is edited', async () => {
+    const updated = await call<{ company: { sector: string } }>('PATCH', `/admin/companies/${createdId}`, {
+      token: adminToken,
+      body: { industry: 'Semiconductors' },
+    });
+    assert.equal(updated.status, 200);
+    assert.equal(updated.body.company.sector, 'Semiconductors & Hardware');
+
+    await call('DELETE', `/admin/companies/${createdId}`, { token: adminToken });
+  });
+});
+
 describe('code engine when disabled', () => {
   it('refuses execution rather than pretending to run', async () => {
     const problems = await call<{ problems: { problemId: number }[] }>('GET', '/coding/problems');

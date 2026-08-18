@@ -36,6 +36,7 @@ Open <http://localhost:5173>.
 ```bash
 npm run build        # compiles the server and bundles the client
 npm start            # serves the API and the built client from :4000
+                     # first run seeds the catalogue automatically
 ```
 
 The API serves `client/dist` when it exists, so one process hosts everything.
@@ -88,7 +89,7 @@ rounds are the structure, and the bank is what an admin grows over time.
 | `npm run dev` | API + client with hot reload |
 | `npm run build` | Type-check and build both workspaces |
 | `npm start` | Run the built server (also serves the client) |
-| `npm test` | Engine, catalogue and API tests (88 tests) |
+| `npm test` | Engine, catalogue and API tests (95 tests) |
 | `npm run typecheck` | Type-check both workspaces |
 | `npm run audit:mocks` | Start all 1,922 mock tests against a copy of the DB and report any that fail to assemble |
 | `npm run db:reset` | Drop, migrate and seed the database |
@@ -157,6 +158,20 @@ exactly the same paper. The assembled paper carries no `is_correct` flags — a
 test asserts this — and grading happens entirely server-side against the stored
 key. The countdown is driven by an absolute server deadline, so backgrounding the
 tab does not buy extra time.
+
+### The catalogue converges on boot
+
+A migration brings the schema forward but not the content, so pulling new code
+and restarting used to leave the previous catalogue in place — a database seeded
+by an older build kept serving 13 companies while the code shipped 171, and
+nothing said so. The server now stores a fingerprint of the catalogue it wrote
+and compares it on boot; when it differs it re-seeds and logs what changed.
+Seeding is idempotent and non-destructive (below), so this is safe to do
+unattended, and `PP_AUTO_SEED=0` turns it into a warning instead.
+
+The fingerprint is content-based rather than a company count, so deleting a
+company in the admin console is respected rather than silently undone on the
+next restart.
 
 ### Re-seeding never destroys student work
 

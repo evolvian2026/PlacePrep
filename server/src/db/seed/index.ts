@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import type { Db } from '../index.js';
 import { db as sharedDb } from '../index.js';
 import { config } from '../../config.js';
-import { addDays, slugify, stringify, today } from '../../lib/util.js';
+import { addDays, hashString, slugify, stringify, today } from '../../lib/util.js';
 import type { Difficulty } from '../../types.js';
 import { TOPICS } from './topics.js';
 import { COMPANIES, type CompanySeed, type RoundSeed } from './companies.js';
@@ -29,6 +29,30 @@ const ALL_MCQ: McqSeed[] = [
 // entries carry an insight saying their rounds come from a template, so the
 // UI can tell a student what is researched and what is generic.
 const ALL_COMPANIES: CompanySeed[] = [...COMPANIES, ...EXTENDED_COMPANIES];
+
+/**
+ * Fingerprint of the content this seed would write.
+ *
+ * Stored in `settings` after a successful seed, so the server can tell on boot
+ * whether the database holds the current catalogue or one from an older build.
+ * A plain company count is not enough: an admin deleting a company would look
+ * identical to a stale database and get silently re-seeded every restart.
+ */
+export const CATALOGUE_FINGERPRINT = String(
+  hashString(
+    [
+      ALL_COMPANIES.map((company) => company.slug).sort().join(','),
+      ALL_MCQ.length,
+      CODING_PROBLEMS.length,
+      TOPICS.length,
+    ].join('|'),
+  ),
+);
+
+export const CATALOGUE_KEY = 'content.catalogueFingerprint';
+
+/** How many companies this build's seed would write. Used for logging. */
+export const CATALOGUE_SIZE = ALL_COMPANIES.length;
 
 const OPTION_LABELS = ['A', 'B', 'C', 'D', 'E', 'F'];
 
@@ -933,6 +957,19 @@ function seedSettings(target: Db): void {
   for (const [key, value] of Object.entries(defaults)) {
     insert.run(key, typeof value === 'string' ? value : stringify(value));
   }
+  // Records which catalogue this database now holds.
+  insert.run(CATALOGUE_KEY, CATALOGUE_FINGERPRINT);
+}
+
+/**
+ * True when the database does not hold the catalogue this build ships — either
+ * it was never seeded, or it was seeded by an older build.
+ */
+export function isCatalogueStale(target: Db = sharedDb()): boolean {
+  const row = target
+    .prepare<[string], { value: string }>('SELECT value FROM settings WHERE key = ?')
+    .get(CATALOGUE_KEY);
+  return row?.value !== CATALOGUE_FINGERPRINT;
 }
 
 // ───────────────────────────── demo users ─────────────────────────────

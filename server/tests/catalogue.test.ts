@@ -5,7 +5,7 @@ import { EXTENDED_COMPANIES } from '../src/db/seed/companies-extended.js';
 import { sectorFor } from '../src/db/seed/sectors.js';
 import { ARCHETYPES } from '../src/db/seed/company-archetypes.js';
 import { createTestDb } from '../src/db/index.js';
-import { seed } from '../src/db/seed/index.js';
+import { CATALOGUE_KEY, isCatalogueStale, seed } from '../src/db/seed/index.js';
 
 const ALL = [...COMPANIES, ...EXTENDED_COMPANIES];
 
@@ -191,6 +191,38 @@ test('seeded catalogue gives every company the full feature set', async (t) => {
       const { n } = count.get(company.id, company.id) as { n: number };
       assert.ok(n > 0, `${company.name} has no coding problems on its page`);
     }
+  });
+
+  db.close();
+});
+
+
+test('a database seeded by an older build is detected as stale', async (t) => {
+  const db = createTestDb();
+
+  await t.test('an unseeded database is stale', () => {
+    assert.equal(isCatalogueStale(db), true);
+  });
+
+  await t.test('a freshly seeded database is current', () => {
+    seed(db);
+    assert.equal(isCatalogueStale(db), false);
+  });
+
+  await t.test('a database holding an older catalogue is stale', () => {
+    // What a pull used to leave behind: the schema migrated forward, the
+    // content left on whatever the previous build wrote. The server served it
+    // silently, which is how a 171-company catalogue showed up as 13.
+    db.prepare('UPDATE settings SET value = ? WHERE key = ?').run('an-older-build', CATALOGUE_KEY);
+    assert.equal(isCatalogueStale(db), true);
+  });
+
+  await t.test('re-seeding brings it current again without touching student work', () => {
+    const before = db.prepare('SELECT COUNT(*) n FROM attempts').get() as { n: number };
+    seed(db);
+    const after = db.prepare('SELECT COUNT(*) n FROM attempts').get() as { n: number };
+    assert.equal(isCatalogueStale(db), false);
+    assert.equal(after.n, before.n);
   });
 
   db.close();

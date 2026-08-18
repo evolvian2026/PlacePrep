@@ -26,6 +26,8 @@ const listSchema = z.object({
   scope: z.enum(['quick', 'sectional', 'round', 'company']).optional(),
   roundId: z.coerce.number().int().positive().optional(),
   search: z.string().trim().max(80).optional(),
+  limit: z.coerce.number().int().min(1).max(200).optional(),
+  offset: z.coerce.number().int().min(0).optional(),
 });
 
 mockTestsRouter.get(
@@ -53,6 +55,20 @@ mockTestsRouter.get(
       clauses.push('mt.title LIKE ?');
       whereParams.push(`%${query.search}%`);
     }
+
+    // The catalogue generates a mock test per company, round and section —
+    // nearly two thousand of them — so this is paged. Without the window the
+    // endpoint returned every row and the page mounted a card for each.
+    const limit = query.limit ?? 60;
+    const offset = query.offset ?? 0;
+    const { total } = db()
+      .prepare<unknown[], { total: number }>(
+        `SELECT COUNT(*) AS total FROM mock_tests mt
+           LEFT JOIN companies c ON c.id = mt.company_id
+           LEFT JOIN rounds r ON r.id = mt.round_id
+          WHERE ${clauses.join(' AND ')}`,
+      )
+      .get(...whereParams)!;
 
     const rows = db()
       .prepare<unknown[], {
@@ -93,12 +109,17 @@ mockTestsRouter.get(
          LEFT JOIN companies c ON c.id = mt.company_id
          LEFT JOIN rounds r ON r.id = mt.round_id
          WHERE ${clauses.join(' AND ')}
-         ORDER BY c.sort_order, CASE mt.scope WHEN 'company' THEN 1 WHEN 'round' THEN 2 WHEN 'sectional' THEN 3 ELSE 4 END, mt.id`,
+         ORDER BY c.sort_order, CASE mt.scope WHEN 'company' THEN 1 WHEN 'round' THEN 2 WHEN 'sectional' THEN 3 ELSE 4 END, mt.id
+         LIMIT ? OFFSET ?`,
       )
-      // Three userId binds for the correlated sub-selects, then the WHERE params.
-      .all(userId, userId, userId, ...whereParams);
+      // Three userId binds for the correlated sub-selects, then the WHERE
+      // params, then the page window.
+      .all(userId, userId, userId, ...whereParams, limit, offset);
 
     res.json({
+      total,
+      limit,
+      offset,
       tests: rows.map((row) => ({
         id: row.id,
         slug: row.slug,

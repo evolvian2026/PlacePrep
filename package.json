@@ -16,6 +16,7 @@
     "dev:client": "npm --workspace client run dev",
     "build": "npm --workspace server run build && npm --workspace client run build",
     "start": "npm --workspace server run start",
+    "db:migrate": "npm --workspace server run db:migrate",
     "db:reset": "npm --workspace server run db:reset",
     "db:seed": "npm --workspace server run db:seed",
     "test": "npm --workspace server run test",

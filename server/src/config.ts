@@ -27,6 +27,13 @@ export const config = {
   port: int(process.env.PORT, 4000),
   dataDir,
   databaseFile: process.env.PP_DATABASE_FILE ?? path.join(dataDir, 'placeprep.db'),
+  /**
+   * Seed the content catalogue on boot when the database holds an older one.
+   * Seeding is idempotent and never deletes student work, so converging on
+   * startup is safe and saves a pull from silently serving a stale catalogue.
+   * Set PP_AUTO_SEED=0 to manage seeding by hand instead.
+   */
+  autoSeed: bool(process.env.PP_AUTO_SEED, true),
   clientOrigins: (process.env.PP_CLIENT_ORIGINS ?? 'http://localhost:5173,http://127.0.0.1:5173')
     .split(',')
     .map((s) => s.trim())

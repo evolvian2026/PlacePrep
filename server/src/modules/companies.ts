@@ -44,7 +44,7 @@ function shapeCompany(row: CompanyRow, extra: Record<string, unknown> = {}) {
     brandColor: row.brand_color,
     companyType: row.company_type,
     industry: row.industry,
-    sector: row.sector,
+    sector: row.sector ?? 'Other',
     description: row.description,
     difficulty: row.difficulty,
     hiringFrequency: row.hiring_frequency,
@@ -95,7 +95,10 @@ companiesRouter.get(
       params.push(query.difficulty);
     }
     if (query.sector) {
-      clauses.push('c.sector = ?');
+      // COALESCE so a company saved before sectors existed, or by an older
+      // build, is still reachable under "Other" instead of vanishing from
+      // every sector view.
+      clauses.push("COALESCE(c.sector, 'Other') = ?");
       params.push(query.sector);
     }
     if (query.branch) {
@@ -149,9 +152,9 @@ companiesRouter.get(
       // set, so choosing one sector does not empty the dropdown.
       sectors: db()
         .prepare<[], { sector: string }>(
-          `SELECT DISTINCT sector FROM companies
-           WHERE is_published = 1 AND sector IS NOT NULL AND sector <> ''
-           ORDER BY sector`,
+          `SELECT DISTINCT COALESCE(NULLIF(sector, ''), 'Other') AS sector
+             FROM companies WHERE is_published = 1
+            ORDER BY sector`,
         )
         .all()
         .map((row) => row.sector),
