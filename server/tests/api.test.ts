@@ -365,6 +365,53 @@ describe('admin content management', () => {
   });
 });
 
+describe('every company is usable, not just the hand-researched ones', () => {
+  // A templated company must reach all four student features. Coding was the
+  // one that silently returned nothing: its company filter matched only
+  // explicit question tags, and those name only the original 13 companies.
+  const templated = ['zoho', 'qualcomm', 'mu-sigma', 'larsen-toubro', 'pwc'];
+
+  it('offers coding problems for a templated company', async () => {
+    for (const slug of templated) {
+      const response = await call<{ problems: unknown[] }>('GET', `/coding/problems?companySlug=${slug}`, {
+        token: studentToken,
+      });
+      assert.equal(response.status, 200);
+      assert.ok(response.body.problems.length > 0, `${slug} has no coding problems`);
+    }
+  });
+
+  it('offers practice questions for a templated company', async () => {
+    for (const slug of templated) {
+      const response = await call<{ total: number }>('GET', `/practice/questions?companySlug=${slug}&limit=5`, {
+        token: studentToken,
+      });
+      assert.equal(response.status, 200);
+      assert.ok(response.body.total > 0, `${slug} has no practice questions`);
+    }
+  });
+
+  it('builds a roadmap for a templated company', async () => {
+    for (const slug of templated) {
+      const response = await call<{ plan: { items: unknown[] } }>('GET', `/roadmap?companySlug=${slug}`, {
+        token: studentToken,
+      });
+      assert.equal(response.status, 200);
+      assert.ok(response.body.plan.items.length > 0, `${slug} produced an empty roadmap`);
+    }
+  });
+
+  it('lists mock tests for a templated company', async () => {
+    for (const slug of templated) {
+      const response = await call<{ tests: unknown[] }>('GET', `/mock-tests?companySlug=${slug}`, {
+        token: studentToken,
+      });
+      assert.equal(response.status, 200);
+      assert.ok(response.body.tests.length > 0, `${slug} has no mock tests`);
+    }
+  });
+});
+
 describe('code engine when disabled', () => {
   it('refuses execution rather than pretending to run', async () => {
     const problems = await call<{ problems: { problemId: number }[] }>('GET', '/coding/problems');

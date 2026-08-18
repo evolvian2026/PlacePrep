@@ -44,7 +44,7 @@ The API serves `client/dist` when it exists, so one process hosts everything.
 
 ## What is in the box
 
-**171 companies** across 11 sectors, with 650 rounds, 859 sections and 105
+**171 companies** across 11 sectors, with 650 rounds, 930 sections and 105
 topics between them. They come from two catalogues, and the difference matters:
 
 - **13 hand-researched companies** — 7 service-based (TCS, Infosys, Wipro,
@@ -67,14 +67,14 @@ behaviour, plus **16 coding problems** with 106 machine-verified test cases.
 Every MCQ carries an explanation, and most carry a per-option "why this is wrong"
 note that is revealed only for the option the student actually picked.
 
-**1,851 mock tests**, generated per company as four tiers: a full company
+**1,922 mock tests**, generated per company as four tiers: a full company
 simulation, one mock per round, one per section, and a 12-question quick mock.
 Papers are assembled from the shared bank at start time, so a templated
 company's mock is drawn from the same verified questions as a researched one.
 
-The catalogue is deliberately far larger than the bank: 1,851 papers draw on
+The catalogue is deliberately far larger than the bank: 1,922 papers draw on
 184 questions. `npm run audit:mocks` starts every one of them against a copy of
-the database — all 1,851 assemble, and 92 of them come up short of their
+the database — all 1,922 assemble, and 90 of them come up short of their
 nominal question count (the worst fills 13 of 18). That is a content gap to
 fill by importing more questions, not a broken paper; the seeded companies and
 rounds are the structure, and the bank is what an admin grows over time.
@@ -88,9 +88,9 @@ rounds are the structure, and the bank is what an admin grows over time.
 | `npm run dev` | API + client with hot reload |
 | `npm run build` | Type-check and build both workspaces |
 | `npm start` | Run the built server (also serves the client) |
-| `npm test` | Engine, catalogue and API tests (78 tests) |
+| `npm test` | Engine, catalogue and API tests (88 tests) |
 | `npm run typecheck` | Type-check both workspaces |
-| `npm run audit:mocks` | Start all 1,851 mock tests against a copy of the DB and report any that fail to assemble |
+| `npm run audit:mocks` | Start all 1,922 mock tests against a copy of the DB and report any that fail to assemble |
 | `npm run db:reset` | Drop, migrate and seed the database |
 | `npm run db:seed` | Re-seed without dropping (safe on a live database) |
 | `npm --workspace server run verify:coding` | Run every coding problem's reference solution against its test cases |
@@ -181,6 +181,27 @@ strip — not buried under a tab a student may never open. A test
 (`tests/catalogue.test.ts`) fails the build if a templated company loses that
 note, or if any of its insights claims `verified` provenance for a statement
 about the employer's process rather than about this platform's own content.
+
+### Every company reaches every feature
+
+A company is only useful if all four student surfaces work for it, so the seed
+guarantees each of the 171 gets rounds and a topic-mapped roadmap, a full mock
+plus round, sectional and quick mocks, practice questions, and coding problems.
+`tests/catalogue.test.ts` asserts this over the seeded database.
+
+Practice and coding reach a company through different routes. Practice matches
+question tags, where a NULL company means "applies everywhere" — most of the
+bank. Coding has only 16 problems and their tags name only the hand-researched
+companies, so filtering by tag alone returned an empty list for the other 158.
+The coding filter therefore matches a problem when it is either tagged for that
+company **or** sits on a topic that company's roadmap covers, and the page says
+so: `Asked by` still lists only where a problem is genuinely reported to have
+appeared, so a syllabus match is never dressed up as a company fact.
+
+Capgemini is the one company with no coding round, and that is deliberate — its
+researched process runs on pseudocode and a game-based stage rather than a live
+editor. Inventing a round to make the numbers tidy would be a lie about a real
+employer; its students still reach the coding workspace from the Coding page.
 
 ---
 

@@ -4,6 +4,8 @@ import { COMPANIES } from '../src/db/seed/companies.js';
 import { EXTENDED_COMPANIES } from '../src/db/seed/companies-extended.js';
 import { sectorFor } from '../src/db/seed/sectors.js';
 import { ARCHETYPES } from '../src/db/seed/company-archetypes.js';
+import { createTestDb } from '../src/db/index.js';
+import { seed } from '../src/db/seed/index.js';
 
 const ALL = [...COMPANIES, ...EXTENDED_COMPANIES];
 
@@ -119,4 +121,77 @@ test('sector bucketing', async (t) => {
       assert.notEqual(sectorFor(company.industry), 'Other', `${company.name} ("${company.industry}") is unbucketed`);
     }
   });
+});
+
+
+test('seeded catalogue gives every company the full feature set', async (t) => {
+  const db = createTestDb();
+  seed(db);
+
+  const companies = db.prepare('SELECT id, slug, name FROM companies').all() as {
+    id: number;
+    slug: string;
+    name: string;
+  }[];
+
+  const missing = (sql: string): string[] =>
+    companies
+      .filter((company) => !(db.prepare(sql).get(company.id) as unknown))
+      .map((company) => company.slug);
+
+  await t.test('every company has rounds and a roadmap syllabus', () => {
+    assert.deepEqual(missing('SELECT 1 FROM rounds WHERE company_id = ? LIMIT 1'), []);
+    assert.deepEqual(
+      missing(
+        `SELECT 1 FROM round_topics rt JOIN rounds r ON r.id = rt.round_id
+          WHERE r.company_id = ? LIMIT 1`,
+      ),
+      [],
+      'a company with no round topics produces an empty roadmap',
+    );
+  });
+
+  await t.test('every company has a full, round and sectional mock', () => {
+    for (const scope of ['company', 'round', 'sectional', 'quick']) {
+      assert.deepEqual(
+        missing(`SELECT 1 FROM mock_tests WHERE company_id = ? AND scope = '${scope}' LIMIT 1`),
+        [],
+        `some companies have no ${scope} mock`,
+      );
+    }
+  });
+
+  await t.test('every company has a coding section its students can practise', () => {
+    // Capgemini is the one deliberate exception: its researched process runs on
+    // pseudocode and a game-based round rather than a live coding round, and
+    // inventing one to tidy up this test would be a lie about a real employer.
+    // Its students still reach the coding workspace through the Coding page,
+    // which is scoped by roadmap topics rather than by round structure.
+    const withoutCoding = missing(
+      `SELECT 1 FROM sections s JOIN rounds r ON r.id = s.round_id
+        WHERE r.company_id = ? AND s.question_kind = 'coding' LIMIT 1`,
+    );
+    assert.deepEqual(withoutCoding, ['capgemini']);
+  });
+
+  await t.test('the coding page returns problems for every company', () => {
+    // Mirrors the company filter in modules/coding.ts: an explicit tag, or a
+    // problem sitting on a topic the company's roadmap covers.
+    const count = db.prepare(
+      `SELECT COUNT(*) n FROM coding_problems cp JOIN questions q ON q.id = cp.question_id
+        WHERE q.status = 'published'
+          AND (EXISTS (SELECT 1 FROM question_tags qt
+                        WHERE qt.question_id = q.id
+                          AND (qt.company_id IS NULL OR qt.company_id = ?))
+               OR COALESCE(q.topic_id, q.subtopic_id) IN (
+                 SELECT rt.topic_id FROM round_topics rt JOIN rounds r ON r.id = rt.round_id
+                  WHERE r.company_id = ?))`,
+    );
+    for (const company of companies) {
+      const { n } = count.get(company.id, company.id) as { n: number };
+      assert.ok(n > 0, `${company.name} has no coding problems on its page`);
+    }
+  });
+
+  db.close();
 });

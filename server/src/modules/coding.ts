@@ -27,6 +27,9 @@ codingRouter.get(
   }),
 );
 
+/** Resolves a company slug to its id inline; used twice in the same clause. */
+const COMPANY_ID_SUBQUERY = '(SELECT id FROM companies WHERE slug = ?)';
+
 const listSchema = z.object({
   difficulty: z.enum(['easy', 'medium', 'hard']).optional(),
   topicId: z.coerce.number().int().positive().optional(),
@@ -57,12 +60,38 @@ codingRouter.get(
       params.push(`%${query.search}%`, `%${query.search}%`);
     }
     if (query.companySlug) {
+      // Two ways a problem is relevant to a company: it is explicitly tagged as
+      // asked there, or it sits on a topic that company's roadmap actually
+      // covers. Only 16 problems carry company tags, and they name only the
+      // hand-researched companies, so tags alone returned an empty list for
+      // most of the catalogue. Matching the roadmap's topics keeps the list
+      // genuinely company-relevant without inventing tags we cannot support.
       clauses.push(
-        `EXISTS (SELECT 1 FROM question_tags qt JOIN companies c ON c.id = qt.company_id
-                 WHERE qt.question_id = q.id AND c.slug = ?)`,
+        `(
+           EXISTS (
+             SELECT 1 FROM question_tags qt
+              WHERE qt.question_id = q.id
+                AND (qt.company_id IS NULL OR qt.company_id = ${COMPANY_ID_SUBQUERY})
+           )
+           OR COALESCE(q.topic_id, q.subtopic_id) IN (
+             SELECT rt.topic_id FROM round_topics rt
+              JOIN rounds r ON r.id = rt.round_id
+             WHERE r.company_id = ${COMPANY_ID_SUBQUERY}
+           )
+         )`,
       );
-      params.push(query.companySlug);
+      params.push(query.companySlug, query.companySlug);
     }
+
+    // With a company selected, the problems that company is actually known to
+    // ask lead the list; the rest follow as syllabus-matched practice. The
+    // ordering parameter binds last, after every WHERE parameter.
+    const orderBy = query.companySlug
+      ? `EXISTS (SELECT 1 FROM question_tags qt
+                  WHERE qt.question_id = q.id AND qt.company_id = ${COMPANY_ID_SUBQUERY}) DESC,
+         CASE q.difficulty WHEN 'easy' THEN 1 WHEN 'medium' THEN 2 ELSE 3 END, cp.title`
+      : "CASE q.difficulty WHEN 'easy' THEN 1 WHEN 'medium' THEN 2 ELSE 3 END, cp.title";
+    if (query.companySlug) params.push(query.companySlug);
 
     const rows = db()
       .prepare<unknown[], {
@@ -88,7 +117,7 @@ codingRouter.get(
          JOIN questions q ON q.id = cp.question_id
          LEFT JOIN topics t ON t.id = q.topic_id
          WHERE ${clauses.join(' AND ')}
-         ORDER BY CASE q.difficulty WHEN 'easy' THEN 1 WHEN 'medium' THEN 2 ELSE 3 END, cp.title`,
+         ORDER BY ${orderBy}`,
       )
       .all(...params);
 

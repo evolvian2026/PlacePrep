@@ -142,6 +142,18 @@ export default function Coding() {
         </div>
       </Card>
 
+      {/* Filtering by company can look odd — a problem can appear under
+          Qualcomm while "Asked by" names TCS — so say what the filter means
+          rather than letting a student read the list as company-confirmed. */}
+      {companySlug ? (
+        <Note>
+          These problems match{' '}
+          <strong>{companyData?.companies.find((c) => c.slug === companySlug)?.name ?? 'this company'}</strong>'s
+          roadmap topics. <strong>Asked by</strong> lists the companies a problem is actually reported to have
+          appeared at — a blank or different name there does not mean it is off-syllabus here.
+        </Note>
+      ) : null}
+
       {loading ? <Spinner /> : null}
       {error ? <ErrorNote message={error} onRetry={reload} /> : null}
 

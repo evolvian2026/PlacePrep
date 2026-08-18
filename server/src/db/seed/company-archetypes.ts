@@ -97,6 +97,35 @@ const APTITUDE_SECTIONS = {
   },
 } as const;
 
+/**
+ * A hands-on programming section.
+ *
+ * Every archetype gets one. Even where an employer's own process leans on
+ * aptitude or domain subjects rather than a formal coding round, the students
+ * targeting it still need somewhere to practise writing code against this
+ * company, and the platform's coding workspace is keyed off these sections.
+ * `topics` picks the flavour: DSA for a product loop, data handling for
+ * analytics, C and memory for embedded.
+ */
+const coding = (
+  overrides: {
+    slug?: string;
+    name?: string;
+    questionCount?: number;
+    durationMinutes?: number;
+    marksPerQuestion?: number;
+    topics: string[];
+  },
+) => ({
+  slug: overrides.slug ?? 'coding',
+  name: overrides.name ?? 'Programming',
+  questionCount: overrides.questionCount ?? 1,
+  durationMinutes: overrides.durationMinutes ?? 30,
+  questionKind: 'coding' as const,
+  marksPerQuestion: overrides.marksPerQuestion ?? 50,
+  topics: overrides.topics,
+});
+
 const CORE_CS_SECTION = {
   slug: 'technical-mcq',
   name: 'Core CS Rapid-fire',
@@ -389,8 +418,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
         slug: 'technical',
         name: 'Round 2 — Technical Screen',
         roundType: 'technical_mcq',
-        description: 'Technology fundamentals, SQL and pseudocode reasoning.',
-        durationMinutes: 45,
+        description: 'Technology fundamentals, SQL and a short hands-on programming task.',
+        durationMinutes: 60,
         difficulty: 'moderate',
         estimatedPrepHours: 35,
         sections: [
@@ -401,7 +430,11 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
             durationMinutes: 30,
             topics: ['programming-fundamentals', 'sql', 'dbms', 'oops', 'computer-networks', 'output-prediction'],
           },
-        ],
+          coding({
+            name: 'Programming Task',
+            topics: ['arrays', 'strings', 'searching', 'sorting', 'programming-fundamentals'],
+          }),
+        ] as unknown as RoundSeed['sections'],
       },
       {
         slug: 'case-interview',
@@ -463,7 +496,12 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
             durationMinutes: 28,
             topics: ['sql', 'joins', 'aggregations', 'subqueries', 'window-functions', 'dbms'],
           },
-        ],
+          coding({
+            name: 'Data Programming',
+            durationMinutes: 25,
+            topics: ['arrays', 'hashing', 'strings', 'sorting', 'programming-fundamentals'],
+          }),
+        ] as unknown as RoundSeed['sections'],
         extraTopics: ['probability', 'data-interpretation'],
       },
       {
@@ -602,7 +640,12 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
             durationMinutes: 28,
             topics: ['programming-fundamentals', 'output-prediction', 'dbms', 'computer-networks', 'oops'],
           },
-        ],
+          coding({
+            name: 'Programming Task',
+            durationMinutes: 25,
+            topics: ['arrays', 'strings', 'searching', 'programming-fundamentals', 'recursion'],
+          }),
+        ] as unknown as RoundSeed['sections'],
       },
       {
         slug: 'technical-interview',
@@ -650,6 +693,12 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
             durationMinutes: 30,
             topics: ['programming-fundamentals', 'pointers-memory', 'output-prediction', 'operating-systems', 'bit-manipulation'],
           },
+          coding({
+            name: 'Programming (C-style)',
+            questionCount: 2,
+            durationMinutes: 40,
+            topics: ['arrays', 'strings', 'bit-manipulation', 'recursion', 'programming-fundamentals'],
+          }),
         ] as unknown as RoundSeed['sections'],
       },
       {
