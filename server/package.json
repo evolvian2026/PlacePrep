@@ -14,6 +14,7 @@
     "db:reset": "tsx src/db/cli.ts reset",
     "verify:coding": "tsx scripts/verify-coding.ts",
     "audit:mocks": "tsx scripts/audit-mocks.ts",
+    "audit:db": "tsx scripts/audit-integrity.ts",
     "test": "tsx --test tests/*.test.ts"
   },
   "dependencies": {
