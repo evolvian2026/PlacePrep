@@ -19,6 +19,7 @@
     "db:reset": "npm --workspace server run db:reset",
     "db:seed": "npm --workspace server run db:seed",
     "test": "npm --workspace server run test",
+    "audit:mocks": "npm --workspace server run audit:mocks",
     "typecheck": "npm --workspace server run typecheck && npm --workspace client run typecheck"
   },
   "devDependencies": {

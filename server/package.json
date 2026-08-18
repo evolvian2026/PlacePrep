@@ -13,6 +13,7 @@
     "db:seed": "tsx src/db/cli.ts seed",
     "db:reset": "tsx src/db/cli.ts reset",
     "verify:coding": "tsx scripts/verify-coding.ts",
+    "audit:mocks": "tsx scripts/audit-mocks.ts",
     "test": "tsx --test tests/*.test.ts"
   },
   "dependencies": {

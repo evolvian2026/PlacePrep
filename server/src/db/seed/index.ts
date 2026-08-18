@@ -6,6 +6,8 @@ import { addDays, slugify, stringify, today } from '../../lib/util.js';
 import type { Difficulty } from '../../types.js';
 import { TOPICS } from './topics.js';
 import { COMPANIES, type CompanySeed, type RoundSeed } from './companies.js';
+import { EXTENDED_COMPANIES } from './companies-extended.js';
+import { sectorFor } from './sectors.js';
 import { APTITUDE_QUESTIONS } from './questions-aptitude.js';
 import { REASONING_QUESTIONS } from './questions-reasoning.js';
 import { VERBAL_QUESTIONS } from './questions-verbal.js';
@@ -22,6 +24,11 @@ const ALL_MCQ: McqSeed[] = [
   ...TECHNICAL_QUESTIONS,
   ...BEHAVIOURAL_QUESTIONS,
 ];
+
+// The hand-researched catalogue plus the archetype-templated one. Extended
+// entries carry an insight saying their rounds come from a template, so the
+// UI can tell a student what is researched and what is generic.
+const ALL_COMPANIES: CompanySeed[] = [...COMPANIES, ...EXTENDED_COMPANIES];
 
 const OPTION_LABELS = ['A', 'B', 'C', 'D', 'E', 'F'];
 
@@ -185,13 +192,13 @@ function seedCompanies(
   // round_progress all reference these ids.
   const insertCompany = target.prepare(
     `INSERT INTO companies (
-       slug, name, logo_text, brand_color, company_type, industry, description, difficulty,
+       slug, name, logo_text, brand_color, company_type, industry, sector, description, difficulty,
        hiring_frequency, eligible_branches, eligible_years, min_cgpa, ctc_min_lpa, ctc_max_lpa,
        roles_offered, locations, expected_prep_weeks, is_published, sort_order
-     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?)
+     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?)
      ON CONFLICT(slug) DO UPDATE SET
        name = excluded.name, logo_text = excluded.logo_text, brand_color = excluded.brand_color,
-       company_type = excluded.company_type, industry = excluded.industry,
+       company_type = excluded.company_type, industry = excluded.industry, sector = excluded.sector,
        description = excluded.description, difficulty = excluded.difficulty,
        hiring_frequency = excluded.hiring_frequency, eligible_branches = excluded.eligible_branches,
        eligible_years = excluded.eligible_years, min_cgpa = excluded.min_cgpa,
@@ -233,7 +240,7 @@ function seedCompanies(
      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
   );
 
-  COMPANIES.forEach((company, companyIndex) => {
+  ALL_COMPANIES.forEach((company, companyIndex) => {
     insertCompany.run(
       company.slug,
       company.name,
@@ -241,6 +248,7 @@ function seedCompanies(
       company.brandColor,
       company.companyType,
       company.industry,
+      sectorFor(company.industry),
       company.description,
       company.difficulty,
       company.hiringFrequency,
@@ -684,7 +692,7 @@ function seedMockTests(
     });
   };
 
-  for (const company of COMPANIES) {
+  for (const company of ALL_COMPANIES) {
     const companyId = companyIds.get(company.slug)!;
 
     // ── Full company mock ──

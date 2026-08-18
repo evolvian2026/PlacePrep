@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { api } from '../../lib/api';
 import { useApi, useMutation } from '../../lib/hooks';
 import { DIFFICULTY_LABEL, PROVENANCE_LABEL } from '../../lib/format';
@@ -85,6 +85,9 @@ export default function AdminCompanies() {
   const [creating, setCreating] = useState(false);
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
   const [insightsFor, setInsightsFor] = useState<CompanyRow | null>(null);
+  // The catalogue runs to a couple of hundred rows, so the table needs a way to
+  // reach one company without scrolling the whole list.
+  const [filter, setFilter] = useState('');
 
   const save = useMutation(async () => {
     const body = {
@@ -147,6 +150,15 @@ export default function AdminCompanies() {
 
   const set = (key: keyof FormState) => (value: string) => setForm((current) => ({ ...current, [key]: value }));
 
+  const term = filter.trim().toLowerCase();
+  const visible = useMemo(() => {
+    const rows = data?.companies ?? [];
+    if (!term) return rows;
+    return rows.filter((row) =>
+      [row.name, row.slug, row.industry].some((field) => (field ?? '').toLowerCase().includes(term)),
+    );
+  }, [data, term]);
+
   return (
     <div className="space-y-6">
       <SectionHeading
@@ -170,8 +182,14 @@ export default function AdminCompanies() {
 
       {data ? (
         <Card>
+          <div className="mb-3 max-w-sm">
+            <Input label="Filter" value={filter} onChange={setFilter} placeholder="Name, slug or industry" />
+            <p className="mt-1 text-[11px] ink-muted">
+              {visible.length} of {data.companies.length} companies
+            </p>
+          </div>
           <Table
-            rows={data.companies}
+            rows={visible}
             keyOf={(row) => row.id}
             columns={[
               {

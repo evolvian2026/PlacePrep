@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../../lib/api';
 import { useApi, useMutation } from '../../lib/hooks';
@@ -44,6 +44,8 @@ interface Company {
   isPrimaryTarget: boolean;
 }
 
+const PAGE_SIZE = 48;
+
 const STATUSES = [
   { value: 'interested', label: 'Interested' },
   { value: 'preparing', label: 'Preparing' },
@@ -63,15 +65,17 @@ export default function Companies() {
   const [type, setType] = useState('');
   const [difficulty, setDifficulty] = useState('');
   const [branch, setBranch] = useState('');
+  const [sector, setSector] = useState('');
   const [sort, setSort] = useState('');
+  // The catalogue runs to a few hundred companies, so the grid reveals a page
+  // at a time rather than mounting every card on first paint.
+  const [visible, setVisible] = useState(PAGE_SIZE);
 
-  const { data, loading, error, reload } = useApi<{ companies: Company[]; total: number }>('/companies', {
-    search,
-    type,
-    difficulty,
-    branch,
-    sort,
-  });
+  const { data, loading, error, reload } = useApi<{
+    companies: Company[];
+    total: number;
+    sectors: string[];
+  }>('/companies', { search, type, difficulty, branch, sector, sort });
 
   const track = useMutation(async (input: { slug: string; status: string; primary?: boolean }) => {
     await api(`/companies/${input.slug}/track`, {
@@ -82,6 +86,10 @@ export default function Companies() {
   });
 
   const companies = data?.companies ?? [];
+  const sectors = data?.sectors ?? [];
+  const filterKey = [search, type, difficulty, branch, sector, sort].join('|');
+  useEffect(() => setVisible(PAGE_SIZE), [filterKey]);
+
   const grouped = useMemo(
     () => ({
       following: companies.filter((company) => company.studentStatus),
@@ -100,7 +108,7 @@ export default function Companies() {
 
       {/* Filters sit in one row above the results. */}
       <Card>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
           <Input label="Search" value={search} onChange={setSearch} placeholder="Company or industry" />
           <Select
             label="Type"
@@ -131,6 +139,15 @@ export default function Companies() {
             options={[
               { value: '', label: 'All branches' },
               ...['CSE', 'IT', 'ECE', 'EEE', 'Mechanical', 'Civil'].map((value) => ({ value, label: value })),
+            ]}
+          />
+          <Select
+            label="Sector"
+            value={sector}
+            onChange={setSector}
+            options={[
+              { value: '', label: 'All sectors' },
+              ...sectors.map((value) => ({ value, label: value })),
             ]}
           />
           <Select
@@ -166,7 +183,11 @@ export default function Companies() {
 
           <section>
             <SectionHeading
-              title={grouped.following.length > 0 ? 'All companies' : `${companies.length} companies`}
+              title={
+                grouped.following.length > 0
+                  ? `${grouped.rest.length} other companies`
+                  : `${grouped.rest.length} companies`
+              }
               subtitle="Mark a company to start tracking readiness against its rounds."
             />
             {grouped.rest.length === 0 && grouped.following.length === 0 ? (
@@ -174,11 +195,23 @@ export default function Companies() {
                 <Empty title="No companies match those filters" hint="Try clearing the search or branch filter." />
               </Card>
             ) : (
-              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                {grouped.rest.map((company) => (
-                  <CompanyCard key={company.id} company={company} onTrack={track.mutate} pending={track.pending} />
-                ))}
-              </div>
+              <>
+                <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                  {grouped.rest.slice(0, visible).map((company) => (
+                    <CompanyCard key={company.id} company={company} onTrack={track.mutate} pending={track.pending} />
+                  ))}
+                </div>
+                {grouped.rest.length > visible ? (
+                  <div className="mt-4 flex items-center justify-center gap-3">
+                    <span className="text-sm ink-muted">
+                      Showing {visible} of {grouped.rest.length}
+                    </span>
+                    <Button variant="secondary" size="sm" onClick={() => setVisible((count) => count + PAGE_SIZE)}>
+                      Show more
+                    </Button>
+                  </div>
+                ) : null}
+              </>
             )}
           </section>
         </>

@@ -210,6 +210,22 @@ describe('mock test engine', () => {
     assert.ok(result.paper.sections.some((s) => s.questionKind === 'coding'), 'expected a coding section');
   });
 
+  it('starts a long paper even when the bank cannot fill every section', () => {
+    // A four-round company mock asks for more questions than the shared bank
+    // holds. The no-repeat rule starves the later sections, and before the
+    // fallback existed that made the paper impossible to start at all.
+    const test = db
+      .prepare<[string], { id: number }>('SELECT id FROM mock_tests WHERE slug = ?')
+      .get('qualcomm-full-mock')!;
+    const other = db
+      .prepare<[], { id: number }>("SELECT id FROM users WHERE role = 'student' ORDER BY id DESC LIMIT 1")
+      .get()!;
+    const result = startAttempt(other.id, test.id, db);
+    for (const section of result.paper.sections) {
+      assert.ok(section.questions.length > 0, `section "${section.name}" came back empty`);
+    }
+  });
+
   it('resumes rather than creating a second live attempt', () => {
     const test = db.prepare<[string], { id: number }>('SELECT id FROM mock_tests WHERE slug = ?').get('tcs-full-mock')!;
     const again = startAttempt(studentId, test.id, db);

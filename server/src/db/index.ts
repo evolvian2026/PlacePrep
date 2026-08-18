@@ -9,11 +9,13 @@ let instance: Db | null = null;
 /** Migrations applied by the most recent connection open, for CLI reporting. */
 let lastAppliedMigrations: string[] = [];
 
-// Migrations ship as plain .sql files. `npm run build` copies them into dist/,
-// but fall back to src/ so a compiled server started from the repo still works.
+// Migrations ship as plain .sql files. src/ is checked first: when it exists it
+// is the authoritative set, and a stale dist/ copy from an earlier build must
+// not shadow a migration that has just been added. `npm run build` copies them
+// into dist/ for deploys that ship only compiled output.
 const MIGRATIONS_DIR = [
-  path.join(SERVER_ROOT, 'dist/db/migrations'),
   path.join(SERVER_ROOT, 'src/db/migrations'),
+  path.join(SERVER_ROOT, 'dist/db/migrations'),
 ].find((dir) => fs.existsSync(dir)) ?? path.join(SERVER_ROOT, 'src/db/migrations');
 
 function open(file: string): Db {

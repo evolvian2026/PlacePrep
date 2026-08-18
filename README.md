@@ -44,9 +44,22 @@ The API serves `client/dist` when it exists, so one process hosts everything.
 
 ## What is in the box
 
-**13 companies** — 7 service-based (TCS, Infosys, Wipro, Accenture, Cognizant,
-Capgemini, Deloitte) and 6 product-based (Amazon, Microsoft, Google, Adobe,
-Salesforce, Walmart) — with 51 rounds, 73 sections and 105 topics between them.
+**171 companies** across 11 sectors, with 650 rounds, 859 sections and 105
+topics between them. They come from two catalogues, and the difference matters:
+
+- **13 hand-researched companies** — 7 service-based (TCS, Infosys, Wipro,
+  Accenture, Cognizant, Capgemini, Deloitte) and 6 product-based (Amazon,
+  Microsoft, Google, Adobe, Salesforce, Walmart). Their rounds, durations and
+  quirks reflect how these companies are actually known to hire.
+- **158 templated companies** — the rest of the employers that recruit on
+  Indian campuses, mapped onto one of ten *hiring-process archetypes*
+  (mass-hiring services, product SDE loop, semiconductor, quant finance, core
+  engineering…). Their round structure is a realistic pattern for that kind of
+  employer, **not** a researched account of that company's process.
+
+Every templated company carries that caveat as a `community_reported` insight,
+shown as a banner on its roadmap tab. Nothing generic is ever presented as
+verified company policy — see [Company data is marked with its provenance](#company-data-is-marked-with-its-provenance).
 
 **184 questions**: 168 MCQs across aptitude, reasoning, verbal, DSA theory, OOPS,
 DBMS, SQL, OS, networks, programming fundamentals, system design and HR
@@ -54,8 +67,17 @@ behaviour, plus **16 coding problems** with 106 machine-verified test cases.
 Every MCQ carries an explanation, and most carry a per-option "why this is wrong"
 note that is revealed only for the option the student actually picked.
 
-**150 mock tests**, generated per company as four tiers: a full company
+**1,851 mock tests**, generated per company as four tiers: a full company
 simulation, one mock per round, one per section, and a 12-question quick mock.
+Papers are assembled from the shared bank at start time, so a templated
+company's mock is drawn from the same verified questions as a researched one.
+
+The catalogue is deliberately far larger than the bank: 1,851 papers draw on
+184 questions. `npm run audit:mocks` starts every one of them against a copy of
+the database — all 1,851 assemble, and 92 of them come up short of their
+nominal question count (the worst fills 13 of 18). That is a content gap to
+fill by importing more questions, not a broken paper; the seeded companies and
+rounds are the structure, and the bank is what an admin grows over time.
 
 ---
 
@@ -66,8 +88,9 @@ simulation, one mock per round, one per section, and a 12-question quick mock.
 | `npm run dev` | API + client with hot reload |
 | `npm run build` | Type-check and build both workspaces |
 | `npm start` | Run the built server (also serves the client) |
-| `npm test` | Engine and seed-integrity tests (38 tests) |
+| `npm test` | Engine, catalogue and API tests (78 tests) |
 | `npm run typecheck` | Type-check both workspaces |
+| `npm run audit:mocks` | Start all 1,851 mock tests against a copy of the DB and report any that fail to assemble |
 | `npm run db:reset` | Drop, migrate and seed the database |
 | `npm run db:seed` | Re-seed without dropping (safe on a live database) |
 | `npm --workspace server run verify:coding` | Run every coding problem's reference solution against its test cases |
@@ -151,6 +174,14 @@ discussed campus-placement experience, and every intelligence note carries a
 `verified` / `community_reported` / `historical` marker that the UI displays next
 to the text. Admins can add their own verified notes.
 
+The 158 templated companies go further: because their rounds come from an
+archetype rather than research, each one ships a `community_reported` note
+saying exactly that, and the roadmap tab shows it as a banner above the round
+strip — not buried under a tab a student may never open. A test
+(`tests/catalogue.test.ts`) fails the build if a templated company loses that
+note, or if any of its insights claims `verified` provenance for a statement
+about the employer's process rather than about this platform's own content.
+
 ---
 
 ## The coding evaluation engine
@@ -217,7 +248,12 @@ student submissions. It caught three during development.
 The architecture is deliberately additive:
 
 - **A new company** — add it in the admin console, or add an entry to
-  `server/src/db/seed/companies.ts`. No code changes.
+  `server/src/db/seed/companies.ts` (hand-researched rounds) or
+  `server/src/db/seed/companies-extended.ts` (a one-line brief that inherits an
+  archetype's rounds). No code changes either way.
+- **A new hiring pattern** — add an archetype to
+  `server/src/db/seed/company-archetypes.ts` and point briefs at it; every
+  company using it picks up the new rounds on the next seed.
 - **A new topic or question** — admin console, CSV/JSON bulk import, or a seed
   file. Questions are tagged to companies and round types, so one question can
   serve many papers.

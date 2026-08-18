@@ -148,6 +148,9 @@ export default function CompanyDetail() {
   if (!data) return null;
 
   const { company, rounds, readiness } = data;
+  // Companies whose rounds come from a hiring-process template rather than
+  // researched detail carry this insight; the roadmap tab surfaces it inline.
+  const templateNote = data.insights.find((insight) => insight.title.includes('hiring-process template'));
 
   return (
     <div className="space-y-6">
@@ -239,6 +242,18 @@ export default function CompanyDetail() {
 
       {tab === 'roadmap' ? (
         <div className="space-y-4">
+          {/* A templated roadmap says so here rather than only under the
+              intelligence tab, so a student reading the rounds knows straight
+              away which parts are researched and which are a generic pattern. */}
+          {templateNote ? (
+            <Note tone="warning">
+              <strong>{templateNote.title}.</strong> {templateNote.body}{' '}
+              <button type="button" className="underline" onClick={() => setTab('intel')}>
+                See company intelligence
+              </button>
+            </Note>
+          ) : null}
+
           {/* Round progression strip */}
           <Card>
             <SectionHeading

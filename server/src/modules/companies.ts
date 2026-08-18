@@ -19,6 +19,7 @@ interface CompanyRow {
   brand_color: string | null;
   company_type: string;
   industry: string | null;
+  sector: string | null;
   description: string | null;
   difficulty: string;
   hiring_frequency: string | null;
@@ -43,6 +44,7 @@ function shapeCompany(row: CompanyRow, extra: Record<string, unknown> = {}) {
     brandColor: row.brand_color,
     companyType: row.company_type,
     industry: row.industry,
+    sector: row.sector,
     description: row.description,
     difficulty: row.difficulty,
     hiringFrequency: row.hiring_frequency,
@@ -63,6 +65,7 @@ const listQuerySchema = z.object({
   search: z.string().trim().max(80).optional(),
   type: z.enum(['service', 'product']).optional(),
   difficulty: z.enum(['easy', 'moderate', 'hard', 'very_hard']).optional(),
+  sector: z.string().trim().max(60).optional(),
   branch: z.string().trim().max(40).optional(),
   year: z.coerce.number().int().min(2000).max(2100).optional(),
   status: z.enum(['interested', 'preparing', 'completed', 'shortlisted']).optional(),
@@ -90,6 +93,10 @@ companiesRouter.get(
     if (query.difficulty) {
       clauses.push('c.difficulty = ?');
       params.push(query.difficulty);
+    }
+    if (query.sector) {
+      clauses.push('c.sector = ?');
+      params.push(query.sector);
     }
     if (query.branch) {
       clauses.push("c.eligible_branches LIKE ?");
@@ -138,6 +145,16 @@ companiesRouter.get(
         }),
       ),
       total: filtered.length,
+      // Facet list is computed over every published company, not the filtered
+      // set, so choosing one sector does not empty the dropdown.
+      sectors: db()
+        .prepare<[], { sector: string }>(
+          `SELECT DISTINCT sector FROM companies
+           WHERE is_published = 1 AND sector IS NOT NULL AND sector <> ''
+           ORDER BY sector`,
+        )
+        .all()
+        .map((row) => row.sector),
     });
   }),
 );

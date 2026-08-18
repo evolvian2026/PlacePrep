@@ -160,8 +160,20 @@ export function startAttempt(userId: number, mockTestId: number, target: Db = sh
           target,
         );
 
+    // `used` keeps a paper from repeating a question across its sections, but on
+    // a long multi-round mock it can starve the later sections entirely. A
+    // paper that repeats a question is much better than one that will not
+    // start, so drop the exclusion and try again before giving up.
+    if (questionIds.length === 0 && !pinned.length && used.length > 0) {
+      questionIds = selectForRule(
+        { rule, count: section.question_count, companyId: test.company_id, seed },
+        target,
+      );
+    }
+
     if (questionIds.length === 0) {
-      // A section with no available questions would produce a broken paper.
+      // Nothing in the bank matches this section at all, with or without the
+      // no-repeat constraint — that is a content gap an admin has to fill.
       throw badRequest(
         `No questions available for section "${section.name}". Add questions to the bank or relax its selection rule.`,
       );
