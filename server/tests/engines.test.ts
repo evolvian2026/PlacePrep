@@ -232,6 +232,34 @@ describe('mock test engine', () => {
     assert.equal(state.time_spent_seconds, 42);
   });
 
+  it('does not wipe a saved answer when a later save only reports time', () => {
+    const keys = loadAnswerKeys(paperQuestionIds, db);
+    const questionId = paperQuestionIds.find((id) => keys.get(id)!.questionType !== 'coding')!;
+    const correct = keys.get(questionId)!.correctLabels;
+
+    saveAnswer(studentId, attemptId, { questionId, selectedLabels: correct }, db);
+    // The runner posts elapsed time on its own when the student navigates away.
+    saveAnswer(studentId, attemptId, { questionId, timeSpentSeconds: 12 }, db);
+
+    const state = loadAttemptState(attemptId, db).find((row) => row.question_id === questionId)!;
+    assert.deepEqual(
+      JSON.parse(state.selected_labels ?? 'null'),
+      correct,
+      'a timing-only save must leave the recorded answer alone',
+    );
+  });
+
+  it('clears an answer when an empty selection is sent explicitly', () => {
+    const keys = loadAnswerKeys(paperQuestionIds, db);
+    const questionId = paperQuestionIds.find((id) => keys.get(id)!.questionType !== 'coding')!;
+
+    saveAnswer(studentId, attemptId, { questionId, selectedLabels: keys.get(questionId)!.correctLabels }, db);
+    saveAnswer(studentId, attemptId, { questionId, selectedLabels: [] }, db);
+
+    const state = loadAttemptState(attemptId, db).find((row) => row.question_id === questionId)!;
+    assert.deepEqual(JSON.parse(state.selected_labels ?? 'null'), [], '"clear response" must still clear');
+  });
+
   it('grades, reports and awards negative marks only where configured', () => {
     const keys = loadAnswerKeys(paperQuestionIds, db);
     // Answer everything correctly except the last five, which we skip.

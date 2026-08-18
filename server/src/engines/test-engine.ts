@@ -279,27 +279,43 @@ export function saveAnswer(
   const section = paper.sections.find((s) => s.questions.some((q) => q.questionId === input.questionId));
   if (!section) throw badRequest('That question is not part of this paper');
 
+  // Only touch the columns this call actually carries. The distinction matters:
+  // the runner posts a timing-only save whenever the student navigates away from
+  // a question, and blanket-writing every column there would erase the answer
+  // they just gave. An explicit `[]` (the "clear response" button) still clears,
+  // because that is *present* rather than absent.
+  const assignments: string[] = ["visited = 1", "updated_at = datetime('now')"];
+  const params: unknown[] = [];
+
+  if (input.selectedLabels !== undefined) {
+    assignments.push('selected_labels = ?');
+    params.push(input.selectedLabels === null ? null : stringify(input.selectedLabels));
+  }
+  if (input.numericResponse !== undefined) {
+    assignments.push('numeric_response = ?');
+    params.push(input.numericResponse);
+  }
+  if (input.codeSubmissionId !== undefined && input.codeSubmissionId !== null) {
+    assignments.push('code_submission_id = ?');
+    params.push(input.codeSubmissionId);
+  }
+  if (input.markedForReview !== undefined) {
+    assignments.push('is_marked_review = ?');
+    params.push(input.markedForReview ? 1 : 0);
+  }
+
+  const elapsed = Math.max(0, Math.min(input.timeSpentSeconds ?? 0, 3600));
+  if (elapsed > 0) {
+    assignments.push('time_spent_seconds = time_spent_seconds + ?');
+    params.push(elapsed);
+  }
+
   target
     .prepare(
-      `UPDATE attempt_answers SET
-         selected_labels = ?,
-         numeric_response = ?,
-         code_submission_id = COALESCE(?, code_submission_id),
-         is_marked_review = COALESCE(?, is_marked_review),
-         visited = 1,
-         time_spent_seconds = time_spent_seconds + ?,
-         updated_at = datetime('now')
+      `UPDATE attempt_answers SET ${assignments.join(', ')}
        WHERE attempt_id = ? AND question_id = ?`,
     )
-    .run(
-      input.selectedLabels === undefined ? null : stringify(input.selectedLabels),
-      input.numericResponse ?? null,
-      input.codeSubmissionId ?? null,
-      input.markedForReview === undefined ? null : input.markedForReview ? 1 : 0,
-      Math.max(0, Math.min(input.timeSpentSeconds ?? 0, 3600)),
-      attemptId,
-      input.questionId,
-    );
+    .run(...params, attemptId, input.questionId);
 
   return { savedAt: new Date().toISOString(), autoSubmitted: false };
 }
