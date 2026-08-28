@@ -278,12 +278,25 @@ roadmapRouter.post(
     const input = parse(
       z.object({
         companySlug: z.string().trim().max(60),
+        /** ISO date of the drive; the plan is built backwards from it. */
+        targetDate: z.string().trim().regex(/^\d{4}-\d{2}-\d{2}$/).nullable().optional(),
         horizonDays: z.number().int().min(3).max(30).optional(),
         minutesPerDay: z.number().int().min(30).max(600).optional(),
       }),
       req.body,
     );
     const companyId = companyIdFromSlug(input.companySlug);
+
+    if (input.targetDate !== undefined) {
+      db()
+        .prepare(
+          `INSERT INTO student_companies (user_id, company_id, status, target_date)
+           VALUES (?, ?, 'preparing', ?)
+           ON CONFLICT(user_id, company_id) DO UPDATE SET
+             target_date = excluded.target_date, updated_at = datetime('now')`,
+        )
+        .run(user.id, companyId, input.targetDate);
+    }
 
     const plan = generatePlan(user.id, companyId, {
       horizonDays: input.horizonDays,

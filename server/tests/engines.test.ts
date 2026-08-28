@@ -16,6 +16,8 @@ import { evaluateEligibility } from '../src/engines/eligibility.js';
 import { loadExposure } from '../src/engines/question-engine.js';
 import { recordAttemptEvent, summariseIntegrity } from '../src/engines/proctoring.js';
 import { BOXES_TO_RETIRE, dueCards, recordOutcome, revisionSummary } from '../src/engines/revision.js';
+import { generatePlan, horizonForTarget } from '../src/engines/recommendation-engine.js';
+import { addDays, today } from '../src/lib/util.js';
 import { recordGradedAnswers } from '../src/engines/progress.js';
 import { generatePlan, scoreTopicsForCompany, ensureCurrentPlan } from '../src/engines/recommendation-engine.js';
 import { evaluateBadges, awardXp, levelFor, totalXp, leaderboard } from '../src/engines/gamification.js';
@@ -690,5 +692,64 @@ describe('revision queue', () => {
       )
       .get(userId, fresh.id)!;
     assert.equal(queued.n, 1, 'a mock or coding mistake should queue revision the same way practice does');
+  });
+});
+
+describe('deadline-driven plans', () => {
+  it('runs to a rolling default when no drive date is set', () => {
+    const result = horizonForTarget(null, 7);
+    assert.equal(result.horizonDays, 7);
+    assert.equal(result.daysToTarget, null);
+    assert.equal(result.pace, null);
+  });
+
+  it('builds backwards from the drive date', () => {
+    const result = horizonForTarget(addDays(today(), 12), 7);
+    assert.equal(result.daysToTarget, 12);
+    assert.equal(result.horizonDays, 12, 'a plan should use the time it actually has');
+    assert.equal(result.pace, 'comfortable');
+  });
+
+  it('flags a plan as tight when the drive is sooner than the default', () => {
+    const result = horizonForTarget(addDays(today(), 4), 7);
+    assert.equal(result.horizonDays, 4);
+    assert.equal(result.pace, 'tight');
+  });
+
+  it('still produces a usable plan for a drive that is almost here', () => {
+    const result = horizonForTarget(addDays(today(), 1), 7);
+    assert.ok(result.horizonDays >= 3, 'a last-minute date should give work to do, not an empty plan');
+    assert.equal(result.pace, 'tight');
+  });
+
+  it('caps a distant drive rather than planning a year out', () => {
+    const result = horizonForTarget(addDays(today(), 300), 7);
+    assert.equal(result.horizonDays, 30);
+    assert.equal(result.daysToTarget, 300);
+  });
+
+  it('falls back and says so when the date has already passed', () => {
+    const result = horizonForTarget(addDays(today(), -5), 7);
+    assert.equal(result.pace, 'past');
+    assert.equal(result.horizonDays, 7, 'planning against a date that has gone would be nonsense');
+    assert.equal(result.daysToTarget, -5);
+  });
+
+  it('uses the drive date end to end and explains itself', () => {
+    const user = db.prepare<[], { id: number }>("SELECT id FROM users WHERE role = 'student' LIMIT 1").get()!;
+    const company = db.prepare<[], { id: number }>("SELECT id FROM companies WHERE slug = 'tcs'").get()!;
+    const driveDate = addDays(today(), 10);
+    db.prepare(
+      `INSERT INTO student_companies (user_id, company_id, status, target_date)
+       VALUES (?, ?, 'preparing', ?)
+       ON CONFLICT(user_id, company_id) DO UPDATE SET target_date = excluded.target_date`,
+    ).run(user.id, company.id, driveDate);
+
+    const plan = generatePlan(user.id, company.id, {}, db);
+    assert.equal(plan.horizonDays, 10);
+    assert.equal(plan.targetDate, driveDate);
+    assert.equal(plan.pace, 'comfortable');
+    assert.match(plan.rationale, /drive is on/);
+    assert.ok(plan.items.some((item) => item.dayIndex === 10), 'the plan should reach the drive date');
   });
 });

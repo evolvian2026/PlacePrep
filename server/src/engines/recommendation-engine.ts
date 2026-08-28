@@ -17,7 +17,7 @@
  */
 import type { Db } from '../db/index.js';
 import { db as sharedDb } from '../db/index.js';
-import { json, parseSqlDate, round } from '../lib/util.js';
+import { daysBetween, json, parseSqlDate, round, today } from '../lib/util.js';
 import { computeCompanyReadiness, loadThresholds, MASTERY_COMPLETE, type CompanyReadiness } from './readiness.js';
 
 export type ActionType =
@@ -47,6 +47,15 @@ export interface GeneratedPlan {
   readiness: number;
   rationale: string;
   items: PlanItem[];
+  /** The drive date this plan was built backwards from, when one is set. */
+  targetDate?: string | null;
+  /** Calendar days from today to the drive. Negative once the date has passed. */
+  daysToTarget?: number | null;
+  /**
+   * Whether the plan fits before the drive. 'tight' means the horizon had to be
+   * cut to reach the date; 'past' means the date has already gone.
+   */
+  pace?: 'comfortable' | 'tight' | 'past' | null;
 }
 
 interface ScoredTopic {
@@ -187,6 +196,42 @@ export interface GenerateOptions {
 }
 
 /**
+ * How long the plan should run.
+ *
+ * A student prepares against a date, not against a rolling week. When they
+ * have told us the drive date, the plan runs up to it — capped at 30 days
+ * because a plan further out than that is a guess, and floored at 3 so a
+ * last-minute date still produces something to do rather than nothing.
+ */
+export function horizonForTarget(targetDate: string | null, fallback: number): {
+  horizonDays: number;
+  daysToTarget: number | null;
+  pace: GeneratedPlan['pace'];
+} {
+  if (!targetDate) return { horizonDays: fallback, daysToTarget: null, pace: null };
+
+  const days = daysBetween(today(), targetDate);
+  if (days < 0) return { horizonDays: fallback, daysToTarget: days, pace: 'past' };
+  // The drive day itself is not a study day.
+  const usable = Math.max(days, 1);
+  return {
+    horizonDays: Math.min(Math.max(usable, 3), 30),
+    daysToTarget: days,
+    pace: usable < fallback ? 'tight' : 'comfortable',
+  };
+}
+
+/** Reads the drive date a student set for a company, if any. */
+export function targetDateFor(userId: number, companyId: number, target: Db = sharedDb()): string | null {
+  const row = target
+    .prepare<[number, number], { target_date: string | null }>(
+      'SELECT target_date FROM student_companies WHERE user_id = ? AND company_id = ?',
+    )
+    .get(userId, companyId);
+  return row?.target_date ?? null;
+}
+
+/**
  * Builds a day-by-day plan.
  *
  * Shape of a plan: study/practice the highest-priority weak topics early, place
@@ -199,7 +244,15 @@ export function generatePlan(
   options: GenerateOptions = {},
   target: Db = sharedDb(),
 ): GeneratedPlan {
-  const horizonDays = Math.min(Math.max(options.horizonDays ?? defaultHorizon(target), 3), 30);
+  // An explicit horizon wins; otherwise the drive date sets it, and only then
+  // does the configured default apply.
+  const targetDate = targetDateFor(userId, companyId, target);
+  const fallback = defaultHorizon(target);
+  const fromTarget = horizonForTarget(targetDate, fallback);
+  const horizonDays = Math.min(
+    Math.max(options.horizonDays ?? fromTarget.horizonDays ?? fallback, 3),
+    30,
+  );
   const minutesPerDay = Math.min(Math.max(options.minutesPerDay ?? 120, 30), 600);
   const thresholds = loadThresholds(target);
 
@@ -305,8 +358,11 @@ export function generatePlan(
     companyId,
     horizonDays,
     readiness: readiness.readiness,
-    rationale: buildRationale(readiness, topics, horizonDays),
+    rationale: buildRationale(readiness, topics, horizonDays, targetDate, fromTarget.daysToTarget),
     items,
+    targetDate,
+    daysToTarget: fromTarget.daysToTarget,
+    pace: fromTarget.pace,
   };
 }
 
@@ -321,7 +377,13 @@ function buildTopicDetail(topic: ScoredTopic): string {
   return `${reason} ${target} Appears in ${topic.roundName}.`.trim();
 }
 
-function buildRationale(readiness: CompanyReadiness, topics: ScoredTopic[], horizonDays: number): string {
+function buildRationale(
+  readiness: CompanyReadiness,
+  topics: ScoredTopic[],
+  horizonDays: number,
+  targetDate: string | null,
+  daysToTarget: number | null,
+): string {
   const strong = readiness.strongTopics.slice(0, 3).map((t) => t.name);
   const weak = topics.slice(0, 4).map((t) => t.name);
   const parts: string[] = [`Your current readiness is ${readiness.readiness}%.`];
@@ -331,6 +393,19 @@ function buildRationale(readiness: CompanyReadiness, topics: ScoredTopic[], hori
 
   const untouched = topics.filter((t) => t.attempted === 0).length;
   if (untouched > 0) parts.push(`${untouched} topic${untouched === 1 ? '' : 's'} on this company's syllabus have no attempts yet.`);
+
+  if (targetDate && daysToTarget !== null && daysToTarget >= 0) {
+    parts.push(
+      `Your drive is on ${targetDate}, ${daysToTarget} day${daysToTarget === 1 ? '' : 's'} away, ` +
+        `so this plan runs to that date rather than a rolling week.`,
+    );
+  } else if (targetDate && daysToTarget !== null) {
+    // Say it plainly rather than silently planning against a date that has gone.
+    parts.push(
+      `The drive date you set (${targetDate}) has passed, so this is a standard ${horizonDays}-day plan. ` +
+        `Update the date if you are preparing for another round.`,
+    );
+  }
 
   parts.push(
     `This ${horizonDays}-day plan front-loads the weakest core topics from the earliest rounds and ends with a full simulation so your readiness is re-measured.`,
@@ -468,6 +543,13 @@ export function loadCurrentPlan(userId: number, companyId: number, target: Db = 
     readiness: plan.readiness_at_generation,
     rationale: plan.rationale ?? '',
     generatedAt: plan.generated_at,
+    // Read live rather than frozen into the plan: a student who moves their
+    // drive date should see the countdown update without regenerating.
+    ...(() => {
+      const targetDate = targetDateFor(userId, companyId, target);
+      const fromTarget = horizonForTarget(targetDate, plan.horizon_days);
+      return { targetDate, daysToTarget: fromTarget.daysToTarget, pace: fromTarget.pace };
+    })(),
     items: items.map((item) => ({
       id: item.id,
       dayIndex: item.day_index,

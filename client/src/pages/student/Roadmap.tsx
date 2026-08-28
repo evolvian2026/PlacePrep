@@ -11,6 +11,7 @@ import {
   ErrorNote,
   HeroScore,
   Meter,
+  Input,
   Note,
   SectionHeading,
   Select,
@@ -39,6 +40,9 @@ interface RoadmapData {
     rationale: string;
     generatedAt: string;
     items: PlanItem[];
+    targetDate: string | null;
+    daysToTarget: number | null;
+    pace: 'comfortable' | 'tight' | 'past' | null;
   };
   readiness: {
     score: number;
@@ -96,10 +100,24 @@ export default function Roadmap() {
     minutesPerDay: minutes,
   });
 
-  const regenerate = useMutation(async () => {
+  const [driveDate, setDriveDate] = useState('');
+  // Reflect whatever the server holds when the company changes, so the field
+  // shows the saved date rather than an empty box.
+  useEffect(() => setDriveDate(data?.plan.targetDate ?? ''), [data?.plan.targetDate, companySlug]);
+
+  const regenerate = useMutation(async (nextDate?: string | null) => {
     await api('/roadmap/regenerate', {
       method: 'POST',
-      body: { companySlug, horizonDays: Number(horizon), minutesPerDay: Number(minutes) },
+      body: {
+        companySlug,
+        minutesPerDay: Number(minutes),
+        // A drive date sets the horizon; the manual length only applies without one.
+        ...(nextDate === undefined
+          ? driveDate
+            ? { targetDate: driveDate }
+            : { horizonDays: Number(horizon) }
+          : { targetDate: nextDate }),
+      },
     });
     reload();
   });
@@ -139,7 +157,7 @@ export default function Roadmap() {
       />
 
       <Card>
-        <div className="grid gap-3 sm:grid-cols-3">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <Select
             label="Target company"
             value={companySlug}
@@ -157,6 +175,12 @@ export default function Roadmap() {
               { value: '30', label: '30 days' },
             ]}
           />
+          <Input
+            label="Drive date (optional)"
+            type="date"
+            value={driveDate}
+            onChange={setDriveDate}
+          />
           <Select
             label="Time per day"
             value={minutes}
@@ -170,6 +194,8 @@ export default function Roadmap() {
           />
         </div>
       </Card>
+
+      {data?.plan.targetDate ? <DriveCountdown plan={data.plan} /> : null}
 
       {loading ? <Spinner label="Generating your plan…" /> : null}
       {error ? <ErrorNote message={error} onRetry={reload} /> : null}
@@ -301,5 +327,39 @@ export default function Roadmap() {
         </>
       ) : null}
     </div>
+  );
+}
+
+
+/**
+ * A drive date turns the plan from "some study" into "study before Thursday",
+ * so the countdown is stated plainly — including when the date has passed,
+ * which the plan would otherwise silently ignore.
+ */
+function DriveCountdown({ plan }: { plan: RoadmapData['plan'] }) {
+  const days = plan.daysToTarget ?? 0;
+  const done = plan.items.filter((item) => item.isDone).length;
+  const remaining = plan.items.length - done;
+
+  if (plan.pace === 'past') {
+    return (
+      <Note tone="warning">
+        <strong>Your drive date ({plan.targetDate}) has passed.</strong> This plan has gone back to a rolling
+        schedule. Set a new date if you are preparing for a later round.
+      </Note>
+    );
+  }
+
+  return (
+    <Note tone={plan.pace === 'tight' ? 'warning' : 'neutral'}>
+      <strong>
+        {days === 0 ? 'Your drive is today.' : `${days} day${days === 1 ? '' : 's'} until your drive on ${plan.targetDate}.`}
+      </strong>{' '}
+      {remaining} of {plan.items.length} planned tasks left
+      {days > 0 ? `, about ${Math.ceil(remaining / days)} a day to finish in time` : ''}.
+      {plan.pace === 'tight'
+        ? ' That is less time than a full plan usually takes, so this one leads with the highest-weight topics.'
+        : ''}
+    </Note>
   );
 }
