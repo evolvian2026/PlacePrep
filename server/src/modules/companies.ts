@@ -5,6 +5,7 @@ import { handler, notFound, parse } from '../lib/http.js';
 import { json } from '../lib/util.js';
 import { attachUser, currentUser, requireAuth } from '../middleware/auth.js';
 import { computeCompanyReadiness, explainCompanyReadiness } from '../engines/readiness.js';
+import { criteriaFromRow, evaluateEligibility, loadProfile } from '../engines/eligibility.js';
 import type { StudentCompanyStatus } from '../types.js';
 
 export const companiesRouter = Router();
@@ -66,6 +67,7 @@ const listQuerySchema = z.object({
   type: z.enum(['service', 'product']).optional(),
   difficulty: z.enum(['easy', 'moderate', 'hard', 'very_hard']).optional(),
   sector: z.string().trim().max(60).optional(),
+  eligibleOnly: z.coerce.boolean().optional(),
   branch: z.string().trim().max(40).optional(),
   year: z.coerce.number().int().min(2000).max(2100).optional(),
   status: z.enum(['interested', 'preparing', 'completed', 'shortlisted']).optional(),
@@ -134,10 +136,25 @@ companiesRouter.get(
       )
       .all(userId, ...params);
 
-    const filtered = query.status ? rows.filter((row) => row.student_status === query.status) : rows;
+    // Eligibility is evaluated in the app rather than SQL: the criteria live in
+    // JSON columns, and the verdict needs to explain itself, not just filter.
+    const profile = loadProfile(userId);
+    const withEligibility = rows.map((row) => ({
+      row,
+      eligibility: profile ? evaluateEligibility(profile, criteriaFromRow(row)) : null,
+    }));
+
+    let filtered = query.status
+      ? withEligibility.filter((entry) => entry.row.student_status === query.status)
+      : withEligibility;
+    if (query.eligibleOnly) {
+      // 'unknown' is kept: an incomplete profile should not hide companies the
+      // student may well qualify for.
+      filtered = filtered.filter((entry) => entry.eligibility?.status !== 'not_eligible');
+    }
 
     res.json({
-      companies: filtered.map((row) =>
+      companies: filtered.map(({ row, eligibility }) =>
         shapeCompany(row, {
           roundCount: row.round_count,
           mockCount: row.mock_count,
@@ -145,6 +162,7 @@ companiesRouter.get(
           studentStatus: row.student_status,
           studentReadiness: row.student_readiness,
           isPrimaryTarget: row.is_primary === 1,
+          eligibility,
         }),
       ),
       total: filtered.length,
@@ -296,6 +314,10 @@ companiesRouter.get(
       company: shapeCompany(company, {
         studentStatus: link?.status ?? null,
         isPrimaryTarget: link?.is_primary_target === 1,
+        eligibility: (() => {
+          const profile = loadProfile(userId);
+          return profile ? evaluateEligibility(profile, criteriaFromRow(company)) : null;
+        })(),
         moduleCount: roundTopics.length,
         mockCount: mocks.length,
       }),

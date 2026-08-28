@@ -12,6 +12,7 @@ import { computeMastery, computeCompanyReadiness, band, MASTERY_COMPLETE } from 
 import { computeStreak, recordGradedAnswers, refreshCompanyProgress } from '../src/engines/progress.js';
 import { findQuestions, selectForRule, loadAnswerKeys, toPaperQuestions } from '../src/engines/question-engine.js';
 import { startAttempt, saveAnswer, submitAttempt, loadAttemptState } from '../src/engines/test-engine.js';
+import { evaluateEligibility } from '../src/engines/eligibility.js';
 import { generatePlan, scoreTopicsForCompany, ensureCurrentPlan } from '../src/engines/recommendation-engine.js';
 import { evaluateBadges, awardXp, levelFor, totalXp, leaderboard } from '../src/engines/gamification.js';
 import { parseCsv, shuffle, mulberry32, pct } from '../src/lib/util.js';
@@ -477,5 +478,57 @@ describe('utilities', () => {
   it('guards percentage division by zero', () => {
     assert.equal(pct(5, 0), 0);
     assert.equal(pct(1, 3), 33.3);
+  });
+});
+
+describe('eligibility matching', () => {
+  const criteria = { eligibleBranches: ['CSE', 'IT', 'ECE'], eligibleYears: [2026, 2027], minCgpa: 6.5 };
+
+  it('clears a student who meets every criterion', () => {
+    const verdict = evaluateEligibility({ branch: 'CSE', graduationYear: 2026, cgpa: 8.1 }, criteria);
+    assert.equal(verdict.status, 'eligible');
+    assert.equal(verdict.blockers.length, 0);
+    assert.equal(verdict.met.length, 3);
+  });
+
+  it('names the criterion that blocks, rather than just failing', () => {
+    const verdict = evaluateEligibility({ branch: 'Mechanical', graduationYear: 2026, cgpa: 9 }, criteria);
+    assert.equal(verdict.status, 'not_eligible');
+    assert.match(verdict.blockers[0], /not Mechanical/);
+  });
+
+  it('reports a CGPA shortfall with both numbers', () => {
+    const verdict = evaluateEligibility({ branch: 'IT', graduationYear: 2027, cgpa: 5.9 }, criteria);
+    assert.equal(verdict.status, 'not_eligible');
+    assert.match(verdict.blockers[0], /6\.5.*5\.9/);
+  });
+
+  it('treats a blank profile field as unknown, never as a rejection', () => {
+    const verdict = evaluateEligibility({ branch: 'CSE', graduationYear: 2026, cgpa: null }, criteria);
+    assert.equal(verdict.status, 'unknown');
+    assert.deepEqual(verdict.missingProfile, ['CGPA']);
+    assert.equal(verdict.blockers.length, 0);
+  });
+
+  it('still rejects on a hard failure even when another field is blank', () => {
+    // Filling in a CGPA cannot make an ineligible branch eligible, so the
+    // verdict must not soften to "unknown".
+    const verdict = evaluateEligibility({ branch: 'Civil', graduationYear: null, cgpa: null }, criteria);
+    assert.equal(verdict.status, 'not_eligible');
+  });
+
+  it('matches branch names written differently', () => {
+    for (const branch of ['cse', 'Computer Science', 'C.S.E.', 'Computer Science Engineering']) {
+      assert.equal(
+        evaluateEligibility({ branch, graduationYear: 2026, cgpa: 7 }, criteria).status,
+        'eligible',
+        `"${branch}" should match CSE`,
+      );
+    }
+  });
+
+  it('ignores criteria a company does not set', () => {
+    const open = { eligibleBranches: [], eligibleYears: [], minCgpa: null };
+    assert.equal(evaluateEligibility({ branch: null, graduationYear: null, cgpa: null }, open).status, 'eligible');
   });
 });

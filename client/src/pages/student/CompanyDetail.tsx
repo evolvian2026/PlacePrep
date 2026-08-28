@@ -92,6 +92,12 @@ interface CompanyDetailData {
     expectedPrepWeeks: number | null;
     studentStatus: string | null;
     isPrimaryTarget: boolean;
+    eligibility: {
+      status: 'eligible' | 'not_eligible' | 'unknown';
+      blockers: string[];
+      missingProfile: string[];
+      met: string[];
+    } | null;
   };
   rounds: Round[];
   insights: {
@@ -151,6 +157,7 @@ export default function CompanyDetail() {
   // Companies whose rounds come from a hiring-process template rather than
   // researched detail carry this insight; the roadmap tab surfaces it inline.
   const templateNote = data.insights.find((insight) => insight.title.includes('hiring-process template'));
+  const eligibility = company.eligibility;
 
   return (
     <div className="space-y-6">
@@ -228,6 +235,31 @@ export default function CompanyDetail() {
             />
           ) : null}
         </div>
+      ) : null}
+
+      {eligibility ? (
+        <Note tone={eligibility.status === 'not_eligible' ? 'warning' : 'neutral'}>
+          {eligibility.status === 'eligible' ? (
+            <>
+              <strong>You are eligible for {company.name}.</strong> {eligibility.met.join(' · ')}.
+            </>
+          ) : eligibility.status === 'not_eligible' ? (
+            <>
+              <strong>You do not currently meet {company.name}'s criteria.</strong>{' '}
+              {eligibility.blockers.map((b) => (b.endsWith('.') ? b : `${b}.`)).join(' ')} You can still prepare here — criteria change every season, and
+              your placement cell has the final word.
+            </>
+          ) : (
+            <>
+              <strong>Eligibility not checked.</strong> Add your{' '}
+              {eligibility.missingProfile.join(' and ')} on{' '}
+              <Link to="/profile" className="underline">
+                your profile
+              </Link>{' '}
+              and this will tell you whether you qualify.
+            </>
+          )}
+        </Note>
       ) : null}
 
       <Tabs

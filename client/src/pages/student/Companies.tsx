@@ -42,6 +42,14 @@ interface Company {
   studentStatus: string | null;
   studentReadiness: number | null;
   isPrimaryTarget: boolean;
+  eligibility: Eligibility | null;
+}
+
+interface Eligibility {
+  status: 'eligible' | 'not_eligible' | 'unknown';
+  blockers: string[];
+  missingProfile: string[];
+  met: string[];
 }
 
 const PAGE_SIZE = 48;
@@ -66,6 +74,7 @@ export default function Companies() {
   const [difficulty, setDifficulty] = useState('');
   const [branch, setBranch] = useState('');
   const [sector, setSector] = useState('');
+  const [eligibleOnly, setEligibleOnly] = useState(false);
   const [sort, setSort] = useState('');
   // The catalogue runs to a few hundred companies, so the grid reveals a page
   // at a time rather than mounting every card on first paint.
@@ -75,7 +84,7 @@ export default function Companies() {
     companies: Company[];
     total: number;
     sectors: string[];
-  }>('/companies', { search, type, difficulty, branch, sector, sort });
+  }>('/companies', { search, type, difficulty, branch, sector, sort, eligibleOnly: eligibleOnly || undefined });
 
   const track = useMutation(async (input: { slug: string; status: string; primary?: boolean }) => {
     await api(`/companies/${input.slug}/track`, {
@@ -87,7 +96,7 @@ export default function Companies() {
 
   const companies = data?.companies ?? [];
   const sectors = data?.sectors ?? [];
-  const filterKey = [search, type, difficulty, branch, sector, sort].join('|');
+  const filterKey = [search, type, difficulty, branch, sector, sort, String(eligibleOnly)].join('|');
   useEffect(() => setVisible(PAGE_SIZE), [filterKey]);
 
   const grouped = useMemo(
@@ -163,6 +172,16 @@ export default function Companies() {
             ]}
           />
         </div>
+        <label className="mt-3 flex w-fit cursor-pointer items-center gap-2 text-sm ink-2">
+          <input
+            type="checkbox"
+            checked={eligibleOnly}
+            onChange={(event) => setEligibleOnly(event.target.checked)}
+            className="h-4 w-4"
+          />
+          Only companies I am eligible for
+          <span className="text-xs ink-muted">(uses your branch, batch and CGPA)</span>
+        </label>
       </Card>
 
       {loading ? <Spinner /> : null}
@@ -258,7 +277,16 @@ function CompanyCard({
             {STATUSES.find((s) => s.value === company.studentStatus)?.label}
           </Badge>
         ) : null}
+        <EligibilityBadge eligibility={company.eligibility} />
       </div>
+
+      {company.eligibility && company.eligibility.status !== 'eligible' ? (
+        <p className="mb-3 text-xs leading-relaxed ink-muted">
+          {company.eligibility.status === 'not_eligible'
+            ? company.eligibility.blockers[0]
+            : `Add your ${company.eligibility.missingProfile.join(' and ')} to your profile to check eligibility.`}
+        </p>
+      ) : null}
 
       <p className="mb-3 line-clamp-2 text-xs leading-relaxed ink-2">{company.description}</p>
 
@@ -338,4 +366,16 @@ function CompanyCard({
       ) : null}
     </Card>
   );
+}
+
+
+/**
+ * Eligibility reads as reassurance when it passes and as a plain statement of
+ * the gap when it does not — never as a warning the student cannot act on.
+ */
+function EligibilityBadge({ eligibility }: { eligibility: Eligibility | null }) {
+  if (!eligibility) return null;
+  if (eligibility.status === 'eligible') return <Badge tone="good" icon="✓">Eligible</Badge>;
+  if (eligibility.status === 'not_eligible') return <Badge tone="serious">Not eligible</Badge>;
+  return <Badge tone="neutral">Eligibility unknown</Badge>;
 }
