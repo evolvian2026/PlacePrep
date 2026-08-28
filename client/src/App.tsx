@@ -27,6 +27,7 @@ import AdminQuestions from './pages/admin/AdminQuestions';
 import AdminMockTests from './pages/admin/AdminMockTests';
 import AdminStudents from './pages/admin/AdminStudents';
 import AdminAnalytics from './pages/admin/AdminAnalytics';
+import AdminReports from './pages/admin/AdminReports';
 import AdminSettings from './pages/admin/AdminSettings';
 
 function RequireAuth({ children, staffOnly }: { children: ReactNode; staffOnly?: boolean }) {
@@ -91,6 +92,7 @@ export default function App() {
           <Route path="/admin/questions" element={<AdminQuestions />} />
           <Route path="/admin/mock-tests" element={<AdminMockTests />} />
           <Route path="/admin/students" element={<AdminStudents />} />
+          <Route path="/admin/reports" element={<AdminReports />} />
           <Route path="/admin/analytics" element={<AdminAnalytics />} />
           <Route path="/admin/settings" element={<AdminSettings />} />
         </Route>

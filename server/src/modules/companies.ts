@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { z } from 'zod';
 import { db } from '../db/index.js';
-import { handler, notFound, parse } from '../lib/http.js';
+import { badRequest, handler, notFound, parse } from '../lib/http.js';
 import { json } from '../lib/util.js';
 import { attachUser, currentUser, requireAuth } from '../middleware/auth.js';
 import { computeCompanyReadiness, explainCompanyReadiness } from '../engines/readiness.js';
@@ -436,6 +436,103 @@ export function disclaimer(): string {
     .get('content.disclaimer');
   return row?.value ?? '';
 }
+
+// ─────────────────────── first-hand process reports ───────────────────────
+
+const reportSchema = z.object({
+  category: z.enum([
+    'hiring_process',
+    'coding_pattern',
+    'technical_pattern',
+    'hr_pattern',
+    'frequently_tested',
+    'question_types',
+    'eligibility',
+    'preparation_advice',
+    'general',
+  ]),
+  title: z.string().trim().min(6).max(120),
+  body: z.string().trim().min(30).max(4000),
+  satOn: z.string().trim().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+});
+
+/**
+ * A student who actually sat this company's process tells us what it was.
+ *
+ * Queued for review, never published on submission: an unreviewed claim about
+ * an employer's hiring process is exactly what this platform promises not to
+ * present as fact. This is how a templated roadmap becomes a researched one.
+ */
+companiesRouter.post(
+  '/:slug/reports',
+  requireAuth,
+  handler((req, res) => {
+    const user = currentUser(req);
+    const input = parse(reportSchema, req.body);
+    const company = db()
+      .prepare<[string], { id: number }>('SELECT id FROM companies WHERE slug = ?')
+      .get(String(req.params.slug));
+    if (!company) throw notFound('Company not found');
+
+    // One pending report per student per company keeps the review queue
+    // honest and stops a single frustrated student flooding it.
+    const pending = db()
+      .prepare<[number, number], { id: number }>(
+        "SELECT id FROM company_reports WHERE user_id = ? AND company_id = ? AND status = 'pending'",
+      )
+      .get(user.id, company.id);
+    if (pending) {
+      throw badRequest('You already have a report awaiting review for this company.');
+    }
+
+    const info = db()
+      .prepare(
+        `INSERT INTO company_reports (company_id, user_id, category, title, body, sat_on)
+         VALUES (?, ?, ?, ?, ?, ?)`,
+      )
+      .run(company.id, user.id, input.category, input.title, input.body, input.satOn ?? null);
+
+    res.status(201).json({ reportId: Number(info.lastInsertRowid), status: 'pending' });
+  }),
+);
+
+/** A student's own reports, so they can see what happened to what they sent. */
+companiesRouter.get(
+  '/:slug/reports/mine',
+  requireAuth,
+  handler((req, res) => {
+    const user = currentUser(req);
+    const company = db()
+      .prepare<[string], { id: number }>('SELECT id FROM companies WHERE slug = ?')
+      .get(String(req.params.slug));
+    if (!company) throw notFound('Company not found');
+
+    const rows = db()
+      .prepare<[number, number], {
+        id: number;
+        category: string;
+        title: string;
+        status: string;
+        reviewer_note: string | null;
+        created_at: string;
+      }>(
+        `SELECT id, category, title, status, reviewer_note, created_at
+           FROM company_reports WHERE user_id = ? AND company_id = ? ORDER BY id DESC`,
+      )
+      .all(user.id, company.id);
+
+    res.json({
+      reports: rows.map((row) => ({
+        id: row.id,
+        category: row.category,
+        title: row.title,
+        status: row.status,
+        reviewerNote: row.reviewer_note,
+        createdAt: row.created_at,
+      })),
+    });
+  }),
+);
 
 // ─────────────────────── student ↔ company link ───────────────────────
 

@@ -1563,6 +1563,133 @@ adminRouter.get(
  * observation: these are browser hints, and the UI must not present them as
  * findings against a student.
  */
+// ═══════════════════ first-hand company reports ═══════════════════
+
+/** The review queue: what students have reported about real hiring processes. */
+adminRouter.get(
+  '/company-reports',
+  requireFaculty,
+  handler((req, res) => {
+    const status = String(req.query.status ?? 'pending');
+    const rows = db()
+      .prepare<[string, string], {
+        id: number;
+        company: string;
+        company_slug: string;
+        student: string | null;
+        category: string;
+        title: string;
+        body: string;
+        sat_on: string | null;
+        status: string;
+        reviewer_note: string | null;
+        created_at: string;
+      }>(
+        `SELECT r.id, c.name AS company, c.slug AS company_slug, u.name AS student,
+                r.category, r.title, r.body, r.sat_on, r.status, r.reviewer_note, r.created_at
+           FROM company_reports r
+           JOIN companies c ON c.id = r.company_id
+           LEFT JOIN users u ON u.id = r.user_id
+          WHERE (? = 'all' OR r.status = ?)
+          ORDER BY r.created_at DESC
+          LIMIT 200`,
+      )
+      .all(status, status);
+
+    res.json({
+      reports: rows.map((row) => ({
+        id: row.id,
+        company: row.company,
+        companySlug: row.company_slug,
+        student: row.student,
+        category: row.category,
+        title: row.title,
+        body: row.body,
+        satOn: row.sat_on,
+        status: row.status,
+        reviewerNote: row.reviewer_note,
+        createdAt: row.created_at,
+      })),
+    });
+  }),
+);
+
+/**
+ * Accept or reject a report.
+ *
+ * Accepting publishes it as a company insight. The provenance is the whole
+ * point of the exercise: a single student's account is `community_reported`,
+ * and only an admin who has corroborated it may mark it `verified` — the UI
+ * defaults to the honest option rather than the flattering one.
+ */
+adminRouter.post(
+  '/company-reports/:id/review',
+  requireFaculty,
+  handler((req, res) => {
+    const id = Number(req.params.id);
+    const input = parse(
+      z.object({
+        decision: z.enum(['accept', 'reject']),
+        note: z.string().trim().max(500).optional(),
+        provenance: z.enum(['verified', 'community_reported', 'historical']).optional(),
+        sourceLabel: z.string().trim().max(120).optional(),
+      }),
+      req.body,
+    );
+
+    const report = db()
+      .prepare<[number], {
+        id: number;
+        company_id: number;
+        category: string;
+        title: string;
+        body: string;
+        sat_on: string | null;
+        status: string;
+      }>('SELECT id, company_id, category, title, body, sat_on, status FROM company_reports WHERE id = ?')
+      .get(id);
+    if (!report) throw notFound('Report not found');
+    if (report.status !== 'pending') throw badRequest('This report has already been reviewed');
+
+    let insightId: number | null = null;
+    db().transaction(() => {
+      if (input.decision === 'accept') {
+        const info = db()
+          .prepare(
+            `INSERT INTO company_insights (company_id, category, title, body, provenance, source_label, as_of, sort_order)
+             VALUES (?, ?, ?, ?, ?, ?, ?, 50)`,
+          )
+          .run(
+            report.company_id,
+            report.category,
+            report.title,
+            report.body,
+            input.provenance ?? 'community_reported',
+            input.sourceLabel ?? 'Student report',
+            report.sat_on,
+          );
+        insightId = Number(info.lastInsertRowid);
+      }
+
+      db()
+        .prepare(
+          `UPDATE company_reports
+              SET status = ?, reviewer_id = ?, reviewer_note = ?, reviewed_at = datetime('now'), insight_id = ?
+            WHERE id = ?`,
+        )
+        .run(
+          input.decision === 'accept' ? 'accepted' : 'rejected',
+          req.user?.id ?? null,
+          input.note ?? null,
+          insightId,
+          id,
+        );
+    })();
+
+    res.json({ ok: true, insightId });
+  }),
+);
+
 adminRouter.get(
   '/attempts/integrity',
   requireFaculty,

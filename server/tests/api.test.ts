@@ -474,3 +474,83 @@ describe('code engine when disabled', () => {
     assert.match(response.body.error.message, /disabled/i);
   });
 });
+
+describe('first-hand company reports', () => {
+  let reportId: number;
+
+  it('queues a report rather than publishing it', async () => {
+    const before = await call<{ insights: unknown[] }>('GET', '/companies/zoho', { token: studentToken });
+    const beforeCount = (before.body as { insights: unknown[] }).insights.length;
+
+    const created = await call<{ reportId: number; status: string }>('POST', '/companies/zoho/reports', {
+      token: studentToken,
+      body: {
+        category: 'hiring_process',
+        title: 'Three rounds, no aptitude section',
+        body: 'The online assessment was two coding questions only. No aptitude at all, then one technical interview and an HR round on the same day.',
+        satOn: '2026-08-01',
+      },
+    });
+    assert.equal(created.status, 201);
+    assert.equal(created.body.status, 'pending');
+    reportId = created.body.reportId;
+
+    const after = await call<{ insights: unknown[] }>('GET', '/companies/zoho', { token: studentToken });
+    assert.equal(
+      (after.body as { insights: unknown[] }).insights.length,
+      beforeCount,
+      'an unreviewed report must not appear on the company page',
+    );
+  });
+
+  it('refuses a second pending report for the same company', async () => {
+    const response = await call('POST', '/companies/zoho/reports', {
+      token: studentToken,
+      body: {
+        category: 'hr_pattern',
+        title: 'Another report from the same student',
+        body: 'This should be refused because one report is already awaiting review for this company.',
+      },
+    });
+    assert.equal(response.status, 400);
+  });
+
+  it('publishes as community_reported when an admin accepts it', async () => {
+    const response = await call<{ ok: boolean; insightId: number }>(
+      'POST',
+      `/admin/company-reports/${reportId}/review`,
+      { token: adminToken, body: { decision: 'accept' } },
+    );
+    assert.equal(response.status, 200);
+    assert.ok(response.body.insightId);
+
+    const detail = await call<{ insights: { title: string; provenance: string }[] }>('GET', '/companies/zoho', {
+      token: studentToken,
+    });
+    const published = detail.body.insights.find((i) => i.title === 'Three rounds, no aptitude section');
+    assert.ok(published, 'an accepted report should appear on the company page');
+    assert.equal(
+      published!.provenance,
+      'community_reported',
+      'one student account is not company policy and must not default to verified',
+    );
+  });
+
+  it('will not review the same report twice', async () => {
+    const response = await call('POST', `/admin/company-reports/${reportId}/review`, {
+      token: adminToken,
+      body: { decision: 'reject' },
+    });
+    assert.equal(response.status, 400);
+  });
+
+  it('shows a student the fate of their own report', async () => {
+    const response = await call<{ reports: { id: number; status: string }[] }>(
+      'GET',
+      '/companies/zoho/reports/mine',
+      { token: studentToken },
+    );
+    assert.equal(response.status, 200);
+    assert.equal(response.body.reports[0].status, 'accepted');
+  });
+});

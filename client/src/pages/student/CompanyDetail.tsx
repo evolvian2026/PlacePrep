@@ -11,8 +11,11 @@ import {
   Empty,
   ErrorNote,
   HeroScore,
+  Input,
   Meter,
+  Modal,
   Note,
+  Select,
   SectionHeading,
   Spinner,
   Tabs,
@@ -139,6 +142,7 @@ export default function CompanyDetail() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const [tab, setTab] = useState('roadmap');
+  const [reporting, setReporting] = useState(false);
   const { data, loading, error, reload } = useApi<CompanyDetailData>(slug ? `/companies/${slug}` : null);
 
   const track = useMutation(async (status: string) => {
@@ -282,6 +286,9 @@ export default function CompanyDetail() {
               <strong>{templateNote.title}.</strong> {templateNote.body}{' '}
               <button type="button" className="underline" onClick={() => setTab('intel')}>
                 See company intelligence
+              </button>{' '}
+              <button type="button" className="underline" onClick={() => setReporting(true)}>
+                Sat this process? Tell us what it was really like
               </button>
             </Note>
           ) : null}
@@ -463,6 +470,21 @@ export default function CompanyDetail() {
         <div className="space-y-4">
           <Note tone="warning">{data.disclaimer}</Note>
 
+          <Card>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h3 className="text-sm font-semibold ink">Sat {company.name}'s process yourself?</h3>
+                <p className="mt-0.5 text-xs ink-muted">
+                  First-hand accounts are how this page stops being a template. Yours goes to your placement
+                  cell for review — it is never shown to other students unreviewed.
+                </p>
+              </div>
+              <Button variant="secondary" size="sm" onClick={() => setReporting(true)}>
+                Report the real process
+              </Button>
+            </div>
+          </Card>
+
           {data.insights.length === 0 ? (
             <Card>
               <Empty title="No intelligence recorded yet" hint="Your placement cell can add verified notes from the admin console." />
@@ -493,6 +515,124 @@ export default function CompanyDetail() {
           )}
         </div>
       ) : null}
+
+      <ReportProcessModal
+        open={reporting}
+        companyName={company.name}
+        companySlug={company.slug}
+        onClose={() => setReporting(false)}
+      />
     </div>
+  );
+}
+
+
+const REPORT_CATEGORIES = [
+  { value: 'hiring_process', label: 'The rounds and their order' },
+  { value: 'coding_pattern', label: 'Coding round' },
+  { value: 'technical_pattern', label: 'Technical interview' },
+  { value: 'hr_pattern', label: 'HR interview' },
+  { value: 'frequently_tested', label: 'What was tested' },
+  { value: 'eligibility', label: 'Eligibility criteria' },
+  { value: 'preparation_advice', label: 'Preparation advice' },
+];
+
+/**
+ * A student's first-hand account of a real process.
+ *
+ * The copy is careful about what happens next: the report is queued, not
+ * published. Letting a student believe their account went live immediately
+ * would be both untrue and the start of exactly the unverified-claims problem
+ * the provenance model exists to prevent.
+ */
+function ReportProcessModal({
+  open,
+  companyName,
+  companySlug,
+  onClose,
+}: {
+  open: boolean;
+  companyName: string;
+  companySlug: string;
+  onClose: () => void;
+}) {
+  const [category, setCategory] = useState('hiring_process');
+  const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
+  const [satOn, setSatOn] = useState('');
+  const [done, setDone] = useState(false);
+  const [failure, setFailure] = useState<string | null>(null);
+
+  const submit = useMutation(async () => {
+    setFailure(null);
+    try {
+      await api(`/companies/${companySlug}/reports`, {
+        method: 'POST',
+        body: { category, title, body, satOn: satOn || undefined },
+      });
+      setDone(true);
+    } catch (error) {
+      setFailure(error instanceof Error ? error.message : 'Could not send that report.');
+    }
+  });
+
+  const close = () => {
+    setDone(false);
+    setFailure(null);
+    setTitle('');
+    setBody('');
+    onClose();
+  };
+
+  return (
+    <Modal open={open} onClose={close} title={`Report ${companyName}'s hiring process`}>
+      {done ? (
+        <div className="space-y-3">
+          <Note>
+            <strong>Sent for review.</strong> Your placement cell will check it before it appears on this page.
+            Thank you — this is how the roadmap for {companyName} stops being a generic template.
+          </Note>
+          <Button onClick={close}>Close</Button>
+        </div>
+      ) : (
+        <div className="space-y-3">
+          <Note>
+            Please describe only what you saw yourself. Your report is reviewed before publication, and it is
+            attributed as a student account rather than as company policy.
+          </Note>
+          <Select
+            label="What is this about?"
+            value={category}
+            onChange={setCategory}
+            options={REPORT_CATEGORIES}
+          />
+          <Input label="Summary" value={title} onChange={setTitle} placeholder="e.g. Three rounds, no aptitude test" />
+          <label className="block">
+            <span className="mb-1 block text-xs font-medium ink-2">What actually happened</span>
+            <textarea
+              className="w-full rounded-lg border p-2 text-sm"
+              style={{ borderColor: 'var(--hairline)', background: 'var(--surface)', color: 'var(--ink)' }}
+              rows={6}
+              value={body}
+              onChange={(event) => setBody(event.target.value)}
+              placeholder="Rounds in order, how long each was, what was asked, anything that surprised you."
+            />
+          </label>
+          <Input label="When did you sit it?" type="date" value={satOn} onChange={setSatOn} />
+          {failure ? <ErrorNote message={failure} /> : null}
+          <div className="flex gap-2">
+            <Button
+              onClick={() => void submit.mutate(undefined)}
+              disabled={submit.pending || title.trim().length < 6 || body.trim().length < 30}
+            >
+              {submit.pending ? 'Sending…' : 'Send for review'}
+            </Button>
+            <Button variant="secondary" onClick={close}>
+              Cancel
+            </Button>
+          </div>
+        </div>
+      )}
+    </Modal>
   );
 }
