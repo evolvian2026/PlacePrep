@@ -80,6 +80,38 @@ nominal question count (the worst fills 13 of 18). That is a content gap to
 fill by importing more questions, not a broken paper; the seeded companies and
 rounds are the structure, and the bank is what an admin grows over time.
 
+**Eligibility** is checked against the student's own branch, batch and CGPA, and
+explains itself ("Open to Mechanical, Civil, EEE — not CSE") rather than
+returning a bare yes/no. A blank profile field is *unknown*, never a rejection.
+
+**A revision queue** brings back questions the student got wrong, on a Leitner
+schedule (1, 3, 7, 21 days). Cards come only from real mistakes, and the hook
+sits in the one funnel every graded answer passes through, so a mock or coding
+mistake queues revision the same way a practice mistake does.
+
+**Papers prefer fresh questions.** Selection knows what the student has already
+answered and sinks it to the back. Where a repeat is unavoidable — the bank is
+smaller than the catalogue — the report says how much of the paper was familiar
+rather than letting it quietly inflate a score.
+
+**Study plans run to the drive date** when one is set, not a rolling week, and
+say how many days are left and the pace needed.
+
+**Integrity signals** (tab hidden, focus lost, fullscreen exited) are recorded
+during a paper and shown to both the student and the placement cell — framed as
+browser observations, never as accusations, and never affecting a score.
+
+**Students can report what a hiring process was really like.** Reports go to an
+admin review queue and are published as `community_reported` on acceptance —
+the path from a templated roadmap to a researched one.
+
+**A cohort view** for the placement cell: readiness spread rather than only an
+average, per-company readiness by soonest drive, and who has not started.
+
+**Behavioural answers** are drafted in STAR form against real prompts, with a
+self-review rubric and a spoken-length estimate. Nothing there is auto-scored —
+see [What is deliberately not automated](#what-is-deliberately-not-automated).
+
 ---
 
 ## Commands
@@ -89,7 +121,7 @@ rounds are the structure, and the bank is what an admin grows over time.
 | `npm run dev` | API + client with hot reload |
 | `npm run build` | Type-check and build both workspaces |
 | `npm start` | Run the built server (also serves the client) |
-| `npm test` | Engine, catalogue and API tests (95 tests) |
+| `npm test` | Engine, catalogue and API tests (134 tests) |
 | `npm run typecheck` | Type-check both workspaces |
 | `npm run audit:mocks` | Start all 1,922 mock tests against a copy of the DB and report any that fail to assemble |
 | `npm run measure:repeats` | Sit each of three mocks three times and report how much the paper repeats — the practical read on bank pressure |
@@ -219,6 +251,23 @@ Capgemini is the one company with no coding round, and that is deliberate — it
 researched process runs on pseudocode and a game-based stage rather than a live
 editor. Inventing a round to make the numbers tidy would be a lie about a real
 employer; its students still reach the coding workspace from the Coding page.
+
+### What is deliberately not automated
+
+Free-text interview answers are not scored. Judging one properly is a
+language-model problem, and a keyword heuristic dressed up as feedback is worse
+than none, because a student would believe it. The builder gives structure,
+per-prompt guidance on what a good answer contains, a self-review rubric and a
+spoken-length estimate — and says plainly that a person should read the draft.
+
+Integrity signals are not proof. A notification stealing focus looks exactly
+like a deliberate tab switch. Nothing blocks a submission or changes a score,
+and the admin copy says to treat a signal as a prompt to ask rather than as
+evidence.
+
+An accepted student report defaults to `community_reported`, not `verified`.
+One person's account of a hiring process is not company policy; marking it
+verified stays possible but is a deliberate choice, never the default.
 
 ---
 
