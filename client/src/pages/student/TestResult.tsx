@@ -11,6 +11,7 @@ import {
   ErrorNote,
   HeroScore,
   Meter,
+  Note,
   SectionHeading,
   Spinner,
   Stat,
@@ -79,6 +80,7 @@ interface ResultData {
     topics: { topicId: number; name: string; questions: number; correct: number; accuracy: number; label: string; timeSpentSeconds: number }[];
     difficulties: { difficulty: string; questions: number; correct: number; accuracy: number }[];
     recommendations: { title: string; detail: string; topicId?: number }[];
+    seenBefore: number;
     timing: { totalSeconds: number; questionSeconds: number; averagePerQuestion: number; overtimeQuestions: number };
   };
   review: QuestionOutcome[];
@@ -162,6 +164,18 @@ export default function TestResult() {
           />
         </div>
       </div>
+
+      {report.seenBefore > 0 ? (
+        <Note>
+          <strong>
+            {report.seenBefore} of these {attempt.correctCount + attempt.incorrectCount + attempt.skippedCount}{' '}
+            questions you had answered before.
+          </strong>{' '}
+          Papers draw fresh questions first, but once you have worked through a topic's pool a repeat is
+          unavoidable — treat this score as partly a recall check, and read the topic breakdown below rather
+          than the headline number.
+        </Note>
+      ) : null}
 
       <Card>
         <div className="mb-2 flex items-center justify-between text-xs ink-2">

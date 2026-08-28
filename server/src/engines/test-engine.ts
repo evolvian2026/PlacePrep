@@ -19,7 +19,7 @@ import type {
   PaperSection,
   SelectionRule,
 } from '../types.js';
-import { loadAnswerKeys, selectForRule, toPaperQuestions } from './question-engine.js';
+import { loadAnswerKeys, loadExposure, selectForRule, toPaperQuestions } from './question-engine.js';
 import { recordGradedAnswers, refreshCompanyProgress } from './progress.js';
 import { DEFAULT_THRESHOLDS, labelFor, loadThresholds } from './readiness.js';
 
@@ -137,6 +137,10 @@ export function startAttempt(userId: number, mockTestId: number, target: Db = sh
   const seed = hashString(`${userId}:${test.id}:${Date.now()}`);
   const used: number[] = [];
   const paperSections: PaperSection[] = [];
+  // Repeats are unavoidable once a student has worked through a topic's pool.
+  // Rather than let that quietly inflate a score, the paper reports how much
+  // of it the student has seen before.
+  const exposure = loadExposure(userId, target);
 
   for (const section of sections) {
     const rule = json<SelectionRule>(section.selection_rule, {});
@@ -156,6 +160,7 @@ export function startAttempt(userId: number, mockTestId: number, target: Db = sh
             companyId: test.company_id,
             exclude: used,
             seed,
+            userId,
           },
           target,
         );
@@ -166,7 +171,7 @@ export function startAttempt(userId: number, mockTestId: number, target: Db = sh
     // start, so drop the exclusion and try again before giving up.
     if (questionIds.length === 0 && !pinned.length && used.length > 0) {
       questionIds = selectForRule(
-        { rule, count: section.question_count, companyId: test.company_id, seed },
+        { rule, count: section.question_count, companyId: test.company_id, seed, userId },
         target,
       );
     }
@@ -203,6 +208,9 @@ export function startAttempt(userId: number, mockTestId: number, target: Db = sh
     shuffleOptions: test.shuffle_options === 1,
     sectionLock: test.section_lock === 1,
     generatedAt: new Date().toISOString(),
+    seenBefore: paperSections
+      .flatMap((section) => section.questions)
+      .filter((question) => exposure.has(question.questionId)).length,
   };
 
   const totalMarks = round(
@@ -409,6 +417,12 @@ export interface AttemptReport {
   difficulties: DifficultyReport[];
   questions: QuestionOutcome[];
   recommendations: { title: string; detail: string; topicId?: number }[];
+  /**
+   * How many of this paper's questions the student had answered before.
+   * A score built partly on recalled questions is worth less than a clean one,
+   * so the report says so instead of quietly letting it inflate the number.
+   */
+  seenBefore: number;
   timing: {
     /** Wall-clock seconds from starting the paper to submitting it. */
     totalSeconds: number;
@@ -584,6 +598,7 @@ export function submitAttempt(
     difficulties: difficultyReports,
     questions: outcomes,
     recommendations: buildRecommendations(sectionReports, topicReports, difficultyReports, thresholds),
+    seenBefore: paper.seenBefore ?? 0,
     timing: {
       totalSeconds: durationSeconds,
       questionSeconds: totalQuestionTime,
@@ -635,6 +650,7 @@ function emptyReport(): AttemptReport {
     difficulties: [],
     questions: [],
     recommendations: [],
+    seenBefore: 0,
     timing: { totalSeconds: 0, questionSeconds: 0, averagePerQuestion: 0, overtimeQuestions: 0 },
   };
 }

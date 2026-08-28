@@ -294,6 +294,83 @@ export interface SelectionRequest {
   exclude?: number[];
   /** Seed for reproducible selection; omit for a fresh random paper. */
   seed?: number;
+  /**
+   * Whose history to account for. Given one, questions this student has
+   * already answered sink to the back of every stage, so a second attempt at
+   * the same mock is largely new material instead of a re-run.
+   */
+  userId?: number | null;
+}
+
+/** How often, and how recently, a student has already met a question. */
+interface Exposure {
+  times: number;
+  lastSeen: string;
+}
+
+/**
+ * Everything this student has already answered, from mocks and from practice.
+ *
+ * A repeated question is not useless — spaced repetition is the point of the
+ * revision queue — but a *fresh* paper should exhaust new material first, or
+ * the readiness score just measures recall of a small bank.
+ */
+export function loadExposure(userId: number, target: Db = sharedDb()): Map<number, Exposure> {
+  const exposure = new Map<number, Exposure>();
+  const merge = (rows: { id: number; times: number; last_seen: string | null }[]): void => {
+    for (const row of rows) {
+      const seen = exposure.get(row.id);
+      const lastSeen = row.last_seen ?? '';
+      if (seen) {
+        seen.times += row.times;
+        if (lastSeen > seen.lastSeen) seen.lastSeen = lastSeen;
+      } else {
+        exposure.set(row.id, { times: row.times, lastSeen });
+      }
+    }
+  };
+
+  merge(
+    target
+      .prepare<[number], { id: number; times: number; last_seen: string | null }>(
+        `SELECT aa.question_id AS id, COUNT(*) AS times, MAX(aa.updated_at) AS last_seen
+           FROM attempt_answers aa JOIN attempts a ON a.id = aa.attempt_id
+          WHERE a.user_id = ? AND a.status IN ('submitted', 'auto_submitted')
+          GROUP BY aa.question_id`,
+      )
+      .all(userId),
+  );
+  merge(
+    target
+      .prepare<[number], { id: number; times: number; last_seen: string | null }>(
+        `SELECT question_id AS id, COUNT(*) AS times, MAX(created_at) AS last_seen
+           FROM practice_events WHERE user_id = ? GROUP BY question_id`,
+      )
+      .all(userId),
+  );
+  return exposure;
+}
+
+/**
+ * Shuffles, then sorts unseen questions ahead of seen ones — and among seen
+ * ones, the least often and longest ago first. Shuffling before sorting keeps
+ * the choice random within each band rather than always serving the same
+ * question at the front of the queue.
+ */
+function orderByFreshness(ids: number[], exposure: Map<number, Exposure>, seed?: number): number[] {
+  const shuffled = shuffle(ids, seed);
+  if (exposure.size === 0) return shuffled;
+  return shuffled
+    .map((id, index) => ({ id, index, seen: exposure.get(id) }))
+    .sort((a, b) => {
+      if (!a.seen && !b.seen) return a.index - b.index;
+      if (!a.seen) return -1;
+      if (!b.seen) return 1;
+      if (a.seen.times !== b.seen.times) return a.seen.times - b.seen.times;
+      if (a.seen.lastSeen !== b.seen.lastSeen) return a.seen.lastSeen < b.seen.lastSeen ? -1 : 1;
+      return a.index - b.index;
+    })
+    .map((entry) => entry.id);
 }
 
 /**
@@ -310,6 +387,7 @@ export function selectForRule(request: SelectionRequest, target: Db = sharedDb()
   const { rule, count } = request;
   const exclude = new Set(request.exclude ?? []);
   const picked: number[] = [];
+  const exposure = request.userId ? loadExposure(request.userId, target) : new Map<number, Exposure>();
 
   const take = (ids: number[]): void => {
     for (const id of ids) {
@@ -346,12 +424,12 @@ export function selectForRule(request: SelectionRequest, target: Db = sharedDb()
         const already = countByDifficulty(picked, difficulty, target);
         if (already >= want) continue;
         const { rows } = findQuestions({ ...stage, difficulties: [difficulty] }, target);
-        take(shuffle(rows.map((r) => r.id), request.seed).slice(0, want - already));
+        take(orderByFreshness(rows.map((r) => r.id), exposure, request.seed).slice(0, want - already));
       }
     }
     if (picked.length >= count) break;
     const { rows } = findQuestions(stage, target);
-    take(shuffle(rows.map((r) => r.id), request.seed));
+    take(orderByFreshness(rows.map((r) => r.id), exposure, request.seed));
   }
 
   // Stage 3: widen to the categories of the requested topics.
@@ -367,7 +445,7 @@ export function selectForRule(request: SelectionRequest, target: Db = sharedDb()
         { ...baseFilter, topicIds: undefined, categories },
         target,
       );
-      take(shuffle(rows.map((r) => r.id), request.seed));
+      take(orderByFreshness(rows.map((r) => r.id), exposure, request.seed));
     }
   }
 

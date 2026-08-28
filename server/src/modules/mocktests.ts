@@ -388,6 +388,7 @@ attemptsRouter.get(
       difficulties: [],
       questions: [],
       recommendations: [],
+      seenBefore: 0,
       timing: { totalSeconds: 0, questionSeconds: 0, averagePerQuestion: 0, overtimeQuestions: 0 },
     });
 

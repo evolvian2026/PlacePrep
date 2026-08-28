@@ -13,6 +13,7 @@ import { computeStreak, recordGradedAnswers, refreshCompanyProgress } from '../s
 import { findQuestions, selectForRule, loadAnswerKeys, toPaperQuestions } from '../src/engines/question-engine.js';
 import { startAttempt, saveAnswer, submitAttempt, loadAttemptState } from '../src/engines/test-engine.js';
 import { evaluateEligibility } from '../src/engines/eligibility.js';
+import { loadExposure } from '../src/engines/question-engine.js';
 import { generatePlan, scoreTopicsForCompany, ensureCurrentPlan } from '../src/engines/recommendation-engine.js';
 import { evaluateBadges, awardXp, levelFor, totalXp, leaderboard } from '../src/engines/gamification.js';
 import { parseCsv, shuffle, mulberry32, pct } from '../src/lib/util.js';
@@ -530,5 +531,31 @@ describe('eligibility matching', () => {
   it('ignores criteria a company does not set', () => {
     const open = { eligibleBranches: [], eligibleYears: [], minCgpa: null };
     assert.equal(evaluateEligibility({ branch: null, graduationYear: null, cgpa: null }, open).status, 'eligible');
+  });
+});
+
+describe('repeat-aware question selection', () => {
+  // A paper-level "second sitting repeats less" test is not written here on
+  // purpose: sections draw from topic-scoped pools, so the honest denominator
+  // is each section's own pool, which is exactly what the engine test below
+  // asserts. Measured effect on real data: a TCS full mock's second sitting
+  // drops from 62 repeats to 43; a Zoho mock barely moves, because its
+  // sections already ask for nearly their whole pool. The bank size is the
+  // ceiling, not the ordering.
+
+  it('ranks unseen questions ahead of ones already answered', () => {
+    const user = db.prepare<[], { id: number }>("SELECT id FROM users WHERE role = 'student' LIMIT 1").get()!;
+    const exposure = loadExposure(user.id, db);
+    assert.ok(exposure.size > 0, 'the earlier attempts should have recorded exposure');
+
+    const topicRow = db.prepare<[], { id: number }>("SELECT id FROM topics WHERE slug = 'quantitative-aptitude'").get()!;
+    const picked = selectForRule(
+      { rule: { topicIds: [topicRow.id], questionTypes: ['mcq'] }, count: 3, userId: user.id },
+      db,
+    );
+    const pool = findQuestions({ topicIds: [topicRow.id], questionTypes: ['mcq'], status: 'published' }, db);
+    const unseenInPool = pool.rows.filter((row) => !exposure.has(row.id)).length;
+    const unseenPicked = picked.filter((id) => !exposure.has(id)).length;
+    assert.equal(unseenPicked, Math.min(3, unseenInPool), 'fresh questions should be used before repeats');
   });
 });

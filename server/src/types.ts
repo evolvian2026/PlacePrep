@@ -94,6 +94,12 @@ export interface Paper {
   shuffleOptions: boolean;
   sectionLock: boolean;
   generatedAt: string;
+  /**
+   * How many of this paper's questions the student has answered before.
+   * Reported rather than hidden: once a topic's pool is exhausted a repeat is
+   * unavoidable, and a score built on recalled questions should say so.
+   */
+  seenBefore?: number;
 }
 
 /** Selection rule stored on a mock-test section and used by the question engine. */

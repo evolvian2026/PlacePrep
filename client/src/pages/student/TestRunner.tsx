@@ -45,7 +45,7 @@ interface AttemptData {
   expiresAt: string;
   serverTime: string;
   startedAt: string;
-  paper: { sections: PaperSection[]; sectionLock: boolean };
+  paper: { sections: PaperSection[]; sectionLock: boolean; seenBefore?: number };
   state: {
     questionId: number;
     sectionKey: string;

@@ -92,6 +92,7 @@ rounds are the structure, and the bank is what an admin grows over time.
 | `npm test` | Engine, catalogue and API tests (95 tests) |
 | `npm run typecheck` | Type-check both workspaces |
 | `npm run audit:mocks` | Start all 1,922 mock tests against a copy of the DB and report any that fail to assemble |
+| `npm run measure:repeats` | Sit each of three mocks three times and report how much the paper repeats — the practical read on bank pressure |
 | `npm run audit:db` | Whole-database consistency check: SQLite integrity, foreign keys, required fields, orphans, and per-company completeness across rounds, roadmap, mocks, practice and coding |
 | `npm run db:reset` | Drop, migrate and seed the database |
 | `npm run db:seed` | Re-seed without dropping (safe on a live database) |

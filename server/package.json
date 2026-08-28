@@ -15,6 +15,7 @@
     "verify:coding": "tsx scripts/verify-coding.ts",
     "audit:mocks": "tsx scripts/audit-mocks.ts",
     "audit:db": "tsx scripts/audit-integrity.ts",
+    "measure:repeats": "tsx scripts/measure-repeats.ts",
     "test": "tsx --test tests/*.test.ts"
   },
   "dependencies": {
