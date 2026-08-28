@@ -24,6 +24,7 @@ interface Analytics {
 
 export default function AdminAnalytics() {
   const { data, loading, error, reload } = useApi<Analytics>('/admin/analytics');
+  const integrity = useApi<{ attempts: IntegrityRow[] }>('/admin/attempts/integrity');
 
   if (loading) return <Spinner />;
   if (error) return <ErrorNote message={error} onRetry={reload} />;
@@ -216,6 +217,60 @@ export default function AdminAnalytics() {
           ]}
         />
       </Card>
+
+      <Card>
+        <SectionHeading
+          level={3}
+          title="Test integrity signals"
+          subtitle="Attempts where the browser reported the student leaving the paper."
+        />
+        <Note>
+          These are browser hints — a notification stealing focus looks the same as a deliberate switch. Treat
+          them as a prompt to ask, never as evidence. Nothing here affects anyone's score.
+        </Note>
+        <div className="mt-3">
+          <Table
+            rows={integrity.data?.attempts ?? []}
+            keyOf={(row) => row.attemptId}
+            empty="No integrity signals recorded yet."
+            columns={[
+              { key: 'student', header: 'Student', render: (row) => row.student },
+              { key: 'test', header: 'Mock test', render: (row) => row.test },
+              {
+                key: 'signals',
+                header: 'What was recorded',
+                render: (row) => row.integrity.notes.join(' ') || '—',
+              },
+              {
+                key: 'level',
+                header: 'Level',
+                align: 'right',
+                render: (row) => (
+                  <Badge tone={row.integrity.level === 'notable' ? 'warning' : 'neutral'}>
+                    {row.integrity.level}
+                  </Badge>
+                ),
+              },
+              {
+                key: 'score',
+                header: 'Score',
+                align: 'right',
+                render: (row) => pctText(row.percentage, 1),
+              },
+            ]}
+          />
+        </div>
+      </Card>
     </div>
   );
+}
+
+interface IntegrityRow {
+  attemptId: number;
+  student: string;
+  email: string;
+  test: string;
+  submittedAt: string | null;
+  percentage: number;
+  integrity: { level: string; notes: string[]; awaySeconds: number };
 }

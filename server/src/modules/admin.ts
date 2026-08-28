@@ -7,6 +7,7 @@ import { json, parseCsv, pct, round, slugify, stringify } from '../lib/util.js';
 import { attachUser, requireAdmin, requireFaculty, requireRole } from '../middleware/auth.js';
 import { findQuestions, loadOptions, selectForRule } from '../engines/question-engine.js';
 import { sectorFor } from '../db/seed/sectors.js';
+import { summariseIntegrity } from '../engines/proctoring.js';
 import type { Difficulty, SelectionRule } from '../types.js';
 
 export const adminRouter = Router();
@@ -1553,6 +1554,56 @@ adminRouter.get(
 );
 
 // ═══════════════════════════ analytics ═══════════════════════════
+
+/**
+ * Attempts whose integrity signals are worth a look.
+ *
+ * A placement cell running a mock drive wants to see who left the paper
+ * repeatedly. Sorted by how much was recorded, capped, and phrased as
+ * observation: these are browser hints, and the UI must not present them as
+ * findings against a student.
+ */
+adminRouter.get(
+  '/attempts/integrity',
+  requireFaculty,
+  handler((req, res) => {
+    const limit = Math.min(Number(req.query.limit ?? 50) || 50, 200);
+    const rows = db()
+      .prepare<[number], {
+        attempt_id: number;
+        student: string;
+        email: string;
+        test: string;
+        submitted_at: string | null;
+        percentage: number;
+        events: number;
+      }>(
+        `SELECT a.id AS attempt_id, u.name AS student, u.email, mt.title AS test,
+                a.submitted_at, a.percentage,
+                (SELECT COUNT(*) FROM attempt_events e WHERE e.attempt_id = a.id) AS events
+           FROM attempts a
+           JOIN users u ON u.id = a.user_id
+           JOIN mock_tests mt ON mt.id = a.mock_test_id
+          WHERE a.status IN ('submitted', 'auto_submitted')
+            AND EXISTS (SELECT 1 FROM attempt_events e WHERE e.attempt_id = a.id)
+          ORDER BY events DESC, a.submitted_at DESC
+          LIMIT ?`,
+      )
+      .all(limit);
+
+    res.json({
+      attempts: rows.map((row) => ({
+        attemptId: row.attempt_id,
+        student: row.student,
+        email: row.email,
+        test: row.test,
+        submittedAt: row.submitted_at,
+        percentage: row.percentage,
+        integrity: summariseIntegrity(row.attempt_id),
+      })),
+    });
+  }),
+);
 
 adminRouter.get(
   '/analytics',

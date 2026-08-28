@@ -85,6 +85,12 @@ interface ResultData {
   };
   review: QuestionOutcome[];
   cohort: { attempts: number; averagePercentage: number; bestPercentage: number };
+  integrity: {
+    counts: Record<string, number>;
+    awaySeconds: number;
+    level: 'clean' | 'minor' | 'notable';
+    notes: string[];
+  };
 }
 
 export default function TestResult() {
@@ -164,6 +170,14 @@ export default function TestResult() {
           />
         </div>
       </div>
+
+      {data.integrity.notes.length > 0 ? (
+        <Note tone={data.integrity.level === 'notable' ? 'warning' : 'neutral'}>
+          <strong>While this paper was open:</strong> {data.integrity.notes.join(' ')} A real assessment is sat
+          in one window without interruption — this is here so your practice matches it. These are browser
+          signals, not proof of anything, and they do not affect your score.
+        </Note>
+      ) : null}
 
       {report.seenBefore > 0 ? (
         <Note>

@@ -153,15 +153,47 @@ export default function TestRunner() {
     return () => window.clearInterval(id);
   }, [flush]);
 
+  // Leaving the paper autosaves *and* is recorded. These are browser hints, not
+  // proctoring: a notification can steal focus and a screen can lock, so the
+  // report describes what happened rather than accusing anyone.
   useEffect(() => {
-    const onHide = () => void flush({ silent: true });
-    window.addEventListener('pagehide', onHide);
-    document.addEventListener('visibilitychange', onHide);
-    return () => {
-      window.removeEventListener('pagehide', onHide);
-      document.removeEventListener('visibilitychange', onHide);
+    if (!attemptId) return;
+    let leftAt: number | null = null;
+
+    const report = (kind: string, awaySeconds = 0) => {
+      // Fire-and-forget: a failed integrity ping must never disturb the paper.
+      void api(`/attempts/${attemptId}/events`, {
+        method: 'POST',
+        body: { events: [{ kind, awaySeconds }] },
+      }).catch(() => undefined);
     };
-  }, [flush]);
+
+    const onHide = () => {
+      void flush({ silent: true });
+      if (document.visibilityState === 'hidden') {
+        leftAt = Date.now();
+      } else if (leftAt !== null) {
+        report('tab_hidden', Math.round((Date.now() - leftAt) / 1000));
+        leftAt = null;
+      }
+    };
+    const onPageHide = () => void flush({ silent: true });
+    const onBlur = () => report('window_blur');
+    const onFullscreenChange = () => {
+      if (!document.fullscreenElement) report('fullscreen_exit');
+    };
+
+    window.addEventListener('pagehide', onPageHide);
+    document.addEventListener('visibilitychange', onHide);
+    window.addEventListener('blur', onBlur);
+    document.addEventListener('fullscreenchange', onFullscreenChange);
+    return () => {
+      window.removeEventListener('pagehide', onPageHide);
+      document.removeEventListener('visibilitychange', onHide);
+      window.removeEventListener('blur', onBlur);
+      document.removeEventListener('fullscreenchange', onFullscreenChange);
+    };
+  }, [flush, attemptId]);
 
   const submit = useCallback(
     async (auto: boolean) => {

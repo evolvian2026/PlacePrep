@@ -14,6 +14,7 @@ import { findQuestions, selectForRule, loadAnswerKeys, toPaperQuestions } from '
 import { startAttempt, saveAnswer, submitAttempt, loadAttemptState } from '../src/engines/test-engine.js';
 import { evaluateEligibility } from '../src/engines/eligibility.js';
 import { loadExposure } from '../src/engines/question-engine.js';
+import { recordAttemptEvent, summariseIntegrity } from '../src/engines/proctoring.js';
 import { generatePlan, scoreTopicsForCompany, ensureCurrentPlan } from '../src/engines/recommendation-engine.js';
 import { evaluateBadges, awardXp, levelFor, totalXp, leaderboard } from '../src/engines/gamification.js';
 import { parseCsv, shuffle, mulberry32, pct } from '../src/lib/util.js';
@@ -557,5 +558,47 @@ describe('repeat-aware question selection', () => {
     const unseenInPool = pool.rows.filter((row) => !exposure.has(row.id)).length;
     const unseenPicked = picked.filter((id) => !exposure.has(id)).length;
     assert.equal(unseenPicked, Math.min(3, unseenInPool), 'fresh questions should be used before repeats');
+  });
+});
+
+describe('proctoring signals', () => {
+  let attemptId: number;
+
+  it('summarises a clean paper as clean', () => {
+    const test = db.prepare<[string], { id: number }>('SELECT id FROM mock_tests WHERE slug = ?').get('tcs-quick-mock')!;
+    const user = db.prepare<[], { id: number }>("SELECT id FROM users WHERE role = 'student' LIMIT 1").get()!;
+    attemptId = startAttempt(user.id, test.id, db).attemptId;
+
+    const summary = summariseIntegrity(attemptId, db);
+    assert.equal(summary.level, 'clean');
+    assert.deepEqual(summary.notes, []);
+  });
+
+  it('counts leaves and reports the time away', () => {
+    recordAttemptEvent(attemptId, 'tab_hidden', 45, db);
+    recordAttemptEvent(attemptId, 'tab_hidden', 75, db);
+    const summary = summariseIntegrity(attemptId, db);
+    assert.equal(summary.counts.tab_hidden, 2);
+    assert.equal(summary.awaySeconds, 120);
+    assert.match(summary.notes[0], /Left the paper 2 times/);
+    assert.equal(summary.level, 'minor', 'two brief leaves is noise, not a finding');
+  });
+
+  it('escalates to notable only after repeated leaves', () => {
+    recordAttemptEvent(attemptId, 'window_blur', 0, db);
+    recordAttemptEvent(attemptId, 'fullscreen_exit', 0, db);
+    const summary = summariseIntegrity(attemptId, db);
+    assert.equal(summary.level, 'notable');
+    assert.ok(summary.notes.some((note) => /fullscreen/i.test(note)));
+  });
+
+  it('clamps an implausible away time rather than trusting the client', () => {
+    const other = startAttempt(
+      db.prepare<[], { id: number }>("SELECT id FROM users WHERE role = 'student' ORDER BY id DESC LIMIT 1").get()!.id,
+      db.prepare<[string], { id: number }>('SELECT id FROM mock_tests WHERE slug = ?').get('infosys-quick-mock')!.id,
+      db,
+    ).attemptId;
+    recordAttemptEvent(other, 'tab_hidden', 999_999, db);
+    assert.equal(summariseIntegrity(other, db).awaySeconds, 6 * 60 * 60);
   });
 });

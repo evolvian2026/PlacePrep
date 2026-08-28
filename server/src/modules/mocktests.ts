@@ -16,6 +16,12 @@ import {
 } from '../engines/test-engine.js';
 import { awardXp, evaluateBadges, loadXpConfig } from '../engines/gamification.js';
 import { loadOptions } from '../engines/question-engine.js';
+import {
+  ATTEMPT_EVENT_KINDS,
+  recordAttemptEvent,
+  summariseIntegrity,
+  type AttemptEventKind,
+} from '../engines/proctoring.js';
 import type { Paper } from '../types.js';
 
 export const mockTestsRouter = Router();
@@ -322,6 +328,37 @@ attemptsRouter.post(
   }),
 );
 
+/**
+ * Integrity signals from the runner. Ownership is checked so a student cannot
+ * write events onto someone else's attempt, and the call is fire-and-forget on
+ * the client: a dropped event must never interrupt a paper.
+ */
+attemptsRouter.post(
+  '/:id/events',
+  handler((req, res) => {
+    const user = currentUser(req);
+    const attemptId = Number(req.params.id);
+    loadAttempt(user.id, attemptId);
+    const input = parse(
+      z.object({
+        events: z
+          .array(
+            z.object({
+              kind: z.enum(ATTEMPT_EVENT_KINDS as [AttemptEventKind, ...AttemptEventKind[]]),
+              awaySeconds: z.number().min(0).max(21600).optional(),
+            }),
+          )
+          .max(50),
+      }),
+      req.body,
+    );
+    db().transaction(() => {
+      for (const event of input.events) recordAttemptEvent(attemptId, event.kind, event.awaySeconds ?? 0);
+    })();
+    res.json({ recorded: input.events.length });
+  }),
+);
+
 attemptsRouter.post(
   '/:id/submit',
   handler((req, res) => {
@@ -423,6 +460,7 @@ attemptsRouter.get(
         averagePercentage: cohort.average ? round(cohort.average, 1) : 0,
         bestPercentage: cohort.best ? round(cohort.best, 1) : 0,
       },
+      integrity: summariseIntegrity(attempt.id),
     });
   }),
 );
