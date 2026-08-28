@@ -15,6 +15,7 @@ import { TECHNICAL_QUESTIONS } from './questions-technical.js';
 import { BEHAVIOURAL_QUESTIONS } from './questions-behavioural.js';
 import { CODING_PROBLEMS } from './questions-coding.js';
 import { BADGES, CHALLENGES } from './gamification.js';
+import { INTERVIEW_PROMPTS } from './interview-prompts.js';
 import type { McqSeed } from './types.js';
 
 const ALL_MCQ: McqSeed[] = [
@@ -45,6 +46,7 @@ export const CATALOGUE_FINGERPRINT = String(
       ALL_MCQ.length,
       CODING_PROBLEMS.length,
       TOPICS.length,
+      INTERVIEW_PROMPTS.length,
     ].join('|'),
   ),
 );
@@ -90,6 +92,7 @@ export function seed(target: Db = sharedDb()): SeedResult {
     const mockTests = seedMockTests(target, companyIds, roundIds, sectionIds, topicIds);
     const badgeCount = seedBadges(target, companyIds);
     seedChallenges(target, companyIds);
+    seedInterviewPrompts(target);
     seedSettings(target);
     const users = seedUsers(target, companyIds);
 
@@ -936,6 +939,20 @@ function seedChallenges(target: Db, companyIds: Map<string, number>): void {
       challenge.companySlug ? companyIds.get(challenge.companySlug) ?? null : null,
     );
   }
+}
+
+/** Upserted on slug so a student's saved answers keep pointing at the prompt. */
+function seedInterviewPrompts(target: Db): void {
+  const upsert = target.prepare(
+    `INSERT INTO interview_prompts (slug, prompt, category, guidance, sort_order)
+     VALUES (?, ?, ?, ?, ?)
+     ON CONFLICT(slug) DO UPDATE SET
+       prompt = excluded.prompt, category = excluded.category,
+       guidance = excluded.guidance, sort_order = excluded.sort_order`,
+  );
+  INTERVIEW_PROMPTS.forEach((prompt, index) => {
+    upsert.run(prompt.slug, prompt.prompt, prompt.category, prompt.guidance, (index + 1) * 10);
+  });
 }
 
 function seedSettings(target: Db): void {

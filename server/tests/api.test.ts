@@ -554,3 +554,60 @@ describe('first-hand company reports', () => {
     assert.equal(response.body.reports[0].status, 'accepted');
   });
 });
+
+describe('behavioural answer builder', () => {
+  let promptId: number;
+
+  it('offers prompts with guidance and no score', async () => {
+    const response = await call<{
+      rubric: { key: string }[];
+      prompts: { id: number; prompt: string; guidance: string | null; answer: unknown }[];
+    }>('GET', '/practice/interview-prompts', { token: studentToken });
+
+    assert.equal(response.status, 200);
+    assert.ok(response.body.prompts.length >= 10);
+    assert.ok(response.body.rubric.length > 0, 'a rubric is what replaces a score here');
+    assert.ok(response.body.prompts.every((p) => p.guidance), 'every prompt should say what a good answer contains');
+    assert.equal(response.body.prompts[0].answer, null, 'nothing drafted yet');
+    promptId = response.body.prompts[0].id;
+
+    // The contract that matters: no numeric judgement of writing anywhere.
+    const raw = JSON.stringify(response.body);
+    assert.ok(!/"score"|"grade"|"rating"/.test(raw), 'free text must not be auto-scored');
+  });
+
+  it('saves a draft and returns it verbatim', async () => {
+    const situation = 'Final-year project, three weeks before the review.';
+    const saved = await call('PUT', `/practice/interview-prompts/${promptId}/answer`, {
+      token: studentToken,
+      body: { situation, task: 'I owned the API.', action: 'Rewrote the sync as a queue.', result: 'Cut p95 to 200ms.' },
+    });
+    assert.equal(saved.status, 200);
+
+    const response = await call<{ prompts: { id: number; answer: { situation: string } | null }[] }>(
+      'GET',
+      '/practice/interview-prompts',
+      { token: studentToken },
+    );
+    const prompt = response.body.prompts.find((p) => p.id === promptId)!;
+    assert.equal(prompt.answer?.situation, situation);
+  });
+
+  it('keeps one student drafts private from another', async () => {
+    const response = await call<{ prompts: { id: number; answer: unknown }[] }>(
+      'GET',
+      '/practice/interview-prompts',
+      { token: adminToken },
+    );
+    const prompt = response.body.prompts.find((p) => p.id === promptId)!;
+    assert.equal(prompt.answer, null, 'drafts belong to the student who wrote them');
+  });
+
+  it('rejects a draft against a prompt that does not exist', async () => {
+    const response = await call('PUT', '/practice/interview-prompts/999999/answer', {
+      token: studentToken,
+      body: { situation: 'x' },
+    });
+    assert.equal(response.status, 404);
+  });
+});

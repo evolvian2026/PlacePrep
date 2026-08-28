@@ -2,11 +2,12 @@ import { Router } from 'express';
 import { z } from 'zod';
 import { db } from '../db/index.js';
 import { badRequest, handler, notFound, parse } from '../lib/http.js';
-import { pct } from '../lib/util.js';
+import { json, pct } from '../lib/util.js';
 import { attachUser, currentUser, requireAuth } from '../middleware/auth.js';
 import { findQuestions, loadCodingProblems, loadOptions, loadTestCases } from '../engines/question-engine.js';
 import { recordGradedAnswers, refreshCompanyProgress } from '../engines/progress.js';
 import { dueCards, revisionSummary } from '../engines/revision.js';
+import { STAR_RUBRIC } from '../db/seed/interview-prompts.js';
 import { awardXp, evaluateBadges, loadXpConfig } from '../engines/gamification.js';
 import type { Difficulty, QuestionType } from '../types.js';
 
@@ -397,6 +398,111 @@ practiceRouter.get(
         revision: byQuestion.get(row.id) ?? null,
       })),
     });
+  }),
+);
+
+// ─────────────────────── behavioural answer builder ───────────────────────
+
+/**
+ * Prompts with whatever the student has already drafted against each.
+ *
+ * No score is returned, and none is computed. Judging a written answer well is
+ * a language-model problem; a keyword heuristic dressed up as feedback would
+ * be worse than none, because a student would believe it.
+ */
+practiceRouter.get(
+  '/interview-prompts',
+  requireAuth,
+  handler((req, res) => {
+    const user = currentUser(req);
+    const rows = db()
+      .prepare<[number], {
+        id: number;
+        slug: string;
+        prompt: string;
+        category: string;
+        guidance: string | null;
+        situation: string | null;
+        task: string | null;
+        action: string | null;
+        result: string | null;
+        self_review: string | null;
+        updated_at: string | null;
+      }>(
+        `SELECT p.id, p.slug, p.prompt, p.category, p.guidance,
+                a.situation, a.task, a.action, a.result, a.self_review, a.updated_at
+           FROM interview_prompts p
+           LEFT JOIN star_answers a ON a.prompt_id = p.id AND a.user_id = ?
+          ORDER BY p.sort_order, p.id`,
+      )
+      .all(user.id);
+
+    res.json({
+      rubric: STAR_RUBRIC,
+      prompts: rows.map((row) => ({
+        id: row.id,
+        slug: row.slug,
+        prompt: row.prompt,
+        category: row.category,
+        guidance: row.guidance,
+        answer:
+          row.updated_at === null
+            ? null
+            : {
+                situation: row.situation ?? '',
+                task: row.task ?? '',
+                action: row.action ?? '',
+                result: row.result ?? '',
+                selfReview: json<Record<string, number>>(row.self_review ?? '{}', {}),
+                updatedAt: row.updated_at,
+              },
+      })),
+    });
+  }),
+);
+
+/** Saves a draft. Drafts are private to the student who wrote them. */
+practiceRouter.put(
+  '/interview-prompts/:id/answer',
+  requireAuth,
+  handler((req, res) => {
+    const user = currentUser(req);
+    const promptId = Number(req.params.id);
+    if (!db().prepare('SELECT 1 FROM interview_prompts WHERE id = ?').get(promptId)) {
+      throw notFound('Prompt not found');
+    }
+
+    const input = parse(
+      z.object({
+        situation: z.string().max(2000).optional(),
+        task: z.string().max(2000).optional(),
+        action: z.string().max(4000).optional(),
+        result: z.string().max(2000).optional(),
+        selfReview: z.record(z.number().int().min(0).max(3)).optional(),
+      }),
+      req.body,
+    );
+
+    db()
+      .prepare(
+        `INSERT INTO star_answers (user_id, prompt_id, situation, task, action, result, self_review)
+         VALUES (?, ?, ?, ?, ?, ?, ?)
+         ON CONFLICT(user_id, prompt_id) DO UPDATE SET
+           situation = excluded.situation, task = excluded.task,
+           action = excluded.action, result = excluded.result,
+           self_review = excluded.self_review, updated_at = datetime('now')`,
+      )
+      .run(
+        user.id,
+        promptId,
+        input.situation ?? '',
+        input.task ?? '',
+        input.action ?? '',
+        input.result ?? '',
+        JSON.stringify(input.selfReview ?? {}),
+      );
+
+    res.json({ ok: true });
   }),
 );
 

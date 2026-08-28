@@ -17,6 +17,7 @@ const STUDENT_NAV: NavItem[] = [
   { to: '/practice', label: 'Practice', icon: '✎' },
   { to: '/mock-tests', label: 'Mock tests', icon: '⏱' },
   { to: '/coding', label: 'Coding', icon: '⌘' },
+  { to: '/interview', label: 'Interview', icon: '☏' },
   { to: '/performance', label: 'Performance', icon: '▲' },
   { to: '/leaderboard', label: 'Leaderboard', icon: '★' },
   { to: '/profile', label: 'Profile', icon: '☺' },

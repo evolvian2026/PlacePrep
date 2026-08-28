@@ -11,6 +11,7 @@ import CompanyDetail from './pages/student/CompanyDetail';
 import RoundDetail from './pages/student/RoundDetail';
 import Roadmap from './pages/student/Roadmap';
 import Practice from './pages/student/Practice';
+import Interview from './pages/student/Interview';
 import MockTests from './pages/student/MockTests';
 import TestRunner from './pages/student/TestRunner';
 import TestResult from './pages/student/TestResult';
@@ -73,6 +74,7 @@ export default function App() {
           <Route path="/practice" element={<Practice />} />
           <Route path="/mock-tests" element={<MockTests />} />
           <Route path="/results/:attemptId" element={<TestResult />} />
+          <Route path="/interview" element={<Interview />} />
           <Route path="/coding" element={<Coding />} />
           <Route path="/coding/:problemId" element={<CodingProblem />} />
           <Route path="/performance" element={<Performance />} />
