@@ -35,6 +35,8 @@ export interface QuestionRow {
 }
 
 export interface QuestionFilter {
+  /** Restrict to these exact questions — used by the revision queue. */
+  ids?: number[];
   companyId?: number;
   roundId?: number;
   roundType?: string;
@@ -104,6 +106,12 @@ function buildFilter(filter: QuestionFilter): BuiltQuery {
   if (filter.search) {
     clauses.push('(q.body LIKE ? OR q.public_id LIKE ?)');
     params.push(`%${filter.search}%`, `%${filter.search}%`);
+  }
+
+  if (filter.ids) {
+    if (filter.ids.length === 0) return { where: '0 = 1', params: [] };
+    clauses.push(`q.id IN (${filter.ids.map(() => '?').join(', ')})`);
+    params.push(...filter.ids);
   }
 
   if (filter.companyId || filter.roundType) {

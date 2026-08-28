@@ -8,6 +8,7 @@
  * analyse → recommend → practise → reassess.
  */
 import type { Db } from '../db/index.js';
+import { recordOutcome } from './revision.js';
 import { db as sharedDb } from '../db/index.js';
 import { today } from '../lib/util.js';
 import { MASTERY_COMPLETE, computeMastery, computeCompanyReadiness } from './readiness.js';
@@ -31,6 +32,12 @@ export function recordGradedAnswers(
   target: Db = sharedDb(),
 ): void {
   if (answers.length === 0) return;
+
+  // Every graded answer in the app — practice, mocks and coding — arrives
+  // here, which makes this the one place the revision queue needs to hook.
+  for (const answer of answers) {
+    recordOutcome(userId, answer.questionId, answer.isCorrect, target);
+  }
 
   const upsert = target.prepare(
     `INSERT INTO topic_progress (

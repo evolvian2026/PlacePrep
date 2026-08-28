@@ -30,7 +30,9 @@ interface Question {
   frequentlyAsked: boolean;
   options: { label: string; body: string }[];
   coding?: { problemId: number; title: string };
-  state: { attempts: number; solved: boolean; lastCorrect: boolean | null };
+  state?: { attempts: number; solved: boolean; lastCorrect: boolean | null };
+  /** Present only on the revision queue. */
+  revision?: { box: number; dueOn: string; timesSeen: number; timesCorrect: number } | null;
 }
 
 interface AnswerResult {
@@ -69,6 +71,8 @@ export default function Practice() {
   const [order, setOrder] = useState('newest');
 
   const { data: topicData } = useApi<{ topics: TopicRow[] }>('/practice/topics');
+  const revisionMode = params.get('mode') === 'revision';
+  const revision = useApi<{ summary: RevisionSummary; questions: Question[] }>('/practice/revision');
   const { data: companyData } = useApi<{ companies: { slug: string; name: string }[] }>('/companies');
 
   const { data, loading, error, reload } = useApi<{ questions: Question[]; total: number }>('/practice/questions', {
@@ -101,6 +105,39 @@ export default function Practice() {
         subtitle="Topic-wise questions with full explanations. Every answer feeds your mastery scores and your roadmap."
       />
 
+      <RevisionBanner
+        summary={revision.data?.summary}
+        active={revisionMode}
+        onToggle={() => setParam('mode', revisionMode ? '' : 'revision')}
+      />
+
+      {revisionMode ? (
+        <div className="space-y-4">
+          {(revision.data?.questions ?? []).length === 0 ? (
+            <Card>
+              <Empty
+                title="Nothing due right now"
+                hint={
+                  revision.data?.summary.nextDueOn
+                    ? `Your next review is scheduled for ${revision.data.summary.nextDueOn}.`
+                    : 'Questions you get wrong will appear here on a spaced schedule.'
+                }
+              />
+            </Card>
+          ) : (
+            (revision.data?.questions ?? []).map((question, index) => (
+              <QuestionCard
+                key={question.id}
+                question={question}
+                index={index + 1}
+                companySlug={companySlug}
+                onAnswered={() => revision.reload()}
+              />
+            ))
+          )}
+        </div>
+      ) : (
+      <>
       <Card>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <Select
@@ -228,17 +265,83 @@ export default function Practice() {
             </p>
             <div className="space-y-4">
               {data.questions.map((question, index) => (
-                <QuestionCard key={question.id} question={question} index={index + 1} companySlug={companySlug} />
+                <QuestionCard
+                  key={question.id}
+                  question={question}
+                  index={index + 1}
+                  companySlug={companySlug}
+                  onAnswered={() => revision.reload()}
+                />
               ))}
             </div>
           </>
         )
       ) : null}
+      </>
+      )}
     </div>
   );
 }
 
-function QuestionCard({ question, index, companySlug }: { question: Question; index: number; companySlug: string }) {
+interface RevisionSummary {
+  due: number;
+  scheduled: number;
+  retired: number;
+  nextDueOn: string | null;
+}
+
+/**
+ * Revision only exists because of mistakes, so the banner never appears until
+ * there is something to revise, and it counts what is waiting rather than
+ * nagging about what was got wrong.
+ */
+function RevisionBanner({
+  summary,
+  active,
+  onToggle,
+}: {
+  summary: RevisionSummary | undefined;
+  active: boolean;
+  onToggle: () => void;
+}) {
+  if (!summary || summary.scheduled + summary.retired === 0) return null;
+
+  return (
+    <Card>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h2 className="text-sm font-semibold ink">
+            {summary.due > 0
+              ? `${summary.due} question${summary.due === 1 ? '' : 's'} due for revision`
+              : 'Nothing due for revision today'}
+          </h2>
+          <p className="mt-0.5 text-xs ink-muted">
+            Questions you got wrong come back on a widening schedule — a day, then three, then a week, then
+            three weeks. {summary.scheduled} scheduled
+            {summary.retired > 0 ? `, ${summary.retired} learned` : ''}
+            {summary.due === 0 && summary.nextDueOn ? ` · next on ${summary.nextDueOn}` : ''}.
+          </p>
+        </div>
+        <Button variant={active ? 'primary' : 'secondary'} size="sm" onClick={onToggle}>
+          {active ? 'Back to all questions' : 'Revise now'}
+        </Button>
+      </div>
+    </Card>
+  );
+}
+
+function QuestionCard({
+  question,
+  index,
+  companySlug,
+  onAnswered,
+}: {
+  question: Question;
+  index: number;
+  companySlug: string;
+  /** Lets the revision banner refresh its counts as soon as an answer lands. */
+  onAnswered?: () => void;
+}) {
   const [selected, setSelected] = useState<string[]>([]);
   const [result, setResult] = useState<AnswerResult | null>(null);
   const elapsed = useElapsed(question.id);
@@ -260,10 +363,14 @@ function QuestionCard({ question, index, companySlug }: { question: Question; in
       },
     });
     setResult(answer);
+    onAnswered?.();
     return answer;
   });
 
   const feedbackFor = (label: string) => result?.optionFeedback.find((entry) => entry.label === label);
+  // In revision mode the card carries its own history, which is the useful
+  // context: how many times this one has caught you out before.
+  const revision = question.revision;
 
   if (question.questionType === 'coding' && question.coding) {
     return (
@@ -293,7 +400,12 @@ function QuestionCard({ question, index, companySlug }: { question: Question; in
           <Badge>{DIFFICULTY_LABEL[question.difficulty]}</Badge>
           {question.topic ? <Badge tone="neutral">{question.topic}</Badge> : null}
           {question.frequentlyAsked ? <Badge tone="warning" icon="★">Frequently asked</Badge> : null}
-          {question.state.solved ? <Badge tone="good" icon="✓">Solved before</Badge> : null}
+          {question.state?.solved ? <Badge tone="good" icon="✓">Solved before</Badge> : null}
+          {revision ? (
+            <Badge tone="warning">
+              Missed {revision.timesSeen - revision.timesCorrect}× · review {revision.box + 1} of 4
+            </Badge>
+          ) : null}
           {multi ? <Badge tone="brand">Select all that apply</Badge> : null}
         </div>
         <span className="text-xs tabular ink-muted">

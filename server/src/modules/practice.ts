@@ -6,6 +6,7 @@ import { pct } from '../lib/util.js';
 import { attachUser, currentUser, requireAuth } from '../middleware/auth.js';
 import { findQuestions, loadCodingProblems, loadOptions, loadTestCases } from '../engines/question-engine.js';
 import { recordGradedAnswers, refreshCompanyProgress } from '../engines/progress.js';
+import { dueCards, revisionSummary } from '../engines/revision.js';
 import { awardXp, evaluateBadges, loadXpConfig } from '../engines/gamification.js';
 import type { Difficulty, QuestionType } from '../types.js';
 
@@ -354,6 +355,51 @@ practiceRouter.post(
 );
 
 /** Topic list with the caller's mastery, for the practice landing page. */
+/**
+ * The revision queue: questions this student has actually got wrong,
+ * resurfaced on a spacing schedule. Shaped like the practice browser so the
+ * same card UI renders it.
+ */
+practiceRouter.get(
+  '/revision',
+  requireAuth,
+  handler((req, res) => {
+    const user = currentUser(req);
+    const limit = Math.min(Number(req.query.limit ?? 20) || 20, 50);
+    const summary = revisionSummary(user.id);
+    const cards = dueCards(user.id, limit);
+
+    if (cards.length === 0) {
+      res.json({ summary, questions: [] });
+      return;
+    }
+
+    const byQuestion = new Map(cards.map((card) => [card.questionId, card]));
+    const { rows } = findQuestions({ ids: [...byQuestion.keys()], status: 'published', limit: cards.length });
+    const optionMap = loadOptions(rows.map((row) => row.id));
+
+    res.json({
+      summary,
+      questions: rows.map((row) => ({
+        id: row.id,
+        publicId: row.public_id,
+        questionType: row.question_type,
+        body: row.body,
+        difficulty: row.difficulty,
+        topic: row.topic_name,
+        topicId: row.topic_id,
+        subtopic: row.subtopic_name,
+        expectedSeconds: row.expected_seconds,
+        frequentlyAsked: row.frequently_asked === 1,
+        marks: row.marks,
+        optionCount: (optionMap.get(row.id) ?? []).length,
+        options: (optionMap.get(row.id) ?? []).map((option) => ({ label: option.label, body: option.body })),
+        revision: byQuestion.get(row.id) ?? null,
+      })),
+    });
+  }),
+);
+
 practiceRouter.get(
   '/topics',
   handler((req, res) => {

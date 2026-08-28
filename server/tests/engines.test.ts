@@ -15,6 +15,8 @@ import { startAttempt, saveAnswer, submitAttempt, loadAttemptState } from '../sr
 import { evaluateEligibility } from '../src/engines/eligibility.js';
 import { loadExposure } from '../src/engines/question-engine.js';
 import { recordAttemptEvent, summariseIntegrity } from '../src/engines/proctoring.js';
+import { BOXES_TO_RETIRE, dueCards, recordOutcome, revisionSummary } from '../src/engines/revision.js';
+import { recordGradedAnswers } from '../src/engines/progress.js';
 import { generatePlan, scoreTopicsForCompany, ensureCurrentPlan } from '../src/engines/recommendation-engine.js';
 import { evaluateBadges, awardXp, levelFor, totalXp, leaderboard } from '../src/engines/gamification.js';
 import { parseCsv, shuffle, mulberry32, pct } from '../src/lib/util.js';
@@ -600,5 +602,93 @@ describe('proctoring signals', () => {
     ).attemptId;
     recordAttemptEvent(other, 'tab_hidden', 999_999, db);
     assert.equal(summariseIntegrity(other, db).awaySeconds, 6 * 60 * 60);
+  });
+});
+
+describe('revision queue', () => {
+  let rdb: ReturnType<typeof createTestDb>;
+  let userId: number;
+  let questionId: number;
+  let otherQuestionId: number;
+
+  before(() => {
+    rdb = createTestDb();
+    seed(rdb);
+    userId = rdb.prepare<[], { id: number }>("SELECT id FROM users WHERE role = 'student' LIMIT 1").get()!.id;
+    const questions = rdb
+      .prepare<[], { id: number }>("SELECT id FROM questions WHERE question_type = 'mcq' LIMIT 2")
+      .all();
+    questionId = questions[0].id;
+    otherQuestionId = questions[1].id;
+  });
+
+  it('does not queue a question answered correctly first time', () => {
+    recordOutcome(userId, otherQuestionId, true, rdb);
+    assert.equal(revisionSummary(userId, rdb).scheduled, 0, 'getting it right should not create revision work');
+  });
+
+  it('queues a missed question for tomorrow, not for right now', () => {
+    recordOutcome(userId, questionId, false, rdb);
+    const summary = revisionSummary(userId, rdb);
+    assert.equal(summary.scheduled, 1);
+    assert.equal(summary.due, 0, 'immediate re-answering tests short-term memory, not recall');
+    assert.ok(summary.nextDueOn);
+  });
+
+  it('moves a card up a box on each correct recall, spacing it further out', () => {
+    const dueDates: string[] = [];
+    for (let box = 0; box < BOXES_TO_RETIRE - 1; box += 1) {
+      // Pull the card forward so it is reviewable, then answer it correctly.
+      rdb.prepare("UPDATE revision_cards SET due_on = date('now','-1 day') WHERE user_id = ? AND question_id = ?")
+        .run(userId, questionId);
+      assert.equal(dueCards(userId, 10, rdb).length, 1, `card should be due at box ${box}`);
+      recordOutcome(userId, questionId, true, rdb);
+      dueDates.push(
+        rdb.prepare<[number, number], { due_on: string }>(
+          'SELECT due_on FROM revision_cards WHERE user_id = ? AND question_id = ?',
+        ).get(userId, questionId)!.due_on,
+      );
+    }
+    assert.deepEqual([...dueDates].sort(), dueDates, 'each correct recall must push the card further out');
+  });
+
+  it('retires a card once it has been recalled through every box', () => {
+    rdb.prepare("UPDATE revision_cards SET due_on = date('now','-1 day') WHERE user_id = ? AND question_id = ?")
+      .run(userId, questionId);
+    recordOutcome(userId, questionId, true, rdb);
+    const summary = revisionSummary(userId, rdb);
+    assert.equal(summary.retired, 1);
+    assert.equal(summary.scheduled, 0);
+    assert.equal(dueCards(userId, 10, rdb).length, 0, 'a retired card must not come back');
+  });
+
+  it('resurrects a retired card when the student misses it again', () => {
+    recordOutcome(userId, questionId, false, rdb);
+    const summary = revisionSummary(userId, rdb);
+    assert.equal(summary.retired, 0);
+    assert.equal(summary.scheduled, 1);
+    const card = rdb
+      .prepare<[number, number], { box: number }>(
+        'SELECT box FROM revision_cards WHERE user_id = ? AND question_id = ?',
+      )
+      .get(userId, questionId)!;
+    assert.equal(card.box, 0, 'a miss undoes the spacing rather than nudging it back one step');
+  });
+
+  it('feeds off every graded surface, not just practice', () => {
+    const fresh = rdb.prepare<[], { id: number }>(
+      "SELECT id FROM questions WHERE question_type = 'mcq' AND id NOT IN (SELECT question_id FROM revision_cards) LIMIT 1",
+    ).get()!;
+    recordGradedAnswers(
+      userId,
+      [{ questionId: fresh.id, topicId: null, difficulty: 'easy', isCorrect: false, timeSpentSeconds: 10 }],
+      rdb,
+    );
+    const queued = rdb
+      .prepare<[number, number], { n: number }>(
+        'SELECT COUNT(*) n FROM revision_cards WHERE user_id = ? AND question_id = ?',
+      )
+      .get(userId, fresh.id)!;
+    assert.equal(queued.n, 1, 'a mock or coding mistake should queue revision the same way practice does');
   });
 });
