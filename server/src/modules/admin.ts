@@ -8,6 +8,7 @@ import { attachUser, requireAdmin, requireFaculty, requireRole } from '../middle
 import { findQuestions, loadOptions, selectForRule } from '../engines/question-engine.js';
 import { sectorFor } from '../db/seed/sectors.js';
 import { summariseIntegrity } from '../engines/proctoring.js';
+import { cohortByCompany, cohortOverview, dormantStudents } from '../engines/cohort.js';
 import type { Difficulty, SelectionRule } from '../types.js';
 
 export const adminRouter = Router();
@@ -1563,6 +1564,53 @@ adminRouter.get(
  * observation: these are browser hints, and the UI must not present them as
  * findings against a student.
  */
+// ═══════════════════════════ cohort ═══════════════════════════
+
+const cohortFilterSchema = z.object({
+  collegeId: z.coerce.number().int().positive().optional(),
+  branch: z.string().trim().max(40).optional(),
+  graduationYear: z.coerce.number().int().min(2000).max(2100).optional(),
+});
+
+/** The colleges on the platform, for the cohort filter. */
+adminRouter.get(
+  '/colleges',
+  requireFaculty,
+  handler((_req, res) => {
+    const rows = db()
+      .prepare<[], { id: number; name: string; slug: string; students: number }>(
+        `SELECT c.id, c.name, c.slug,
+                (SELECT COUNT(*) FROM users u WHERE u.college_id = c.id AND u.role = 'student') AS students
+           FROM colleges c ORDER BY c.name`,
+      )
+      .all();
+    res.json({ colleges: rows });
+  }),
+);
+
+/**
+ * The placement cell's view: how ready is this cohort, for which companies,
+ * and who has not started.
+ */
+adminRouter.get(
+  '/cohort',
+  requireFaculty,
+  handler((req, res) => {
+    const query = parse(cohortFilterSchema, req.query);
+    const filter = {
+      collegeId: query.collegeId ?? null,
+      branch: query.branch ?? null,
+      graduationYear: query.graduationYear ?? null,
+    };
+
+    res.json({
+      overview: cohortOverview(filter),
+      companies: cohortByCompany(filter),
+      dormant: dormantStudents(filter, 50),
+    });
+  }),
+);
+
 // ═══════════════════ first-hand company reports ═══════════════════
 
 /** The review queue: what students have reported about real hiring processes. */

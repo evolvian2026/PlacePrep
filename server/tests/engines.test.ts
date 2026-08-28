@@ -17,6 +17,7 @@ import { loadExposure } from '../src/engines/question-engine.js';
 import { recordAttemptEvent, summariseIntegrity } from '../src/engines/proctoring.js';
 import { BOXES_TO_RETIRE, dueCards, recordOutcome, revisionSummary } from '../src/engines/revision.js';
 import { generatePlan, horizonForTarget } from '../src/engines/recommendation-engine.js';
+import { cohortOverview, resolveCollegeId } from '../src/engines/cohort.js';
 import { addDays, today } from '../src/lib/util.js';
 import { recordGradedAnswers } from '../src/engines/progress.js';
 import { generatePlan, scoreTopicsForCompany, ensureCurrentPlan } from '../src/engines/recommendation-engine.js';
@@ -751,5 +752,58 @@ describe('deadline-driven plans', () => {
     assert.equal(plan.pace, 'comfortable');
     assert.match(plan.rationale, /drive is on/);
     assert.ok(plan.items.some((item) => item.dayIndex === 10), 'the plan should reach the drive date');
+  });
+});
+
+describe('cohort view', () => {
+  let cdb: ReturnType<typeof createTestDb>;
+
+  before(() => {
+    cdb = createTestDb();
+    seed(cdb);
+  });
+
+  it('merges colleges written differently into one cohort', () => {
+    const a = resolveCollegeId('N.I.T. Trichy', cdb);
+    const b = resolveCollegeId('nit trichy', cdb);
+    const c = resolveCollegeId('NIT  Trichy', cdb);
+    assert.equal(a, b, 'punctuation should not split a cohort');
+    assert.equal(b, c, 'spacing should not split a cohort');
+    assert.notEqual(resolveCollegeId('NIT Warangal', cdb), a);
+  });
+
+  it('treats a blank college as no college rather than creating an empty one', () => {
+    assert.equal(resolveCollegeId('', cdb), null);
+    assert.equal(resolveCollegeId(null, cdb), null);
+    assert.equal(resolveCollegeId('   ', cdb), null);
+  });
+
+  it('counts students who have never started, which is the cell to-do list', () => {
+    const collegeId = resolveCollegeId('Test College', cdb);
+    const insert = cdb.prepare(
+      `INSERT INTO users (email, password_hash, name, role, college, college_id, branch, graduation_year)
+       VALUES (?, 'x', ?, 'student', 'Test College', ?, 'CSE', 2026)`,
+    );
+    for (let i = 0; i < 3; i += 1) insert.run(`cohort${i}@test.dev`, `Student ${i}`, collegeId);
+
+    const overview = cohortOverview({ collegeId }, cdb);
+    assert.equal(overview.students, 3);
+    assert.equal(overview.neverAttempted, 3);
+    assert.equal(overview.active, 0);
+    assert.equal(overview.averageReadiness, 0);
+  });
+
+  it('reports the spread, not just the average', () => {
+    const collegeId = resolveCollegeId('Test College', cdb);
+    const overview = cohortOverview({ collegeId }, cdb);
+    const total = overview.bands.reduce((sum, band) => sum + band.students, 0);
+    assert.equal(total, overview.students, 'every student must land in exactly one band');
+    assert.ok(overview.bands.some((band) => band.band === 'weak' && band.students === 3));
+  });
+
+  it('narrows to a branch without leaking the rest of the cohort', () => {
+    const collegeId = resolveCollegeId('Test College', cdb);
+    assert.equal(cohortOverview({ collegeId, branch: 'CSE' }, cdb).students, 3);
+    assert.equal(cohortOverview({ collegeId, branch: 'Mechanical' }, cdb).students, 0);
   });
 });

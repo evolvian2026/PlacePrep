@@ -29,6 +29,7 @@ const ADMIN_NAV: NavItem[] = [
   { to: '/admin/questions', label: 'Question bank', icon: '✎' },
   { to: '/admin/mock-tests', label: 'Mock tests', icon: '⏱' },
   { to: '/admin/students', label: 'Students', icon: '☺' },
+  { to: '/admin/cohort', label: 'Cohort', icon: '⚭' },
   { to: '/admin/reports', label: 'Student reports', icon: '✉' },
   { to: '/admin/analytics', label: 'Analytics', icon: '▲' },
   { to: '/admin/settings', label: 'Settings', icon: '⚙' },

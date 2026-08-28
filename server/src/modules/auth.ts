@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { resolveCollegeId } from '../engines/cohort.js';
 import bcrypt from 'bcryptjs';
 import { z } from 'zod';
 import { db } from '../db/index.js';
@@ -86,14 +87,17 @@ authRouter.post(
 
     const info = db()
       .prepare(
-        `INSERT INTO users (email, password_hash, name, role, college, branch, graduation_year, cgpa, avatar_seed)
-         VALUES (?, ?, ?, 'student', ?, ?, ?, ?, ?)`,
+        `INSERT INTO users (email, password_hash, name, role, college, college_id, branch, graduation_year, cgpa, avatar_seed)
+         VALUES (?, ?, ?, 'student', ?, ?, ?, ?, ?, ?)`,
       )
       .run(
         input.email,
         bcrypt.hashSync(input.password, 10),
         input.name,
         input.college ?? null,
+        // The typed name is kept as the student wrote it; the id is what makes
+        // them part of a cohort.
+        resolveCollegeId(input.college),
         input.branch ?? null,
         input.graduationYear ?? null,
         input.cgpa ?? null,
@@ -167,6 +171,11 @@ authRouter.patch(
         fields.push(`${column} = ?`);
         params.push((input as Record<string, unknown>)[key] ?? null);
       }
+    }
+    // Keep the cohort link in step with whatever the student typed.
+    if ('college' in input) {
+      fields.push('college_id = ?');
+      params.push(resolveCollegeId(input.college));
     }
     if (fields.length === 0) throw badRequest('No fields to update');
 
