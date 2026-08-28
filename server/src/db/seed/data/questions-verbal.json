@@ -1,0 +1,760 @@
+[
+  {
+    "id": "VRB-0001",
+    "body": "Choose the grammatically correct sentence.",
+    "topic": "verbal-ability",
+    "subtopic": "sentence-correction",
+    "difficulty": "easy",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "frequentlyAsked": true,
+    "options": [
+      {
+        "body": "Neither of the two candidates was selected.",
+        "correct": true
+      },
+      {
+        "body": "Neither of the two candidates were selected.",
+        "whyWrong": "\"Neither\" is singular, so it takes \"was\", not \"were\"."
+      },
+      {
+        "body": "Neither of the two candidate was selected.",
+        "whyWrong": "\"Candidate\" must be plural after \"of the two\"."
+      },
+      {
+        "body": "Neither of the two candidates has been select.",
+        "whyWrong": "\"Select\" must be the past participle \"selected\"."
+      }
+    ],
+    "explanation": "\"Neither\" is a singular pronoun and governs a singular verb, so \"was selected\" is correct. The noun after \"of the two\" stays plural.",
+    "concept": "Indefinite pronouns like each, either, neither and every one take singular verbs."
+  },
+  {
+    "id": "VRB-0002",
+    "body": "Identify the error: \"The list of items were sent to the manager yesterday.\"",
+    "topic": "verbal-ability",
+    "subtopic": "sentence-correction",
+    "difficulty": "easy",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "\"were\" should be \"was\"",
+        "correct": true
+      },
+      {
+        "body": "\"list\" should be \"lists\"",
+        "whyWrong": "The subject is a single list, so the noun is fine."
+      },
+      {
+        "body": "\"items\" should be \"item\"",
+        "whyWrong": "The list can contain many items; the plural is correct."
+      },
+      {
+        "body": "There is no error",
+        "whyWrong": "The verb does not agree with the singular head noun \"list\"."
+      }
+    ],
+    "explanation": "The subject is \"the list\", not \"items\" — the prepositional phrase \"of items\" does not change the number. The verb must be \"was sent\".",
+    "concept": "A verb agrees with the head noun of the subject, not with a noun inside an intervening phrase."
+  },
+  {
+    "id": "VRB-0003",
+    "body": "Choose the word closest in meaning to \"MITIGATE\".",
+    "topic": "verbal-ability",
+    "subtopic": "synonyms-antonyms",
+    "difficulty": "medium",
+    "expectedSeconds": 40,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Alleviate",
+        "correct": true
+      },
+      {
+        "body": "Aggravate",
+        "whyWrong": "This is the opposite — it means to make worse."
+      },
+      {
+        "body": "Mediate",
+        "whyWrong": "Mediate means to intervene between parties, a different idea."
+      },
+      {
+        "body": "Motivate",
+        "whyWrong": "Motivate means to provide a reason to act."
+      }
+    ],
+    "explanation": "\"Mitigate\" means to make less severe. \"Alleviate\" carries the same sense of easing or lessening."
+  },
+  {
+    "id": "VRB-0004",
+    "body": "Choose the word most nearly OPPOSITE in meaning to \"FRUGAL\".",
+    "topic": "verbal-ability",
+    "subtopic": "synonyms-antonyms",
+    "difficulty": "medium",
+    "expectedSeconds": 40,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Extravagant",
+        "correct": true
+      },
+      {
+        "body": "Economical",
+        "whyWrong": "This is a synonym of frugal, not an antonym."
+      },
+      {
+        "body": "Prudent",
+        "whyWrong": "Prudent is closer in meaning to frugal than opposed to it."
+      },
+      {
+        "body": "Fruitful",
+        "whyWrong": "Similar-sounding but unrelated in meaning."
+      }
+    ],
+    "explanation": "\"Frugal\" means sparing with money or resources; \"extravagant\" means spending excessively."
+  },
+  {
+    "id": "VRB-0005",
+    "body": "Select the correct order to form a coherent paragraph:\nP. This led to a sharp fall in production costs.\nQ. Solar panel efficiency improved steadily through the decade.\nR. As a result, solar became competitive with fossil fuels in many markets.\nS. Manufacturers simultaneously scaled up their factories.",
+    "topic": "verbal-ability",
+    "subtopic": "para-jumbles",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Q, S, P, R",
+        "correct": true
+      },
+      {
+        "body": "Q, P, S, R",
+        "whyWrong": "The cost fall (P) is the consequence of scaling up (S), so S must come first."
+      },
+      {
+        "body": "S, Q, R, P",
+        "whyWrong": "R is a concluding result and cannot precede P, its cause."
+      },
+      {
+        "body": "P, Q, S, R",
+        "whyWrong": "P opens with \"This\", which needs an antecedent — it cannot be the first sentence."
+      }
+    ],
+    "explanation": "Q introduces the topic. S adds a parallel development (\"simultaneously\"). P states the joint consequence (\"This led to\"). R draws the final conclusion (\"As a result\").",
+    "concept": "Anchor jumbles on referring words: \"this\", \"as a result\" and \"simultaneously\" all point backwards."
+  },
+  {
+    "id": "VRB-0006",
+    "body": "Read the passage: \"Remote work reduced commuting time for millions, but studies suggest it also blurred the boundary between professional and personal hours. Employees reported working later into the evening, even as they valued the flexibility.\"\n\nWhat is the author’s main point?",
+    "topic": "verbal-ability",
+    "subtopic": "reading-comprehension",
+    "difficulty": "medium",
+    "expectedSeconds": 80,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "frequentlyAsked": true,
+    "options": [
+      {
+        "body": "Remote work brings both a clear benefit and an unintended cost.",
+        "correct": true
+      },
+      {
+        "body": "Remote work should be discontinued because it harms employees.",
+        "whyWrong": "The passage is balanced and makes no recommendation."
+      },
+      {
+        "body": "Employees dislike the flexibility of remote work.",
+        "whyWrong": "The passage explicitly says they valued the flexibility."
+      },
+      {
+        "body": "Commuting time is the only meaningful measure of work quality.",
+        "whyWrong": "Nothing in the passage claims this."
+      }
+    ],
+    "explanation": "The passage pairs a benefit (less commuting, valued flexibility) with a drawback (eroded boundaries, longer evenings). The \"but\" signals that balance is the main point."
+  },
+  {
+    "id": "VRB-0007",
+    "body": "Fill in the blank: \"Despite ______ evidence, the committee refused to revise its conclusion.\"",
+    "topic": "verbal-ability",
+    "subtopic": "vocabulary",
+    "difficulty": "medium",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "compelling",
+        "correct": true
+      },
+      {
+        "body": "compelled",
+        "whyWrong": "The past participle cannot modify \"evidence\" in this construction."
+      },
+      {
+        "body": "competing",
+        "whyWrong": "Competing evidence would give the committee a reason to hesitate, weakening the contrast \"despite\" sets up."
+      },
+      {
+        "body": "complacent",
+        "whyWrong": "Complacent describes a person’s attitude, not evidence."
+      }
+    ],
+    "explanation": "\"Despite\" sets up a contrast, so the evidence must be strong enough to warrant a revision. \"Compelling\" supplies that strength."
+  },
+  {
+    "id": "VRB-0008",
+    "body": "Choose the correctly spelled word.",
+    "topic": "verbal-ability",
+    "subtopic": "vocabulary",
+    "difficulty": "easy",
+    "expectedSeconds": 30,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Accommodation",
+        "correct": true
+      },
+      {
+        "body": "Accomodation",
+        "whyWrong": "This drops one \"m\" — the word takes double c and double m."
+      },
+      {
+        "body": "Acommodation",
+        "whyWrong": "This drops one \"c\"."
+      },
+      {
+        "body": "Accommodatoin",
+        "whyWrong": "The final syllable is \"-tion\", not \"-toin\"."
+      }
+    ],
+    "explanation": "\"Accommodation\" is spelled with a double \"c\" and a double \"m\"."
+  },
+  {
+    "id": "VRB-0009",
+    "body": "Choose the sentence with correct tense usage.",
+    "topic": "verbal-ability",
+    "subtopic": "sentence-correction",
+    "difficulty": "medium",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "She has been working here since 2020.",
+        "correct": true
+      },
+      {
+        "body": "She is working here since 2020.",
+        "whyWrong": "\"Since\" with an ongoing action requires the present perfect continuous, not the present continuous."
+      },
+      {
+        "body": "She works here since 2020.",
+        "whyWrong": "The simple present cannot take \"since\" for a duration reaching the present."
+      },
+      {
+        "body": "She had been working here since 2020.",
+        "whyWrong": "The past perfect continuous implies the action has ended, which contradicts the present reference."
+      }
+    ],
+    "explanation": "An action beginning in the past and continuing into the present takes the present perfect continuous: \"has been working … since 2020\".",
+    "concept": "\"Since\" marks a starting point and pairs with perfect tenses; \"for\" marks a duration."
+  },
+  {
+    "id": "VRB-0010",
+    "body": "Identify the part of speech of the underlined word: \"The team performed *remarkably* well.\"",
+    "topic": "verbal-ability",
+    "subtopic": "sentence-correction",
+    "difficulty": "easy",
+    "expectedSeconds": 35,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Adverb",
+        "correct": true
+      },
+      {
+        "body": "Adjective",
+        "whyWrong": "An adjective would modify a noun; here another adverb (\"well\") is being modified."
+      },
+      {
+        "body": "Noun",
+        "whyWrong": "\"Remarkably\" does not name a thing."
+      },
+      {
+        "body": "Conjunction",
+        "whyWrong": "It joins nothing; it modifies."
+      }
+    ],
+    "explanation": "\"Remarkably\" modifies the adverb \"well\", and words that modify verbs, adjectives or other adverbs are adverbs."
+  },
+  {
+    "id": "VRB-0011",
+    "body": "Choose the option that best replaces the underlined phrase: \"The manager asked that the report *be submitted* by Friday.\"",
+    "topic": "verbal-ability",
+    "subtopic": "sentence-correction",
+    "difficulty": "hard",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "No change is required",
+        "correct": true
+      },
+      {
+        "body": "is submitted",
+        "whyWrong": "After \"asked that\", English uses the subjunctive base form, not the indicative."
+      },
+      {
+        "body": "will be submitted",
+        "whyWrong": "The future indicative does not fit a subjunctive clause of request."
+      },
+      {
+        "body": "was submitted",
+        "whyWrong": "The past tense contradicts the future deadline."
+      }
+    ],
+    "explanation": "Verbs of request (\"ask\", \"demand\", \"insist\", \"recommend\") take the subjunctive in the that-clause: \"that the report be submitted\".",
+    "concept": "The mandative subjunctive uses the bare base form regardless of the subject."
+  },
+  {
+    "id": "VRB-0012",
+    "body": "What is the meaning of the idiom \"to bite the bullet\"?",
+    "topic": "verbal-ability",
+    "subtopic": "vocabulary",
+    "difficulty": "easy",
+    "expectedSeconds": 35,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "To endure a painful situation with courage",
+        "correct": true
+      },
+      {
+        "body": "To speak without thinking",
+        "whyWrong": "That is closer to \"to shoot from the hip\"."
+      },
+      {
+        "body": "To take an unnecessary risk",
+        "whyWrong": "That is closer to \"to chance one’s arm\"."
+      },
+      {
+        "body": "To betray a close friend",
+        "whyWrong": "That is closer to \"to stab in the back\"."
+      }
+    ],
+    "explanation": "\"Bite the bullet\" means to accept something unpleasant that cannot be avoided and face it bravely."
+  },
+  {
+    "id": "VRB-0013",
+    "body": "Read the passage: \"Automated testing does not eliminate defects; it shifts when they are found. A suite that runs in seconds turns a week-long feedback loop into a minute-long one, which changes how developers behave far more than it changes the code.\"\n\nWhich statement does the author most likely agree with?",
+    "topic": "verbal-ability",
+    "subtopic": "reading-comprehension",
+    "difficulty": "hard",
+    "expectedSeconds": 85,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "The value of fast tests lies largely in changing developer behaviour.",
+        "correct": true
+      },
+      {
+        "body": "Automated testing guarantees defect-free software.",
+        "whyWrong": "The first sentence explicitly denies this."
+      },
+      {
+        "body": "Slow test suites are just as useful as fast ones.",
+        "whyWrong": "The passage contrasts a week-long loop unfavourably with a minute-long one."
+      },
+      {
+        "body": "Automated testing mainly improves code structure.",
+        "whyWrong": "The passage says it changes behaviour \"far more than it changes the code\"."
+      }
+    ],
+    "explanation": "The closing clause states the point directly: the behavioural change from a fast feedback loop matters more than any change to the code itself."
+  },
+  {
+    "id": "VRB-0014",
+    "body": "Choose the correct preposition: \"She is not interested ______ pursuing higher studies abroad.\"",
+    "topic": "verbal-ability",
+    "subtopic": "sentence-correction",
+    "difficulty": "easy",
+    "expectedSeconds": 30,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "in",
+        "correct": true
+      },
+      {
+        "body": "for",
+        "whyWrong": "\"Interested for\" is not idiomatic English."
+      },
+      {
+        "body": "on",
+        "whyWrong": "\"Interested on\" is not idiomatic."
+      },
+      {
+        "body": "with",
+        "whyWrong": "\"Interested with\" is not idiomatic."
+      }
+    ],
+    "explanation": "The fixed collocation is \"interested in\" followed by a gerund."
+  },
+  {
+    "id": "VRB-0015",
+    "body": "Select the word that means \"a person who is easily deceived\".",
+    "topic": "verbal-ability",
+    "subtopic": "vocabulary",
+    "difficulty": "medium",
+    "expectedSeconds": 40,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Gullible",
+        "correct": true
+      },
+      {
+        "body": "Gregarious",
+        "whyWrong": "Gregarious means sociable."
+      },
+      {
+        "body": "Garrulous",
+        "whyWrong": "Garrulous means excessively talkative."
+      },
+      {
+        "body": "Grandiose",
+        "whyWrong": "Grandiose means excessively grand or pompous."
+      }
+    ],
+    "explanation": "\"Gullible\" describes someone who believes things too readily and is easily fooled."
+  },
+  {
+    "id": "VRB-0016",
+    "body": "Choose the sentence in correct active voice for: \"The bug was fixed by the intern.\"",
+    "topic": "verbal-ability",
+    "subtopic": "sentence-correction",
+    "difficulty": "easy",
+    "expectedSeconds": 40,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "The intern fixed the bug.",
+        "correct": true
+      },
+      {
+        "body": "The intern was fixing the bug.",
+        "whyWrong": "This changes the aspect from simple past to past continuous."
+      },
+      {
+        "body": "The bug fixed the intern.",
+        "whyWrong": "This reverses the roles and changes the meaning entirely."
+      },
+      {
+        "body": "The intern has fixed the bug.",
+        "whyWrong": "This shifts to the present perfect rather than the simple past."
+      }
+    ],
+    "explanation": "Converting to the active voice makes the agent the subject and keeps the simple past: \"The intern fixed the bug.\""
+  },
+  {
+    "id": "VRB-0017",
+    "body": "Fill in the blank: \"The proposal was rejected, ______ it lacked a clear budget.\"",
+    "topic": "verbal-ability",
+    "subtopic": "sentence-correction",
+    "difficulty": "easy",
+    "expectedSeconds": 35,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "because",
+        "correct": true
+      },
+      {
+        "body": "although",
+        "whyWrong": "\"Although\" signals contrast, but the clause gives a reason."
+      },
+      {
+        "body": "therefore",
+        "whyWrong": "\"Therefore\" introduces a consequence, and the clause is a cause."
+      },
+      {
+        "body": "whereas",
+        "whyWrong": "\"Whereas\" marks a contrast between two facts."
+      }
+    ],
+    "explanation": "The second clause explains why the proposal was rejected, so a causal conjunction — \"because\" — is required."
+  },
+  {
+    "id": "VRB-0018",
+    "body": "Which sentence uses the apostrophe correctly?",
+    "topic": "verbal-ability",
+    "subtopic": "sentence-correction",
+    "difficulty": "medium",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "The employees’ badges were reissued.",
+        "correct": true
+      },
+      {
+        "body": "The employee’s badges were reissued for all staff.",
+        "whyWrong": "This refers to a single employee, contradicting \"all staff\"."
+      },
+      {
+        "body": "The employees badge’s were reissued.",
+        "whyWrong": "The apostrophe has been attached to the wrong word."
+      },
+      {
+        "body": "The employees's badges were reissued.",
+        "whyWrong": "A plural noun already ending in \"s\" takes only an apostrophe."
+      }
+    ],
+    "explanation": "For a plural noun ending in \"s\", the possessive adds only an apostrophe: \"employees’ badges\"."
+  },
+  {
+    "id": "VRB-0019",
+    "body": "Choose the option closest in meaning to \"UBIQUITOUS\".",
+    "topic": "verbal-ability",
+    "subtopic": "synonyms-antonyms",
+    "difficulty": "medium",
+    "expectedSeconds": 40,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Omnipresent",
+        "correct": true
+      },
+      {
+        "body": "Unique",
+        "whyWrong": "Unique means one of a kind, nearly the opposite of widespread."
+      },
+      {
+        "body": "Ambiguous",
+        "whyWrong": "Ambiguous means open to more than one interpretation."
+      },
+      {
+        "body": "Ubiquity",
+        "whyWrong": "This is the noun form, not a synonym of the adjective."
+      }
+    ],
+    "explanation": "\"Ubiquitous\" means present everywhere, which is exactly what \"omnipresent\" conveys."
+  },
+  {
+    "id": "VRB-0020",
+    "body": "Read the passage: \"The company reported record revenue but its operating margin narrowed for the third consecutive quarter, as customer-acquisition spending outpaced growth in average contract value.\"\n\nWhat can be inferred?",
+    "topic": "verbal-ability",
+    "subtopic": "reading-comprehension",
+    "difficulty": "hard",
+    "expectedSeconds": 85,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Growth is being bought at an increasing cost per customer.",
+        "correct": true
+      },
+      {
+        "body": "The company is losing revenue each quarter.",
+        "whyWrong": "Revenue is at a record high — it is the margin that is narrowing."
+      },
+      {
+        "body": "Average contract value is falling.",
+        "whyWrong": "It is growing, just more slowly than acquisition spending."
+      },
+      {
+        "body": "The company has stopped acquiring customers.",
+        "whyWrong": "Acquisition spending is described as rising."
+      }
+    ],
+    "explanation": "Revenue is up but margin is down because spending to win customers grows faster than the value each customer brings — growth is getting more expensive."
+  },
+  {
+    "id": "VRB-0021",
+    "body": "Identify the sentence with a misplaced modifier.",
+    "topic": "verbal-ability",
+    "subtopic": "sentence-correction",
+    "difficulty": "hard",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Walking to the station, the rain soaked my shoes.",
+        "correct": true
+      },
+      {
+        "body": "Walking to the station, I got my shoes soaked by the rain.",
+        "whyWrong": "Here the modifier correctly attaches to \"I\", the one walking."
+      },
+      {
+        "body": "The rain soaked my shoes while I was walking to the station.",
+        "whyWrong": "The subordinate clause states the subject explicitly, so nothing dangles."
+      },
+      {
+        "body": "As I walked to the station, the rain soaked my shoes.",
+        "whyWrong": "The clause has its own subject, so the modifier is not misplaced."
+      }
+    ],
+    "explanation": "The introductory participial phrase must describe the sentence’s subject. In the first option the subject is \"the rain\", implying the rain was walking to the station.",
+    "concept": "A participial phrase at the start of a sentence attaches to whatever noun follows the comma."
+  },
+  {
+    "id": "VRB-0022",
+    "body": "Choose the correct plural form of \"criterion\".",
+    "topic": "verbal-ability",
+    "subtopic": "vocabulary",
+    "difficulty": "easy",
+    "expectedSeconds": 30,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "criteria",
+        "correct": true
+      },
+      {
+        "body": "criterions",
+        "whyWrong": "The word keeps its Greek plural rather than taking \"-s\"."
+      },
+      {
+        "body": "criterias",
+        "whyWrong": "\"Criteria\" is already plural, so this double-pluralises."
+      },
+      {
+        "body": "criterion",
+        "whyWrong": "That is the singular form."
+      }
+    ],
+    "explanation": "\"Criterion\" is Greek in origin and pluralises as \"criteria\"."
+  },
+  {
+    "id": "VRB-0023",
+    "body": "Fill in the blanks: \"Not only ______ the deadline missed, but the budget ______ also exceeded.\"",
+    "topic": "verbal-ability",
+    "subtopic": "sentence-correction",
+    "difficulty": "hard",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "was … was",
+        "correct": true
+      },
+      {
+        "body": "were … was",
+        "whyWrong": "\"Deadline\" is singular and takes \"was\"."
+      },
+      {
+        "body": "was … were",
+        "whyWrong": "\"Budget\" is singular and takes \"was\"."
+      },
+      {
+        "body": "did … did",
+        "whyWrong": "The passive construction requires the verb \"to be\", not \"do\"."
+      }
+    ],
+    "explanation": "Both \"deadline\" and \"budget\" are singular, and both clauses are passive, so both blanks take \"was\". Note the inversion after \"not only\"."
+  },
+  {
+    "id": "VRB-0024",
+    "body": "Which option best completes the sentence: \"The report was ______ ; it left every important question unanswered.\"",
+    "topic": "verbal-ability",
+    "subtopic": "vocabulary",
+    "difficulty": "medium",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "perfunctory",
+        "correct": true
+      },
+      {
+        "body": "meticulous",
+        "whyWrong": "A meticulous report would address the important questions."
+      },
+      {
+        "body": "exhaustive",
+        "whyWrong": "An exhaustive report would leave nothing unanswered."
+      },
+      {
+        "body": "articulate",
+        "whyWrong": "Articulate describes clear expression, not incompleteness."
+      }
+    ],
+    "explanation": "\"Perfunctory\" means done as a routine duty with minimal effort, which fits a report that answers nothing."
+  },
+  {
+    "id": "VRB-0025",
+    "body": "Choose the correct sentence.",
+    "topic": "verbal-ability",
+    "subtopic": "sentence-correction",
+    "difficulty": "medium",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "One of my friends is joining the same company.",
+        "correct": true
+      },
+      {
+        "body": "One of my friends are joining the same company.",
+        "whyWrong": "The subject is \"one\", which is singular."
+      },
+      {
+        "body": "One of my friend is joining the same company.",
+        "whyWrong": "\"Of my friends\" requires the plural noun."
+      },
+      {
+        "body": "One of my friends were joining the same company.",
+        "whyWrong": "Again the singular subject \"one\" requires \"is\" or \"was\"."
+      }
+    ],
+    "explanation": "In \"one of my friends\", the grammatical subject is \"one\" — singular — so the verb is \"is\"."
+  }
+]

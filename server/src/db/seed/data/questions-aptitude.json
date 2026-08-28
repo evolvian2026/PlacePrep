@@ -1,0 +1,1386 @@
+[
+  {
+    "id": "APT-0001",
+    "body": "What is the remainder when 7^103 is divided by 5?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "number-systems",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "frequentlyAsked": true,
+    "options": [
+      {
+        "body": "1",
+        "whyWrong": "The remainder is 1 only when the exponent is a multiple of 4 (e.g. 7^104)."
+      },
+      {
+        "body": "2",
+        "whyWrong": "This is the remainder for exponents ≡ 1 (mod 4), such as 7^101."
+      },
+      {
+        "body": "3",
+        "correct": true
+      },
+      {
+        "body": "4",
+        "whyWrong": "This is the remainder for exponents ≡ 2 (mod 4), such as 7^102."
+      }
+    ],
+    "explanation": "Reduce the base first: 7 ≡ 2 (mod 5), so 7^103 ≡ 2^103 (mod 5). Powers of 2 mod 5 cycle with period 4: 2, 4, 3, 1. Since 103 mod 4 = 3, we take the third term of the cycle, which is 3.",
+    "concept": "Use a ≡ b (mod m) to reduce the base first, then exploit the cyclicity of powers.",
+    "hint": "Reduce 7 mod 5 first, then find the cycle length of the powers."
+  },
+  {
+    "id": "APT-0002",
+    "body": "The sum of the digits of a two-digit number is 12. If the digits are reversed the number increases by 18. What is the original number?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "number-systems",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "57",
+        "correct": true
+      },
+      {
+        "body": "75",
+        "whyWrong": "Reversing 75 gives 57, which is a decrease of 18, not an increase."
+      },
+      {
+        "body": "48",
+        "whyWrong": "The digits of 48 sum to 12, but reversing gives 84 — an increase of 36."
+      },
+      {
+        "body": "39",
+        "whyWrong": "The digits of 39 sum to 12, but reversing gives 93 — an increase of 54."
+      }
+    ],
+    "explanation": "Let the number be 10t + u with t + u = 12. Reversing gives 10u + t, and (10u + t) − (10t + u) = 9(u − t) = 18, so u − t = 2. Solving t + u = 12 and u − t = 2 gives t = 5, u = 7 — the number is 57.",
+    "concept": "For a two-digit number, reversing changes the value by exactly 9 × (difference of digits)."
+  },
+  {
+    "id": "APT-0003",
+    "body": "How many trailing zeros does 100! have?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "number-systems",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "frequentlyAsked": true,
+    "options": [
+      {
+        "body": "20",
+        "whyWrong": "This counts only ⌊100/5⌋ and forgets multiples of 25 contributing a second factor of 5."
+      },
+      {
+        "body": "24",
+        "correct": true
+      },
+      {
+        "body": "25",
+        "whyWrong": "Off by one — ⌊100/125⌋ is 0, so the sum stops at 20 + 4."
+      },
+      {
+        "body": "10",
+        "whyWrong": "This is ⌊100/10⌋, which undercounts factors of 5."
+      }
+    ],
+    "explanation": "Trailing zeros come from factors of 10 = 2 × 5, and 5s are scarcer. Count ⌊100/5⌋ + ⌊100/25⌋ + ⌊100/125⌋ = 20 + 4 + 0 = 24.",
+    "concept": "Legendre’s formula: the exponent of prime p in n! is Σ ⌊n/pᵏ⌋."
+  },
+  {
+    "id": "APT-0004",
+    "body": "What is the highest power of 3 that exactly divides 50!?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "number-systems",
+    "difficulty": "hard",
+    "expectedSeconds": 80,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "16",
+        "whyWrong": "This is only the first term, ⌊50/3⌋ = 16. Legendre’s formula keeps going with ⌊50/9⌋ and ⌊50/27⌋."
+      },
+      {
+        "body": "22",
+        "correct": true
+      },
+      {
+        "body": "20",
+        "whyWrong": "This omits the ⌊50/27⌋ = 1 term."
+      },
+      {
+        "body": "24",
+        "whyWrong": "Too high — recheck ⌊50/9⌋ = 5, not 7."
+      }
+    ],
+    "explanation": "⌊50/3⌋ + ⌊50/9⌋ + ⌊50/27⌋ = 16 + 5 + 1 = 22.",
+    "concept": "Legendre’s formula again, this time with p = 3."
+  },
+  {
+    "id": "APT-0005",
+    "body": "The LCM of two numbers is 1188 and their HCF is 9. If one number is 108, the other is:",
+    "topic": "quantitative-aptitude",
+    "subtopic": "number-systems",
+    "difficulty": "easy",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "99",
+        "correct": true
+      },
+      {
+        "body": "132",
+        "whyWrong": "132 × 108 = 14 256, not 1188 × 9 = 10 692."
+      },
+      {
+        "body": "81",
+        "whyWrong": "81 × 108 = 8 748, which does not equal 10 692."
+      },
+      {
+        "body": "117",
+        "whyWrong": "117 × 108 = 12 636, which does not equal 10 692."
+      }
+    ],
+    "explanation": "For two numbers, HCF × LCM = product. So the other number = (9 × 1188)/108 = 10 692/108 = 99.",
+    "concept": "HCF(a,b) × LCM(a,b) = a × b holds for any two positive integers."
+  },
+  {
+    "id": "APT-0006",
+    "body": "A shopkeeper marks an item 40% above cost and then offers a 25% discount. What is the profit percentage?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "percentages",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "frequentlyAsked": true,
+    "options": [
+      {
+        "body": "5%",
+        "correct": true
+      },
+      {
+        "body": "15%",
+        "whyWrong": "You cannot subtract 25 from 40 — the discount applies to the marked price, not the cost."
+      },
+      {
+        "body": "10%",
+        "whyWrong": "Recompute 140 × 0.75 = 105, which is 5% above 100."
+      },
+      {
+        "body": "12.5%",
+        "whyWrong": "This does not follow from successive multiplication of 1.40 and 0.75."
+      }
+    ],
+    "explanation": "Take cost = 100. Marked price = 140. Selling price = 140 × 0.75 = 105. Profit = 5 on a cost of 100, i.e. 5%.",
+    "concept": "Chain successive percentage changes multiplicatively: 1.40 × 0.75 = 1.05."
+  },
+  {
+    "id": "APT-0007",
+    "body": "The price of a commodity rises by 25%. By what percentage must consumption be reduced so that expenditure stays unchanged?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "percentages",
+    "difficulty": "easy",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "20%",
+        "correct": true
+      },
+      {
+        "body": "25%",
+        "whyWrong": "A 25% cut would over-correct; the base for the reduction is the new price level."
+      },
+      {
+        "body": "15%",
+        "whyWrong": "Too small — 1.25 × 0.85 = 1.0625, so expenditure would still rise."
+      },
+      {
+        "body": "33.33%",
+        "whyWrong": "That is the reduction needed if price rose by 50%."
+      }
+    ],
+    "explanation": "Required reduction = r/(100 + r) × 100 = 25/125 × 100 = 20%. Check: 1.25 × 0.80 = 1.00.",
+    "concept": "To keep a product constant, a rise of r% must be offset by a fall of r/(100+r) × 100 %."
+  },
+  {
+    "id": "APT-0008",
+    "body": "A trader sells two articles at ₹1,000 each, gaining 20% on one and losing 20% on the other. What is the overall result?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "profit-loss",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "frequentlyAsked": true,
+    "options": [
+      {
+        "body": "No profit, no loss",
+        "whyWrong": "The two cost prices differ, so the gain and loss amounts do not cancel."
+      },
+      {
+        "body": "Loss of ₹83.33 (approx.)",
+        "correct": true
+      },
+      {
+        "body": "Profit of ₹83.33 (approx.)",
+        "whyWrong": "Equal percentage gain and loss at the same selling price always produces a net loss."
+      },
+      {
+        "body": "Loss of ₹40",
+        "whyWrong": "Recompute the cost prices: 1000/1.2 and 1000/0.8."
+      }
+    ],
+    "explanation": "Cost prices are 1000/1.2 = 833.33 and 1000/0.8 = 1250, totalling 2083.33 against revenue of 2000 — a loss of 83.33. Shortcut: net loss % = (20/10)² = 4%, and 4% of 2083.33 ≈ 83.33.",
+    "concept": "Selling two items at the same price with ±x% gives a net loss of (x/10)% squared, i.e. x²/100 %."
+  },
+  {
+    "id": "APT-0009",
+    "body": "In an election between two candidates, the winner secured 56% of the votes and won by 1,440 votes. How many votes were cast in total?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "percentages",
+    "difficulty": "easy",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "12,000",
+        "correct": true
+      },
+      {
+        "body": "10,000",
+        "whyWrong": "12% of 10 000 is 1 200, not 1 440."
+      },
+      {
+        "body": "14,400",
+        "whyWrong": "This treats 1 440 as 10% of the total rather than 12%."
+      },
+      {
+        "body": "9,600",
+        "whyWrong": "12% of 9 600 is 1 152."
+      }
+    ],
+    "explanation": "The margin is 56% − 44% = 12% of the total. So 0.12T = 1440, giving T = 12 000."
+  },
+  {
+    "id": "APT-0010",
+    "body": "A number is increased by 20% and the result is then decreased by 20%. The net change is:",
+    "topic": "quantitative-aptitude",
+    "subtopic": "percentages",
+    "difficulty": "easy",
+    "expectedSeconds": 40,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "A 4% decrease",
+        "correct": true
+      },
+      {
+        "body": "No change",
+        "whyWrong": "The decrease applies to the larger intermediate value, so it removes more than the increase added."
+      },
+      {
+        "body": "A 4% increase",
+        "whyWrong": "The sign is wrong — successive ±x% always nets a decrease."
+      },
+      {
+        "body": "A 2% decrease",
+        "whyWrong": "Recompute: 1.2 × 0.8 = 0.96."
+      }
+    ],
+    "explanation": "1.20 × 0.80 = 0.96, a 4% net decrease. In general the net effect is −x²/100 %."
+  },
+  {
+    "id": "APT-0011",
+    "body": "The average age of 30 students is 14 years. When the teacher’s age is included the average rises to 15 years. The teacher’s age is:",
+    "topic": "quantitative-aptitude",
+    "subtopic": "averages-mixtures",
+    "difficulty": "easy",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "frequentlyAsked": true,
+    "options": [
+      {
+        "body": "45 years",
+        "correct": true
+      },
+      {
+        "body": "44 years",
+        "whyWrong": "Off by one — the new total is 31 × 15 = 465, not 464."
+      },
+      {
+        "body": "40 years",
+        "whyWrong": "420 + 40 = 460, giving an average of 14.84, not 15."
+      },
+      {
+        "body": "50 years",
+        "whyWrong": "420 + 50 = 470, giving an average above 15."
+      }
+    ],
+    "explanation": "Students total 30 × 14 = 420. With the teacher, 31 × 15 = 465. The teacher’s age is 465 − 420 = 45.",
+    "concept": "Adding one value that is k above the new average raises the average by k/(n+1)."
+  },
+  {
+    "id": "APT-0012",
+    "body": "A vessel contains 60 litres of milk and water in the ratio 7 : 3. How much water must be added to make the ratio 7 : 5?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "averages-mixtures",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "12 litres",
+        "correct": true
+      },
+      {
+        "body": "10 litres",
+        "whyWrong": "That gives 42 : 28 = 3 : 2, not 7 : 5."
+      },
+      {
+        "body": "15 litres",
+        "whyWrong": "That gives 42 : 33 = 14 : 11, not 7 : 5."
+      },
+      {
+        "body": "8 litres",
+        "whyWrong": "That gives 42 : 26 = 21 : 13."
+      }
+    ],
+    "explanation": "Milk = 42 L, water = 18 L. Milk is unchanged, so for 7 : 5 the water must be 42 × 5/7 = 30 L. Water to add = 30 − 18 = 12 L.",
+    "concept": "When only one component changes, anchor the calculation on the component that stays constant."
+  },
+  {
+    "id": "APT-0013",
+    "body": "If a : b = 3 : 4 and b : c = 8 : 9, then a : c is:",
+    "topic": "quantitative-aptitude",
+    "subtopic": "ratio-proportion",
+    "difficulty": "easy",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "2 : 3",
+        "correct": true
+      },
+      {
+        "body": "3 : 9",
+        "whyWrong": "You cannot pair the first and last terms directly without matching b."
+      },
+      {
+        "body": "8 : 9",
+        "whyWrong": "That is b : c, not a : c."
+      },
+      {
+        "body": "4 : 9",
+        "whyWrong": "Recheck the scaling of b to a common value."
+      }
+    ],
+    "explanation": "Scale b to 8: a : b = 6 : 8. Then a : b : c = 6 : 8 : 9, so a : c = 6 : 9 = 2 : 3."
+  },
+  {
+    "id": "APT-0014",
+    "body": "Two numbers are in the ratio 5 : 7. If 6 is added to each, the ratio becomes 3 : 4. The smaller number is:",
+    "topic": "quantitative-aptitude",
+    "subtopic": "ratio-proportion",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "30",
+        "correct": true
+      },
+      {
+        "body": "35",
+        "whyWrong": "That is the larger of the two numbers."
+      },
+      {
+        "body": "25",
+        "whyWrong": "25 and 35 are in 5 : 7 but adding 6 gives 31 : 41, not 3 : 4."
+      },
+      {
+        "body": "20",
+        "whyWrong": "20 and 28 give 26 : 34 = 13 : 17."
+      }
+    ],
+    "explanation": "Let the numbers be 5k and 7k. Then (5k + 6)/(7k + 6) = 3/4 → 20k + 24 = 21k + 18 → k = 6. The smaller number is 30."
+  },
+  {
+    "id": "APT-0015",
+    "body": "A train 150 m long passes a pole in 15 seconds. How long will it take to cross a 300 m platform at the same speed?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "time-speed-distance",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "frequentlyAsked": true,
+    "options": [
+      {
+        "body": "45 seconds",
+        "correct": true
+      },
+      {
+        "body": "30 seconds",
+        "whyWrong": "This uses only the platform length; the train must clear its own length too."
+      },
+      {
+        "body": "35 seconds",
+        "whyWrong": "Recompute: total distance is 450 m at 10 m/s."
+      },
+      {
+        "body": "60 seconds",
+        "whyWrong": "That would need 600 m of travel."
+      }
+    ],
+    "explanation": "Speed = 150/15 = 10 m/s. To cross the platform the train travels 150 + 300 = 450 m, taking 450/10 = 45 s.",
+    "concept": "Crossing a platform means covering (train length + platform length)."
+  },
+  {
+    "id": "APT-0016",
+    "body": "A can complete a task in 12 days and B in 18 days. Working together, how many days will they take?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "time-and-work",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "frequentlyAsked": true,
+    "options": [
+      {
+        "body": "7.2 days",
+        "correct": true
+      },
+      {
+        "body": "15 days",
+        "whyWrong": "You cannot average the two durations — rates add, not times."
+      },
+      {
+        "body": "6 days",
+        "whyWrong": "That would need a combined rate of 1/6 per day; the actual rate is 5/36."
+      },
+      {
+        "body": "9 days",
+        "whyWrong": "Recompute 1/12 + 1/18 = 5/36."
+      }
+    ],
+    "explanation": "Combined rate = 1/12 + 1/18 = 3/36 + 2/36 = 5/36 per day, so time = 36/5 = 7.2 days.",
+    "concept": "Work problems add rates: 1/T = 1/a + 1/b."
+  },
+  {
+    "id": "APT-0017",
+    "body": "A boat travels 24 km downstream in 3 hours and returns in 4 hours. What is the speed of the stream?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "time-speed-distance",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "1 km/h",
+        "correct": true
+      },
+      {
+        "body": "2 km/h",
+        "whyWrong": "That would make the downstream and upstream speeds 9 and 5, giving times of 2.67 and 4.8 hours."
+      },
+      {
+        "body": "3.5 km/h",
+        "whyWrong": "Far too large for a 1 km/h difference between 8 and 6."
+      },
+      {
+        "body": "7 km/h",
+        "whyWrong": "That is the boat’s still-water speed, not the stream speed."
+      }
+    ],
+    "explanation": "Downstream speed = 24/3 = 8 km/h, upstream = 24/4 = 6 km/h. Stream speed = (8 − 6)/2 = 1 km/h (and boat speed = 7 km/h).",
+    "concept": "Downstream = b + s, upstream = b − s, so s = (down − up)/2."
+  },
+  {
+    "id": "APT-0018",
+    "body": "A and B together can finish a job in 8 days. A alone takes 12 days. How long would B alone take?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "time-and-work",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "24 days",
+        "correct": true
+      },
+      {
+        "body": "20 days",
+        "whyWrong": "1/12 + 1/20 = 2/15, which is not 1/8."
+      },
+      {
+        "body": "16 days",
+        "whyWrong": "1/12 + 1/16 = 7/48, which is not 1/8 = 6/48."
+      },
+      {
+        "body": "4 days",
+        "whyWrong": "B cannot be faster than the pair working together."
+      }
+    ],
+    "explanation": "1/B = 1/8 − 1/12 = 3/24 − 2/24 = 1/24, so B alone takes 24 days."
+  },
+  {
+    "id": "APT-0019",
+    "body": "Two trains 120 m and 180 m long run in opposite directions at 40 km/h and 50 km/h. How long do they take to cross each other?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "time-speed-distance",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "12 seconds",
+        "correct": true
+      },
+      {
+        "body": "10.8 seconds",
+        "whyWrong": "This uses 100 km/h instead of the correct 90 km/h relative speed."
+      },
+      {
+        "body": "36 seconds",
+        "whyWrong": "That uses the difference of speeds, which applies to same-direction travel."
+      },
+      {
+        "body": "15 seconds",
+        "whyWrong": "Recompute 300 m ÷ 25 m/s."
+      }
+    ],
+    "explanation": "Opposite directions add speeds: 90 km/h = 90 × 5/18 = 25 m/s. Total length = 300 m, so time = 300/25 = 12 s.",
+    "concept": "Relative speed adds for opposite directions and subtracts for the same direction."
+  },
+  {
+    "id": "APT-0020",
+    "body": "What is the compound interest on ₹10,000 at 10% per annum for 2 years, compounded annually?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "simple-compound-interest",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "₹2,100",
+        "correct": true
+      },
+      {
+        "body": "₹2,000",
+        "whyWrong": "That is the simple interest; compounding adds interest on the first year’s interest."
+      },
+      {
+        "body": "₹1,100",
+        "whyWrong": "That is one year of interest only."
+      },
+      {
+        "body": "₹2,200",
+        "whyWrong": "Recompute 10 000 × (1.1² − 1) = 2 100."
+      }
+    ],
+    "explanation": "A = 10 000 × 1.1² = 12 100, so CI = 12 100 − 10 000 = ₹2 100.",
+    "concept": "CI = P[(1 + r)ⁿ − 1]; for 2 years it exceeds SI by P·r²."
+  },
+  {
+    "id": "APT-0021",
+    "body": "The difference between the compound and simple interest on a sum for 2 years at 5% per annum is ₹25. What is the sum?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "simple-compound-interest",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "₹10,000",
+        "correct": true
+      },
+      {
+        "body": "₹5,000",
+        "whyWrong": "5 000 × 0.0025 = 12.50, not 25."
+      },
+      {
+        "body": "₹12,500",
+        "whyWrong": "12 500 × 0.0025 = 31.25."
+      },
+      {
+        "body": "₹20,000",
+        "whyWrong": "20 000 × 0.0025 = 50."
+      }
+    ],
+    "explanation": "For 2 years, CI − SI = P·r² where r is the decimal rate. So P × 0.05² = 25 → P × 0.0025 = 25 → P = ₹10 000."
+  },
+  {
+    "id": "APT-0022",
+    "body": "In how many ways can the letters of the word \"LEVEL\" be arranged?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "permutation-combination",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "frequentlyAsked": true,
+    "options": [
+      {
+        "body": "30",
+        "correct": true
+      },
+      {
+        "body": "120",
+        "whyWrong": "This is 5! and ignores the repeated L and E."
+      },
+      {
+        "body": "60",
+        "whyWrong": "This divides by only one repetition instead of both."
+      },
+      {
+        "body": "20",
+        "whyWrong": "Recompute 5!/(2!·2!) = 120/4 = 30."
+      }
+    ],
+    "explanation": "\"LEVEL\" has 5 letters with L twice and E twice, so arrangements = 5!/(2! × 2!) = 120/4 = 30.",
+    "concept": "Arrangements of n items with repetitions n₁, n₂… = n!/(n₁!·n₂!…)."
+  },
+  {
+    "id": "APT-0023",
+    "body": "A bag has 4 red and 6 blue balls. Two balls are drawn at random without replacement. What is the probability that both are red?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "probability",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "frequentlyAsked": true,
+    "options": [
+      {
+        "body": "2/15",
+        "correct": true
+      },
+      {
+        "body": "4/25",
+        "whyWrong": "This assumes replacement — (4/10)² — but the draws are without replacement."
+      },
+      {
+        "body": "1/5",
+        "whyWrong": "Recompute C(4,2)/C(10,2) = 6/45."
+      },
+      {
+        "body": "3/20",
+        "whyWrong": "6/45 simplifies to 2/15, not 3/20."
+      }
+    ],
+    "explanation": "P = C(4,2)/C(10,2) = 6/45 = 2/15. Equivalently (4/10) × (3/9) = 12/90 = 2/15."
+  },
+  {
+    "id": "APT-0024",
+    "body": "How many 4-digit numbers can be formed from the digits 1–7 with no digit repeated?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "permutation-combination",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "840",
+        "correct": true
+      },
+      {
+        "body": "2,401",
+        "whyWrong": "That is 7⁴, which allows repetition."
+      },
+      {
+        "body": "35",
+        "whyWrong": "That is C(7,4) and ignores the ordering of digits."
+      },
+      {
+        "body": "210",
+        "whyWrong": "Recompute 7 × 6 × 5 × 4 = 840."
+      }
+    ],
+    "explanation": "Ordered selection without repetition: 7 × 6 × 5 × 4 = 840, i.e. P(7,4)."
+  },
+  {
+    "id": "APT-0025",
+    "body": "Two dice are rolled. What is the probability that the sum is 8?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "probability",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "5/36",
+        "correct": true
+      },
+      {
+        "body": "1/6",
+        "whyWrong": "That is 6/36, which would need six favourable pairs; there are only five."
+      },
+      {
+        "body": "1/9",
+        "whyWrong": "That is 4/36 — you have missed one ordered pair."
+      },
+      {
+        "body": "6/36",
+        "whyWrong": "The favourable pairs are (2,6), (3,5), (4,4), (5,3), (6,2) — five, not six."
+      }
+    ],
+    "explanation": "Favourable ordered pairs summing to 8: (2,6), (3,5), (4,4), (5,3), (6,2) — five out of 36."
+  },
+  {
+    "id": "APT-0026",
+    "body": "In how many ways can 5 people be seated around a circular table?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "permutation-combination",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "24",
+        "correct": true
+      },
+      {
+        "body": "120",
+        "whyWrong": "That is 5! — linear arrangements. Rotations of a circle are not distinct."
+      },
+      {
+        "body": "12",
+        "whyWrong": "That is (n−1)!/2, which applies only when reflections are also identical (e.g. a necklace)."
+      },
+      {
+        "body": "60",
+        "whyWrong": "Recompute (5 − 1)! = 24."
+      }
+    ],
+    "explanation": "Circular arrangements of n distinct people = (n − 1)! = 4! = 24, because rotating everyone gives the same seating.",
+    "concept": "Fix one person to break rotational symmetry, then arrange the remaining n − 1."
+  },
+  {
+    "id": "APT-0027",
+    "body": "The radius of a circle is increased by 20%. By what percentage does its area increase?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "mensuration",
+    "difficulty": "easy",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "44%",
+        "correct": true
+      },
+      {
+        "body": "20%",
+        "whyWrong": "Area scales with the square of the radius, not linearly."
+      },
+      {
+        "body": "40%",
+        "whyWrong": "Recompute 1.2² = 1.44."
+      },
+      {
+        "body": "21%",
+        "whyWrong": "That would be the answer for a 10% radius increase."
+      }
+    ],
+    "explanation": "Area ∝ r², so the factor is 1.2² = 1.44 — a 44% increase."
+  },
+  {
+    "id": "APT-0028",
+    "body": "If x + 1/x = 5, what is x² + 1/x²?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "number-systems",
+    "difficulty": "easy",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "23",
+        "correct": true
+      },
+      {
+        "body": "25",
+        "whyWrong": "That is 5² without subtracting the cross term 2."
+      },
+      {
+        "body": "27",
+        "whyWrong": "Recheck the identity: square the sum and subtract 2."
+      },
+      {
+        "body": "24",
+        "whyWrong": "5² − 2 = 23, not 24."
+      }
+    ],
+    "explanation": "(x + 1/x)² = x² + 2 + 1/x², so x² + 1/x² = 25 − 2 = 23.",
+    "concept": "Squaring a sum of reciprocals introduces a constant cross term of 2."
+  },
+  {
+    "id": "APT-0029",
+    "body": "A cube of side 6 cm is cut into cubes of side 2 cm. How many smaller cubes are obtained?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "mensuration",
+    "difficulty": "easy",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "27",
+        "correct": true
+      },
+      {
+        "body": "9",
+        "whyWrong": "That counts a single face’s worth of cubes, not the whole volume."
+      },
+      {
+        "body": "36",
+        "whyWrong": "Recompute 6³/2³ = 216/8 = 27."
+      },
+      {
+        "body": "18",
+        "whyWrong": "Volume ratio is 27, not 18."
+      }
+    ],
+    "explanation": "Volume ratio = 6³/2³ = 216/8 = 27, i.e. 3 cubes along each edge."
+  },
+  {
+    "id": "APT-0030",
+    "body": "The sum of the first n natural numbers is 210. What is n?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "number-systems",
+    "difficulty": "easy",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "20",
+        "correct": true
+      },
+      {
+        "body": "21",
+        "whyWrong": "21 × 22/2 = 231, not 210."
+      },
+      {
+        "body": "19",
+        "whyWrong": "19 × 20/2 = 190."
+      },
+      {
+        "body": "15",
+        "whyWrong": "15 × 16/2 = 120."
+      }
+    ],
+    "explanation": "n(n + 1)/2 = 210 → n² + n − 420 = 0 → (n + 21)(n − 20) = 0 → n = 20."
+  },
+  {
+    "id": "APT-0031",
+    "body": "A shopkeeper uses a weight of 900 g in place of 1 kg. What is the profit percentage on a sale at cost price?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "profit-loss",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "11.11%",
+        "correct": true
+      },
+      {
+        "body": "10%",
+        "whyWrong": "The 100 g shortfall is measured against the 900 g actually delivered, not the 1 000 g claimed."
+      },
+      {
+        "body": "9%",
+        "whyWrong": "Recompute 100/900 × 100."
+      },
+      {
+        "body": "12.5%",
+        "whyWrong": "A gain of 12.5% would mean a shortfall of 1/8 of the delivered weight; here it is 1/9."
+      }
+    ],
+    "explanation": "Gain = shortfall / actual weight × 100 = 100/900 × 100 = 11.11%.",
+    "concept": "False-weight profit uses the delivered quantity as the base, not the stated quantity."
+  },
+  {
+    "id": "APT-0032",
+    "body": "Pipes A and B fill a tank in 10 and 15 hours respectively, while pipe C empties it in 30 hours. With all three open, how long does the tank take to fill?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "time-and-work",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "7.5 hours",
+        "correct": true
+      },
+      {
+        "body": "6 hours",
+        "whyWrong": "This ignores the emptying pipe."
+      },
+      {
+        "body": "10 hours",
+        "whyWrong": "Recompute 1/10 + 1/15 − 1/30 = 2/15."
+      },
+      {
+        "body": "8 hours",
+        "whyWrong": "The net rate 2/15 gives 7.5 hours, not 8."
+      }
+    ],
+    "explanation": "Net rate = 1/10 + 1/15 − 1/30 = 3/30 + 2/30 − 1/30 = 4/30 = 2/15 per hour, so time = 15/2 = 7.5 h."
+  },
+  {
+    "id": "APT-0033",
+    "body": "A man rows 15 km upstream in 3 hours and 21 km downstream in 3 hours. What is his speed in still water?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "time-speed-distance",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "6 km/h",
+        "correct": true
+      },
+      {
+        "body": "5 km/h",
+        "whyWrong": "That is the upstream speed."
+      },
+      {
+        "body": "7 km/h",
+        "whyWrong": "That is the downstream speed."
+      },
+      {
+        "body": "1 km/h",
+        "whyWrong": "That is the stream speed."
+      }
+    ],
+    "explanation": "Upstream = 15/3 = 5 km/h, downstream = 21/3 = 7 km/h. Still-water speed = (5 + 7)/2 = 6 km/h."
+  },
+  {
+    "id": "APT-0034",
+    "body": "The average of 5 consecutive even numbers is 24. What is the largest of them?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "averages-mixtures",
+    "difficulty": "easy",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "28",
+        "correct": true
+      },
+      {
+        "body": "26",
+        "whyWrong": "That is the fourth term, not the fifth."
+      },
+      {
+        "body": "30",
+        "whyWrong": "The numbers are 20, 22, 24, 26, 28 — 30 is outside the set."
+      },
+      {
+        "body": "24",
+        "whyWrong": "That is the middle term, which equals the average."
+      }
+    ],
+    "explanation": "For an odd count of equally spaced numbers, the average is the middle term: 24. The set is 20, 22, 24, 26, 28, so the largest is 28."
+  },
+  {
+    "id": "APT-0035",
+    "body": "If 15 workers can build a wall in 48 hours, how many workers are needed to build it in 30 hours?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "time-and-work",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "24",
+        "correct": true
+      },
+      {
+        "body": "20",
+        "whyWrong": "20 × 30 = 600, but the work requires 720 worker-hours."
+      },
+      {
+        "body": "30",
+        "whyWrong": "Too many — 30 × 30 = 900 worker-hours."
+      },
+      {
+        "body": "18",
+        "whyWrong": "18 × 30 = 540 worker-hours, short of 720."
+      }
+    ],
+    "explanation": "Work = 15 × 48 = 720 worker-hours. In 30 hours you need 720/30 = 24 workers.",
+    "concept": "Workers and time are inversely proportional for a fixed amount of work."
+  },
+  {
+    "id": "APT-0036",
+    "body": "A sum doubles in 8 years at simple interest. In how many years will it become four times the original?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "simple-compound-interest",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "24 years",
+        "correct": true
+      },
+      {
+        "body": "16 years",
+        "whyWrong": "That is the compound-interest answer; simple interest grows linearly, so tripling the interest takes 24 years."
+      },
+      {
+        "body": "32 years",
+        "whyWrong": "This assumes each doubling takes 8 years, which is compound-interest behaviour."
+      },
+      {
+        "body": "12 years",
+        "whyWrong": "Too short — that would only give 2.5× the principal."
+      }
+    ],
+    "explanation": "Doubling means the interest earned equals the principal in 8 years. Becoming four times needs interest of 3 × principal, which at the same linear rate takes 3 × 8 = 24 years.",
+    "concept": "Simple interest accrues linearly, so multiples of the interest scale the time directly."
+  },
+  {
+    "id": "APT-0037",
+    "body": "What is the value of 0.̅3 (i.e. 0.333… recurring) expressed as a fraction?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "number-systems",
+    "difficulty": "easy",
+    "expectedSeconds": 40,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "1/3",
+        "correct": true
+      },
+      {
+        "body": "3/10",
+        "whyWrong": "That is 0.3 terminating, not the recurring decimal."
+      },
+      {
+        "body": "33/100",
+        "whyWrong": "That is 0.33 terminating."
+      },
+      {
+        "body": "1/30",
+        "whyWrong": "That is 0.0333…"
+      }
+    ],
+    "explanation": "Let x = 0.333…, then 10x = 3.333… and 10x − x = 3, giving 9x = 3 and x = 1/3."
+  },
+  {
+    "id": "APT-0038",
+    "body": "The ratio of the ages of A and B is 4 : 3. After 6 years the ratio becomes 6 : 5. What is A’s present age?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "ratio-proportion",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "12 years",
+        "correct": true
+      },
+      {
+        "body": "16 years",
+        "whyWrong": "16 and 12 after 6 years give 22 : 18 = 11 : 9, not 6 : 5."
+      },
+      {
+        "body": "9 years",
+        "whyWrong": "That is B’s present age."
+      },
+      {
+        "body": "24 years",
+        "whyWrong": "24 and 18 after 6 years give 30 : 24 = 5 : 4."
+      }
+    ],
+    "explanation": "Let ages be 4k and 3k. Then (4k + 6)/(3k + 6) = 6/5 → 20k + 30 = 18k + 36 → 2k = 6 → k = 3. A is 12."
+  },
+  {
+    "id": "APT-0039",
+    "body": "A clock shows 3:00. What is the angle between the hour and minute hands?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "number-systems",
+    "difficulty": "easy",
+    "expectedSeconds": 40,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "90°",
+        "correct": true
+      },
+      {
+        "body": "75°",
+        "whyWrong": "At exactly 3:00 the minute hand is at 0°, giving a clean quarter turn."
+      },
+      {
+        "body": "80°",
+        "whyWrong": "The hour hand sits exactly on 3 at 3:00, so the gap is 3 × 30° = 90°."
+      },
+      {
+        "body": "105°",
+        "whyWrong": "That would be the angle at 3:30 territory, not 3:00."
+      }
+    ],
+    "explanation": "Each hour mark is 30°. At 3:00 the minute hand is at 12 and the hour hand at 3, so the angle is 3 × 30° = 90°.",
+    "concept": "Angle = |30H − 5.5M| degrees."
+  },
+  {
+    "id": "APT-0040",
+    "body": "If the selling price of 12 articles equals the cost price of 15 articles, what is the profit percentage?",
+    "topic": "quantitative-aptitude",
+    "subtopic": "profit-loss",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "25%",
+        "correct": true
+      },
+      {
+        "body": "20%",
+        "whyWrong": "That is the answer if you divide by 15 instead of 12 — profit % uses cost as the base."
+      },
+      {
+        "body": "3%",
+        "whyWrong": "The difference of 3 articles must be expressed relative to the 12 sold."
+      },
+      {
+        "body": "15%",
+        "whyWrong": "Recompute (15 − 12)/12 × 100 = 25%."
+      }
+    ],
+    "explanation": "Take the cost of one article as 1. Then 12 articles cost 12 and sell for 15, so profit = 3 on a cost of 12 = 25%."
+  },
+  {
+    "id": "APT-0041",
+    "body": "A company’s quarterly revenue (₹ crore) was: Q1 120, Q2 150, Q3 135, Q4 195. What was the percentage growth from Q1 to Q4?",
+    "topic": "data-interpretation",
+    "subtopic": "tables-and-charts",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "62.5%",
+        "correct": true
+      },
+      {
+        "body": "75%",
+        "whyWrong": "That would be the growth if Q4 were 210."
+      },
+      {
+        "body": "38.5%",
+        "whyWrong": "This uses Q4 as the base instead of Q1."
+      },
+      {
+        "body": "60%",
+        "whyWrong": "Recompute 75/120 × 100 = 62.5%."
+      }
+    ],
+    "explanation": "Growth = (195 − 120)/120 × 100 = 75/120 × 100 = 62.5%."
+  },
+  {
+    "id": "APT-0042",
+    "body": "Using the same data (Q1 120, Q2 150, Q3 135, Q4 195 in ₹ crore), what fraction of the annual revenue came from Q4?",
+    "topic": "data-interpretation",
+    "subtopic": "tables-and-charts",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "32.5%",
+        "correct": true
+      },
+      {
+        "body": "25%",
+        "whyWrong": "Q4 is above average, so its share exceeds a flat quarter."
+      },
+      {
+        "body": "30%",
+        "whyWrong": "Recompute 195/600 = 0.325."
+      },
+      {
+        "body": "35%",
+        "whyWrong": "195/600 is 32.5%, not 35%."
+      }
+    ],
+    "explanation": "Total = 120 + 150 + 135 + 195 = 600. Q4 share = 195/600 = 32.5%."
+  },
+  {
+    "id": "APT-0043",
+    "body": "In a class of 200 students, 45% study Java, 30% study Python and 10% study both. How many study neither?",
+    "topic": "data-interpretation",
+    "subtopic": "caselets",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "frequentlyAsked": true,
+    "options": [
+      {
+        "body": "70",
+        "correct": true
+      },
+      {
+        "body": "50",
+        "whyWrong": "This forgets to add back the overlap when computing the union."
+      },
+      {
+        "body": "30",
+        "whyWrong": "Recompute: union is 65% of 200 = 130, so neither is 70."
+      },
+      {
+        "body": "90",
+        "whyWrong": "That would need a union of only 55%."
+      }
+    ],
+    "explanation": "Union = 45 + 30 − 10 = 65% → 130 students. Neither = 200 − 130 = 70.",
+    "concept": "Inclusion–exclusion: |A ∪ B| = |A| + |B| − |A ∩ B|."
+  },
+  {
+    "id": "APT-0044",
+    "body": "A pie chart shows expenses split as: Rent 30%, Food 25%, Travel 15%, Savings 20%, Other 10%. If travel costs ₹4,500, what is the monthly income?",
+    "topic": "data-interpretation",
+    "subtopic": "tables-and-charts",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "₹30,000",
+        "correct": true
+      },
+      {
+        "body": "₹45,000",
+        "whyWrong": "That treats travel as 10% of income."
+      },
+      {
+        "body": "₹25,000",
+        "whyWrong": "15% of 25 000 is 3 750, not 4 500."
+      },
+      {
+        "body": "₹36,000",
+        "whyWrong": "15% of 36 000 is 5 400."
+      }
+    ],
+    "explanation": "0.15 × income = 4 500 → income = 4 500/0.15 = ₹30 000."
+  },
+  {
+    "id": "APT-0045",
+    "body": "A bar chart shows units sold across five months: 400, 480, 520, 460, 540. By how much does the highest month exceed the average?",
+    "topic": "data-interpretation",
+    "subtopic": "tables-and-charts",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "60 units",
+        "correct": true
+      },
+      {
+        "body": "80 units",
+        "whyWrong": "Recompute the mean: 2 400/5 = 480."
+      },
+      {
+        "body": "40 units",
+        "whyWrong": "540 − 480 = 60, not 40."
+      },
+      {
+        "body": "100 units",
+        "whyWrong": "That is roughly the gap between the lowest and highest months, not the gap from the average."
+      }
+    ],
+    "explanation": "Total = 2 400, mean = 480. The highest month is 540, exceeding the average by 60 units."
+  }
+]

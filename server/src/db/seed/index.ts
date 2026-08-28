@@ -8,23 +8,13 @@ import { TOPICS } from './topics.js';
 import { COMPANIES, type CompanySeed, type RoundSeed } from './companies.js';
 import { EXTENDED_COMPANIES } from './companies-extended.js';
 import { sectorFor } from './sectors.js';
-import { APTITUDE_QUESTIONS } from './questions-aptitude.js';
-import { REASONING_QUESTIONS } from './questions-reasoning.js';
-import { VERBAL_QUESTIONS } from './questions-verbal.js';
-import { TECHNICAL_QUESTIONS } from './questions-technical.js';
-import { BEHAVIOURAL_QUESTIONS } from './questions-behavioural.js';
+import { loadMcqBank } from './load-questions.js';
 import { CODING_PROBLEMS } from './questions-coding.js';
 import { BADGES, CHALLENGES } from './gamification.js';
 import { INTERVIEW_PROMPTS } from './interview-prompts.js';
 import type { McqSeed } from './types.js';
 
-const ALL_MCQ: McqSeed[] = [
-  ...APTITUDE_QUESTIONS,
-  ...REASONING_QUESTIONS,
-  ...VERBAL_QUESTIONS,
-  ...TECHNICAL_QUESTIONS,
-  ...BEHAVIOURAL_QUESTIONS,
-];
+const ALL_MCQ: McqSeed[] = loadMcqBank();
 
 // The hand-researched catalogue plus the archetype-templated one. Extended
 // entries carry an insight saying their rounds come from a template, so the

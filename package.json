@@ -20,6 +20,7 @@
     "db:reset": "npm --workspace server run db:reset",
     "db:seed": "npm --workspace server run db:seed",
     "test": "npm --workspace server run test",
+    "verify:questions": "npm --workspace server run verify:questions",
     "audit:mocks": "npm --workspace server run audit:mocks",
     "audit:db": "npm --workspace server run audit:db",
     "measure:repeats": "npm --workspace server run measure:repeats",
