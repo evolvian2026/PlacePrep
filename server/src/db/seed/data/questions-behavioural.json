@@ -388,5 +388,643 @@
       }
     ],
     "explanation": "The interviewer is testing accountability and learning speed. The strongest version has a real cost, your own contribution to it, a specific change, and proof the change held."
+  },
+  {
+    "id": "HR-0013",
+    "body": "An interviewer asks \"walk me through your resume\". What are they actually testing?",
+    "topic": "hr-interview",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "hr",
+      "managerial"
+    ],
+    "options": [
+      {
+        "body": "Whether you can select what matters and tell a coherent story",
+        "correct": true
+      },
+      {
+        "body": "Whether you have memorised every date",
+        "whyWrong": "They have the dates in front of them; reciting them adds nothing."
+      },
+      {
+        "body": "Whether you can speak for at least ten minutes",
+        "whyWrong": "Length is not the goal — a rambling answer works against you."
+      },
+      {
+        "body": "Whether your resume is factually true",
+        "whyWrong": "Verification happens elsewhere; this question is about communication."
+      }
+    ],
+    "explanation": "They want a two-to-three minute narrative that connects your choices: what you did, why, and how it leads to this role. Reciting the resume line by line signals you cannot distinguish important from trivial.",
+    "subtopic": "behavioural-questions",
+    "concept": "Selection and sequencing are the skill being assessed, not recall.",
+    "hint": "What would you leave out if you only had two minutes?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "HR-0014",
+    "body": "You are asked about a project on your resume you contributed little to. What is the best response?",
+    "topic": "hr-interview",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "hr",
+      "managerial"
+    ],
+    "options": [
+      {
+        "body": "State clearly what your part was and what you learned from the rest",
+        "correct": true
+      },
+      {
+        "body": "Describe the whole project as though you built it",
+        "whyWrong": "Follow-up questions will expose this quickly, and dishonesty ends the interview."
+      },
+      {
+        "body": "Say you would rather discuss a different project",
+        "whyWrong": "Refusing to discuss something on your own resume raises more doubt than the small contribution would."
+      },
+      {
+        "body": "Blame teammates for taking the interesting work",
+        "whyWrong": "Blaming the team is a bigger negative signal than a limited contribution."
+      }
+    ],
+    "explanation": "Interviewers probe depth precisely to find this. Owning a small contribution honestly, and being able to explain the parts you did not build, reads as trustworthy. If a project is too thin to discuss, the real fix is to take it off the resume.",
+    "subtopic": "behavioural-questions",
+    "concept": "Anything on your resume is fair game, and honesty under probing is itself the signal.",
+    "hint": "What happens when they ask a follow-up you cannot answer?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "HR-0015",
+    "body": "What makes a \"tell me about a conflict\" answer strong?",
+    "topic": "hr-interview",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "hr",
+      "managerial"
+    ],
+    "options": [
+      {
+        "body": "You explain the other view fairly and describe how the disagreement was resolved",
+        "correct": true
+      },
+      {
+        "body": "You show that you were right all along",
+        "whyWrong": "Being right is not the point; how you handled the disagreement is."
+      },
+      {
+        "body": "You say you have never had a conflict",
+        "whyWrong": "This reads as either evasive or as never having worked closely with anyone."
+      },
+      {
+        "body": "You describe a conflict you escalated to a manager immediately",
+        "whyWrong": "Escalating first suggests you cannot resolve things directly."
+      }
+    ],
+    "explanation": "Interviewers want evidence you can disagree without damaging the working relationship. Representing the other position fairly is the strongest signal, and describing what you conceded is more convincing than a story where you simply won.",
+    "subtopic": "behavioural-questions",
+    "concept": "A conflict answer is about repair, not victory.",
+    "hint": "Can you state the other person’s case as they would?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "HR-0016",
+    "body": "How should you answer \"why should we hire you?\"",
+    "topic": "hr-interview",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "hr",
+      "managerial"
+    ],
+    "options": [
+      {
+        "body": "Match two or three of your concrete strengths to what the role needs",
+        "correct": true
+      },
+      {
+        "body": "Say you are a hard worker and a fast learner",
+        "whyWrong": "Every candidate says this, so it distinguishes nobody."
+      },
+      {
+        "body": "Point out weaknesses in other candidates",
+        "whyWrong": "You know nothing about them, and criticising them reflects badly."
+      },
+      {
+        "body": "Say you need the job",
+        "whyWrong": "Need is not a reason to hire; capability is."
+      }
+    ],
+    "explanation": "The question asks you to argue your own case with evidence. Naming a specific requirement and the concrete thing you have done that meets it is far stronger than adjectives about yourself.",
+    "subtopic": "behavioural-questions",
+    "concept": "Claims need evidence. \"I learn fast\" is an adjective; \"I picked up Go in two weeks and shipped X\" is evidence.",
+    "hint": "For each strength you name, what is the proof?"
+  },
+  {
+    "id": "HR-0017",
+    "body": "An interviewer asks a question you genuinely cannot answer. What is the best approach?",
+    "topic": "hr-interview",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "hr",
+      "managerial"
+    ],
+    "options": [
+      {
+        "body": "Say so, then reason aloud about how you would find the answer",
+        "correct": true
+      },
+      {
+        "body": "Guess confidently and hope it is right",
+        "whyWrong": "A confident wrong answer is worse than an honest gap, because it makes everything else you said suspect."
+      },
+      {
+        "body": "Stay silent until they move on",
+        "whyWrong": "Silence gives them nothing to assess."
+      },
+      {
+        "body": "Change the subject to something you know",
+        "whyWrong": "Deflection is transparent and wastes the opportunity to show how you think."
+      }
+    ],
+    "explanation": "Most technical interviewers care more about your approach than about recall. Saying what you do know, where the gap is, and how you would close it turns a dead end into a signal about how you work.",
+    "subtopic": "behavioural-questions",
+    "concept": "Interviews assess thinking under uncertainty, which is exactly what a gap reveals.",
+    "hint": "What can you still show them when you do not know the answer?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "HR-0018",
+    "body": "You realise two days before a deadline that you cannot finish. What should you do first?",
+    "topic": "hr-interview",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "hr",
+      "managerial"
+    ],
+    "options": [
+      {
+        "body": "Tell the person depending on it, with what you can deliver and what you cannot",
+        "correct": true
+      },
+      {
+        "body": "Work through the nights and hope to finish",
+        "whyWrong": "Hoping is not a plan, and silence removes everyone else’s chance to react."
+      },
+      {
+        "body": "Deliver whatever is done without saying anything",
+        "whyWrong": "An unflagged partial delivery is discovered at the worst possible moment."
+      },
+      {
+        "body": "Ask for the deadline to be moved without proposing a plan",
+        "whyWrong": "Raising the problem without options puts the whole burden on someone else."
+      }
+    ],
+    "explanation": "Bad news does not improve with age. Early warning gives others time to re-scope, reassign or adjust, and arriving with options — full scope later, or reduced scope on time — turns a failure into a decision someone can make.",
+    "subtopic": "situational-questions",
+    "concept": "Escalate early with options, not late with excuses.",
+    "hint": "Who else is making plans based on your date?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "HR-0019",
+    "body": "A teammate’s code has a bug that will affect users. They are on leave. What do you do?",
+    "topic": "hr-interview",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "hr",
+      "managerial"
+    ],
+    "options": [
+      {
+        "body": "Fix it, then tell both your lead and the teammate what you changed and why",
+        "correct": true
+      },
+      {
+        "body": "Wait for them to return",
+        "whyWrong": "Users are affected now; waiting is a decision to let that continue."
+      },
+      {
+        "body": "Fix it quietly and say nothing",
+        "whyWrong": "An undocumented change to someone else’s code creates confusion and erodes trust."
+      },
+      {
+        "body": "Report it and take no action",
+        "whyWrong": "Reporting without acting leaves the impact in place when you could resolve it."
+      }
+    ],
+    "explanation": "Acting on the user impact is right, and communicating is what keeps it collaborative rather than territorial. The teammate needs to know so they are not confused on return, and the lead needs to know because it changed shipped behaviour.",
+    "subtopic": "situational-questions",
+    "concept": "Act on impact, communicate for trust.",
+    "hint": "What will your teammate think when they return and find changed code?"
+  },
+  {
+    "id": "HR-0020",
+    "body": "You disagree with your manager’s technical decision. What is the constructive path?",
+    "topic": "hr-interview",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "hr",
+      "managerial"
+    ],
+    "options": [
+      {
+        "body": "Raise your concern with evidence privately, then commit to whatever is decided",
+        "correct": true
+      },
+      {
+        "body": "Implement it your way anyway",
+        "whyWrong": "Overriding a decision unilaterally destroys trust regardless of who was right."
+      },
+      {
+        "body": "Say nothing and let it fail",
+        "whyWrong": "Withholding a concern you hold is a failure of your own responsibility."
+      },
+      {
+        "body": "Argue it in front of the whole team until they agree",
+        "whyWrong": "Public pressure makes it about winning rather than about the decision."
+      }
+    ],
+    "explanation": "\"Disagree and commit\" is the phrase most companies use. Your responsibility is to make the concern heard with evidence; the decision is theirs, and once made, half-hearted execution guarantees the failure you predicted.",
+    "subtopic": "situational-questions",
+    "concept": "Voice the concern, then support the decision — a predicted failure you helped cause proves nothing.",
+    "hint": "What happens to the team if everyone quietly undermines decisions they lost?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "HR-0021",
+    "body": "You are given a task with unclear requirements. What is the best first step?",
+    "topic": "hr-interview",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "hr",
+      "managerial"
+    ],
+    "options": [
+      {
+        "body": "Write down your understanding and confirm it before building",
+        "correct": true
+      },
+      {
+        "body": "Start coding and adjust later",
+        "whyWrong": "Building on a wrong assumption wastes the most time of any option here."
+      },
+      {
+        "body": "Wait until someone clarifies it",
+        "whyWrong": "Waiting passively stalls the work and puts the burden on someone who thinks it is clear."
+      },
+      {
+        "body": "Build every possible interpretation",
+        "whyWrong": "Building several versions multiplies the work rather than resolving the ambiguity."
+      }
+    ],
+    "explanation": "Restating requirements in your own words surfaces mismatches in minutes rather than after a week of work. It also demonstrates that you can identify ambiguity, which is much of what senior engineers actually do.",
+    "subtopic": "situational-questions",
+    "concept": "Cheap clarification beats expensive rework.",
+    "hint": "What is the cost of finding out you misunderstood after a week?"
+  },
+  {
+    "id": "HR-0022",
+    "body": "During a group discussion, one person is dominating and others cannot speak. What is the best contribution?",
+    "topic": "group-discussion",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "hr",
+      "managerial"
+    ],
+    "options": [
+      {
+        "body": "Summarise the point made, then explicitly invite a quieter member in",
+        "correct": true
+      },
+      {
+        "body": "Talk louder to reclaim the floor",
+        "whyWrong": "Competing for volume makes the discussion worse and is visible to the assessor."
+      },
+      {
+        "body": "Stay quiet until they finish",
+        "whyWrong": "Assessors are watching for whether you can shape a discussion, not endure it."
+      },
+      {
+        "body": "Point out that they are talking too much",
+        "whyWrong": "Criticising a participant makes it personal rather than moving the discussion on."
+      }
+    ],
+    "explanation": "Group discussions assess whether you improve the group’s output. Summarising shows you were listening, and bringing someone in demonstrates the facilitation that assessors specifically look for — often scoring higher than another opinion would.",
+    "concept": "In a GD, moving the group forward counts for more than airtime.",
+    "hint": "What is the assessor actually scoring?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "HR-0023",
+    "body": "In the STAR format, which part should take the most time?",
+    "topic": "leadership-principles",
+    "difficulty": "easy",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "hr",
+      "managerial"
+    ],
+    "options": [
+      {
+        "body": "Action — what you specifically did",
+        "correct": true
+      },
+      {
+        "body": "Situation",
+        "whyWrong": "Context should be brief; it is setup, not substance."
+      },
+      {
+        "body": "Task",
+        "whyWrong": "The task is usually one sentence."
+      },
+      {
+        "body": "Result",
+        "whyWrong": "The result should be concrete but short — it is the payoff, not the story."
+      }
+    ],
+    "explanation": "Situation and Task set the scene in a couple of sentences each; Action is where the interviewer learns how you work and should be roughly half the answer; Result closes it with what changed. Most weak answers over-invest in context and rush the action.",
+    "subtopic": "star-method",
+    "concept": "The interviewer is hiring your actions, so that is the part to expand.",
+    "hint": "Which section tells them what you would do on their team?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "HR-0024",
+    "body": "Why do interviewers push for \"I\" rather than \"we\" in behavioural answers?",
+    "topic": "leadership-principles",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "hr",
+      "managerial"
+    ],
+    "options": [
+      {
+        "body": "They need to know your individual contribution, not the team’s",
+        "correct": true
+      },
+      {
+        "body": "They dislike teamwork",
+        "whyWrong": "Teamwork is valued; they simply cannot assess a team they are not hiring."
+      },
+      {
+        "body": "Grammar is part of the score",
+        "whyWrong": "Language is not being marked; attribution is."
+      },
+      {
+        "body": "It shortens the answer",
+        "whyWrong": "Length is not the reason for the distinction."
+      }
+    ],
+    "explanation": "A story told entirely in \"we\" leaves your role invisible, and the interviewer cannot hire the team. Credit collaborators, then be explicit about the part you owned — that combination reads as both honest and substantial.",
+    "subtopic": "star-method",
+    "concept": "Credit the team, but make your own contribution unmistakable.",
+    "hint": "Could the interviewer state what you personally did after hearing your answer?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "HR-0025",
+    "body": "What makes a \"result\" in a STAR answer convincing?",
+    "topic": "leadership-principles",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "hr",
+      "managerial"
+    ],
+    "options": [
+      {
+        "body": "It is specific and, where possible, measurable",
+        "correct": true
+      },
+      {
+        "body": "It is always a success",
+        "whyWrong": "A recovered failure is often a stronger answer than an easy win."
+      },
+      {
+        "body": "It credits your manager",
+        "whyWrong": "Credit is fine but is not what makes the result convincing."
+      },
+      {
+        "body": "It describes what you would do differently",
+        "whyWrong": "That is a useful addition but not the result itself."
+      }
+    ],
+    "explanation": "\"It worked well\" is unfalsifiable. \"Cut the report from four hours to twenty minutes, and the team stopped running it manually\" is checkable and memorable. If nothing was measured, describe the observable change instead.",
+    "subtopic": "star-method",
+    "concept": "Specific and checkable beats impressive and vague.",
+    "hint": "How would someone verify the outcome you are claiming?"
+  },
+  {
+    "id": "HR-0026",
+    "body": "A company lists \"ownership\" as a core value. What behaviour demonstrates it?",
+    "topic": "leadership-principles",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "hr",
+      "managerial"
+    ],
+    "options": [
+      {
+        "body": "Seeing a problem outside your assigned task through to resolution",
+        "correct": true
+      },
+      {
+        "body": "Completing exactly what you were assigned",
+        "whyWrong": "Doing your assigned work is the baseline, not evidence of ownership."
+      },
+      {
+        "body": "Taking credit for the team’s results",
+        "whyWrong": "That is the opposite — appropriating rather than owning."
+      },
+      {
+        "body": "Working longer hours than everyone else",
+        "whyWrong": "Hours measure endurance, not ownership."
+      }
+    ],
+    "explanation": "Ownership is acting on something because it needs doing, not because it was allocated to you — and staying with it through to the outcome rather than handing it off after raising it.",
+    "concept": "\"Not my task\" is the phrase ownership questions are designed to detect.",
+    "hint": "What did you do about a problem nobody assigned you?"
+  },
+  {
+    "id": "HR-0027",
+    "body": "How long should a \"tell me about yourself\" answer be?",
+    "topic": "hr-interview",
+    "difficulty": "easy",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "hr",
+      "managerial"
+    ],
+    "options": [
+      {
+        "body": "About sixty to ninety seconds",
+        "correct": true
+      },
+      {
+        "body": "Five to ten minutes",
+        "whyWrong": "That is long enough to lose the room on the opening question."
+      },
+      {
+        "body": "Fifteen seconds",
+        "whyWrong": "Too short to convey anything and reads as unprepared."
+      },
+      {
+        "body": "As long as it takes to cover your whole life",
+        "whyWrong": "Life history is not what the question asks for."
+      }
+    ],
+    "explanation": "It is an opening, not the whole interview. A minute or so covering where you are now, one or two relevant things you have done, and why this role — then let them ask. Rehearse it aloud, because it always runs longer than it reads.",
+    "subtopic": "self-introduction",
+    "concept": "Rehearse the opening answer specifically; it sets the tone for everything after.",
+    "hint": "Have you timed yourself saying it out loud?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "HR-0028",
+    "body": "What makes a good answer to \"why do you want to join our company?\"",
+    "topic": "hr-interview",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "hr",
+      "managerial"
+    ],
+    "options": [
+      {
+        "body": "A specific product, team or problem of theirs that connects to your interests",
+        "correct": true
+      },
+      {
+        "body": "Their reputation and package",
+        "whyWrong": "Everyone can read the package; it says nothing about fit."
+      },
+      {
+        "body": "That they are hiring and you need a job",
+        "whyWrong": "Honest, but it gives them no reason to prefer you."
+      },
+      {
+        "body": "That your seniors recommended them",
+        "whyWrong": "Second-hand impressions are not your reasons."
+      }
+    ],
+    "explanation": "Specificity proves you spent time on them rather than sending the same answer everywhere. Naming a product you have used, a technical blog post you read, or a problem in their domain you find interesting is what separates a real answer from a template.",
+    "subtopic": "company-specific-questions",
+    "concept": "Preparation is visible in specificity, and its absence is equally visible.",
+    "hint": "Could this answer be given about any other company unchanged?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "HR-0029",
+    "body": "What should you ask when the interviewer says \"do you have any questions for us?\"",
+    "topic": "hr-interview",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "hr",
+      "managerial"
+    ],
+    "options": [
+      {
+        "body": "Something about the work, the team or how success is measured",
+        "correct": true
+      },
+      {
+        "body": "Nothing — it saves their time",
+        "whyWrong": "Having no questions reads as disinterest and wastes your best chance to assess them."
+      },
+      {
+        "body": "Salary and leave policy",
+        "whyWrong": "In a campus interview these come later, usually with HR rather than the panel."
+      },
+      {
+        "body": "Whether you got the job",
+        "whyWrong": "Asking for a verdict on the spot puts the interviewer in an awkward position."
+      }
+    ],
+    "explanation": "Have at least two prepared, and ask something you actually want to know — what the first six months look like, how the team decides what to build, what makes someone successful there. It is also your chance to find out whether you want the job.",
+    "subtopic": "company-specific-questions",
+    "concept": "This question is an interview of them, and treating it that way reads well.",
+    "hint": "What would you genuinely want to know before accepting?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "HR-0030",
+    "body": "How should you present a project you built alone as a learning exercise?",
+    "topic": "hr-interview",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "hr",
+      "managerial"
+    ],
+    "options": [
+      {
+        "body": "Say plainly that it was a personal project and focus on the decisions you made",
+        "correct": true
+      },
+      {
+        "body": "Imply it was used in production",
+        "whyWrong": "An untrue claim collapses under one follow-up question."
+      },
+      {
+        "body": "Skip it because it was not professional work",
+        "whyWrong": "Personal projects are strong material, especially for a first job."
+      },
+      {
+        "body": "Describe only the technologies used",
+        "whyWrong": "A technology list says nothing about how you think."
+      }
+    ],
+    "explanation": "Interviewers know a campus candidate has limited professional work. What they want is the reasoning: why that architecture, what you would change, what broke. A modest project explained deeply beats an ambitious one explained shallowly.",
+    "subtopic": "projects-resume",
+    "concept": "Depth of reasoning matters more than the scale of the project.",
+    "hint": "What did you decide, and what would you decide differently now?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "HR-0031",
+    "body": "An interviewer asks what you would change about your final-year project. What is the best response?",
+    "topic": "hr-interview",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "hr",
+      "managerial"
+    ],
+    "options": [
+      {
+        "body": "Name a specific weakness and what you would do instead, with the reason",
+        "correct": true
+      },
+      {
+        "body": "Say you would not change anything",
+        "whyWrong": "This suggests you have not reflected, or cannot evaluate your own work."
+      },
+      {
+        "body": "List every flaw at length",
+        "whyWrong": "Excessive self-criticism undersells work you should be presenting positively."
+      },
+      {
+        "body": "Blame the time available",
+        "whyWrong": "Constraints are real, but the answer should still be about your technical judgement."
+      }
+    ],
+    "explanation": "They are testing whether you can critique your own work — an essential engineering skill. One concrete, well-reasoned change shows growth without undermining the project.",
+    "subtopic": "projects-resume",
+    "concept": "Self-critique with a reason is a senior habit and interviewers look for it early.",
+    "hint": "What is the one thing you would rebuild, and why that one?"
   }
 ]

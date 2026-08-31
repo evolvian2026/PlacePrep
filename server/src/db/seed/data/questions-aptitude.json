@@ -1382,5 +1382,1019 @@
       }
     ],
     "explanation": "Total = 2 400, mean = 480. The highest month is 540, exceeding the average by 60 units."
+  },
+  {
+    "id": "APT-0046",
+    "body": "Two fair dice are rolled. What is the probability that the sum is 7?",
+    "topic": "quantitative-aptitude",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "1/6",
+        "correct": true
+      },
+      {
+        "body": "1/12",
+        "whyWrong": "That is the probability of a sum of 5 or 9, each with 4 favourable outcomes."
+      },
+      {
+        "body": "1/9",
+        "whyWrong": "That is 4/36, the probability of a sum of 5."
+      },
+      {
+        "body": "7/36",
+        "whyWrong": "7 is the sum, not the count of favourable outcomes."
+      }
+    ],
+    "explanation": "There are 36 equally likely outcomes. The pairs summing to 7 are (1,6), (2,5), (3,4), (4,3), (5,2) and (6,1) — six of them. So the probability is 6/36 = 1/6, which makes 7 the most likely sum.",
+    "subtopic": "probability",
+    "concept": "Count favourable ordered pairs over 36; sum 7 has the most.",
+    "hint": "List the ordered pairs, not the unordered ones.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "APT-0047",
+    "body": "A bag has 4 red and 6 blue balls. Two are drawn without replacement. What is the probability both are red?",
+    "topic": "quantitative-aptitude",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "2/15",
+        "correct": true
+      },
+      {
+        "body": "4/25",
+        "whyWrong": "That would be the answer with replacement: (4/10)²."
+      },
+      {
+        "body": "1/5",
+        "whyWrong": "This ignores that the pool shrinks after the first draw."
+      },
+      {
+        "body": "3/20",
+        "whyWrong": "Recheck the second draw: 3 red remain out of 9 balls, not out of 10."
+      }
+    ],
+    "explanation": "The first draw is red with probability 4/10. Given that, only 3 red remain among 9 balls, so the second is 3/9. Multiplying gives (4/10) × (3/9) = 12/90 = 2/15.",
+    "subtopic": "probability",
+    "concept": "Without replacement, both the favourable count and the total shrink.",
+    "hint": "What is in the bag after the first ball is removed?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "APT-0048",
+    "body": "The probability that it rains is 0.3 and that it is windy is 0.4, independently. What is the probability of at least one of them?",
+    "topic": "quantitative-aptitude",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "0.58",
+        "correct": true
+      },
+      {
+        "body": "0.70",
+        "whyWrong": "That adds the two probabilities without subtracting the overlap, double-counting the both case."
+      },
+      {
+        "body": "0.12",
+        "whyWrong": "That is the probability of both occurring, not at least one."
+      },
+      {
+        "body": "0.42",
+        "whyWrong": "That is the probability of neither."
+      }
+    ],
+    "explanation": "P(A or B) = P(A) + P(B) − P(A and B) = 0.3 + 0.4 − 0.12 = 0.58. Equivalently, 1 minus the probability of neither: 1 − (0.7 × 0.6) = 1 − 0.42 = 0.58.",
+    "subtopic": "probability",
+    "concept": "Inclusion-exclusion, or complement of \"neither\" — the complement route is usually faster.",
+    "hint": "What is the chance neither happens?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "APT-0049",
+    "body": "A coin is tossed 3 times. What is the probability of getting exactly two heads?",
+    "topic": "quantitative-aptitude",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "3/8",
+        "correct": true
+      },
+      {
+        "body": "1/2",
+        "whyWrong": "A half is the probability of a single head, not of exactly two in three."
+      },
+      {
+        "body": "1/4",
+        "whyWrong": "That is the probability of one specific sequence such as HHT."
+      },
+      {
+        "body": "2/3",
+        "whyWrong": "This treats two-of-three as a ratio rather than counting the eight outcomes."
+      }
+    ],
+    "explanation": "There are 2³ = 8 equally likely sequences. Exactly two heads occurs as HHT, HTH and THH — three of them — giving 3/8. In general the count is C(3,2) = 3.",
+    "subtopic": "probability",
+    "concept": "Binomial: C(n,k) favourable sequences out of 2^n.",
+    "hint": "How many arrangements of two heads and one tail are there?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "APT-0050",
+    "body": "Two cards are drawn from a standard 52-card deck without replacement. What is the probability both are aces?",
+    "topic": "quantitative-aptitude",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "1/221",
+        "correct": true
+      },
+      {
+        "body": "1/169",
+        "whyWrong": "That is the with-replacement answer, (4/52)²."
+      },
+      {
+        "body": "1/13",
+        "whyWrong": "That is the probability that a single card is an ace."
+      },
+      {
+        "body": "4/52",
+        "whyWrong": "That is one draw, not two."
+      }
+    ],
+    "explanation": "(4/52) × (3/51) = 12/2652 = 1/221. Equivalently C(4,2)/C(52,2) = 6/1326 = 1/221.",
+    "subtopic": "probability",
+    "concept": "Sequential multiplication and the combinations ratio give the same answer; use whichever is quicker.",
+    "hint": "How many aces are left after drawing one?"
+  },
+  {
+    "id": "APT-0051",
+    "body": "If P(A) = 0.6 and P(B|A) = 0.5, what is P(A and B)?",
+    "topic": "quantitative-aptitude",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "0.3",
+        "correct": true
+      },
+      {
+        "body": "0.5",
+        "whyWrong": "That is the conditional probability itself, not the joint."
+      },
+      {
+        "body": "1.1",
+        "whyWrong": "Probabilities cannot exceed 1; this adds rather than multiplies."
+      },
+      {
+        "body": "0.6",
+        "whyWrong": "That is P(A) alone."
+      }
+    ],
+    "explanation": "By the definition of conditional probability, P(A and B) = P(A) × P(B|A) = 0.6 × 0.5 = 0.3. The conditional already assumes A has occurred, so multiplying by P(A) gives the unconditional joint probability.",
+    "subtopic": "probability",
+    "concept": "P(A∩B) = P(A)·P(B|A) always; independence is the special case where P(B|A) = P(B).",
+    "hint": "What does the conditional already assume?"
+  },
+  {
+    "id": "APT-0052",
+    "body": "Three people each pick a day of the week at random. What is the probability all three pick different days?",
+    "topic": "quantitative-aptitude",
+    "difficulty": "hard",
+    "expectedSeconds": 85,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "30/49",
+        "correct": true
+      },
+      {
+        "body": "1/7",
+        "whyWrong": "That is the chance two specific people match on a given day."
+      },
+      {
+        "body": "6/7",
+        "whyWrong": "That is the probability the second person differs from the first only."
+      },
+      {
+        "body": "3/7",
+        "whyWrong": "This does not account for both later choices needing to differ."
+      }
+    ],
+    "explanation": "The first person is unconstrained. The second must avoid one day: 6/7. The third must avoid two: 5/7. So (6/7) × (5/7) = 30/49 ≈ 0.61. This is the birthday-problem structure in miniature.",
+    "subtopic": "probability",
+    "concept": "Fix the first choice, then constrain each subsequent one against those already taken.",
+    "hint": "How many days remain available for the third person?"
+  },
+  {
+    "id": "APT-0053",
+    "body": "A price rises by 20% and then falls by 20%. What is the net change?",
+    "topic": "quantitative-aptitude",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "A 4% decrease",
+        "correct": true
+      },
+      {
+        "body": "No change",
+        "whyWrong": "The two percentages apply to different bases, so they do not cancel."
+      },
+      {
+        "body": "A 4% increase",
+        "whyWrong": "The fall applies to the larger amount, so the net effect is downward."
+      },
+      {
+        "body": "A 40% decrease",
+        "whyWrong": "The changes are successive, not additive."
+      }
+    ],
+    "explanation": "Starting at 100: +20% gives 120, then −20% of 120 is −24, giving 96. The 4% loss arises because the increase applies to 100 while the decrease applies to 120. The general shortcut is x − y − xy/100 = −4.",
+    "subtopic": "percentages",
+    "concept": "Successive percentage changes compose multiplicatively, never additively.",
+    "hint": "What is 20% of 120 compared with 20% of 100?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "APT-0054",
+    "body": "If 40% of a number is 96, what is 75% of the same number?",
+    "topic": "quantitative-aptitude",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "180",
+        "correct": true
+      },
+      {
+        "body": "160",
+        "whyWrong": "That is 66.7% of the number — recheck the division."
+      },
+      {
+        "body": "240",
+        "whyWrong": "That is the number itself, not 75% of it."
+      },
+      {
+        "body": "120",
+        "whyWrong": "That is 50% of the number."
+      }
+    ],
+    "explanation": "40% of x is 96, so x = 96 / 0.4 = 240. Then 75% of 240 = 180. A faster route: 75% is 40% × (75/40), so 96 × 1.875 = 180.",
+    "subtopic": "percentages",
+    "concept": "Find the whole first, or scale directly by the ratio of the two percentages.",
+    "hint": "What is the number itself?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "APT-0055",
+    "body": "A student scores 30% and fails by 20 marks. Another scores 45% and gets 10 marks more than the pass mark. What is the total?",
+    "topic": "quantitative-aptitude",
+    "difficulty": "medium",
+    "expectedSeconds": 80,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "200",
+        "correct": true
+      },
+      {
+        "body": "150",
+        "whyWrong": "Check the equation: 0.15 × total must equal 30, not 22.5."
+      },
+      {
+        "body": "250",
+        "whyWrong": "That would make the 15% gap equal 37.5 marks, not 30."
+      },
+      {
+        "body": "300",
+        "whyWrong": "That would make the 15% gap equal 45 marks."
+      }
+    ],
+    "explanation": "Let the total be T. The pass mark is 0.30T + 20 and also 0.45T − 10. Setting them equal gives 0.15T = 30, so T = 200. The pass mark is 80.",
+    "subtopic": "percentages",
+    "concept": "Two expressions for the same unknown quantity give one equation.",
+    "hint": "Both statements describe the same pass mark.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "APT-0056",
+    "body": "The population of a town increases by 10% each year. After 2 years it is 12,100. What was it initially?",
+    "topic": "quantitative-aptitude",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "10,000",
+        "correct": true
+      },
+      {
+        "body": "11,000",
+        "whyWrong": "That is the population after one year, not the start."
+      },
+      {
+        "body": "9,900",
+        "whyWrong": "This subtracts 10% twice instead of dividing by 1.1 twice."
+      },
+      {
+        "body": "12,000",
+        "whyWrong": "This treats the growth as a flat 100 people."
+      }
+    ],
+    "explanation": "After two years the population is P × 1.1² = 1.21P. So P = 12,100 / 1.21 = 10,000. Reversing compound growth means dividing by the factor, not subtracting the percentage.",
+    "subtopic": "percentages",
+    "concept": "Compound growth reverses by division, never by subtracting the same percentage.",
+    "hint": "What single factor represents two years of 10% growth?"
+  },
+  {
+    "id": "APT-0057",
+    "body": "A shopkeeper marks goods 40% above cost and gives a 25% discount. What is the profit percentage?",
+    "topic": "quantitative-aptitude",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "5%",
+        "correct": true
+      },
+      {
+        "body": "15%",
+        "whyWrong": "This subtracts the two percentages, but they apply to different bases."
+      },
+      {
+        "body": "10%",
+        "whyWrong": "Recompute: 140 × 0.75 = 105, which is 5 above the cost of 100."
+      },
+      {
+        "body": "12.5%",
+        "whyWrong": "This is not consistent with a marked price of 140."
+      }
+    ],
+    "explanation": "Take cost as 100. The marked price is 140, and a 25% discount gives 140 × 0.75 = 105. Profit is 5 on a cost of 100, so 5%. Discount applies to the marked price, while profit is measured against cost — the distinction the question is testing.",
+    "subtopic": "percentages",
+    "concept": "Percentages only combine when they share a base; here they do not.",
+    "hint": "What is the discount taken on — cost or marked price?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "APT-0058",
+    "body": "If A is 25% more than B, then B is what percent less than A?",
+    "topic": "quantitative-aptitude",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "20%",
+        "correct": true
+      },
+      {
+        "body": "25%",
+        "whyWrong": "Percentage change is not symmetric, because the base differs in each direction."
+      },
+      {
+        "body": "30%",
+        "whyWrong": "Recompute: the difference is 25 on a base of 125."
+      },
+      {
+        "body": "75%",
+        "whyWrong": "That is B as a percentage of A, not the reduction."
+      }
+    ],
+    "explanation": "Let B = 100, so A = 125. B is 25 below A, and 25/125 = 20%. The asymmetry is because the first percentage uses B as base and the second uses A.",
+    "subtopic": "percentages",
+    "concept": "x% more one way is x/(100+x) less the other way.",
+    "hint": "What is the base for each of the two comparisons?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "APT-0059",
+    "body": "A train 150 m long travelling at 72 km/h crosses a platform 250 m long. How long does it take?",
+    "topic": "quantitative-aptitude",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "20 seconds",
+        "correct": true
+      },
+      {
+        "body": "12.5 seconds",
+        "whyWrong": "That covers only the platform length, ignoring the train’s own length."
+      },
+      {
+        "body": "7.5 seconds",
+        "whyWrong": "That covers only the train length."
+      },
+      {
+        "body": "25 seconds",
+        "whyWrong": "Recheck the conversion: 72 km/h is 20 m/s, not 16."
+      }
+    ],
+    "explanation": "To clear the platform the train travels its own length plus the platform: 150 + 250 = 400 m. Speed is 72 × 5/18 = 20 m/s. Time = 400 / 20 = 20 seconds.",
+    "subtopic": "time-speed-distance",
+    "concept": "Crossing a platform means covering both lengths; crossing a pole means only the train’s length.",
+    "hint": "What total distance must the train cover to be fully clear?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "APT-0060",
+    "body": "Two trains 100 km apart move towards each other at 40 km/h and 60 km/h. When do they meet?",
+    "topic": "quantitative-aptitude",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "After 1 hour",
+        "correct": true
+      },
+      {
+        "body": "After 2 hours",
+        "whyWrong": "That would be the time at 50 km/h combined, which is not how relative speed works here."
+      },
+      {
+        "body": "After 1.5 hours",
+        "whyWrong": "Recheck: the closing speed is the sum, 100 km/h."
+      },
+      {
+        "body": "After 40 minutes",
+        "whyWrong": "That would need a closing speed of 150 km/h."
+      }
+    ],
+    "explanation": "Approaching each other, the closing speed is the sum: 40 + 60 = 100 km/h. Time = 100 / 100 = 1 hour. If they moved in the same direction, the relevant speed would be the difference.",
+    "subtopic": "time-speed-distance",
+    "concept": "Towards each other, add the speeds; same direction, subtract them.",
+    "hint": "How fast is the gap between them shrinking?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "APT-0061",
+    "body": "A boat travels 30 km downstream in 2 hours and returns in 3 hours. What is the speed of the stream?",
+    "topic": "quantitative-aptitude",
+    "difficulty": "medium",
+    "expectedSeconds": 80,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "2.5 km/h",
+        "correct": true
+      },
+      {
+        "body": "5 km/h",
+        "whyWrong": "That is the difference between the two speeds, which is twice the stream speed."
+      },
+      {
+        "body": "12.5 km/h",
+        "whyWrong": "That is the boat’s speed in still water."
+      },
+      {
+        "body": "1 km/h",
+        "whyWrong": "Recheck: downstream is 15 km/h and upstream is 10 km/h."
+      }
+    ],
+    "explanation": "Downstream speed is 30/2 = 15 km/h and upstream is 30/3 = 10 km/h. Since downstream = boat + stream and upstream = boat − stream, the stream is (15 − 10)/2 = 2.5 km/h and the boat is 12.5 km/h.",
+    "subtopic": "time-speed-distance",
+    "concept": "Stream speed is half the difference; still-water speed is half the sum.",
+    "hint": "What do you get by subtracting the two speeds?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "APT-0062",
+    "body": "A man covers half a journey at 20 km/h and the other half at 30 km/h. What is his average speed?",
+    "topic": "quantitative-aptitude",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "24 km/h",
+        "correct": true
+      },
+      {
+        "body": "25 km/h",
+        "whyWrong": "That is the arithmetic mean, which is only correct when equal times are spent at each speed."
+      },
+      {
+        "body": "26 km/h",
+        "whyWrong": "No combination of these figures gives 26."
+      },
+      {
+        "body": "50 km/h",
+        "whyWrong": "That adds the speeds rather than averaging them."
+      }
+    ],
+    "explanation": "Average speed is total distance over total time. For equal distances the harmonic mean applies: 2 × 20 × 30 / (20 + 30) = 1200/50 = 24 km/h. It is below the arithmetic mean because more time is spent at the slower speed.",
+    "subtopic": "time-speed-distance",
+    "concept": "Equal distances need the harmonic mean; equal times need the arithmetic mean.",
+    "hint": "Which half of the journey takes longer?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "APT-0063",
+    "body": "A car travelling at 60 km/h reaches its destination 10 minutes late. At 75 km/h it would arrive 5 minutes early. What is the distance?",
+    "topic": "quantitative-aptitude",
+    "difficulty": "hard",
+    "expectedSeconds": 95,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "75 km",
+        "correct": true
+      },
+      {
+        "body": "60 km",
+        "whyWrong": "Check the equation: the time difference at 60 and 75 km/h must be 15 minutes."
+      },
+      {
+        "body": "90 km",
+        "whyWrong": "That would give a time difference of 18 minutes."
+      },
+      {
+        "body": "100 km",
+        "whyWrong": "That would give a time difference of 20 minutes."
+      }
+    ],
+    "explanation": "Let the distance be d. The time difference between the two speeds is 15 minutes = 1/4 hour: d/60 − d/75 = 1/4. The left side is d(75 − 60)/4500 = d/300, so d = 75 km.",
+    "subtopic": "time-speed-distance",
+    "concept": "Late-and-early problems reduce to one equation on the difference of the two travel times.",
+    "hint": "How many minutes separate the two arrival times?"
+  },
+  {
+    "id": "APT-0064",
+    "body": "Walking at 3/4 of his usual speed, a man is 20 minutes late. What is his usual travel time?",
+    "topic": "quantitative-aptitude",
+    "difficulty": "hard",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "60 minutes",
+        "correct": true
+      },
+      {
+        "body": "80 minutes",
+        "whyWrong": "That is the time taken at the slower speed, not the usual time."
+      },
+      {
+        "body": "40 minutes",
+        "whyWrong": "That would make the delay 13.3 minutes, not 20."
+      },
+      {
+        "body": "20 minutes",
+        "whyWrong": "That is the delay itself, not the usual time."
+      }
+    ],
+    "explanation": "Speed and time are inversely proportional over a fixed distance, so 3/4 speed means 4/3 of the usual time. The extra 1/3 of the usual time equals 20 minutes, so the usual time is 60 minutes.",
+    "subtopic": "time-speed-distance",
+    "concept": "At constant distance, multiplying speed by k divides time by k.",
+    "hint": "If speed is three quarters, what fraction of usual is the time?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "APT-0065",
+    "body": "A can do a job in 12 days and B in 18 days. Working together, how long do they take?",
+    "topic": "quantitative-aptitude",
+    "difficulty": "easy",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "7.2 days",
+        "correct": true
+      },
+      {
+        "body": "15 days",
+        "whyWrong": "That is the average of the two times, which is not how rates combine."
+      },
+      {
+        "body": "6 days",
+        "whyWrong": "That would need a combined rate of 1/6 per day; the actual rate is 5/36."
+      },
+      {
+        "body": "30 days",
+        "whyWrong": "That adds the times rather than the rates."
+      }
+    ],
+    "explanation": "A does 1/12 per day and B does 1/18. Together that is 3/36 + 2/36 = 5/36 per day, so the job takes 36/5 = 7.2 days. Rates add; times do not.",
+    "subtopic": "time-and-work",
+    "concept": "Convert to work-per-day, add, then invert.",
+    "hint": "What fraction of the job is done in one day by each?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "APT-0066",
+    "body": "A and B together finish a job in 8 days. A alone takes 12 days. How long does B alone take?",
+    "topic": "quantitative-aptitude",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "24 days",
+        "correct": true
+      },
+      {
+        "body": "20 days",
+        "whyWrong": "Recheck: B’s rate is 1/8 − 1/12 = 1/24."
+      },
+      {
+        "body": "16 days",
+        "whyWrong": "That would give a combined time of 6.86 days."
+      },
+      {
+        "body": "4 days",
+        "whyWrong": "That would make B faster than the pair together, which is impossible."
+      }
+    ],
+    "explanation": "Together they do 1/8 per day and A does 1/12, so B does 1/8 − 1/12 = 3/24 − 2/24 = 1/24 per day. B alone therefore takes 24 days.",
+    "subtopic": "time-and-work",
+    "concept": "Subtract rates to isolate one worker’s contribution.",
+    "hint": "What is left of the combined rate once A’s share is removed?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "APT-0067",
+    "body": "12 workers build a wall in 10 days. How many days would 15 workers take, assuming equal rates?",
+    "topic": "quantitative-aptitude",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "8 days",
+        "correct": true
+      },
+      {
+        "body": "12 days",
+        "whyWrong": "That increases the time when adding workers should reduce it."
+      },
+      {
+        "body": "7.5 days",
+        "whyWrong": "Recheck: 120 worker-days divided by 15 is 8."
+      },
+      {
+        "body": "6 days",
+        "whyWrong": "That would require 20 workers."
+      }
+    ],
+    "explanation": "The job is 12 × 10 = 120 worker-days. With 15 workers that is 120/15 = 8 days. Workers and time are inversely proportional when the total work is fixed.",
+    "subtopic": "time-and-work",
+    "concept": "Total work in worker-days is the invariant.",
+    "hint": "How many worker-days does the wall take?"
+  },
+  {
+    "id": "APT-0068",
+    "body": "A cistern fills in 6 hours through a tap but has a leak that empties it in 10 hours. How long to fill?",
+    "topic": "quantitative-aptitude",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "15 hours",
+        "correct": true
+      },
+      {
+        "body": "4 hours",
+        "whyWrong": "The leak slows filling, so the time must exceed 6 hours."
+      },
+      {
+        "body": "16 hours",
+        "whyWrong": "Recheck: the net rate is 1/6 − 1/10 = 1/15."
+      },
+      {
+        "body": "8 hours",
+        "whyWrong": "That would need a net rate of 1/8."
+      }
+    ],
+    "explanation": "The tap adds 1/6 per hour and the leak removes 1/10, so the net rate is 5/30 − 3/30 = 2/30 = 1/15 per hour. The cistern fills in 15 hours.",
+    "subtopic": "time-and-work",
+    "concept": "A leak is simply a negative rate added to the total.",
+    "hint": "What is the net fraction filled in one hour?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "APT-0069",
+    "body": "A does a job in 20 days and B in 30 days. They start together but A leaves after 5 days. How long in total?",
+    "topic": "quantitative-aptitude",
+    "difficulty": "hard",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "22.5 days",
+        "correct": true
+      },
+      {
+        "body": "21.25 days",
+        "whyWrong": "Check the final addition: 5 days together plus 17.5 days for B is 22.5, not 21.25."
+      },
+      {
+        "body": "20 days",
+        "whyWrong": "That is A’s solo time and does not account for the handover to B."
+      },
+      {
+        "body": "17.5 days",
+        "whyWrong": "That is only B’s remaining time; the 5 days already worked must be added."
+      }
+    ],
+    "explanation": "In 5 days together they complete 5 × (1/20 + 1/30) = 5 × 5/60 = 5/12. The remaining 7/12 is done by B alone at 1/30 per day, taking (7/12) × 30 = 17.5 days. Total = 5 + 17.5 = 22.5 days.",
+    "subtopic": "time-and-work",
+    "concept": "Break the timeline at each change in who is working.",
+    "hint": "How much is left when A leaves?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "APT-0070",
+    "body": "A is twice as efficient as B and together they finish in 12 days. How long would A take alone?",
+    "topic": "quantitative-aptitude",
+    "difficulty": "medium",
+    "expectedSeconds": 80,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "18 days",
+        "correct": true
+      },
+      {
+        "body": "24 days",
+        "whyWrong": "That is B’s solo time, not A’s."
+      },
+      {
+        "body": "36 days",
+        "whyWrong": "That would make A slower than the pair, which contradicts the premise."
+      },
+      {
+        "body": "6 days",
+        "whyWrong": "That would make the combined time 4 days."
+      }
+    ],
+    "explanation": "Let B’s rate be r, so A’s is 2r and together 3r = 1/12, giving r = 1/36. A works at 2/36 = 1/18, so A alone takes 18 days and B takes 36.",
+    "subtopic": "time-and-work",
+    "concept": "Express both rates in terms of one variable, then use the combined rate.",
+    "hint": "If A is twice as fast, what share of the joint work does A do?"
+  },
+  {
+    "id": "APT-0071",
+    "body": "A pie chart shows a company’s expenses. Salaries occupy 126 degrees of the chart. What percentage of expenses is that?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "35%",
+        "correct": true
+      },
+      {
+        "body": "126%",
+        "whyWrong": "Degrees are not percentages; the whole circle is 360 degrees."
+      },
+      {
+        "body": "25%",
+        "whyWrong": "That would be 90 degrees."
+      },
+      {
+        "body": "50%",
+        "whyWrong": "That would be 180 degrees."
+      }
+    ],
+    "explanation": "A full circle is 360 degrees representing 100%, so each degree is 1/3.6 of a percent. 126/360 = 0.35, which is 35%.",
+    "subtopic": "tables-and-charts",
+    "concept": "Divide the angle by 360 to convert a pie slice to a proportion.",
+    "hint": "What fraction of the full circle is 126 degrees?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "APT-0072",
+    "body": "Sales were 120 units in year 1 and 150 in year 2. What is the percentage increase?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "25%",
+        "correct": true
+      },
+      {
+        "body": "30%",
+        "whyWrong": "That is the absolute increase, not the percentage."
+      },
+      {
+        "body": "20%",
+        "whyWrong": "That would be the decrease from 150 back to 120."
+      },
+      {
+        "body": "80%",
+        "whyWrong": "That is year 1 as a percentage of year 2."
+      }
+    ],
+    "explanation": "The increase is 30 on a base of 120, so 30/120 = 0.25 = 25%. Percentage change always uses the earlier value as the base — using 150 would give the wrong 20%.",
+    "subtopic": "tables-and-charts",
+    "concept": "Percentage change is (new − old)/old, and the base is always the starting value.",
+    "hint": "Which of the two years is the base?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "APT-0073",
+    "body": "A bar chart shows revenue of 40, 60, 80 and 100 across four quarters. What is the average quarterly revenue?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "70",
+        "correct": true
+      },
+      {
+        "body": "60",
+        "whyWrong": "That is the median-ish middle value, not the mean of all four."
+      },
+      {
+        "body": "80",
+        "whyWrong": "That is the third quarter alone."
+      },
+      {
+        "body": "280",
+        "whyWrong": "That is the total, not the average."
+      }
+    ],
+    "explanation": "The total is 40 + 60 + 80 + 100 = 280, and dividing by 4 gives 70. Note the average is not one of the plotted values, which is a common source of doubt in these questions.",
+    "subtopic": "tables-and-charts",
+    "concept": "Sum the values and divide by the count; the mean need not be a value that appears.",
+    "hint": "What is the total across all four quarters?"
+  },
+  {
+    "id": "APT-0074",
+    "body": "In a table, company A’s profit rose from 50 to 65 and company B’s from 80 to 100. Which grew faster in percentage terms?",
+    "topic": "data-interpretation",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "A, at 30% versus 25%",
+        "correct": true
+      },
+      {
+        "body": "B, because its absolute rise was larger",
+        "whyWrong": "Absolute rise and percentage growth are different measures; the question asks for the latter."
+      },
+      {
+        "body": "Both grew equally",
+        "whyWrong": "15/50 and 20/80 are not equal."
+      },
+      {
+        "body": "It cannot be determined",
+        "whyWrong": "Both starting and ending values are given, so it can."
+      }
+    ],
+    "explanation": "A grew by 15 on a base of 50, which is 30%. B grew by 20 on a base of 80, which is 25%. The larger absolute increase belongs to B, but the larger relative growth belongs to A.",
+    "subtopic": "tables-and-charts",
+    "concept": "Comparisons across different bases must use percentages, not absolute differences.",
+    "hint": "Which comparison does a different starting size make unfair?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "APT-0075",
+    "body": "A caselet states that 60% of 500 employees are male, and 30% of the males are engineers. How many male engineers are there?",
+    "topic": "data-interpretation",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "90",
+        "correct": true
+      },
+      {
+        "body": "150",
+        "whyWrong": "That is the number of engineers if 30% of all employees were engineers."
+      },
+      {
+        "body": "300",
+        "whyWrong": "That is the number of males."
+      },
+      {
+        "body": "45",
+        "whyWrong": "That halves the correct figure — recheck 30% of 300."
+      }
+    ],
+    "explanation": "Males number 500 × 0.6 = 300, and 30% of those are engineers: 300 × 0.3 = 90. The trap is applying the second percentage to the total rather than to the subgroup it refers to.",
+    "subtopic": "caselets",
+    "concept": "Successive percentages apply to the group named immediately before them.",
+    "hint": "30% of what — everyone, or the males?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "APT-0076",
+    "body": "A caselet gives four departments with 25, 35, 20 and 20 employees. What fraction of staff is in the largest department?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "35%",
+        "correct": true
+      },
+      {
+        "body": "35",
+        "whyWrong": "That is the headcount, not the fraction."
+      },
+      {
+        "body": "25%",
+        "whyWrong": "That is the first department."
+      },
+      {
+        "body": "20%",
+        "whyWrong": "That is one of the two smallest."
+      }
+    ],
+    "explanation": "The total is 25 + 35 + 20 + 20 = 100 employees, so the largest department’s 35 people are exactly 35% of staff. The round total makes the conversion immediate.",
+    "subtopic": "caselets",
+    "concept": "Always compute the total before reading any single figure as a proportion.",
+    "hint": "What do the four departments add up to?"
   }
 ]

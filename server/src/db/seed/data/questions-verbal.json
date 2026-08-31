@@ -756,5 +756,335 @@
       }
     ],
     "explanation": "In \"one of my friends\", the grammatical subject is \"one\" — singular — so the verb is \"is\"."
+  },
+  {
+    "id": "VRB-0026",
+    "body": "In a reading-comprehension passage, what does an \"inference\" question ask for?",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Something the passage implies without stating outright",
+        "correct": true
+      },
+      {
+        "body": "A fact stated directly in the passage",
+        "whyWrong": "That is a detail question, not an inference."
+      },
+      {
+        "body": "Your own opinion of the topic",
+        "whyWrong": "Your view is irrelevant; the answer must be supported by the text."
+      },
+      {
+        "body": "A summary of the whole passage",
+        "whyWrong": "Summary is a separate question type."
+      }
+    ],
+    "explanation": "An inference must follow from the text but not be written in it. The reliable technique is to reject any option needing information the passage never supplies, however plausible it sounds in the wider world.",
+    "subtopic": "reading-comprehension",
+    "concept": "Support every answer from the passage alone, not from general knowledge.",
+    "hint": "Could you point to the lines that make this necessarily true?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "VRB-0027",
+    "body": "A passage says a policy \"was not universally welcomed\". What does this most likely imply?",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Some people objected to it",
+        "correct": true
+      },
+      {
+        "body": "Everyone opposed it",
+        "whyWrong": "\"Not universally welcomed\" is far weaker than universal opposition."
+      },
+      {
+        "body": "It was rejected outright",
+        "whyWrong": "Nothing about rejection is stated or implied."
+      },
+      {
+        "body": "It was welcomed by everyone",
+        "whyWrong": "That is the opposite of what the phrase says."
+      }
+    ],
+    "explanation": "Understatement of this kind signals partial disagreement. Comprehension questions reward reading the exact strength of a claim — \"not universally\" removes only the claim of unanimity, nothing more.",
+    "subtopic": "reading-comprehension",
+    "concept": "Watch the strength of qualifiers; they are usually what the answer turns on.",
+    "hint": "How much does \"not universal\" actually rule out?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "VRB-0028",
+    "body": "Which is the best strategy for a long RC passage under time pressure?",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Skim for structure, then read closely only the parts the questions point to",
+        "correct": true
+      },
+      {
+        "body": "Read every word carefully before looking at the questions",
+        "whyWrong": "Thorough reading is often too slow, and much of the passage is never asked about."
+      },
+      {
+        "body": "Read only the first and last lines",
+        "whyWrong": "That misses the detail most questions target."
+      },
+      {
+        "body": "Answer from general knowledge without reading",
+        "whyWrong": "Options are written to punish exactly this."
+      }
+    ],
+    "explanation": "Understanding the shape — argument, counter-argument, conclusion — lets you locate relevant paragraphs quickly. Detail questions can then be answered by reading only the lines that matter.",
+    "subtopic": "reading-comprehension",
+    "concept": "Map the passage first, then read for detail on demand.",
+    "hint": "Which parts will the questions actually ask about?"
+  },
+  {
+    "id": "VRB-0029",
+    "body": "Arrange into a coherent paragraph: (1) However, the results were inconclusive. (2) Researchers tested the drug on 200 patients. (3) A larger trial has since been proposed. (4) The trial ran for six months.",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 80,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "2, 4, 1, 3",
+        "correct": true
+      },
+      {
+        "body": "2, 1, 4, 3",
+        "whyWrong": "The \"however\" cannot precede the description of how long the trial ran."
+      },
+      {
+        "body": "4, 2, 1, 3",
+        "whyWrong": "Sentence 4 refers to \"the trial\", which must be introduced by sentence 2 first."
+      },
+      {
+        "body": "1, 2, 4, 3",
+        "whyWrong": "A paragraph cannot open with \"however\", which contrasts with something already said."
+      }
+    ],
+    "explanation": "Sentence 2 introduces the trial, 4 adds its duration, 1 contrasts with the expected outcome, and 3 follows from that failure. The definite article in \"the trial\" and the connector \"however\" are the two structural clues.",
+    "subtopic": "para-jumbles",
+    "concept": "Openers rarely start with a connector; definite articles point back to an earlier introduction.",
+    "hint": "Which sentence introduces something the others refer back to?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "VRB-0030",
+    "body": "In para-jumble questions, which sentence is usually the opener?",
+    "topic": "verbal-ability",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "One that introduces a subject without referring back to anything",
+        "correct": true
+      },
+      {
+        "body": "The longest sentence",
+        "whyWrong": "Length says nothing about position."
+      },
+      {
+        "body": "One beginning with a pronoun",
+        "whyWrong": "A pronoun needs an antecedent, so such a sentence cannot come first."
+      },
+      {
+        "body": "One containing a conclusion",
+        "whyWrong": "Conclusions belong at the end."
+      }
+    ],
+    "explanation": "An opener must be self-contained. Pronouns, \"however\", \"therefore\" and definite articles all point back to something earlier, which rules those sentences out of first place — usually narrowing the options immediately.",
+    "subtopic": "para-jumbles",
+    "concept": "Eliminate impossible openers first; it often settles the answer without ordering everything.",
+    "hint": "Which sentences depend on something already said?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "VRB-0031",
+    "body": "Choose the correctly punctuated sentence.",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "The report, which was published in May, contains three recommendations.",
+        "correct": true
+      },
+      {
+        "body": "The report which was published in May, contains three recommendations.",
+        "whyWrong": "A non-defining clause needs commas on both sides, not just one."
+      },
+      {
+        "body": "The report, which was published in May contains three recommendations.",
+        "whyWrong": "The closing comma of the clause is missing."
+      },
+      {
+        "body": "The report which was published in May contains, three recommendations.",
+        "whyWrong": "A comma should never separate a verb from its object."
+      }
+    ],
+    "explanation": "A non-defining relative clause is parenthetical and takes a comma at each end. The test is whether removing it leaves a complete, correct sentence — here it does.",
+    "subtopic": "sentence-correction",
+    "concept": "Non-defining clauses take paired commas; defining clauses take none.",
+    "hint": "Does the sentence still work if you delete the clause?"
+  },
+  {
+    "id": "VRB-0032",
+    "body": "Which sentence uses the subjunctive correctly?",
+    "topic": "verbal-ability",
+    "difficulty": "hard",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "If I were you, I would take the offer.",
+        "correct": true
+      },
+      {
+        "body": "If I was you, I would take the offer.",
+        "whyWrong": "A contrary-to-fact condition takes \"were\", not \"was\"."
+      },
+      {
+        "body": "If I am you, I would take the offer.",
+        "whyWrong": "Present tense does not express a hypothetical condition."
+      },
+      {
+        "body": "If I would be you, I would take the offer.",
+        "whyWrong": "\"Would\" does not belong in the if-clause of this construction."
+      }
+    ],
+    "explanation": "The subjunctive \"were\" marks a hypothetical contrary to fact, regardless of the subject. It survives in fixed expressions like \"if I were you\" and \"I wish it were over\".",
+    "subtopic": "sentence-correction",
+    "concept": "Contrary-to-fact conditions take \"were\" for every subject.",
+    "hint": "Is the speaker actually the other person?"
+  },
+  {
+    "id": "VRB-0033",
+    "body": "\"The committee has published its report\" versus \"have published their report\" — which is correct in Indian and British usage?",
+    "topic": "verbal-ability",
+    "difficulty": "hard",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Both, depending on whether the committee is treated as one body or as its members",
+        "correct": true
+      },
+      {
+        "body": "Only the singular is ever correct",
+        "whyWrong": "American usage prefers the singular, but British and Indian usage allow both."
+      },
+      {
+        "body": "Only the plural is ever correct",
+        "whyWrong": "The singular is correct when the group acts as a single unit."
+      },
+      {
+        "body": "Neither — a committee cannot publish",
+        "whyWrong": "Collective nouns take verbs perfectly well."
+      }
+    ],
+    "explanation": "Collective nouns take a singular verb when the group acts as one and a plural when the members act individually. The requirement is consistency: pairing \"has\" with \"their\" in one sentence is the actual error.",
+    "subtopic": "sentence-correction",
+    "concept": "Choose one reading of a collective noun and keep pronouns and verbs consistent with it.",
+    "hint": "Is the committee acting as one body, or as several people?"
+  },
+  {
+    "id": "VRB-0034",
+    "body": "Choose the word closest in meaning to \"ubiquitous\".",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Omnipresent",
+        "correct": true
+      },
+      {
+        "body": "Rare",
+        "whyWrong": "That is close to the opposite."
+      },
+      {
+        "body": "Ancient",
+        "whyWrong": "Ubiquity concerns distribution in space, not age."
+      },
+      {
+        "body": "Unique",
+        "whyWrong": "Unique means one of a kind, nearly the reverse."
+      }
+    ],
+    "explanation": "Ubiquitous means present everywhere at once. The Latin root ubique — everywhere — matches omni-present exactly, and knowing the root makes the antonym pair with \"rare\" obvious too.",
+    "subtopic": "synonyms-antonyms",
+    "concept": "Roots often settle vocabulary questions faster than recall does.",
+    "hint": "What does the root \"ubique\" mean?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "VRB-0035",
+    "body": "Choose the antonym of \"meticulous\".",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Careless",
+        "correct": true
+      },
+      {
+        "body": "Thorough",
+        "whyWrong": "That is a synonym rather than an antonym."
+      },
+      {
+        "body": "Precise",
+        "whyWrong": "Also a synonym."
+      },
+      {
+        "body": "Cautious",
+        "whyWrong": "Related to care, so nearer a synonym than an opposite."
+      }
+    ],
+    "explanation": "Meticulous means showing great attention to detail, so its opposite is careless or slapdash. The other three all cluster around the same meaning, which is the usual structure of these questions.",
+    "subtopic": "synonyms-antonyms",
+    "concept": "When three options share a meaning, the odd one out is very often the answer.",
+    "hint": "Which option does not belong with the other three?"
   }
 ]

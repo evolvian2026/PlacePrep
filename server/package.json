@@ -14,6 +14,7 @@
     "db:reset": "tsx src/db/cli.ts reset",
     "verify:coding": "tsx scripts/verify-coding.ts",
     "verify:questions": "tsx scripts/verify-questions.ts",
+    "verify:numeric": "tsx scripts/verify-numeric.ts",
     "audit:mocks": "tsx scripts/audit-mocks.ts",
     "audit:db": "tsx scripts/audit-integrity.ts",
     "measure:repeats": "tsx scripts/measure-repeats.ts",

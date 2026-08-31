@@ -907,5 +907,458 @@
       }
     ],
     "explanation": "Subset relations are transitive: Bloops ⊆ Razzies ⊆ Lazzies, therefore all Bloops are Lazzies."
+  },
+  {
+    "id": "RSN-0031",
+    "body": "Statements: All roses are flowers. Some flowers fade quickly. Conclusion: Some roses fade quickly. Is it valid?",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "No — the flowers that fade may all be non-roses",
+        "correct": true
+      },
+      {
+        "body": "Yes, because roses are flowers",
+        "whyWrong": "Being a subset does not mean roses are among the particular flowers that fade."
+      },
+      {
+        "body": "Yes, because some flowers fade",
+        "whyWrong": "\"Some flowers\" need not include any rose."
+      },
+      {
+        "body": "Only if all flowers fade quickly",
+        "whyWrong": "If all flowers faded the conclusion would follow, but that is not what is stated."
+      }
+    ],
+    "explanation": "The second statement tells us only that the fading group overlaps flowers somewhere. Roses could sit entirely outside that overlap. A conclusion is valid only if it holds in every arrangement consistent with the premises.",
+    "subtopic": "syllogisms",
+    "concept": "Test a syllogism by trying to build a counterexample, not by whether it sounds plausible.",
+    "hint": "Can you draw a diagram where no rose fades?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "RSN-0032",
+    "body": "Statements: No cats are dogs. All dogs are animals. Which conclusion follows?",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Some animals are not cats",
+        "correct": true
+      },
+      {
+        "body": "No cats are animals",
+        "whyWrong": "Cats being distinct from dogs says nothing about whether cats are animals."
+      },
+      {
+        "body": "All animals are dogs",
+        "whyWrong": "The premise is the reverse: dogs are a subset of animals."
+      },
+      {
+        "body": "Some cats are dogs",
+        "whyWrong": "This directly contradicts the first premise."
+      }
+    ],
+    "explanation": "Dogs are animals and no dog is a cat, so those dogs are animals that are not cats — which makes \"some animals are not cats\" necessarily true. The other options either reverse a subset relation or contradict a premise.",
+    "subtopic": "syllogisms",
+    "concept": "A valid conclusion must hold in every diagram consistent with the premises.",
+    "hint": "What do we know for certain about dogs?"
+  },
+  {
+    "id": "RSN-0033",
+    "body": "In syllogism problems, what does the \"some\" quantifier mean?",
+    "topic": "logical-reasoning",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "At least one, and possibly all",
+        "correct": true
+      },
+      {
+        "body": "More than half",
+        "whyWrong": "No proportion is implied by \"some\"."
+      },
+      {
+        "body": "Some but definitely not all",
+        "whyWrong": "Logic does not read \"some\" as excluding \"all\", even though everyday speech often does."
+      },
+      {
+        "body": "Exactly one",
+        "whyWrong": "\"Some\" places no upper bound."
+      }
+    ],
+    "explanation": "In formal logic \"some\" means \"there exists at least one\", so \"some A are B\" is still true when every A is B. This is the most common trap: assuming \"some\" rules out \"all\" makes valid conclusions look invalid.",
+    "subtopic": "syllogisms",
+    "concept": "Formal \"some\" is existential — at least one, up to all of them.",
+    "hint": "Is \"some cats are mammals\" true given that all of them are?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "RSN-0034",
+    "body": "Statements: All engineers are graduates. Some graduates are unemployed. Conclusion I: Some engineers are unemployed. Conclusion II: Some graduates are engineers. Which follows?",
+    "topic": "logical-reasoning",
+    "difficulty": "hard",
+    "expectedSeconds": 85,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Only II",
+        "correct": true
+      },
+      {
+        "body": "Only I",
+        "whyWrong": "The unemployed graduates need not include any engineer."
+      },
+      {
+        "body": "Both I and II",
+        "whyWrong": "I does not follow, for the reason above."
+      },
+      {
+        "body": "Neither",
+        "whyWrong": "II does follow: since all engineers are graduates and engineers exist, some graduates are engineers."
+      }
+    ],
+    "explanation": "II is the converse of a universal statement, which is valid in the particular form: if all A are B then some B are A. I fails because the unemployed subset may be entirely non-engineers.",
+    "subtopic": "syllogisms",
+    "concept": "\"All A are B\" gives you \"some B are A\", but never \"all B are A\".",
+    "hint": "Which conclusion only needs the first premise?"
+  },
+  {
+    "id": "RSN-0035",
+    "body": "Which pair of statements is contradictory?",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "\"All A are B\" and \"Some A are not B\"",
+        "correct": true
+      },
+      {
+        "body": "\"All A are B\" and \"Some A are B\"",
+        "whyWrong": "These are consistent — if all are, then some are."
+      },
+      {
+        "body": "\"No A are B\" and \"Some A are not B\"",
+        "whyWrong": "Both can be true at once when A and B are disjoint."
+      },
+      {
+        "body": "\"Some A are B\" and \"Some A are not B\"",
+        "whyWrong": "Both hold when A partially overlaps B."
+      }
+    ],
+    "explanation": "Contradictory means exactly one can be true. \"All A are B\" and \"Some A are not B\" cannot both hold and cannot both fail. The other pairs are merely compatible or contrary rather than contradictory.",
+    "subtopic": "syllogisms",
+    "concept": "Contradictories exhaust the possibilities; contraries can both be false.",
+    "hint": "Which pair leaves no third possibility?"
+  },
+  {
+    "id": "RSN-0036",
+    "body": "Five friends sit in a row. A is to the immediate left of B, and C is at one end. D is not next to A. Who could be in the middle?",
+    "topic": "logical-reasoning",
+    "difficulty": "hard",
+    "expectedSeconds": 95,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "E",
+        "correct": true
+      },
+      {
+        "body": "C",
+        "whyWrong": "C is stated to be at an end, so C cannot be in the middle."
+      },
+      {
+        "body": "A",
+        "whyWrong": "Placing A in the middle forces B to the right of A and leaves no valid position for D."
+      },
+      {
+        "body": "D",
+        "whyWrong": "With A and B adjacent and D not next to A, D in the middle cannot be arranged consistently."
+      }
+    ],
+    "explanation": "C occupies an end, and A and B must be adjacent in that order. Testing the arrangements that also keep D away from A leaves E as the only person who can occupy the centre seat in a consistent layout.",
+    "subtopic": "seating-arrangement",
+    "concept": "Place the most constrained person first, then test the remaining possibilities systematically.",
+    "hint": "Start with the constraint that fixes a position outright."
+  },
+  {
+    "id": "RSN-0037",
+    "body": "In a circular arrangement of 6 people facing the centre, who is third to the right of a person also sitting directly opposite them?",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "The same person",
+        "correct": true
+      },
+      {
+        "body": "The person to their immediate left",
+        "whyWrong": "Three steps around a circle of six is not one step."
+      },
+      {
+        "body": "The person to their immediate right",
+        "whyWrong": "That is one step, not three."
+      },
+      {
+        "body": "It cannot be determined",
+        "whyWrong": "With six seats the geometry fully determines it."
+      }
+    ],
+    "explanation": "With six seats evenly spaced, moving three positions is exactly half the circle — which is the definition of directly opposite. So the person third to the right and the person opposite are the same.",
+    "subtopic": "seating-arrangement",
+    "concept": "In a circle of n people, n/2 steps lands you opposite.",
+    "hint": "How many steps is half of six?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "RSN-0038",
+    "body": "Six people sit around a circular table facing the centre. If P is second to the left of Q, what is Q relative to P?",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Second to the right of P",
+        "correct": true
+      },
+      {
+        "body": "Second to the left of P",
+        "whyWrong": "Left and right reverse when the reference person changes."
+      },
+      {
+        "body": "Third to the right of P",
+        "whyWrong": "The distance is the same in both directions; only the direction flips."
+      },
+      {
+        "body": "Directly opposite P",
+        "whyWrong": "Directly opposite would be three seats away in a circle of six."
+      }
+    ],
+    "explanation": "Relative positions invert when you swap the reference: if P is two seats left of Q, then from P’s viewpoint Q is two seats right. Distance stays the same, direction reverses.",
+    "subtopic": "seating-arrangement",
+    "concept": "Swapping the reference person flips the direction but keeps the count.",
+    "hint": "If I am to your left, where are you relative to me?"
+  },
+  {
+    "id": "RSN-0039",
+    "body": "When people sit in a circle facing outward rather than inward, what changes?",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Left and right are reversed relative to the facing-inward case",
+        "correct": true
+      },
+      {
+        "body": "Nothing changes",
+        "whyWrong": "Facing direction determines which neighbour is on which side."
+      },
+      {
+        "body": "The number of possible arrangements halves",
+        "whyWrong": "The count of distinct arrangements is unaffected by facing direction."
+      },
+      {
+        "body": "Everyone becomes adjacent to everyone",
+        "whyWrong": "Adjacency is fixed by the seating, not the facing."
+      }
+    ],
+    "explanation": "A person facing outward has the clockwise neighbour on their left rather than their right. Puzzles often mix the two, and misreading it inverts every left-right clue in the problem.",
+    "subtopic": "seating-arrangement",
+    "concept": "Read the facing direction before placing anybody.",
+    "hint": "Which way does clockwise appear to someone facing out?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "RSN-0040",
+    "body": "Eight people sit in a row. If M is fourth from the left and N is third from the right, how many people sit between them?",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "One",
+        "correct": true
+      },
+      {
+        "body": "Two",
+        "whyWrong": "Recount: M is at position 4 and N at position 6, leaving only position 5 between them."
+      },
+      {
+        "body": "Three",
+        "whyWrong": "That would require them to be four positions apart."
+      },
+      {
+        "body": "None",
+        "whyWrong": "They are not adjacent — positions 4 and 6 have position 5 between them."
+      }
+    ],
+    "explanation": "M is at position 4. Third from the right in a row of eight is position 8 − 3 + 1 = 6. Between positions 4 and 6 lies only position 5, so one person sits between them.",
+    "subtopic": "seating-arrangement",
+    "concept": "Convert \"from the right\" to an absolute position before comparing.",
+    "hint": "What absolute position is third from the right in a row of eight?"
+  },
+  {
+    "id": "RSN-0041",
+    "body": "If FRIEND is coded as GSJFOE, how is MOTHER coded?",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "NPUIFS",
+        "correct": true
+      },
+      {
+        "body": "NPUIRS",
+        "whyWrong": "Every letter advances by one; R becomes S, but H becomes I not R."
+      },
+      {
+        "body": "LNSGDQ",
+        "whyWrong": "That shifts backwards by one instead of forwards."
+      },
+      {
+        "body": "NPUIFR",
+        "whyWrong": "The final R must advance to S."
+      }
+    ],
+    "explanation": "Each letter moves forward one position: F→G, R→S, I→J, E→F, N→O, D→E. Applying the same shift to MOTHER gives N, P, U, I, F, S.",
+    "subtopic": "coding-decoding",
+    "concept": "Find the shift from the sample, then apply it letter by letter.",
+    "hint": "What is the gap between F and G?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "RSN-0042",
+    "body": "In a code, CAT is written as 3120. What is the likely encoding rule?",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Each letter is replaced by its alphabet position",
+        "correct": true
+      },
+      {
+        "body": "Each letter is replaced by its position doubled",
+        "whyWrong": "C would then be 6, not 3."
+      },
+      {
+        "body": "The letters are reversed",
+        "whyWrong": "Reversal produces letters, not digits."
+      },
+      {
+        "body": "Each letter is replaced by its ASCII code",
+        "whyWrong": "ASCII for C is 67, not 3."
+      }
+    ],
+    "explanation": "C is the 3rd letter, A the 1st and T the 20th, giving 3-1-20 written together as 3120. Positional substitution is the most common numeric coding rule, and checking a single letter usually confirms it.",
+    "subtopic": "coding-decoding",
+    "concept": "Test the simplest hypothesis — alphabet position — before anything elaborate.",
+    "hint": "Which letter of the alphabet is T?"
+  },
+  {
+    "id": "RSN-0043",
+    "body": "If in a code MONDAY is NPOEBZ, what rule is being applied?",
+    "topic": "logical-reasoning",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Each letter is shifted forward by one",
+        "correct": true
+      },
+      {
+        "body": "Each letter is shifted backward by one",
+        "whyWrong": "M would become L, not N."
+      },
+      {
+        "body": "The word is reversed",
+        "whyWrong": "Reversal gives YADNOM, not NPOEBZ."
+      },
+      {
+        "body": "Vowels are shifted and consonants unchanged",
+        "whyWrong": "O becomes P and M becomes N, so consonants shift too."
+      }
+    ],
+    "explanation": "M→N, O→P, N→O, D→E, A→B, Y→Z — every letter advances one place, with Y wrapping to Z without needing the alphabet to wrap around.",
+    "subtopic": "coding-decoding",
+    "concept": "Check the first two letters, then confirm the rule holds for the rest.",
+    "hint": "What comes after M?"
+  },
+  {
+    "id": "RSN-0044",
+    "body": "If BOOK is coded as 2151511, what does the number represent?",
+    "topic": "logical-reasoning",
+    "difficulty": "hard",
+    "expectedSeconds": 80,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Alphabet positions concatenated: 2-15-15-11",
+        "correct": true
+      },
+      {
+        "body": "The sum of the letter positions",
+        "whyWrong": "The positions sum to 43, not this number."
+      },
+      {
+        "body": "ASCII codes",
+        "whyWrong": "ASCII for B is 66, which does not appear."
+      },
+      {
+        "body": "The letters reversed as digits",
+        "whyWrong": "Reversal would not produce digits at all."
+      }
+    ],
+    "explanation": "B is 2, O is 15, O is 15 and K is 11. Concatenating gives 2-15-15-11 = 2151511. Ambiguity is inherent to this scheme, which is why these puzzles supply a worked example.",
+    "subtopic": "coding-decoding",
+    "concept": "Split the digits so each group is a valid alphabet position between 1 and 26.",
+    "hint": "Try splitting the digits into groups no larger than 26."
   }
 ]

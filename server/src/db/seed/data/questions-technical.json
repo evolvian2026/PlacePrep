@@ -1759,5 +1759,4769 @@
       }
     ],
     "explanation": "PUT replaces a resource with the supplied representation, so issuing it repeatedly leaves the same final state. GET, HEAD and DELETE are also idempotent; POST is not."
+  },
+  {
+    "id": "DSA-0016",
+    "body": "A recursive function computes fib(n) as fib(n-1) + fib(n-2) with no memoisation. Roughly how many calls does fib(30) make?",
+    "topic": "recursion",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "About 2^30",
+        "whyWrong": "That is the number of leaves in a full binary tree of depth 30, but the recursion tree is not full — it is skewed by the n-2 branch."
+      },
+      {
+        "body": "About 1.6^30",
+        "correct": true
+      },
+      {
+        "body": "About 30",
+        "whyWrong": "That is the depth of the recursion, not the number of calls."
+      },
+      {
+        "body": "About 30^2",
+        "whyWrong": "Quadratic growth would describe a memoised or iterative version, not the naive one."
+      }
+    ],
+    "explanation": "The call count follows the Fibonacci numbers themselves, which grow like φ^n where φ ≈ 1.618. So fib(30) makes on the order of 1.6^30 calls — a few million — which is why the naive version becomes unusable around n = 40.",
+    "concept": "A recursion that recomputes the same subproblems has a cost equal to the size of its recursion tree, not its depth.",
+    "hint": "How many nodes are in the recursion tree, not how deep is it?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0017",
+    "body": "What is the maximum depth of the call stack when quicksort is implemented recursively on an already-sorted array of n elements, always picking the last element as pivot?",
+    "topic": "recursion",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "n",
+        "correct": true
+      },
+      {
+        "body": "log n",
+        "whyWrong": "log n depth applies when the pivot splits the array evenly — this is the worst case, not the best."
+      },
+      {
+        "body": "n log n",
+        "whyWrong": "That is quicksort’s average time complexity, not its stack depth."
+      },
+      {
+        "body": "2",
+        "whyWrong": "The recursion does not stop after two levels; each call recurses on n-1 elements."
+      }
+    ],
+    "explanation": "With a last-element pivot on sorted input, every partition puts n-1 elements on one side and none on the other. The recursion therefore descends one element at a time, giving a stack depth of n — which is how quicksort causes stack overflow on large sorted inputs.",
+    "concept": "Quicksort’s stack depth mirrors its partition balance: even splits give log n, degenerate splits give n.",
+    "hint": "What does the partition look like when the input is already in order?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0018",
+    "body": "In backtracking, what does \"pruning\" mean?",
+    "topic": "recursion",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Abandoning a partial candidate as soon as it cannot possibly extend to a valid solution",
+        "correct": true
+      },
+      {
+        "body": "Removing duplicate solutions after the search finishes",
+        "whyWrong": "Deduplicating results afterwards does not reduce the work already done; pruning is about avoiding that work."
+      },
+      {
+        "body": "Limiting the recursion to a fixed depth",
+        "whyWrong": "A depth cap is a different technique and can miss valid solutions; pruning never discards a branch that could succeed."
+      },
+      {
+        "body": "Sorting the input before searching",
+        "whyWrong": "Sorting can help pruning be more effective, but it is not itself pruning."
+      }
+    ],
+    "explanation": "Pruning cuts a branch of the search tree the moment the partial candidate violates a constraint — for example abandoning an N-Queens placement as soon as two queens attack each other, rather than completing the board and then checking. The saving is the entire subtree below that point.",
+    "concept": "Backtracking is depth-first search over partial candidates; pruning is what makes it tractable.",
+    "hint": "What happens to the whole subtree below a branch you abandon?"
+  },
+  {
+    "id": "DSA-0019",
+    "body": "A recursive solution to the subset-sum problem explores every subset of n items. What is its time complexity without pruning or memoisation?",
+    "topic": "recursion",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "O(2^n)",
+        "correct": true
+      },
+      {
+        "body": "O(n^2)",
+        "whyWrong": "Quadratic would only cover pairs of items, not every combination."
+      },
+      {
+        "body": "O(n log n)",
+        "whyWrong": "That is the cost of sorting, which does not enumerate subsets."
+      },
+      {
+        "body": "O(n!)",
+        "whyWrong": "Factorial counts orderings; subsets are unordered, so each item is simply in or out."
+      }
+    ],
+    "explanation": "Each of the n items is either included or excluded, giving 2^n subsets, and the recursion visits each one. Note that the pseudo-polynomial dynamic-programming solution is O(n × target), which is much faster when the target is small.",
+    "concept": "Include-or-exclude recursion over n items is 2^n; permutation recursion is n!.",
+    "hint": "How many independent binary choices are there?"
+  },
+  {
+    "id": "DSA-0020",
+    "body": "Which of these is the base case that a recursive function must have to terminate?",
+    "topic": "recursion",
+    "difficulty": "easy",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A condition under which it returns without calling itself",
+        "correct": true
+      },
+      {
+        "body": "A call to itself with a smaller argument",
+        "whyWrong": "That is the recursive step. Without a base case it would recurse forever."
+      },
+      {
+        "body": "A loop that runs a fixed number of times",
+        "whyWrong": "A loop inside the function does not stop the recursion from continuing."
+      },
+      {
+        "body": "A try/catch around the recursive call",
+        "whyWrong": "Catching the resulting stack overflow is not termination; the function still never completes normally."
+      }
+    ],
+    "explanation": "Every recursion needs at least one input for which it returns an answer directly, without recursing. The recursive step must also move strictly towards that case — a base case that is never reached is as broken as not having one.",
+    "concept": "Termination needs both a base case and progress towards it.",
+    "hint": "What has to be true for the chain of calls to ever stop?"
+  },
+  {
+    "id": "DSA-0021",
+    "body": "Converting a recursive function into an iterative one usually requires an explicit what?",
+    "topic": "recursion",
+    "difficulty": "easy",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Stack",
+        "correct": true
+      },
+      {
+        "body": "Queue",
+        "whyWrong": "A queue gives breadth-first order; recursion is inherently depth-first, which is what a stack models."
+      },
+      {
+        "body": "Hash map",
+        "whyWrong": "A hash map may memoise results but does not replace the call structure."
+      },
+      {
+        "body": "Heap",
+        "whyWrong": "A heap orders by priority, which is unrelated to the order recursive calls return in."
+      }
+    ],
+    "explanation": "Recursion is implemented by the machine’s call stack, which stores each pending frame. Rewriting it iteratively means maintaining that stack yourself — which is exactly what an iterative depth-first traversal does.",
+    "concept": "The call stack is the data structure recursion uses; making it explicit is what converts recursion to iteration.",
+    "hint": "What does the machine already use to track pending calls?"
+  },
+  {
+    "id": "DSA-0022",
+    "body": "What does the expression n & (n - 1) do?",
+    "topic": "bit-manipulation",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Clears the lowest set bit of n",
+        "correct": true
+      },
+      {
+        "body": "Sets the lowest zero bit of n",
+        "whyWrong": "That is n | (n + 1). The AND with n-1 can only clear bits, never set them."
+      },
+      {
+        "body": "Reverses the bits of n",
+        "whyWrong": "Bit reversal cannot be done with a single AND."
+      },
+      {
+        "body": "Returns n divided by 2",
+        "whyWrong": "Halving is n >> 1. For n = 12 (1100), n & (n-1) is 8, not 6."
+      }
+    ],
+    "explanation": "Subtracting 1 flips the lowest set bit to 0 and turns every bit below it into 1. ANDing with n therefore keeps all higher bits and clears that lowest set bit: 12 (1100) & 11 (1011) = 8 (1000). Repeating this counts set bits in as many steps as there are ones.",
+    "concept": "n & (n-1) clears the lowest set bit; n & -n isolates it.",
+    "hint": "Write 12 and 11 in binary and AND them.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0023",
+    "body": "How can you test whether a positive integer n is a power of two using a single bitwise expression?",
+    "topic": "bit-manipulation",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "(n & (n - 1)) == 0",
+        "correct": true
+      },
+      {
+        "body": "(n | (n - 1)) == 0",
+        "whyWrong": "OR-ing sets bits rather than clearing them, so this is zero only when n is zero."
+      },
+      {
+        "body": "(n ^ (n - 1)) == 0",
+        "whyWrong": "XOR of n and n-1 is never zero for positive n, because they differ in at least one bit."
+      },
+      {
+        "body": "(n >> 1) == 0",
+        "whyWrong": "That is true only for n = 1, not for 2, 4, 8 and so on."
+      }
+    ],
+    "explanation": "A power of two has exactly one set bit, and n & (n-1) clears the lowest set bit — so the result is zero precisely when there was only one bit to clear. Guard for n = 0 separately, since 0 & -1 is also 0 but 0 is not a power of two.",
+    "concept": "Exactly-one-set-bit is the defining property of a power of two.",
+    "hint": "What does clearing the only set bit leave you with?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0024",
+    "body": "In an array where every number appears twice except one, which single operation finds the unique number in O(n) time and O(1) space?",
+    "topic": "bit-manipulation",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "XOR of every element",
+        "correct": true
+      },
+      {
+        "body": "Sum of every element",
+        "whyWrong": "Summing needs the pairs to cancel, which they do not — and it can overflow."
+      },
+      {
+        "body": "AND of every element",
+        "whyWrong": "AND collapses towards zero and loses the information about which value was unpaired."
+      },
+      {
+        "body": "OR of every element",
+        "whyWrong": "OR accumulates set bits from every element, so the duplicates do not cancel."
+      }
+    ],
+    "explanation": "XOR is its own inverse (x ^ x = 0) and is commutative, so every duplicated pair cancels to zero and the survivor is XORed with 0, leaving itself. It needs one pass and one accumulator.",
+    "concept": "x ^ x = 0 and x ^ 0 = x — the two identities that make XOR cancel duplicates.",
+    "hint": "Which operation makes a value cancel itself out?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0025",
+    "body": "What is the value of 5 << 2?",
+    "topic": "bit-manipulation",
+    "difficulty": "easy",
+    "expectedSeconds": 40,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "20",
+        "correct": true
+      },
+      {
+        "body": "10",
+        "whyWrong": "That is 5 << 1. Shifting left by 2 multiplies by 4, not 2."
+      },
+      {
+        "body": "7",
+        "whyWrong": "Shifting is not addition; 5 + 2 is not what << computes."
+      },
+      {
+        "body": "25",
+        "whyWrong": "Shifting is not exponentiation either."
+      }
+    ],
+    "explanation": "A left shift by k multiplies by 2^k, so 5 << 2 = 5 × 4 = 20. In binary, 101 becomes 10100.",
+    "concept": "x << k is x × 2^k; x >> k is floor division by 2^k for non-negative x.",
+    "hint": "Write 5 in binary and move every bit two places left."
+  },
+  {
+    "id": "DSA-0026",
+    "body": "Why is x >> 1 not always the same as x / 2 in a language like Java or C?",
+    "topic": "bit-manipulation",
+    "difficulty": "hard",
+    "expectedSeconds": 80,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "They round differently for negative numbers",
+        "correct": true
+      },
+      {
+        "body": "Shifting is slower than division",
+        "whyWrong": "Shifting is typically at least as fast; speed is not the difference in behaviour."
+      },
+      {
+        "body": "Shifting overflows for large values",
+        "whyWrong": "A right shift moves towards zero magnitude and cannot overflow."
+      },
+      {
+        "body": "They differ for odd numbers only when positive",
+        "whyWrong": "For positive odd numbers both give the same floor result — the divergence is on the negative side."
+      }
+    ],
+    "explanation": "Arithmetic right shift rounds towards negative infinity, while integer division rounds towards zero. For x = -7: -7 >> 1 is -4, but -7 / 2 is -3. For non-negative values the two agree.",
+    "concept": "Shift rounds towards −∞; integer division truncates towards 0.",
+    "hint": "Try it with −7."
+  },
+  {
+    "id": "DSA-0027",
+    "body": "How do you set the k-th bit of an integer n (counting from 0)?",
+    "topic": "bit-manipulation",
+    "difficulty": "easy",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "n | (1 << k)",
+        "correct": true
+      },
+      {
+        "body": "n & (1 << k)",
+        "whyWrong": "That tests the bit rather than setting it, and clears everything else."
+      },
+      {
+        "body": "n ^ (1 << k)",
+        "whyWrong": "XOR toggles the bit — it clears it if it was already set."
+      },
+      {
+        "body": "n & ~(1 << k)",
+        "whyWrong": "That clears the k-th bit rather than setting it."
+      }
+    ],
+    "explanation": "1 << k is a mask with only the k-th bit set. OR-ing leaves every other bit untouched and forces that one to 1, whether or not it already was. The companion operations are & ~mask to clear and ^ mask to toggle.",
+    "concept": "OR to set, AND-NOT to clear, XOR to toggle, AND to test.",
+    "hint": "Which operator can only ever turn bits on?"
+  },
+  {
+    "id": "DSA-0028",
+    "body": "Which problem is correctly solved by a greedy algorithm?",
+    "topic": "greedy",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Selecting the maximum number of non-overlapping activities by earliest finish time",
+        "correct": true
+      },
+      {
+        "body": "0/1 knapsack with arbitrary weights and values",
+        "whyWrong": "Greedy by value-to-weight ratio can be beaten here; 0/1 knapsack needs dynamic programming."
+      },
+      {
+        "body": "Finding the longest path in a general graph",
+        "whyWrong": "Longest path is NP-hard and no greedy rule solves it."
+      },
+      {
+        "body": "Counting the number of distinct subsets summing to a target",
+        "whyWrong": "Counting requires exploring combinations, which a single greedy pass cannot do."
+      }
+    ],
+    "explanation": "Activity selection has the greedy-choice property: repeatedly taking the activity that finishes earliest always leaves the most room for the rest, and this can be proved by an exchange argument. Fractional knapsack is also greedy; the 0/1 version is not.",
+    "concept": "Greedy is correct only when a local optimum provably leads to a global one — usually shown by an exchange argument.",
+    "hint": "Which of these has a provable exchange argument?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0029",
+    "body": "Why does the greedy coin-change algorithm (always take the largest coin that fits) fail for some coin systems?",
+    "topic": "greedy",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A large coin can force more small coins than a different combination would need",
+        "correct": true
+      },
+      {
+        "body": "It is too slow for large amounts",
+        "whyWrong": "Greedy coin change is fast; correctness, not speed, is the problem."
+      },
+      {
+        "body": "It cannot handle amounts larger than the biggest coin",
+        "whyWrong": "It handles those fine by taking the big coin repeatedly."
+      },
+      {
+        "body": "It requires the coins to be sorted",
+        "whyWrong": "Sorting is trivial and is not why the result can be wrong."
+      }
+    ],
+    "explanation": "With coins {1, 3, 4} and a target of 6, greedy takes 4 then 1 then 1 — three coins — while 3 + 3 uses two. The greedy choice is only safe for canonical systems such as Indian or US denominations; in general the problem needs dynamic programming.",
+    "concept": "A greedy rule that works on one input set can be wrong on another — correctness has to be proved, not assumed from examples.",
+    "hint": "Try coins {1, 3, 4} and a target of 6.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0030",
+    "body": "Huffman coding builds its tree by repeatedly combining which two nodes?",
+    "topic": "greedy",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "The two with the smallest frequencies",
+        "correct": true
+      },
+      {
+        "body": "The two with the largest frequencies",
+        "whyWrong": "Combining the largest first would push frequent symbols deeper, producing longer codes for common characters."
+      },
+      {
+        "body": "The two that are alphabetically adjacent",
+        "whyWrong": "Huffman ignores symbol order entirely; only frequency matters."
+      },
+      {
+        "body": "A random pair, since the result is the same either way",
+        "whyWrong": "The pairing rule is what makes the code optimal; a random pair does not."
+      }
+    ],
+    "explanation": "Taking the two least frequent nodes each time pushes rare symbols deepest in the tree, so they receive the longest codes and frequent symbols the shortest. That is the greedy choice, and it provably yields a minimum weighted path length.",
+    "concept": "Huffman is the standard example of a greedy algorithm with a proof of optimality.",
+    "hint": "Which symbols should end up with the longest codes?"
+  },
+  {
+    "id": "DSA-0031",
+    "body": "What is the time complexity of inserting an element at the beginning of a dynamic array of n elements?",
+    "topic": "arrays",
+    "difficulty": "easy",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "O(n)",
+        "correct": true
+      },
+      {
+        "body": "O(1)",
+        "whyWrong": "Only appending at the end is amortised O(1); inserting at the front must move everything."
+      },
+      {
+        "body": "O(log n)",
+        "whyWrong": "Logarithmic cost implies halving the work each step, which shifting does not do."
+      },
+      {
+        "body": "O(n log n)",
+        "whyWrong": "That is sorting cost, not a single insertion."
+      }
+    ],
+    "explanation": "Every existing element has to shift one position right to make room, so the cost is proportional to n. A linked list or a deque gives O(1) insertion at the front instead.",
+    "concept": "Arrays are cheap at the end and expensive at the front; linked lists are the reverse.",
+    "hint": "What has to move to make space?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0032",
+    "body": "You need to find whether any value repeats in an unsorted array of n integers. Which approach is fastest on average?",
+    "topic": "arrays",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Insert into a hash set and stop on the first repeat",
+        "correct": true
+      },
+      {
+        "body": "Compare every pair",
+        "whyWrong": "That works but costs O(n²), far more than a single pass with a set."
+      },
+      {
+        "body": "Sort, then scan for adjacent equals",
+        "whyWrong": "Correct, but O(n log n) — slower than the hash approach and it mutates the array."
+      },
+      {
+        "body": "Binary search for each element",
+        "whyWrong": "Binary search needs sorted input, and searching for an element you are iterating over finds itself."
+      }
+    ],
+    "explanation": "One pass adding each value to a hash set, checking membership first, is O(n) on average and O(n) space. The sorting approach is a good answer when you must not use extra space.",
+    "concept": "Trading memory for time with a hash set is the standard first move on duplicate problems.",
+    "hint": "What lets you check \"have I seen this?\" in constant time?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0033",
+    "body": "Kadane’s algorithm finds the maximum subarray sum in O(n). What does it track at each position?",
+    "topic": "arrays",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "The best sum ending exactly at this index, and the best seen anywhere",
+        "correct": true
+      },
+      {
+        "body": "The running total of the whole array",
+        "whyWrong": "A plain running total cannot recover from a long negative stretch."
+      },
+      {
+        "body": "The largest single element so far",
+        "whyWrong": "That only helps when every element is negative; it ignores contiguous sums."
+      },
+      {
+        "body": "A sorted list of all prefix sums",
+        "whyWrong": "Kadane keeps two numbers, not a list — that is what makes it O(1) space."
+      }
+    ],
+    "explanation": "At each index Kadane decides whether to extend the previous subarray or start fresh: best_ending_here = max(x, best_ending_here + x). The overall answer is the maximum of that quantity across all positions.",
+    "concept": "Many linear-scan DP problems reduce to \"best ending here\" plus \"best overall\".",
+    "hint": "What two numbers are enough to carry forward?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0034",
+    "body": "Two pointers moving towards each other from the ends of a sorted array is the standard technique for which problem?",
+    "topic": "arrays",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Finding a pair that sums to a target",
+        "correct": true
+      },
+      {
+        "body": "Finding the median of two sorted arrays",
+        "whyWrong": "That needs a partition-based binary search, not a simple converging scan."
+      },
+      {
+        "body": "Detecting a cycle",
+        "whyWrong": "Cycle detection uses two pointers at different speeds in a linked structure, not converging ends."
+      },
+      {
+        "body": "Reversing the array in place",
+        "whyWrong": "Two converging pointers can reverse an array, but that does not require the array to be sorted."
+      }
+    ],
+    "explanation": "Because the array is sorted, a sum that is too small can only be increased by moving the left pointer right, and one that is too large by moving the right pointer left. Each step eliminates a candidate, giving O(n) with no extra space.",
+    "concept": "Sorted input plus converging pointers turns many O(n²) pair searches into O(n).",
+    "hint": "Why does sorting make one direction obviously right?"
+  },
+  {
+    "id": "DSA-0035",
+    "body": "What does the sliding-window technique require of the problem to work correctly?",
+    "topic": "arrays",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "That extending or shrinking the window updates the answer in O(1)",
+        "correct": true
+      },
+      {
+        "body": "That the array is sorted",
+        "whyWrong": "Sliding windows work on unsorted arrays; substring and subarray problems rarely sort first."
+      },
+      {
+        "body": "That all values are positive",
+        "whyWrong": "Positivity matters for some variable-size window problems but is not a general requirement."
+      },
+      {
+        "body": "That the window size is fixed in advance",
+        "whyWrong": "Variable-size windows are common — the longest-substring problems grow and shrink."
+      }
+    ],
+    "explanation": "A window is only cheaper than recomputing if adding the incoming element and removing the outgoing one can each be done in constant time, usually with a running sum or a frequency map. Without that the technique degenerates to the brute force it replaced.",
+    "concept": "Sliding windows trade recomputation for incremental update.",
+    "hint": "What makes moving the window cheaper than recomputing it?"
+  },
+  {
+    "id": "DSA-0036",
+    "body": "Given an array of n+1 integers where each value is between 1 and n, why must there be at least one duplicate?",
+    "topic": "arrays",
+    "difficulty": "easy",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "The pigeonhole principle",
+        "correct": true
+      },
+      {
+        "body": "Because the array is unsorted",
+        "whyWrong": "Order has nothing to do with it; a sorted array of the same values has the same duplicate."
+      },
+      {
+        "body": "Because n+1 is always even",
+        "whyWrong": "n+1 is not always even, and parity is irrelevant."
+      },
+      {
+        "body": "Only if the values are randomly chosen",
+        "whyWrong": "It holds for every possible arrangement, random or not."
+      }
+    ],
+    "explanation": "There are n+1 values drawn from only n distinct possibilities, so at least two must land on the same value. This is what guarantees Floyd’s cycle-detection solution to the find-the-duplicate problem always terminates.",
+    "concept": "Pigeonhole turns \"there might be a duplicate\" into \"there must be\".",
+    "hint": "How many slots, and how many items?"
+  },
+  {
+    "id": "DSA-0037",
+    "body": "What is the amortised cost of appending to a dynamic array that doubles its capacity when full?",
+    "topic": "arrays",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "O(1)",
+        "correct": true
+      },
+      {
+        "body": "O(n) for every append",
+        "whyWrong": "Only the appends that trigger a resize cost O(n); the rest are constant."
+      },
+      {
+        "body": "O(log n)",
+        "whyWrong": "Doubling happens log n times in total, but the cost is spread across n appends, not paid per append."
+      },
+      {
+        "body": "O(n log n)",
+        "whyWrong": "That is the total cost of sorting n items, not of building an array."
+      }
+    ],
+    "explanation": "Copying happens on the 1st, 2nd, 4th, 8th … append, so the total copying work across n appends is 1 + 2 + 4 + … + n < 2n. Divided over n appends that is a constant amortised cost, even though individual appends occasionally cost O(n).",
+    "concept": "Amortised analysis averages an expensive-but-rare operation across the cheap ones.",
+    "hint": "Add up the cost of all the resizes, then divide by n.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0038",
+    "body": "Rotating an array left by k positions in O(1) extra space is usually done by how many reversals?",
+    "topic": "arrays",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Three",
+        "correct": true
+      },
+      {
+        "body": "One",
+        "whyWrong": "A single reversal reverses the whole array, which is not a rotation."
+      },
+      {
+        "body": "Two",
+        "whyWrong": "Two reversals get the halves right but leave the array reversed overall."
+      },
+      {
+        "body": "k",
+        "whyWrong": "Rotating one position k times is O(nk), which defeats the point."
+      }
+    ],
+    "explanation": "Reverse the first k elements, reverse the remaining n−k, then reverse the whole array. Each element ends up shifted by exactly k, in O(n) time and O(1) space.",
+    "concept": "The reversal trick converts rotation into three linear passes with no extra buffer.",
+    "hint": "Try it by hand on [1,2,3,4,5] with k = 2."
+  },
+  {
+    "id": "DSA-0039",
+    "body": "Prefix sums let you answer a range-sum query on a static array in what time, after preprocessing?",
+    "topic": "arrays",
+    "difficulty": "easy",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "O(1)",
+        "correct": true
+      },
+      {
+        "body": "O(n)",
+        "whyWrong": "Scanning the range is exactly what the prefix array exists to avoid."
+      },
+      {
+        "body": "O(log n)",
+        "whyWrong": "Logarithmic query time is what a Fenwick or segment tree gives when updates are also needed."
+      },
+      {
+        "body": "O(n log n)",
+        "whyWrong": "That is a preprocessing cost, not a query cost."
+      }
+    ],
+    "explanation": "With prefix[i] holding the sum of the first i elements, the sum of the range [l, r] is prefix[r+1] − prefix[l] — one subtraction. Preprocessing is O(n); the technique only applies while the array does not change.",
+    "concept": "Prefix sums are the standard answer for many range queries on immutable data.",
+    "hint": "What single arithmetic operation recovers a range from two prefixes?"
+  },
+  {
+    "id": "DSA-0040",
+    "body": "Which statement about arrays and cache performance is true?",
+    "topic": "arrays",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Sequential access is faster than random access because of spatial locality",
+        "correct": true
+      },
+      {
+        "body": "Access time is identical regardless of order, since indexing is O(1)",
+        "whyWrong": "O(1) describes the instruction count, not the memory latency, which varies hugely with cache hits."
+      },
+      {
+        "body": "Arrays have worse locality than linked lists",
+        "whyWrong": "Arrays are contiguous, which is exactly what gives them better locality than a scattered linked list."
+      },
+      {
+        "body": "Cache behaviour only matters for arrays larger than main memory",
+        "whyWrong": "It matters as soon as the working set exceeds a cache level, long before RAM is exhausted."
+      }
+    ],
+    "explanation": "A cache line holds several adjacent elements, so walking an array in order gets many of them for one memory fetch. This is why an O(n²) algorithm over a contiguous array sometimes beats an O(n log n) one over pointers in practice.",
+    "concept": "Big-O counts operations; real running time also depends on memory layout.",
+    "hint": "What does the hardware fetch when you read one element?"
+  },
+  {
+    "id": "DSA-0041",
+    "body": "Why is repeated string concatenation in a loop O(n²) in Java or Python?",
+    "topic": "strings",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Strings are immutable, so each concatenation copies the whole accumulated result",
+        "correct": true
+      },
+      {
+        "body": "The loop itself is quadratic",
+        "whyWrong": "A single loop over n items is linear; the cost comes from what happens inside it."
+      },
+      {
+        "body": "Comparison of strings is O(n)",
+        "whyWrong": "Comparison is not involved in concatenation."
+      },
+      {
+        "body": "Garbage collection runs on every iteration",
+        "whyWrong": "GC timing is unpredictable and is not what makes the asymptotic cost quadratic."
+      }
+    ],
+    "explanation": "Each concatenation allocates a new string and copies everything built so far, so the copies total 1 + 2 + … + n ≈ n²/2 characters. Using a StringBuilder or collecting into a list and joining once brings it back to O(n).",
+    "concept": "Immutability turns \"append\" into \"copy everything\", which is why builders exist.",
+    "hint": "What happens to the existing characters on each step?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0042",
+    "body": "Checking whether two strings are anagrams is most efficiently done by which method?",
+    "topic": "strings",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Counting character frequencies in one pass over each",
+        "correct": true
+      },
+      {
+        "body": "Sorting both and comparing",
+        "whyWrong": "Correct, but O(n log n) versus O(n) for counting."
+      },
+      {
+        "body": "Comparing their hash codes",
+        "whyWrong": "Different strings can share a hash code, and equal hashes do not imply an anagram."
+      },
+      {
+        "body": "Generating all permutations of one and searching",
+        "whyWrong": "That is factorial time and hopeless for anything but tiny inputs."
+      }
+    ],
+    "explanation": "Build a frequency map (or a fixed 26-slot array for lowercase letters) for the first string, decrement it walking the second, and check every count is zero. That is O(n) time and O(1) space for a fixed alphabet.",
+    "concept": "Frequency counting beats sorting whenever only the multiset of characters matters.",
+    "hint": "Do you need the order, or just the counts?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0043",
+    "body": "What is the worst-case time complexity of naive substring search (checking every starting position)?",
+    "topic": "strings",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "O(n × m)",
+        "correct": true
+      },
+      {
+        "body": "O(n + m)",
+        "whyWrong": "That is what KMP achieves by reusing partial match information; the naive version does not."
+      },
+      {
+        "body": "O(n log m)",
+        "whyWrong": "No divide-and-conquer step is involved in the naive scan."
+      },
+      {
+        "body": "O(m²)",
+        "whyWrong": "The cost depends on both the text length n and pattern length m, not m alone."
+      }
+    ],
+    "explanation": "With text length n and pattern length m, there are about n starting positions and each can compare up to m characters before failing — for example searching \"aaab\" inside \"aaaaaaaa\". KMP avoids the re-comparison and runs in O(n + m).",
+    "concept": "The naive scan re-examines characters it has already matched; KMP’s prefix table is what removes that waste.",
+    "hint": "What input makes every starting position fail only at the last character?"
+  },
+  {
+    "id": "DSA-0044",
+    "body": "A palindrome check using two pointers from both ends runs in what time and space?",
+    "topic": "strings",
+    "difficulty": "easy",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "O(n) time, O(1) space",
+        "correct": true
+      },
+      {
+        "body": "O(n) time, O(n) space",
+        "whyWrong": "Reversing into a new string would cost O(n) space; the two-pointer version needs none."
+      },
+      {
+        "body": "O(n log n) time, O(1) space",
+        "whyWrong": "No sorting or halving is involved."
+      },
+      {
+        "body": "O(n²) time, O(1) space",
+        "whyWrong": "Each character is visited once, not once per position."
+      }
+    ],
+    "explanation": "The pointers move towards each other comparing one pair per step, touching each character at most once and storing only two indices. Reversing the string and comparing is also O(n) time but uses O(n) extra space.",
+    "concept": "Two converging pointers is the O(1)-space alternative to building a reversed copy.",
+    "hint": "Do you need a second copy of the string?"
+  },
+  {
+    "id": "DSA-0045",
+    "body": "In the sliding-window solution to \"longest substring without repeating characters\", when does the left pointer move?",
+    "topic": "strings",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "When the incoming character is already inside the window",
+        "correct": true
+      },
+      {
+        "body": "On every iteration",
+        "whyWrong": "Moving it every step would keep the window a fixed size and miss longer answers."
+      },
+      {
+        "body": "Only when the window reaches a fixed maximum length",
+        "whyWrong": "There is no fixed maximum; the answer is whatever the longest valid window turns out to be."
+      },
+      {
+        "body": "When the incoming character is a letter rather than a digit",
+        "whyWrong": "Character class is irrelevant — only repetition matters."
+      }
+    ],
+    "explanation": "The window must always hold distinct characters, so when a duplicate arrives the left edge advances past the previous occurrence of that character, restoring the invariant. Each pointer moves forward at most n times, giving O(n) overall.",
+    "concept": "Sliding-window problems are defined by the invariant the window maintains.",
+    "hint": "What property must the window always satisfy?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0046",
+    "body": "Which data structure gives the most efficient prefix search over a large dictionary of words?",
+    "topic": "strings",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Trie",
+        "correct": true
+      },
+      {
+        "body": "Hash map",
+        "whyWrong": "A hash map finds exact keys in O(1) but cannot enumerate everything sharing a prefix without scanning all keys."
+      },
+      {
+        "body": "Balanced BST of the words",
+        "whyWrong": "A BST can range-scan a prefix but compares whole strings at each node, costing more than walking a trie."
+      },
+      {
+        "body": "Min-heap",
+        "whyWrong": "A heap orders by priority and offers no prefix structure at all."
+      }
+    ],
+    "explanation": "A trie stores one character per edge, so following a prefix of length p costs O(p) regardless of dictionary size, and the subtree below that point contains exactly the words sharing the prefix. This is what powers autocomplete.",
+    "concept": "Tries trade memory for prefix-structured lookup.",
+    "hint": "Which structure shares storage between words with the same beginning?"
+  },
+  {
+    "id": "DSA-0047",
+    "body": "What does it mean for a string comparison to be \"lexicographic\"?",
+    "topic": "strings",
+    "difficulty": "easy",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Characters are compared position by position, and the first difference decides",
+        "correct": true
+      },
+      {
+        "body": "Shorter strings always come first",
+        "whyWrong": "Length only decides when one string is a prefix of the other; \"b\" comes after \"ab\"."
+      },
+      {
+        "body": "Strings are compared by their total character-code sum",
+        "whyWrong": "Summing loses position information — \"ab\" and \"ba\" would compare equal."
+      },
+      {
+        "body": "Uppercase always sorts after lowercase",
+        "whyWrong": "That depends on the encoding; in ASCII uppercase actually comes first."
+      }
+    ],
+    "explanation": "Comparison walks both strings together and returns as soon as the characters differ. If one string runs out first and everything matched so far, the shorter one is smaller — which is why \"app\" sorts before \"apple\".",
+    "concept": "Lexicographic order is dictionary order generalised to any character set.",
+    "hint": "What decides the result — the first difference, or the whole string?"
+  },
+  {
+    "id": "DSA-0048",
+    "body": "Why can string reversal be wrong if you reverse the underlying bytes of a UTF-8 string?",
+    "topic": "strings",
+    "difficulty": "hard",
+    "expectedSeconds": 85,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A character can occupy several bytes, and reversing bytes splits it apart",
+        "correct": true
+      },
+      {
+        "body": "UTF-8 strings cannot be reversed at all",
+        "whyWrong": "They can be reversed correctly — by code point or grapheme cluster rather than by byte."
+      },
+      {
+        "body": "Reversal is O(n²) in UTF-8",
+        "whyWrong": "Reversal is linear whichever unit you iterate over."
+      },
+      {
+        "body": "UTF-8 stores characters in reverse order already",
+        "whyWrong": "It does not; UTF-8 is a straightforward variable-length encoding in reading order."
+      }
+    ],
+    "explanation": "In UTF-8 an ASCII character is one byte but many others take two to four. Reversing the byte sequence produces invalid sequences in the middle of multi-byte characters. Correct reversal iterates code points — and for emoji or combining accents, grapheme clusters.",
+    "concept": "Byte length, character count and display width are three different things.",
+    "hint": "What is the smallest unit that is safe to reorder?"
+  },
+  {
+    "id": "DSA-0049",
+    "body": "Binary search requires the array to be what?",
+    "topic": "searching",
+    "difficulty": "easy",
+    "expectedSeconds": 40,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Sorted",
+        "correct": true
+      },
+      {
+        "body": "Free of duplicates",
+        "whyWrong": "Duplicates are fine; the search still finds a matching element."
+      },
+      {
+        "body": "Of even length",
+        "whyWrong": "Length parity is irrelevant to the halving step."
+      },
+      {
+        "body": "Stored contiguously in memory",
+        "whyWrong": "Contiguity helps performance but binary search also works over any random-access sequence."
+      }
+    ],
+    "explanation": "Each step discards half the range based on a comparison with the middle element, which is only valid if everything to one side is smaller and everything to the other is larger. On unsorted input the discarded half may contain the target.",
+    "concept": "Binary search trades a sortedness precondition for logarithmic lookup.",
+    "hint": "Why is it safe to throw away half the array?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0050",
+    "body": "Why is `mid = low + (high - low) / 2` preferred over `mid = (low + high) / 2`?",
+    "topic": "searching",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "It avoids integer overflow when low and high are both large",
+        "correct": true
+      },
+      {
+        "body": "It is faster",
+        "whyWrong": "Both forms cost the same handful of instructions."
+      },
+      {
+        "body": "It handles unsorted arrays",
+        "whyWrong": "Neither form helps with unsorted input."
+      },
+      {
+        "body": "It returns a floating-point midpoint",
+        "whyWrong": "Both use integer arithmetic; neither yields a fraction."
+      }
+    ],
+    "explanation": "For large indices low + high can exceed the maximum signed integer and wrap negative, producing an out-of-bounds index. Subtracting first keeps the intermediate value within range. This was a real bug in Java’s binary search for nearly a decade.",
+    "subtopic": "binary-search",
+    "concept": "Intermediate values can overflow even when both operands and the result are in range.",
+    "hint": "What is the largest value low + high can reach?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0051",
+    "body": "Binary search on a rotated sorted array works because at every step which invariant holds?",
+    "topic": "searching",
+    "difficulty": "hard",
+    "expectedSeconds": 85,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "At least one of the two halves is itself sorted",
+        "correct": true
+      },
+      {
+        "body": "The array is still fully sorted",
+        "whyWrong": "Rotation breaks global sortedness — that is what makes the problem non-trivial."
+      },
+      {
+        "body": "The target is always in the left half",
+        "whyWrong": "There is no such guarantee; deciding which half to keep is the whole problem."
+      },
+      {
+        "body": "The rotation point is always at the middle",
+        "whyWrong": "The rotation point can be anywhere."
+      }
+    ],
+    "explanation": "Cutting a rotated sorted array at any midpoint leaves one side without the rotation point, so that side is in order. Comparing the target against that sorted side tells you which half to keep, preserving O(log n).",
+    "subtopic": "binary-search",
+    "concept": "Rotation preserves local sortedness even though global order is lost.",
+    "hint": "If the break point is on one side, what does that make the other side?"
+  },
+  {
+    "id": "DSA-0052",
+    "body": "\"Binary search on the answer\" is used when what is true?",
+    "topic": "searching",
+    "difficulty": "hard",
+    "expectedSeconds": 85,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "The feasibility of a candidate answer is monotonic — if x works, everything above (or below) it works too",
+        "correct": true
+      },
+      {
+        "body": "The input array is already sorted",
+        "whyWrong": "The technique searches a range of possible answers, not the input, which need not be sorted."
+      },
+      {
+        "body": "The answer is guaranteed to be a power of two",
+        "whyWrong": "No such restriction exists."
+      },
+      {
+        "body": "The problem has no greedy solution",
+        "whyWrong": "Many problems solved this way also have greedy checkers; the two are complementary."
+      }
+    ],
+    "explanation": "You binary-search the space of answers rather than the data, using a predicate that says whether a candidate is achievable. It is valid only when that predicate is monotonic — as in \"can we split the array into k parts each summing to at most X?\", where a larger X is always at least as easy.",
+    "subtopic": "binary-search-on-answer",
+    "concept": "If a yes/no check is monotonic in the parameter, you can binary-search the parameter.",
+    "hint": "What has to be true about the check as the candidate grows?"
+  },
+  {
+    "id": "DSA-0053",
+    "body": "Searching a hash table has what worst-case time complexity?",
+    "topic": "searching",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "O(n)",
+        "correct": true
+      },
+      {
+        "body": "O(1)",
+        "whyWrong": "That is the average case; the worst case is different."
+      },
+      {
+        "body": "O(log n)",
+        "whyWrong": "Logarithmic lookup describes balanced trees, not hash tables."
+      },
+      {
+        "body": "O(n log n)",
+        "whyWrong": "No sorting occurs during a lookup."
+      }
+    ],
+    "explanation": "If every key hashes to the same bucket, lookup degenerates to scanning a single chain of n entries. Average O(1) assumes a good hash function and a bounded load factor — which is why hash flooding is a real denial-of-service vector.",
+    "concept": "Average and worst case differ sharply for hashing; the average depends on assumptions about the keys.",
+    "hint": "What if every key collides?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0054",
+    "body": "Interpolation search can beat binary search on which kind of data?",
+    "topic": "searching",
+    "difficulty": "hard",
+    "expectedSeconds": 80,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Sorted data that is close to uniformly distributed",
+        "correct": true
+      },
+      {
+        "body": "Any sorted data",
+        "whyWrong": "On skewed data interpolation search can degrade to O(n), worse than binary search’s guaranteed O(log n)."
+      },
+      {
+        "body": "Unsorted data",
+        "whyWrong": "Like binary search, it requires sorted input."
+      },
+      {
+        "body": "Data stored in a linked list",
+        "whyWrong": "Both need random access to a middle element, which a linked list does not provide."
+      }
+    ],
+    "explanation": "Instead of always probing the midpoint, interpolation search estimates the position from the value, giving O(log log n) on uniform data. The estimate is only good when values are spread evenly; on clustered data it can probe almost linearly.",
+    "concept": "Interpolation search trades a worst-case guarantee for a better average on well-behaved data.",
+    "hint": "What assumption does estimating the position require?"
+  },
+  {
+    "id": "DSA-0055",
+    "body": "Which sorting algorithm is stable?",
+    "topic": "sorting",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Merge sort",
+        "correct": true
+      },
+      {
+        "body": "Quicksort",
+        "whyWrong": "Standard in-place quicksort swaps distant elements and is not stable."
+      },
+      {
+        "body": "Heapsort",
+        "whyWrong": "Heapsort’s sift operations reorder equal elements arbitrarily."
+      },
+      {
+        "body": "Selection sort",
+        "whyWrong": "Selection sort swaps the minimum into place, which can jump an equal element over another."
+      }
+    ],
+    "explanation": "A stable sort preserves the relative order of records comparing equal — essential when sorting by one key after another. Merge sort achieves it by taking from the left run on ties.",
+    "concept": "Stability matters whenever you sort by a secondary key first and a primary key second.",
+    "hint": "Which algorithm can break ties consistently by construction?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0056",
+    "body": "Counting sort runs in O(n + k). What is k, and when does that make it a bad choice?",
+    "topic": "sorting",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "The range of input values — it is poor when the range is far larger than n",
+        "correct": true
+      },
+      {
+        "body": "The number of comparisons — it is poor on large arrays",
+        "whyWrong": "Counting sort makes no comparisons at all; that is why it beats the n log n bound."
+      },
+      {
+        "body": "The number of buckets you choose — it is poor if you pick too few",
+        "whyWrong": "The bucket count is determined by the value range, not chosen freely."
+      },
+      {
+        "body": "The recursion depth — it is poor on nearly sorted data",
+        "whyWrong": "Counting sort is not recursive and is indifferent to existing order."
+      }
+    ],
+    "explanation": "Counting sort allocates one counter per possible value, so sorting a hundred integers spread over a billion possible values would allocate a billion counters. It shines when the range is small and known — ages, exam scores, byte values.",
+    "concept": "Non-comparison sorts beat n log n by exploiting structure in the keys, at the cost of assumptions about them.",
+    "hint": "What does the algorithm allocate before it starts counting?"
+  },
+  {
+    "id": "DSA-0057",
+    "body": "Why is the lower bound for comparison-based sorting Ω(n log n)?",
+    "topic": "sorting",
+    "difficulty": "hard",
+    "expectedSeconds": 85,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "There are n! possible orderings and each comparison distinguishes at most two branches",
+        "correct": true
+      },
+      {
+        "body": "Because merge sort is O(n log n)",
+        "whyWrong": "A single algorithm’s cost is an upper bound, not proof that nothing can be faster."
+      },
+      {
+        "body": "Because comparisons take constant time",
+        "whyWrong": "Comparison cost does not determine how many are needed."
+      },
+      {
+        "body": "Because arrays must be split in half",
+        "whyWrong": "Splitting in half is one strategy, not a requirement."
+      }
+    ],
+    "explanation": "A decision tree that distinguishes all n! permutations needs at least log₂(n!) ≈ n log n levels, and its depth is the number of comparisons in the worst case. Non-comparison sorts such as counting and radix sort escape the bound by not comparing.",
+    "concept": "Information-theoretic lower bounds count how much a single operation can reveal.",
+    "hint": "How many outcomes must the algorithm tell apart?"
+  },
+  {
+    "id": "DSA-0058",
+    "body": "On nearly sorted data, which algorithm performs best?",
+    "topic": "sorting",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Insertion sort",
+        "correct": true
+      },
+      {
+        "body": "Quicksort with a last-element pivot",
+        "whyWrong": "That is quicksort’s worst case on sorted input, degrading to O(n²)."
+      },
+      {
+        "body": "Heapsort",
+        "whyWrong": "Heapsort is O(n log n) regardless of existing order and gains nothing from it."
+      },
+      {
+        "body": "Selection sort",
+        "whyWrong": "Selection sort always scans the whole remaining array, so it is O(n²) whatever the input."
+      }
+    ],
+    "explanation": "Insertion sort costs O(n + d) where d is the number of inversions, approaching linear when the data is nearly ordered. This is why real library sorts switch to insertion sort for small or nearly-sorted runs — Timsort is built on the idea.",
+    "concept": "Adaptive algorithms exploit existing order; non-adaptive ones ignore it.",
+    "hint": "Which algorithm does almost no work when every element is already near its place?"
+  },
+  {
+    "id": "DSA-0059",
+    "body": "What makes quicksort’s average case O(n log n) despite an O(n²) worst case?",
+    "topic": "sorting",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A random or median-of-three pivot makes badly unbalanced partitions very unlikely",
+        "correct": true
+      },
+      {
+        "body": "The worst case cannot actually occur",
+        "whyWrong": "It occurs readily with a fixed pivot on sorted input — a common real-world bug."
+      },
+      {
+        "body": "Partitioning is O(log n)",
+        "whyWrong": "Partitioning scans the whole range and is O(n)."
+      },
+      {
+        "body": "It uses extra memory to balance the partitions",
+        "whyWrong": "Quicksort partitions in place; it uses no balancing buffer."
+      }
+    ],
+    "explanation": "Each partition costs O(n), so the total is O(n × depth). A reasonable pivot keeps the expected depth at O(log n). Randomising the pivot means no fixed input can reliably trigger the quadratic case.",
+    "concept": "Randomisation converts a bad worst case into an unlikely one.",
+    "hint": "What determines the depth of the recursion?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0060",
+    "body": "What is the height of a balanced binary search tree containing n nodes?",
+    "topic": "trees",
+    "difficulty": "easy",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "O(log n)",
+        "correct": true
+      },
+      {
+        "body": "O(n)",
+        "whyWrong": "That is the height of a degenerate tree that has become a linked list."
+      },
+      {
+        "body": "O(n log n)",
+        "whyWrong": "Height cannot exceed n; n log n is a time complexity, not a height."
+      },
+      {
+        "body": "O(1)",
+        "whyWrong": "A constant height would mean the tree holds a bounded number of nodes."
+      }
+    ],
+    "explanation": "Balancing keeps each subtree’s size within a constant factor of its sibling, so the node count roughly doubles per level and the depth grows logarithmically. This is what guarantees O(log n) search, insert and delete.",
+    "concept": "A BST’s operations are O(height); balancing is what keeps the height logarithmic.",
+    "hint": "How many nodes fit in a tree of depth d?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0061",
+    "body": "An in-order traversal of a binary search tree produces the values in what order?",
+    "topic": "trees",
+    "difficulty": "easy",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Ascending sorted order",
+        "correct": true
+      },
+      {
+        "body": "The order they were inserted",
+        "whyWrong": "Insertion order is not recoverable from the tree structure."
+      },
+      {
+        "body": "Level by level from the root",
+        "whyWrong": "That is a breadth-first traversal, not in-order."
+      },
+      {
+        "body": "Descending sorted order",
+        "whyWrong": "Reversing the traversal gives descending; plain in-order gives ascending."
+      }
+    ],
+    "explanation": "In-order visits the left subtree, then the node, then the right subtree. Since a BST keeps smaller values left and larger right, this yields sorted output — which is how you validate a BST in linear time.",
+    "concept": "In-order traversal of a BST is a sorted scan.",
+    "hint": "Where do the smaller values live?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0062",
+    "body": "Which traversal would you use to delete every node of a tree safely?",
+    "topic": "trees",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Post-order",
+        "correct": true
+      },
+      {
+        "body": "Pre-order",
+        "whyWrong": "Freeing a node before its children leaves you without the pointers needed to reach them."
+      },
+      {
+        "body": "In-order",
+        "whyWrong": "In-order frees the left subtree, then the node — losing the pointer to the right subtree."
+      },
+      {
+        "body": "Level-order",
+        "whyWrong": "Level-order works if you queue children before freeing, but post-order is the natural recursive answer."
+      }
+    ],
+    "explanation": "Post-order visits both children before the node itself, so a node is only freed once nothing still needs its pointers. The same ordering is why post-order is used to compute a value that depends on both subtrees, such as height.",
+    "concept": "Post-order is the traversal for anything that must handle children before the parent.",
+    "hint": "When is it safe to free a node?"
+  },
+  {
+    "id": "DSA-0063",
+    "body": "What is the minimum number of nodes in an AVL tree of height h?",
+    "topic": "trees",
+    "difficulty": "hard",
+    "expectedSeconds": 85,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "N(h) = N(h−1) + N(h−2) + 1",
+        "correct": true
+      },
+      {
+        "body": "2^h − 1",
+        "whyWrong": "That is the maximum number of nodes, which is a perfectly full tree."
+      },
+      {
+        "body": "h",
+        "whyWrong": "A tree of height h needs at least h+1 nodes on the path alone."
+      },
+      {
+        "body": "h²",
+        "whyWrong": "No recurrence in AVL analysis produces a quadratic bound."
+      }
+    ],
+    "explanation": "A minimal AVL tree of height h has a root, a minimal subtree of height h−1 and one of height h−2 — the balance factor permits no more skew. The recurrence is Fibonacci-like, which is why AVL height stays within about 1.44 log₂ n.",
+    "concept": "The sparsest allowed shape is what bounds a balanced tree’s height.",
+    "hint": "What is the most unbalanced an AVL node is allowed to be?"
+  },
+  {
+    "id": "DSA-0064",
+    "body": "In a binary search tree, deleting a node with two children is usually handled how?",
+    "topic": "trees",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Replace it with its in-order successor or predecessor",
+        "correct": true
+      },
+      {
+        "body": "Promote its left child",
+        "whyWrong": "Promoting one child leaves the other subtree unattached."
+      },
+      {
+        "body": "Delete the whole subtree",
+        "whyWrong": "That would discard values that should remain in the tree."
+      },
+      {
+        "body": "Mark it deleted and leave it in place",
+        "whyWrong": "Tombstoning is a valid engineering choice but is not the standard BST deletion algorithm."
+      }
+    ],
+    "explanation": "The in-order successor is the smallest value in the right subtree, so it is larger than everything left and smaller than everything else right — exactly the ordering property the removed node had. It has at most one child, so removing it from its old position is the easy case.",
+    "subtopic": "binary-search-trees",
+    "concept": "BST deletion reduces the hard case to an easier one by substituting a boundary value.",
+    "hint": "Which value could sit in that position without breaking the ordering?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0065",
+    "body": "Validating that a binary tree is a BST by only comparing each node with its two children is wrong. Why?",
+    "topic": "trees",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A node deeper in a subtree can violate an ancestor’s bound while satisfying its parent",
+        "correct": true
+      },
+      {
+        "body": "Because comparisons are expensive",
+        "whyWrong": "Cost is not the issue; the check gives wrong answers."
+      },
+      {
+        "body": "Because the tree may be unbalanced",
+        "whyWrong": "Balance and BST validity are independent properties."
+      },
+      {
+        "body": "Because duplicates are allowed",
+        "whyWrong": "Duplicate handling is a convention choice, not the flaw in this check."
+      }
+    ],
+    "explanation": "Consider root 10 with left child 5 and that node’s right child 20. Every parent-child pair looks fine, but 20 sits in the left subtree of 10 and breaks the invariant. The correct check carries a (min, max) range down the recursion.",
+    "subtopic": "binary-search-trees",
+    "concept": "A BST invariant is about whole subtrees, not adjacent pairs.",
+    "hint": "Can a node be bigger than its parent but still be in the wrong subtree?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0066",
+    "body": "A complete binary tree with n nodes is usually stored in an array. Where is the left child of index i?",
+    "topic": "trees",
+    "difficulty": "medium",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "2i + 1 with 0-based indexing",
+        "correct": true
+      },
+      {
+        "body": "i + 1",
+        "whyWrong": "That is the next node in level order, which is the sibling or a cousin, not the child."
+      },
+      {
+        "body": "i / 2",
+        "whyWrong": "That is the parent, not the child."
+      },
+      {
+        "body": "2i − 1",
+        "whyWrong": "That formula is off by one and would point above the node for small i."
+      }
+    ],
+    "explanation": "With 0-based indexing the children of i are 2i+1 and 2i+2 and the parent is ⌊(i−1)/2⌋. The array layout works precisely because a complete tree has no gaps — which is why binary heaps use it and need no pointers.",
+    "concept": "A complete tree can be addressed arithmetically, saving all the pointer storage.",
+    "hint": "What does having no gaps let you do with indices?"
+  },
+  {
+    "id": "DSA-0067",
+    "body": "What problem does a segment tree solve that a prefix-sum array cannot?",
+    "topic": "trees",
+    "difficulty": "hard",
+    "expectedSeconds": 80,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Range queries on data that also changes",
+        "correct": true
+      },
+      {
+        "body": "Range queries on immutable data",
+        "whyWrong": "Prefix sums handle exactly that case, more cheaply."
+      },
+      {
+        "body": "Finding the maximum of the whole array",
+        "whyWrong": "A single scan does that; neither structure is needed."
+      },
+      {
+        "body": "Sorting the array",
+        "whyWrong": "Neither structure sorts anything."
+      }
+    ],
+    "explanation": "A prefix-sum array must be rebuilt in O(n) after any update. A segment tree answers a range query and applies a point update both in O(log n), which is what makes it the right choice when reads and writes are interleaved.",
+    "concept": "Choose the structure by the read/write mix, not by the query alone.",
+    "hint": "What happens to a prefix array when one element changes?"
+  },
+  {
+    "id": "DSA-0068",
+    "body": "Which traversal finds the shortest path in an unweighted graph?",
+    "topic": "graphs",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Breadth-first search",
+        "correct": true
+      },
+      {
+        "body": "Depth-first search",
+        "whyWrong": "DFS reaches every node but the first path it finds is not necessarily the shortest."
+      },
+      {
+        "body": "Either, since both visit every node",
+        "whyWrong": "Visiting every node is not the same as finding shortest paths."
+      },
+      {
+        "body": "Neither — you need Dijkstra",
+        "whyWrong": "Dijkstra generalises to weighted edges; on unweighted graphs BFS is simpler and faster."
+      }
+    ],
+    "explanation": "BFS explores by increasing distance from the source, so the first time it reaches a node it has done so in the fewest possible edges. With weights this no longer holds and you need Dijkstra.",
+    "subtopic": "bfs-dfs",
+    "concept": "BFS layers the graph by hop count, which is exactly shortest path when every edge costs the same.",
+    "hint": "In what order does BFS reach nodes?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0069",
+    "body": "How do you detect a cycle in a directed graph using DFS?",
+    "topic": "graphs",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Look for an edge back to a node currently on the recursion stack",
+        "correct": true
+      },
+      {
+        "body": "Look for any already-visited node",
+        "whyWrong": "A visited node may be finished and on a different branch — that is a cross edge, not a cycle."
+      },
+      {
+        "body": "Count edges and compare with nodes",
+        "whyWrong": "The edge count relates to cycles in undirected graphs, not directed ones."
+      },
+      {
+        "body": "Check whether any node has in-degree zero",
+        "whyWrong": "A node with in-degree zero says nothing about cycles elsewhere."
+      }
+    ],
+    "explanation": "A cycle exists exactly when DFS finds a back edge — an edge to a node that is grey, meaning it is an ancestor still being explored. Tracking three colours (unvisited, in progress, done) distinguishes that from an edge to a finished node.",
+    "concept": "Directed cycle detection needs \"on the current path\", not merely \"seen before\".",
+    "hint": "What is the difference between a node you have finished and one you are still inside?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0070",
+    "body": "Dijkstra’s algorithm gives wrong answers on graphs with what property?",
+    "topic": "graphs",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Negative edge weights",
+        "correct": true
+      },
+      {
+        "body": "Cycles",
+        "whyWrong": "Dijkstra handles cycles fine as long as weights are non-negative."
+      },
+      {
+        "body": "More than one shortest path",
+        "whyWrong": "Ties are not a problem; any one of them is returned."
+      },
+      {
+        "body": "Disconnected components",
+        "whyWrong": "Unreachable nodes simply keep an infinite distance."
+      }
+    ],
+    "explanation": "Dijkstra finalises a node’s distance the moment it is popped, assuming no later path can improve it. A negative edge can do exactly that, so the assumption breaks. Bellman-Ford handles negative weights and detects negative cycles.",
+    "subtopic": "shortest-paths",
+    "concept": "Dijkstra’s greedy choice depends on edge weights never being negative.",
+    "hint": "What lets Dijkstra treat a popped node as settled?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0071",
+    "body": "A topological sort exists for a directed graph if and only if it is what?",
+    "topic": "graphs",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Acyclic",
+        "correct": true
+      },
+      {
+        "body": "Connected",
+        "whyWrong": "A DAG with several components still has a valid topological order."
+      },
+      {
+        "body": "Weighted",
+        "whyWrong": "Weights play no part in topological ordering."
+      },
+      {
+        "body": "Complete",
+        "whyWrong": "A complete directed graph contains cycles and has no topological order."
+      }
+    ],
+    "explanation": "A cycle would require each of its nodes to come before the others, which is impossible in a linear order. On a DAG, Kahn’s algorithm or a DFS finishing order produces a valid sequence — which is how build systems and course prerequisites are resolved.",
+    "concept": "Topological order is exactly a linearisation of a partial order, which cycles destroy.",
+    "hint": "Could a node in a cycle ever come first?"
+  },
+  {
+    "id": "DSA-0072",
+    "body": "What is the space complexity of BFS on a graph with V vertices and E edges?",
+    "topic": "graphs",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "O(V)",
+        "correct": true
+      },
+      {
+        "body": "O(E)",
+        "whyWrong": "The queue holds vertices, not edges; the adjacency structure is separate from the traversal’s own space."
+      },
+      {
+        "body": "O(1)",
+        "whyWrong": "A queue and a visited set both grow with the graph."
+      },
+      {
+        "body": "O(V × E)",
+        "whyWrong": "No BFS structure is that large."
+      }
+    ],
+    "explanation": "BFS stores a visited marker per vertex and a queue that in the worst case holds a whole level, which is O(V). DFS is also O(V) for the recursion stack, though the constant differs — on a wide shallow graph BFS uses more, on a deep narrow one DFS uses more.",
+    "subtopic": "bfs-dfs",
+    "concept": "Traversal space is dominated by the frontier plus the visited set.",
+    "hint": "What is in the queue at any moment?"
+  },
+  {
+    "id": "DSA-0073",
+    "body": "Union-Find with path compression and union by rank gives what amortised time per operation?",
+    "topic": "graphs",
+    "difficulty": "hard",
+    "expectedSeconds": 80,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Effectively constant — inverse Ackermann",
+        "correct": true
+      },
+      {
+        "body": "O(log n)",
+        "whyWrong": "That is what union by rank alone gives; path compression improves it further."
+      },
+      {
+        "body": "O(n)",
+        "whyWrong": "Linear per operation is the naive version with no optimisation at all."
+      },
+      {
+        "body": "O(n log n)",
+        "whyWrong": "That is a total sorting cost, not a per-operation bound."
+      }
+    ],
+    "explanation": "The combination yields O(α(n)) amortised, where α is the inverse Ackermann function — below 5 for any input that fits in the universe. This is why Kruskal’s algorithm is dominated by its sorting step rather than by the union-find work.",
+    "concept": "Union-Find is the standard structure for dynamic connectivity and Kruskal’s MST.",
+    "hint": "How fast does the inverse Ackermann function grow?"
+  },
+  {
+    "id": "DSA-0074",
+    "body": "What two properties must a problem have for dynamic programming to apply?",
+    "topic": "dynamic-programming",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Optimal substructure and overlapping subproblems",
+        "correct": true
+      },
+      {
+        "body": "Sorted input and no duplicates",
+        "whyWrong": "Neither is required; DP applies to unsorted data with repeats."
+      },
+      {
+        "body": "A greedy choice and a base case",
+        "whyWrong": "A greedy choice property means you can skip DP entirely."
+      },
+      {
+        "body": "Constant-time comparison and bounded depth",
+        "whyWrong": "Neither is a condition for DP."
+      }
+    ],
+    "explanation": "Optimal substructure means an optimal solution is built from optimal solutions to subproblems; overlapping subproblems means the same subproblem recurs, which is what memoisation exploits. Divide and conquer has the first without the second, which is why merge sort is not DP.",
+    "concept": "DP = recursion + reuse. Without overlap, memoising buys nothing.",
+    "hint": "What distinguishes DP from plain divide and conquer?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0075",
+    "body": "What is the difference between top-down and bottom-up dynamic programming?",
+    "topic": "dynamic-programming",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Top-down memoises a recursion; bottom-up fills a table iteratively",
+        "correct": true
+      },
+      {
+        "body": "Top-down is always faster",
+        "whyWrong": "Bottom-up usually has lower constant factors because it avoids call overhead."
+      },
+      {
+        "body": "Bottom-up uses less memory by definition",
+        "whyWrong": "Both store the same table unless you additionally apply rolling-array optimisation."
+      },
+      {
+        "body": "They solve different classes of problem",
+        "whyWrong": "They are two implementations of the same recurrence."
+      }
+    ],
+    "explanation": "Top-down starts from the original problem and recurses, caching results as it goes, so it only computes the states it actually needs. Bottom-up computes every state in dependency order, avoids recursion depth limits, and is easier to optimise for space.",
+    "concept": "Same recurrence, two evaluation orders, different practical trade-offs.",
+    "hint": "Which one might skip states it never needs?"
+  },
+  {
+    "id": "DSA-0076",
+    "body": "The 0/1 knapsack DP runs in O(n × W). Why is this called pseudo-polynomial rather than polynomial?",
+    "topic": "dynamic-programming",
+    "difficulty": "hard",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "W is a value, and its size in bits is log W — so the cost is exponential in the input length",
+        "correct": true
+      },
+      {
+        "body": "Because it uses a two-dimensional table",
+        "whyWrong": "Table dimensionality does not determine the complexity class."
+      },
+      {
+        "body": "Because it is only an approximation",
+        "whyWrong": "The DP is exact, not approximate."
+      },
+      {
+        "body": "Because it fails for large n",
+        "whyWrong": "It scales fine in n; the capacity is what causes the blow-up."
+      }
+    ],
+    "explanation": "Complexity is measured against the input encoding length. A capacity of one billion is only about 30 bits, yet the table has a billion columns — so the running time is exponential in the number of bits. This is why 0/1 knapsack is NP-hard despite the DP.",
+    "subtopic": "dp-knapsack",
+    "concept": "Pseudo-polynomial means polynomial in the numeric value, exponential in its encoded size.",
+    "hint": "How many bits does it take to write down W?"
+  },
+  {
+    "id": "DSA-0077",
+    "body": "In the longest common subsequence DP, what does dp[i][j] represent?",
+    "topic": "dynamic-programming",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "The LCS length of the first i characters of one string and the first j of the other",
+        "correct": true
+      },
+      {
+        "body": "Whether characters i and j are equal",
+        "whyWrong": "That is a single comparison used to compute the cell, not what it stores."
+      },
+      {
+        "body": "The edit distance between the two prefixes",
+        "whyWrong": "Edit distance is a related but different recurrence."
+      },
+      {
+        "body": "The number of distinct common subsequences",
+        "whyWrong": "Counting subsequences is a different problem with a different recurrence."
+      }
+    ],
+    "explanation": "When the characters match, dp[i][j] = dp[i−1][j−1] + 1; otherwise it is max(dp[i−1][j], dp[i][j−1]). Defining the state over prefix pairs is what makes the recurrence closed.",
+    "concept": "Getting the state definition right is most of the work in a DP problem.",
+    "hint": "What are the two things a subproblem here depends on?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0078",
+    "body": "Many 2-D DP tables can be reduced to O(n) space. What makes that possible?",
+    "topic": "dynamic-programming",
+    "difficulty": "hard",
+    "expectedSeconds": 80,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Each row depends only on the previous row",
+        "correct": true
+      },
+      {
+        "body": "The table is symmetric",
+        "whyWrong": "Symmetry is not general, and even when present does not reduce the asymptotic space."
+      },
+      {
+        "body": "The values are always small",
+        "whyWrong": "Value magnitude affects word size, not the number of cells."
+      },
+      {
+        "body": "The answer is always in the last cell",
+        "whyWrong": "Where the answer sits does not let you discard earlier rows."
+      }
+    ],
+    "explanation": "If the recurrence only reaches back one row, you can keep two rows — or even one, updating in the right direction. Space drops from O(n × m) to O(m). The catch is that you lose the ability to reconstruct the actual solution path, only its value.",
+    "concept": "Rolling arrays trade the reconstruction trace for memory.",
+    "hint": "How far back does the recurrence actually look?"
+  },
+  {
+    "id": "DSA-0079",
+    "body": "Which problem does NOT have optimal substructure?",
+    "topic": "dynamic-programming",
+    "difficulty": "hard",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Longest simple path in a general graph",
+        "correct": true
+      },
+      {
+        "body": "Shortest path in a weighted graph",
+        "whyWrong": "Sub-paths of shortest paths are themselves shortest paths."
+      },
+      {
+        "body": "Matrix chain multiplication",
+        "whyWrong": "Its optimal parenthesisation is built from optimal sub-parenthesisations."
+      },
+      {
+        "body": "Longest common subsequence",
+        "whyWrong": "Its recurrence is a textbook example of optimal substructure."
+      }
+    ],
+    "explanation": "Combining two optimal longest simple paths can revisit a vertex, making the result not simple — so the optimum of the whole is not built from optima of the parts. This is why longest path is NP-hard while shortest path is easy.",
+    "concept": "Optimal substructure has to be checked, not assumed from a problem sounding similar to one that has it.",
+    "hint": "What goes wrong when you join two long paths together?"
+  },
+  {
+    "id": "DSA-0080",
+    "body": "Memoisation converts the naive recursive Fibonacci from exponential to what?",
+    "topic": "dynamic-programming",
+    "difficulty": "easy",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "O(n)",
+        "correct": true
+      },
+      {
+        "body": "O(log n)",
+        "whyWrong": "Logarithmic time needs the matrix-power or fast-doubling method, not simple memoisation."
+      },
+      {
+        "body": "O(n²)",
+        "whyWrong": "Each of the n states is computed once in constant time, so the total is linear."
+      },
+      {
+        "body": "Still exponential",
+        "whyWrong": "Caching is precisely what removes the repeated subtrees."
+      }
+    ],
+    "explanation": "There are only n distinct subproblems, each computed once and thereafter returned from the cache, so the work is proportional to the number of states. The same counting argument — states × cost per state — gives the complexity of most DP solutions.",
+    "concept": "DP cost = number of distinct states × work per state.",
+    "hint": "How many different values can fib() be called with?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0081",
+    "body": "What does O(n) formally describe?",
+    "topic": "complexity-analysis",
+    "difficulty": "easy",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "An upper bound on growth, up to a constant factor, for large n",
+        "correct": true
+      },
+      {
+        "body": "The exact number of operations",
+        "whyWrong": "Big-O discards constants and lower-order terms, so it is not an exact count."
+      },
+      {
+        "body": "The best case",
+        "whyWrong": "Best case is described separately; O() can be applied to any case you choose to analyse."
+      },
+      {
+        "body": "The memory used",
+        "whyWrong": "O() notation describes any resource; which one depends on what you are bounding."
+      }
+    ],
+    "explanation": "f(n) is O(g(n)) if beyond some n₀ it stays below c·g(n) for a constant c. That is why O(n) is technically also a valid (loose) bound on an O(log n) algorithm — Θ is the notation for a tight bound.",
+    "concept": "Big-O is an upper bound; Θ is tight; Ω is a lower bound.",
+    "hint": "Is O() a ceiling, a floor, or an exact figure?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0082",
+    "body": "What is the time complexity of a loop that halves n each iteration until it reaches 1?",
+    "topic": "complexity-analysis",
+    "difficulty": "easy",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "O(log n)",
+        "correct": true
+      },
+      {
+        "body": "O(n)",
+        "whyWrong": "Linear cost would mean one iteration per element, but halving skips most of them."
+      },
+      {
+        "body": "O(n log n)",
+        "whyWrong": "That would need a linear amount of work inside each of the log n iterations."
+      },
+      {
+        "body": "O(1)",
+        "whyWrong": "The iteration count grows with n, slowly but without bound."
+      }
+    ],
+    "explanation": "Halving repeatedly from n reaches 1 after about log₂ n steps. The base of the logarithm only changes the constant factor, which is why it is conventionally omitted.",
+    "concept": "Halving gives log n; doubling work gives 2^n. Recognising the pattern is usually enough.",
+    "hint": "How many times can you halve 1024?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0083",
+    "body": "Two nested loops, the inner running to i where the outer runs to n. What is the complexity?",
+    "topic": "complexity-analysis",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "O(n²)",
+        "correct": true
+      },
+      {
+        "body": "O(n)",
+        "whyWrong": "The inner loop runs a different number of times on each pass, so the total exceeds n."
+      },
+      {
+        "body": "O(n log n)",
+        "whyWrong": "No halving or sorting step is present."
+      },
+      {
+        "body": "O(n³)",
+        "whyWrong": "Only two loops are involved."
+      }
+    ],
+    "explanation": "The inner loop runs 0 + 1 + 2 + … + (n−1) = n(n−1)/2 times, which is n²/2 — still O(n²) once the constant is dropped. A triangular loop is asymptotically the same as a square one.",
+    "concept": "Constant factors are discarded, so half a square is still quadratic.",
+    "hint": "Add up the iteration counts rather than multiplying the bounds."
+  },
+  {
+    "id": "DSA-0084",
+    "body": "What is the complexity of appending n items to a list one at a time, where each append is amortised O(1)?",
+    "topic": "complexity-analysis",
+    "difficulty": "medium",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "O(n)",
+        "correct": true
+      },
+      {
+        "body": "O(n²)",
+        "whyWrong": "That would be the cost if every append copied the whole list, which amortisation avoids."
+      },
+      {
+        "body": "O(log n)",
+        "whyWrong": "Fewer than n operations cannot complete n appends."
+      },
+      {
+        "body": "O(n log n)",
+        "whyWrong": "Nothing here sorts or halves."
+      }
+    ],
+    "explanation": "Amortised O(1) per operation means n operations total O(n), even though individual appends occasionally trigger an O(n) resize. Amortised analysis is about the total across a sequence, not a guarantee for each call.",
+    "concept": "Amortised cost is meaningful for a sequence of operations, not a single one.",
+    "hint": "What does \"amortised\" let you multiply out?"
+  },
+  {
+    "id": "DSA-0085",
+    "body": "An algorithm runs in O(2^n). Roughly what is the largest n that finishes in a second at a billion operations per second?",
+    "topic": "complexity-analysis",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "About 30",
+        "correct": true
+      },
+      {
+        "body": "About 1000",
+        "whyWrong": "2^1000 exceeds the number of atoms in the observable universe."
+      },
+      {
+        "body": "About 100",
+        "whyWrong": "2^100 is around 10^30 operations — far beyond a second."
+      },
+      {
+        "body": "About 1,000,000",
+        "whyWrong": "That scale is only reachable by linear or near-linear algorithms."
+      }
+    ],
+    "explanation": "2^30 is about a billion, so n = 30 is roughly the boundary. Every extra element doubles the time — which is why exponential algorithms need pruning, memoisation or an approximation to be usable at all.",
+    "concept": "Knowing the rough n at which each complexity class becomes infeasible is a practical interview skill.",
+    "hint": "What power of two is about a billion?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0086",
+    "body": "Which is asymptotically fastest for large n: O(n log n), O(n^1.5), or O(n²)?",
+    "topic": "complexity-analysis",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "O(n log n)",
+        "correct": true
+      },
+      {
+        "body": "O(n^1.5)",
+        "whyWrong": "It sits between the other two — slower than n log n, faster than n²."
+      },
+      {
+        "body": "O(n²)",
+        "whyWrong": "Quadratic is the slowest of the three."
+      },
+      {
+        "body": "They are equivalent for large n",
+        "whyWrong": "They separate clearly as n grows; the differences are not constant factors."
+      }
+    ],
+    "explanation": "log n grows more slowly than any positive power of n, so n log n is below n^1.5, which is below n². For n = 10^6 that is roughly 2×10^7 versus 10^9 versus 10^12 operations — the difference between instant, slow and impossible.",
+    "concept": "Ordering the common complexity classes by growth is worth committing to memory.",
+    "hint": "Does log n grow faster or slower than √n?"
+  },
+  {
+    "id": "DSA-0087",
+    "body": "What does it mean when an algorithm is described as O(1) space?",
+    "topic": "complexity-analysis",
+    "difficulty": "easy",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Its extra memory does not grow with the input size",
+        "correct": true
+      },
+      {
+        "body": "It uses no memory at all",
+        "whyWrong": "Every algorithm uses some memory; the point is that the amount is bounded."
+      },
+      {
+        "body": "It uses exactly one variable",
+        "whyWrong": "It may use any fixed number of variables — the count just must not depend on n."
+      },
+      {
+        "body": "The input is stored in constant space",
+        "whyWrong": "The input itself is not counted as extra space in this convention."
+      }
+    ],
+    "explanation": "O(1) auxiliary space means a fixed number of variables regardless of n. Note the convention: the input array is not counted, which is why an in-place sort is called O(1) space even though it holds n elements.",
+    "concept": "Space complexity conventionally counts auxiliary space, not the input.",
+    "hint": "Does the count of extra variables depend on n?"
+  },
+  {
+    "id": "DSA-0088",
+    "body": "What is a hash collision?",
+    "topic": "hashing",
+    "difficulty": "easy",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Two different keys producing the same hash value",
+        "correct": true
+      },
+      {
+        "body": "Two threads writing to the table at once",
+        "whyWrong": "That is a concurrency problem, unrelated to hashing itself."
+      },
+      {
+        "body": "A key that is too large to hash",
+        "whyWrong": "Hash functions map inputs of any size to a fixed range."
+      },
+      {
+        "body": "The table becoming full",
+        "whyWrong": "A full table triggers a resize; collisions happen long before that."
+      }
+    ],
+    "explanation": "Because the key space is larger than the table, collisions are unavoidable by the pigeonhole principle. The design question is how to resolve them — chaining stores a list per bucket, open addressing probes for another slot.",
+    "concept": "Collisions are inevitable; a hash table is defined as much by its resolution strategy as by its hash function.",
+    "hint": "Can a fixed-size table give every possible key its own slot?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0089",
+    "body": "What is the load factor of a hash table?",
+    "topic": "hashing",
+    "difficulty": "medium",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Entries divided by buckets",
+        "correct": true
+      },
+      {
+        "body": "Buckets divided by entries",
+        "whyWrong": "That is the reciprocal, which is not the standard definition."
+      },
+      {
+        "body": "The proportion of buckets that have collided",
+        "whyWrong": "Collision rate is a consequence of the load factor, not its definition."
+      },
+      {
+        "body": "The size of the largest chain",
+        "whyWrong": "Longest chain is a symptom; load factor is the ratio that predicts it."
+      }
+    ],
+    "explanation": "As the load factor rises, collisions and chain lengths grow, so implementations resize when it crosses a threshold — 0.75 in Java’s HashMap. Resizing is O(n) but amortises away across the insertions.",
+    "concept": "The load factor is the dial that trades memory for lookup speed.",
+    "hint": "What ratio tells you how crowded the table is?"
+  },
+  {
+    "id": "DSA-0090",
+    "body": "Which is a requirement of a good hash function for a hash table?",
+    "topic": "hashing",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Equal keys always hash equally, and the outputs are spread evenly",
+        "correct": true
+      },
+      {
+        "body": "It must be cryptographically secure",
+        "whyWrong": "Cryptographic strength costs speed and is unnecessary unless untrusted input is a threat."
+      },
+      {
+        "body": "It must never produce collisions",
+        "whyWrong": "That is impossible for a key space larger than the table."
+      },
+      {
+        "body": "It must be reversible",
+        "whyWrong": "Reversibility is not needed and would work against even distribution."
+      }
+    ],
+    "explanation": "Determinism is required for correctness — this is why mutating a key after inserting it breaks a hash map. Even distribution is required for performance. Cryptographic hashes add resistance to deliberate collisions, which matters for hash-flooding attacks but costs speed.",
+    "concept": "Determinism is correctness; distribution is performance; they are separate requirements.",
+    "hint": "What breaks if the same key hashes differently on two calls?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0091",
+    "body": "Why must an object’s hashCode be consistent with its equals method?",
+    "topic": "hashing",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Otherwise equal objects can land in different buckets and lookups miss them",
+        "correct": true
+      },
+      {
+        "body": "Because hashCode is used to sort the table",
+        "whyWrong": "Hash tables do not maintain sorted order."
+      },
+      {
+        "body": "Because equals is slower than hashCode",
+        "whyWrong": "Relative speed does not create a correctness requirement."
+      },
+      {
+        "body": "Because the JVM caches hashCode",
+        "whyWrong": "Caching is an implementation detail, not the reason for the contract."
+      }
+    ],
+    "explanation": "A hash lookup finds the bucket by hash, then compares with equals inside it. If two equal objects hash differently they occupy different buckets and the map will report the key as absent — a classic source of bugs when equals is overridden but hashCode is not.",
+    "concept": "If a.equals(b) then a.hashCode() must equal b.hashCode(); the converse need not hold.",
+    "hint": "How does a lookup narrow the search before comparing?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0092",
+    "body": "Open addressing resolves collisions how?",
+    "topic": "hashing",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "By probing for another free slot in the table itself",
+        "correct": true
+      },
+      {
+        "body": "By storing a linked list in each bucket",
+        "whyWrong": "That is separate chaining, the alternative strategy."
+      },
+      {
+        "body": "By resizing the table on every collision",
+        "whyWrong": "Resizing on each collision would be prohibitively expensive."
+      },
+      {
+        "body": "By rejecting the insertion",
+        "whyWrong": "Colliding keys must still be stored."
+      }
+    ],
+    "explanation": "Linear, quadratic or double-hash probing looks for the next free slot. It has better cache locality than chaining because everything stays in one array, but degrades sharply at high load factors and makes deletion awkward — a removed entry must leave a tombstone.",
+    "concept": "Chaining versus open addressing is a locality-versus-simplicity trade-off.",
+    "hint": "Where does the colliding entry actually go?"
+  },
+  {
+    "id": "DSA-0093",
+    "body": "When is a hash map the wrong choice compared with a balanced tree map?",
+    "topic": "hashing",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "When you need keys in sorted order or range queries",
+        "correct": true
+      },
+      {
+        "body": "When you need fast lookup by key",
+        "whyWrong": "Hash maps excel at exactly that."
+      },
+      {
+        "body": "When keys are strings",
+        "whyWrong": "Strings hash perfectly well."
+      },
+      {
+        "body": "When the data set is large",
+        "whyWrong": "Large data sets are where hashing’s O(1) advantage matters most."
+      }
+    ],
+    "explanation": "A hash map scatters keys deliberately, so \"all keys between X and Y\" or \"the smallest key\" require scanning everything. A tree map keeps order and answers those in O(log n), at the cost of slower point lookups.",
+    "concept": "Pick the structure by the queries you need, not by lookup speed alone.",
+    "hint": "What does hashing deliberately destroy?"
+  },
+  {
+    "id": "DSA-0094",
+    "body": "What is the average time to find the first non-repeating character in a string using a hash map?",
+    "topic": "hashing",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "O(n)",
+        "correct": true
+      },
+      {
+        "body": "O(n²)",
+        "whyWrong": "That is the nested-loop approach the hash map replaces."
+      },
+      {
+        "body": "O(n log n)",
+        "whyWrong": "No sorting is required."
+      },
+      {
+        "body": "O(1)",
+        "whyWrong": "Every character must be examined at least once."
+      }
+    ],
+    "explanation": "One pass counts each character’s frequency, a second pass returns the first with a count of one. Two linear passes are still O(n), and for a fixed alphabet the space is O(1).",
+    "concept": "Two passes are usually cheaper than one clever pass, and always easier to get right.",
+    "hint": "How many passes do you actually need?"
+  },
+  {
+    "id": "DSA-0095",
+    "body": "How do you detect a cycle in a linked list in O(1) space?",
+    "topic": "linked-lists",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Floyd’s algorithm — a slow and a fast pointer",
+        "correct": true
+      },
+      {
+        "body": "Store visited nodes in a hash set",
+        "whyWrong": "Correct but O(n) space, which the question rules out."
+      },
+      {
+        "body": "Sort the list and look for repeats",
+        "whyWrong": "Sorting a linked list does not reveal cycles and cannot terminate on one."
+      },
+      {
+        "body": "Count the nodes and compare with the length",
+        "whyWrong": "Traversing to count never terminates when there is a cycle."
+      }
+    ],
+    "explanation": "Advancing one pointer by one node and another by two means the fast pointer gains one position per step inside any cycle, so it must eventually meet the slow one. If it reaches the end instead, there is no cycle.",
+    "concept": "Two pointers at different speeds is the standard O(1)-space cycle test.",
+    "hint": "What happens to the gap between them once both are inside a loop?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0096",
+    "body": "Reversing a singly linked list iteratively requires how many pointers?",
+    "topic": "linked-lists",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Three — previous, current and next",
+        "correct": true
+      },
+      {
+        "body": "One",
+        "whyWrong": "With one pointer you lose the rest of the list the moment you rewrite a link."
+      },
+      {
+        "body": "Two",
+        "whyWrong": "Two is nearly enough, but you still need to save the next node before overwriting the current link."
+      },
+      {
+        "body": "n, one per node",
+        "whyWrong": "Storing every node would be O(n) space; the point of the iterative version is O(1)."
+      }
+    ],
+    "explanation": "At each step you save next = current.next, point current.next at previous, then advance previous and current. Losing the next pointer before reassigning is the classic bug.",
+    "concept": "Rewriting a link requires saving what it pointed at first.",
+    "hint": "What do you lose the instant you overwrite current.next?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0097",
+    "body": "Which problem is a stack the natural fit for?",
+    "topic": "stacks-queues",
+    "difficulty": "easy",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Checking whether brackets in an expression are balanced",
+        "correct": true
+      },
+      {
+        "body": "Scheduling tasks in arrival order",
+        "whyWrong": "That is first-in-first-out, which is a queue."
+      },
+      {
+        "body": "Finding the k largest elements",
+        "whyWrong": "That calls for a heap."
+      },
+      {
+        "body": "Looking up a value by key",
+        "whyWrong": "That calls for a hash map."
+      }
+    ],
+    "explanation": "Each closing bracket must match the most recently opened unclosed one, which is exactly last-in-first-out. Push on open, pop and compare on close, and require the stack to be empty at the end.",
+    "concept": "Whenever \"most recent unmatched thing\" appears in a problem, think stack.",
+    "hint": "Which bracket does a closing one have to match?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0098",
+    "body": "A queue implemented with two stacks has what amortised cost per operation?",
+    "topic": "stacks-queues",
+    "difficulty": "hard",
+    "expectedSeconds": 80,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "O(1)",
+        "correct": true
+      },
+      {
+        "body": "O(n) per dequeue",
+        "whyWrong": "Only occasional dequeues trigger a transfer, and each element moves at most twice overall."
+      },
+      {
+        "body": "O(log n)",
+        "whyWrong": "No halving occurs anywhere in the construction."
+      },
+      {
+        "body": "O(n) per enqueue",
+        "whyWrong": "Enqueue is a single push onto the inbox stack."
+      }
+    ],
+    "explanation": "Push onto an inbox stack; to dequeue, pour the inbox into an outbox only when the outbox is empty, then pop. Each element is pushed and popped at most twice in total, so n operations cost O(n) — constant amortised.",
+    "concept": "Amortised analysis again: an occasional expensive transfer averaged over many cheap operations.",
+    "hint": "How many times can a single element move between the stacks?"
+  },
+  {
+    "id": "DSA-0099",
+    "body": "What does a min-heap guarantee?",
+    "topic": "heaps",
+    "difficulty": "easy",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Every parent is less than or equal to its children",
+        "correct": true
+      },
+      {
+        "body": "The array is fully sorted ascending",
+        "whyWrong": "A heap is only partially ordered; heapsort is what turns it into a sorted array."
+      },
+      {
+        "body": "The smallest element is at the end",
+        "whyWrong": "The minimum sits at the root, which is index 0."
+      },
+      {
+        "body": "Every level is completely full",
+        "whyWrong": "A heap is a complete tree, so the last level may be partly filled."
+      }
+    ],
+    "explanation": "The heap property constrains parent and child only, which is why the minimum is at the root and can be read in O(1). No ordering is implied between siblings, and that weaker invariant is exactly what makes insert and extract O(log n).",
+    "concept": "A heap is partially ordered — strong enough to find the extreme, weak enough to maintain cheaply.",
+    "hint": "Does the heap property say anything about two siblings?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0100",
+    "body": "To find the k largest elements of n items efficiently, which structure do you use and of what size?",
+    "topic": "heaps",
+    "difficulty": "hard",
+    "expectedSeconds": 80,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A min-heap of size k",
+        "correct": true
+      },
+      {
+        "body": "A max-heap of size k",
+        "whyWrong": "A max-heap of size k makes the largest easy to see but the wrong element cheap to evict."
+      },
+      {
+        "body": "A min-heap of size n",
+        "whyWrong": "Building a heap of everything is O(n) space and unnecessary when k is small."
+      },
+      {
+        "body": "A sorted array of size n",
+        "whyWrong": "Sorting everything is O(n log n) versus O(n log k)."
+      }
+    ],
+    "explanation": "Keep a min-heap of the k best so far. Its root is the weakest of them, so a new element is compared with the root and replaces it if larger. Cost is O(n log k) with O(k) space — a clear win when k is much smaller than n.",
+    "concept": "For \"top k\", hold a heap whose root is the item you would evict next.",
+    "hint": "Which of your k candidates do you need instant access to?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "OS-0007",
+    "body": "What is a race condition?",
+    "topic": "operating-systems",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Two threads access shared data concurrently and the result depends on their timing",
+        "correct": true
+      },
+      {
+        "body": "A thread that runs faster than expected",
+        "whyWrong": "Speed alone is not a defect; the bug is the unsynchronised shared access."
+      },
+      {
+        "body": "A deadlock between two threads",
+        "whyWrong": "Deadlock is threads blocked forever; a race produces wrong results while still running."
+      },
+      {
+        "body": "A process using more CPU than its share",
+        "whyWrong": "That is a scheduling fairness issue, not a correctness one."
+      }
+    ],
+    "explanation": "The classic example is two threads doing counter++ — a read, an increment and a write that can interleave so one update is lost. Fixing it needs mutual exclusion or an atomic operation, not merely making the code faster.",
+    "subtopic": "concurrency",
+    "concept": "A race is a correctness bug caused by unsynchronised shared mutable state.",
+    "hint": "Why is counter++ not a single indivisible step?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "OS-0008",
+    "body": "What is the difference between a mutex and a semaphore?",
+    "topic": "operating-systems",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A mutex has an owner and allows one holder; a counting semaphore permits N",
+        "correct": true
+      },
+      {
+        "body": "A semaphore is faster",
+        "whyWrong": "Relative speed depends on the implementation and is not the conceptual difference."
+      },
+      {
+        "body": "A mutex works only between processes",
+        "whyWrong": "Mutexes are typically within a process; semaphores are often the cross-process tool."
+      },
+      {
+        "body": "They are the same thing with different names",
+        "whyWrong": "Ownership and counting are real behavioural differences — only the owner may unlock a mutex."
+      }
+    ],
+    "explanation": "A mutex enforces mutual exclusion and is released by the thread that took it, which allows priority inheritance. A semaphore is a counter that any thread may signal, so it also models a pool of N resources or a producer-consumer handoff.",
+    "subtopic": "concurrency",
+    "concept": "Mutex = ownership and exclusion. Semaphore = counting and signalling.",
+    "hint": "Can one thread release a lock another thread took?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "OS-0009",
+    "body": "Which four conditions must all hold for deadlock to occur?",
+    "topic": "operating-systems",
+    "difficulty": "hard",
+    "expectedSeconds": 85,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Mutual exclusion, hold and wait, no preemption, circular wait",
+        "correct": true
+      },
+      {
+        "body": "Starvation, priority inversion, thrashing, fragmentation",
+        "whyWrong": "These are all real problems, but none is a Coffman condition."
+      },
+      {
+        "body": "Race condition, livelock, contention, blocking",
+        "whyWrong": "These describe concurrency issues generally, not the deadlock conditions."
+      },
+      {
+        "body": "Paging, swapping, context switching, interrupts",
+        "whyWrong": "These are ordinary OS mechanisms unrelated to deadlock."
+      }
+    ],
+    "explanation": "These are the Coffman conditions, and they are necessary together — breaking any one prevents deadlock. Requiring all locks to be taken in a global order is the usual practical fix, since it eliminates circular wait.",
+    "subtopic": "deadlocks",
+    "concept": "Deadlock prevention works by making one of the four conditions impossible.",
+    "hint": "Which one is easiest to eliminate by convention in application code?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "OS-0010",
+    "body": "What is thrashing?",
+    "topic": "operating-systems",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "The system spends more time paging than executing",
+        "correct": true
+      },
+      {
+        "body": "Two threads repeatedly locking and unlocking",
+        "whyWrong": "That is lock contention, a different problem."
+      },
+      {
+        "body": "The CPU switching between processes too often",
+        "whyWrong": "Excessive context switching is related but distinct; thrashing is specifically about paging."
+      },
+      {
+        "body": "A disk failing to respond",
+        "whyWrong": "A hardware fault is not thrashing."
+      }
+    ],
+    "explanation": "When the combined working set exceeds physical memory, each process evicts pages another needs immediately, so page faults cascade and CPU utilisation collapses. The fix is to reduce the degree of multiprogramming or add memory — not to schedule harder.",
+    "subtopic": "memory-management",
+    "concept": "Thrashing is a symptom of the working set exceeding available frames.",
+    "hint": "What is the machine actually busy doing?"
+  },
+  {
+    "id": "OS-0011",
+    "body": "What does a page table map?",
+    "topic": "operating-systems",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Virtual page numbers to physical frame numbers",
+        "correct": true
+      },
+      {
+        "body": "Physical addresses to disk blocks",
+        "whyWrong": "That mapping is kept by the swap subsystem, not the page table."
+      },
+      {
+        "body": "File names to inodes",
+        "whyWrong": "That is a directory, part of the filesystem."
+      },
+      {
+        "body": "Process ids to memory limits",
+        "whyWrong": "Limits live in the process control block."
+      }
+    ],
+    "explanation": "Each process has its own page table, which is what gives it a private address space. Because a lookup would otherwise cost an extra memory access, the TLB caches recent translations.",
+    "subtopic": "memory-management",
+    "concept": "Virtual memory is an indirection layer that buys isolation and the illusion of contiguity.",
+    "hint": "What makes two processes able to use the same address safely?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "OS-0012",
+    "body": "Which scheduling algorithm gives the minimum average waiting time?",
+    "topic": "operating-systems",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Shortest Job First",
+        "correct": true
+      },
+      {
+        "body": "First Come First Served",
+        "whyWrong": "FCFS suffers the convoy effect — one long job delays everything behind it."
+      },
+      {
+        "body": "Round Robin",
+        "whyWrong": "Round Robin optimises responsiveness and fairness, not average waiting time."
+      },
+      {
+        "body": "Priority scheduling",
+        "whyWrong": "Priority optimises for importance and can starve low-priority jobs entirely."
+      }
+    ],
+    "explanation": "SJF is provably optimal for average waiting time, but it requires knowing each job’s length in advance, which is why real schedulers estimate it from recent behaviour instead. It can also starve long jobs indefinitely.",
+    "subtopic": "cpu-scheduling",
+    "concept": "Optimal on paper, unimplementable as stated — the reason real schedulers approximate it.",
+    "hint": "What information does it need that a real OS does not have?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "OS-0013",
+    "body": "What is the main difference between a process and a thread?",
+    "topic": "operating-systems",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Threads within a process share an address space; processes do not",
+        "correct": true
+      },
+      {
+        "body": "Threads cannot run in parallel",
+        "whyWrong": "Threads run in parallel on multiple cores; that is much of the point."
+      },
+      {
+        "body": "Processes are always faster",
+        "whyWrong": "Process creation and context switching are heavier, not faster."
+      },
+      {
+        "body": "Only processes can be scheduled",
+        "whyWrong": "Threads are the unit of scheduling on most modern systems."
+      }
+    ],
+    "explanation": "Shared memory makes thread communication cheap and thread bugs dangerous — one thread can corrupt another’s data. Processes are isolated, so a crash is contained, at the cost of slower creation and explicit IPC.",
+    "subtopic": "process-management",
+    "concept": "Sharing is the whole trade-off: cheap communication versus contained failure.",
+    "hint": "What can one thread accidentally overwrite that one process cannot?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "OS-0014",
+    "body": "What is a context switch?",
+    "topic": "operating-systems",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Saving one execution context and restoring another so a different task can run",
+        "correct": true
+      },
+      {
+        "body": "Moving a process from disk to memory",
+        "whyWrong": "That is swapping, a memory-management operation."
+      },
+      {
+        "body": "Switching a process from user mode to kernel mode",
+        "whyWrong": "That is a mode switch, which is cheaper and does not change which process runs."
+      },
+      {
+        "body": "Changing a process’s priority",
+        "whyWrong": "Repriorisation may cause a context switch but is not one."
+      }
+    ],
+    "explanation": "The kernel saves registers, the program counter and memory-management state, then loads another task’s. It is pure overhead — and it also invalidates cache and TLB entries, which is often the larger hidden cost.",
+    "subtopic": "process-management",
+    "concept": "Context switches are overhead; reducing them is why thread pools and async I/O exist.",
+    "hint": "Is any useful work being done during it?"
+  },
+  {
+    "id": "OS-0015",
+    "body": "A process is in the \"ready\" state. What does that mean?",
+    "topic": "operating-systems",
+    "difficulty": "easy",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "It could run immediately but no CPU is currently free for it",
+        "correct": true
+      },
+      {
+        "body": "It is waiting for I/O to finish",
+        "whyWrong": "That is the blocked or waiting state."
+      },
+      {
+        "body": "It has finished executing",
+        "whyWrong": "That is the terminated state."
+      },
+      {
+        "body": "It has not been created yet",
+        "whyWrong": "That is the new state."
+      }
+    ],
+    "explanation": "Ready means runnable but not running — everything it needs is available except a CPU. Blocked is different: even given a CPU it could not proceed, because it is waiting for something external.",
+    "subtopic": "process-management",
+    "concept": "The distinction between ready and blocked is what the scheduler’s queues are built on.",
+    "hint": "If a CPU freed up this instant, could it run?"
+  },
+  {
+    "id": "DBM-0007",
+    "body": "What problem does normalisation to third normal form address?",
+    "topic": "dbms",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Update anomalies caused by redundantly stored data",
+        "correct": true
+      },
+      {
+        "body": "Slow query performance",
+        "whyWrong": "Normalisation often makes reads slower by requiring joins; denormalisation is the performance move."
+      },
+      {
+        "body": "Running out of disk space",
+        "whyWrong": "Space is a minor side benefit, not the purpose."
+      },
+      {
+        "body": "Concurrent access conflicts",
+        "whyWrong": "Those are handled by locking and isolation levels."
+      }
+    ],
+    "explanation": "If a department’s address is repeated on every employee row, changing it means updating many rows and risking inconsistency. 3NF removes transitive dependencies on the key so each fact is stored once — the trade-off being more joins at read time.",
+    "subtopic": "normalization",
+    "concept": "Normalisation optimises for write correctness; denormalisation optimises for read speed.",
+    "hint": "What goes wrong when the same fact is stored in fifty places?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DBM-0008",
+    "body": "What does the \"I\" in ACID guarantee?",
+    "topic": "dbms",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Concurrent transactions do not see each other’s partial results",
+        "correct": true
+      },
+      {
+        "body": "Every transaction is written to disk immediately",
+        "whyWrong": "That is durability, the D."
+      },
+      {
+        "body": "The database never violates a constraint",
+        "whyWrong": "That is consistency, the C."
+      },
+      {
+        "body": "A transaction either fully completes or has no effect",
+        "whyWrong": "That is atomicity, the A."
+      }
+    ],
+    "explanation": "Isolation means concurrent transactions produce a result equivalent to some serial order. In practice databases offer weaker levels — read committed, repeatable read — trading isolation for throughput, which is why phantom reads and lost updates remain real concerns.",
+    "subtopic": "transactions-acid",
+    "concept": "Isolation is a spectrum in practice, not the binary the acronym suggests.",
+    "hint": "Which letter is about what other transactions can see?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DBM-0009",
+    "body": "Why does adding an index speed up reads but slow down writes?",
+    "topic": "dbms",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "The index is a second structure that must be kept in step on every modification",
+        "correct": true
+      },
+      {
+        "body": "Indexes lock the table during reads",
+        "whyWrong": "A read does not lock the table in normal operation."
+      },
+      {
+        "body": "Indexes are stored on slower disk",
+        "whyWrong": "They live on the same storage as the table."
+      },
+      {
+        "body": "Indexes have to be rebuilt on every query",
+        "whyWrong": "They are maintained on write, not rebuilt on read."
+      }
+    ],
+    "explanation": "A B-tree index turns a full scan into a logarithmic descent, but every insert, update or delete must also update that tree — and every additional index multiplies that cost. Which is why indexing every column is a common and expensive mistake.",
+    "subtopic": "indexing",
+    "concept": "Each index is a read optimisation paid for on every write.",
+    "hint": "What has to happen to the index when a row changes?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DBM-0010",
+    "body": "In an ER diagram, what does a many-to-many relationship require in the physical schema?",
+    "topic": "dbms",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A junction table holding a foreign key to each side",
+        "correct": true
+      },
+      {
+        "body": "A foreign key on the more important table",
+        "whyWrong": "A single foreign key column can only reference one row, so it cannot express many-to-many."
+      },
+      {
+        "body": "A composite primary key on one table",
+        "whyWrong": "A composite key does not by itself relate two tables."
+      },
+      {
+        "body": "Nothing — relational databases support it directly",
+        "whyWrong": "Relational tables have no native many-to-many construct."
+      }
+    ],
+    "explanation": "Enrolments between students and courses need their own table with student_id and course_id, usually with that pair as the primary key. The junction table is also the natural place for attributes of the relationship itself, such as an enrolment date.",
+    "subtopic": "er-modelling",
+    "concept": "Many-to-many always becomes a third table in a relational schema.",
+    "hint": "Where would you record the date a student joined a course?"
+  },
+  {
+    "id": "DBM-0011",
+    "body": "What is a deadlock in a database, and how do most engines handle it?",
+    "topic": "dbms",
+    "difficulty": "hard",
+    "expectedSeconds": 80,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Two transactions each hold a lock the other needs; the engine detects it and aborts one",
+        "correct": true
+      },
+      {
+        "body": "Two queries reading the same row; the engine queues them",
+        "whyWrong": "Concurrent reads do not conflict under normal isolation levels."
+      },
+      {
+        "body": "A query running too long; the engine kills it",
+        "whyWrong": "That is a statement timeout, not a deadlock."
+      },
+      {
+        "body": "A table growing beyond its file limit; the engine extends it",
+        "whyWrong": "That is a storage matter, unrelated to locking."
+      }
+    ],
+    "explanation": "The engine maintains a wait-for graph and looks for a cycle. On finding one it picks a victim — usually the transaction with the least work done — and rolls it back with a deadlock error, expecting the application to retry. Consistent lock ordering is what avoids the situation.",
+    "subtopic": "transactions-acid",
+    "concept": "Application code that touches rows in a consistent order is the real fix; retry is the safety net.",
+    "hint": "What does the engine do once it finds a cycle?"
+  },
+  {
+    "id": "SQL-0008",
+    "body": "What is the difference between an INNER JOIN and a LEFT JOIN?",
+    "topic": "sql",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "LEFT JOIN keeps unmatched rows from the left table, filling the right side with NULLs",
+        "correct": true
+      },
+      {
+        "body": "LEFT JOIN is faster",
+        "whyWrong": "Performance depends on indexes and data, not on the join type alone."
+      },
+      {
+        "body": "INNER JOIN can only join two tables",
+        "whyWrong": "Both can chain across many tables."
+      },
+      {
+        "body": "LEFT JOIN removes duplicate rows",
+        "whyWrong": "Neither join deduplicates; that is what DISTINCT or GROUP BY do."
+      }
+    ],
+    "explanation": "INNER JOIN returns only rows matching on both sides. LEFT JOIN returns every left row regardless, which is how you find customers with no orders — LEFT JOIN then filter on the right side being NULL.",
+    "subtopic": "joins",
+    "concept": "A LEFT JOIN plus an IS NULL filter is the standard \"find rows with no match\" idiom.",
+    "hint": "How would you list customers who have never ordered?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "SQL-0009",
+    "body": "Why does filtering a LEFT JOIN’s right table in WHERE often turn it into an INNER JOIN?",
+    "topic": "sql",
+    "difficulty": "hard",
+    "expectedSeconds": 85,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "The unmatched rows have NULL there, and a NULL comparison in WHERE is not true",
+        "correct": true
+      },
+      {
+        "body": "Because WHERE runs before the join",
+        "whyWrong": "The join happens first; WHERE filters the result."
+      },
+      {
+        "body": "Because LEFT JOIN is only a hint",
+        "whyWrong": "It is not a hint; the engine honours it."
+      },
+      {
+        "body": "Because NULLs are converted to zero",
+        "whyWrong": "SQL does not silently convert NULL to zero."
+      }
+    ],
+    "explanation": "A left row with no match gets NULL in every right-hand column, and `WHERE r.status = 'active'` is unknown for NULL, so the row is dropped — exactly what INNER JOIN would have done. Putting the condition in the ON clause instead preserves the unmatched rows.",
+    "subtopic": "joins",
+    "concept": "Conditions on the right table belong in ON; conditions on the left belong in WHERE.",
+    "hint": "What does status = 'active' evaluate to when status is NULL?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "SQL-0010",
+    "body": "What does GROUP BY do, and what may the SELECT list then contain?",
+    "topic": "sql",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Collapses rows into groups; SELECT may list grouping columns and aggregates",
+        "correct": true
+      },
+      {
+        "body": "Sorts the result; SELECT may contain anything",
+        "whyWrong": "GROUP BY is not a sort, and the SELECT list is constrained."
+      },
+      {
+        "body": "Removes duplicates; SELECT may contain anything",
+        "whyWrong": "Deduplication is DISTINCT, and the constraint still applies."
+      },
+      {
+        "body": "Joins tables; SELECT may contain any joined column",
+        "whyWrong": "GROUP BY does not join anything."
+      }
+    ],
+    "explanation": "Each group becomes one output row, so a non-grouped, non-aggregated column has no single well-defined value. Strict engines reject it; MySQL historically returned an arbitrary row’s value, which is a common source of silently wrong reports.",
+    "subtopic": "aggregations",
+    "concept": "If a column is neither grouped nor aggregated, the query has not said which value it means.",
+    "hint": "If a group has five rows, which one’s name would you print?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "SQL-0011",
+    "body": "What is the difference between WHERE and HAVING?",
+    "topic": "sql",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "WHERE filters rows before grouping; HAVING filters groups after aggregation",
+        "correct": true
+      },
+      {
+        "body": "They are interchangeable",
+        "whyWrong": "They apply at different stages, so swapping them changes results or raises an error."
+      },
+      {
+        "body": "HAVING works only with ORDER BY",
+        "whyWrong": "HAVING is tied to GROUP BY, not ORDER BY."
+      },
+      {
+        "body": "WHERE cannot be used with joins",
+        "whyWrong": "WHERE is used with joins constantly."
+      }
+    ],
+    "explanation": "You cannot filter on COUNT(*) in WHERE because the count does not exist yet. Filtering early in WHERE is also usually faster, since fewer rows reach the grouping step.",
+    "subtopic": "aggregations",
+    "concept": "Know the logical order: FROM, WHERE, GROUP BY, HAVING, SELECT, ORDER BY.",
+    "hint": "Where would you put \"only groups with more than five rows\"?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "SQL-0012",
+    "body": "What does a window function do that GROUP BY cannot?",
+    "topic": "sql",
+    "difficulty": "hard",
+    "expectedSeconds": 80,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Compute an aggregate while keeping every individual row",
+        "correct": true
+      },
+      {
+        "body": "Aggregate across several tables",
+        "whyWrong": "Both operate on the result set; neither is limited to one table."
+      },
+      {
+        "body": "Run faster on large tables",
+        "whyWrong": "Window functions are not inherently faster."
+      },
+      {
+        "body": "Filter rows",
+        "whyWrong": "Window functions compute values; filtering still needs WHERE or a wrapping query."
+      }
+    ],
+    "explanation": "SUM(salary) OVER (PARTITION BY dept) puts the department total on every employee row, so you can show a salary next to its department average without a self-join. GROUP BY would collapse those rows away.",
+    "subtopic": "window-functions",
+    "concept": "Window functions add context to rows instead of replacing them.",
+    "hint": "How would you show each row next to its group’s average?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "SQL-0013",
+    "body": "What is a correlated subquery?",
+    "topic": "sql",
+    "difficulty": "hard",
+    "expectedSeconds": 80,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A subquery that references a column from the outer query, so it runs per outer row",
+        "correct": true
+      },
+      {
+        "body": "A subquery that returns more than one row",
+        "whyWrong": "Row count does not determine correlation."
+      },
+      {
+        "body": "A subquery in the FROM clause",
+        "whyWrong": "That is a derived table, which is not correlated."
+      },
+      {
+        "body": "A subquery joined to itself",
+        "whyWrong": "Self-joins are a different construct."
+      }
+    ],
+    "explanation": "Because it depends on the current outer row, it is conceptually evaluated once per row, which can be slow. Query planners often rewrite these as joins or semi-joins — and rewriting one by hand as a JOIN is a common optimisation.",
+    "subtopic": "subqueries",
+    "concept": "Correlated subqueries are readable but can hide a per-row cost.",
+    "hint": "What makes the subquery unable to be evaluated just once?"
+  },
+  {
+    "id": "SQL-0014",
+    "body": "Which query finds the second-highest salary safely when duplicates exist?",
+    "topic": "sql",
+    "difficulty": "hard",
+    "expectedSeconds": 85,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "SELECT MAX(salary) FROM emp WHERE salary < (SELECT MAX(salary) FROM emp)",
+        "correct": true
+      },
+      {
+        "body": "SELECT salary FROM emp ORDER BY salary DESC LIMIT 1 OFFSET 1",
+        "whyWrong": "With duplicate top salaries this returns the same value again rather than the second distinct one."
+      },
+      {
+        "body": "SELECT TOP 2 salary FROM emp ORDER BY salary DESC",
+        "whyWrong": "This returns two rows, and the same duplicate problem applies."
+      },
+      {
+        "body": "SELECT salary FROM emp WHERE ROWNUM = 2",
+        "whyWrong": "ROWNUM is assigned before ordering, so this is unreliable."
+      }
+    ],
+    "explanation": "Taking the maximum below the overall maximum skips ties correctly and returns NULL rather than an error when there is no second salary. DENSE_RANK() = 2 is the modern equivalent and generalises to the Nth case.",
+    "concept": "Ranking questions turn on how ties should be treated — decide that before writing the query.",
+    "hint": "What happens to LIMIT 1 OFFSET 1 when two people share the top salary?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "PRG-0007",
+    "body": "In C, what does `int *p; *p = 5;` do?",
+    "topic": "programming-fundamentals",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Undefined behaviour — p was never pointed at valid memory",
+        "correct": true
+      },
+      {
+        "body": "Sets p to 5",
+        "whyWrong": "That would be p = 5, not *p = 5."
+      },
+      {
+        "body": "Allocates an integer and stores 5",
+        "whyWrong": "Declaring a pointer allocates no target; malloc or an address is needed."
+      },
+      {
+        "body": "Nothing, because p is uninitialised",
+        "whyWrong": "An uninitialised pointer is not inert — dereferencing it writes to whatever address it happens to hold."
+      }
+    ],
+    "explanation": "p holds an indeterminate address, so writing through it may crash, corrupt unrelated memory, or appear to work — the last being the most dangerous. Pointers must be given a valid target before dereferencing.",
+    "subtopic": "pointers-memory",
+    "concept": "Declaring a pointer reserves space for an address, not for what it points at.",
+    "hint": "What address does p hold before you assign one?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "PRG-0008",
+    "body": "What is printed by: `int i = 5; printf(\"%d %d\", i++, ++i);` in C?",
+    "topic": "programming-fundamentals",
+    "difficulty": "hard",
+    "expectedSeconds": 80,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Undefined — i is modified twice without an intervening sequence point",
+        "correct": true
+      },
+      {
+        "body": "5 7",
+        "whyWrong": "This is one plausible output, but the standard does not guarantee it."
+      },
+      {
+        "body": "5 6",
+        "whyWrong": "Also plausible on some compilers, and equally not guaranteed."
+      },
+      {
+        "body": "6 7",
+        "whyWrong": "Another possible observed result, still undefined behaviour."
+      }
+    ],
+    "explanation": "Argument evaluation order is unspecified and modifying i twice between sequence points is undefined behaviour. Different compilers and optimisation levels legitimately print different things. Interviewers ask this to see whether you recognise UB rather than memorise one compiler’s answer.",
+    "subtopic": "output-prediction",
+    "concept": "\"What does my compiler print\" and \"what does the standard guarantee\" are different questions.",
+    "hint": "How many times is i modified in one expression?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "PRG-0009",
+    "body": "In Java, what does `String s = \"a\"; s.concat(\"b\"); System.out.println(s);` print?",
+    "topic": "programming-fundamentals",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "a",
+        "correct": true
+      },
+      {
+        "body": "ab",
+        "whyWrong": "concat returns a new string; it cannot modify s because Strings are immutable."
+      },
+      {
+        "body": "a b",
+        "whyWrong": "No space is introduced anywhere."
+      },
+      {
+        "body": "It does not compile",
+        "whyWrong": "The code compiles fine — it just discards the result."
+      }
+    ],
+    "explanation": "Strings are immutable, so concat returns a new object and leaves s untouched. The returned value is discarded. Writing s = s.concat(\"b\") is what the author intended.",
+    "subtopic": "output-prediction",
+    "concept": "Methods on immutable types return new values rather than mutating in place.",
+    "hint": "What happens to the value concat returns?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "PRG-0010",
+    "body": "What is the difference between pass by value and pass by reference for an object in Java?",
+    "topic": "programming-fundamentals",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Java always passes the reference by value — you can mutate the object but not rebind the caller’s variable",
+        "correct": true
+      },
+      {
+        "body": "Java passes objects by reference",
+        "whyWrong": "If it did, reassigning the parameter would change the caller’s variable, which it does not."
+      },
+      {
+        "body": "Java passes a deep copy of the object",
+        "whyWrong": "No copy of the object is made; only the reference is copied."
+      },
+      {
+        "body": "It depends on whether the object is final",
+        "whyWrong": "final affects rebinding of the variable, not the calling convention."
+      }
+    ],
+    "explanation": "The method gets its own copy of the reference. Calling list.add(x) affects the caller’s list because both references point at the same object; writing list = new ArrayList<>() inside the method affects nothing outside it.",
+    "concept": "\"Pass reference by value\" explains both behaviours that seem contradictory.",
+    "hint": "What happens if the method assigns a whole new object to the parameter?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "PRG-0011",
+    "body": "What is a memory leak in a garbage-collected language?",
+    "topic": "programming-fundamentals",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Objects stay reachable from a live reference long after they are needed",
+        "correct": true
+      },
+      {
+        "body": "Failing to call free",
+        "whyWrong": "There is no free to call; the collector reclaims unreachable memory automatically."
+      },
+      {
+        "body": "The garbage collector crashing",
+        "whyWrong": "A collector fault is a different failure entirely."
+      },
+      {
+        "body": "Allocating memory outside the heap",
+        "whyWrong": "Stack and native allocations are not what leak in this sense."
+      }
+    ],
+    "explanation": "A collector frees what is unreachable, so anything still referenced stays alive. A static list that only ever grows, an unremoved listener, or a cache with no eviction policy are the classic culprits — the memory is not lost, it is retained.",
+    "subtopic": "pointers-memory",
+    "concept": "In managed languages, leaks are unintended retention rather than unfreed allocations.",
+    "hint": "What decides whether the collector can reclaim an object?"
+  },
+  {
+    "id": "PRG-0012",
+    "body": "What does `static` mean for a class member in Java or C++?",
+    "topic": "programming-fundamentals",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "It belongs to the class itself rather than to any instance",
+        "correct": true
+      },
+      {
+        "body": "It cannot be changed",
+        "whyWrong": "That is const or final; static members are freely mutable."
+      },
+      {
+        "body": "It is private to the file",
+        "whyWrong": "That is C’s file-scope static, a different meaning of the keyword."
+      },
+      {
+        "body": "It is allocated on the stack",
+        "whyWrong": "Static members live for the program’s duration, not in a stack frame."
+      }
+    ],
+    "explanation": "One copy exists regardless of how many instances are created, and it can be accessed without an instance. That single shared copy is also why mutable static state is a common source of thread-safety bugs.",
+    "concept": "Static means \"one per class\", which is exactly why it needs care under concurrency.",
+    "hint": "How many copies exist if you create a thousand objects?"
+  },
+  {
+    "id": "OOP-0007",
+    "body": "What does the Liskov Substitution Principle require?",
+    "topic": "oops",
+    "difficulty": "hard",
+    "expectedSeconds": 80,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A subclass must be usable anywhere its parent is, without breaking behaviour",
+        "correct": true
+      },
+      {
+        "body": "A subclass must override every parent method",
+        "whyWrong": "Overriding everything is neither required nor desirable."
+      },
+      {
+        "body": "A class must have only one reason to change",
+        "whyWrong": "That is the Single Responsibility Principle."
+      },
+      {
+        "body": "Classes should depend on interfaces rather than concrete types",
+        "whyWrong": "That is the Dependency Inversion Principle."
+      }
+    ],
+    "explanation": "The classic violation is Square extending Rectangle: code that sets width and height independently and expects both to hold breaks when handed a Square. Inheritance must preserve the contract, not merely reuse the fields.",
+    "subtopic": "solid-principles",
+    "concept": "Inheritance is a promise about behaviour, not a shortcut for sharing code.",
+    "hint": "Can every Rectangle be replaced by a Square without surprising the caller?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "OOP-0008",
+    "body": "What is the difference between an abstract class and an interface?",
+    "topic": "oops",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "An abstract class can hold state and constructors; an interface primarily declares a contract",
+        "correct": true
+      },
+      {
+        "body": "Interfaces cannot have any method bodies",
+        "whyWrong": "Modern Java and C# allow default implementations in interfaces."
+      },
+      {
+        "body": "Abstract classes cannot have concrete methods",
+        "whyWrong": "They very often do — that is a common reason to use one."
+      },
+      {
+        "body": "They are functionally identical",
+        "whyWrong": "Single versus multiple inheritance alone makes them different design choices."
+      }
+    ],
+    "explanation": "A class can implement many interfaces but extend only one abstract class, so interfaces express capabilities while abstract classes express a partial implementation with shared state. Preferring interfaces keeps the hierarchy flexible.",
+    "concept": "Interface = what it can do. Abstract class = shared partial implementation.",
+    "hint": "How many of each can one class inherit from?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "OOP-0009",
+    "body": "What is composition over inheritance?",
+    "topic": "oops",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Building behaviour by holding other objects rather than extending a base class",
+        "correct": true
+      },
+      {
+        "body": "Avoiding classes entirely in favour of functions",
+        "whyWrong": "That is a different paradigm shift, not what this principle says."
+      },
+      {
+        "body": "Making every class final",
+        "whyWrong": "Sealing classes is a related tactic but not the principle itself."
+      },
+      {
+        "body": "Using multiple inheritance instead of single",
+        "whyWrong": "Multiple inheritance is still inheritance and compounds its problems."
+      }
+    ],
+    "explanation": "Inheritance binds a subclass to its parent’s implementation, so a parent change can break it — the fragile base class problem. Composition delegates to a held object, which can be swapped at runtime and tested independently.",
+    "concept": "Prefer \"has a\" to \"is a\" unless the subtype genuinely satisfies the parent’s contract.",
+    "hint": "What happens to every subclass when the base class changes?"
+  },
+  {
+    "id": "OOP-0010",
+    "body": "Method overloading is resolved when?",
+    "topic": "oops",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "At compile time, from the declared argument types",
+        "correct": true
+      },
+      {
+        "body": "At runtime, from the actual object types",
+        "whyWrong": "That is overriding, which is dynamic dispatch."
+      },
+      {
+        "body": "At link time",
+        "whyWrong": "Linking does not perform method selection."
+      },
+      {
+        "body": "Only when the method is first called",
+        "whyWrong": "JIT compilation does not change which overload was selected."
+      }
+    ],
+    "explanation": "Overloading is static polymorphism: the compiler picks the overload from the static types of the arguments. Overriding is dynamic: the runtime type decides. This is why passing a variable declared as Object to an overloaded method picks the Object overload even if it holds a String.",
+    "concept": "Overload = compile time on declared types. Override = runtime on actual type.",
+    "hint": "Does the compiler know the runtime type of a variable?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "SD-0005",
+    "body": "What problem does a cache primarily solve, and what does it cost you?",
+    "topic": "system-design-basics",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "It cuts latency and load, at the cost of possible staleness",
+        "correct": true
+      },
+      {
+        "body": "It increases storage capacity, at the cost of speed",
+        "whyWrong": "A cache trades space for speed, not the other way round."
+      },
+      {
+        "body": "It guarantees consistency, at the cost of memory",
+        "whyWrong": "Caching weakens consistency rather than guaranteeing it."
+      },
+      {
+        "body": "It removes the need for a database",
+        "whyWrong": "A cache is a front for a source of truth, never a replacement."
+      }
+    ],
+    "explanation": "Serving from memory avoids a slower call, but the cached copy can diverge from the source. Every caching design is really a decision about how stale is acceptable and how invalidation happens — which is why cache invalidation is proverbially hard.",
+    "subtopic": "caching",
+    "concept": "A cache is a deliberate trade of consistency for latency.",
+    "hint": "What can go wrong when the underlying data changes?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "SD-0006",
+    "body": "What is the difference between horizontal and vertical scaling?",
+    "topic": "system-design-basics",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Horizontal adds more machines; vertical makes one machine bigger",
+        "correct": true
+      },
+      {
+        "body": "Horizontal adds more disks; vertical adds more RAM",
+        "whyWrong": "Both are ways of making a single machine bigger — both are vertical."
+      },
+      {
+        "body": "Horizontal is for databases; vertical is for web servers",
+        "whyWrong": "Either approach applies to either tier."
+      },
+      {
+        "body": "Horizontal is always cheaper",
+        "whyWrong": "It is often cheaper at scale but adds coordination complexity that vertical scaling avoids."
+      }
+    ],
+    "explanation": "Vertical scaling is simpler but has a ceiling and a single point of failure. Horizontal scaling is effectively unbounded but forces you to handle statelessness, load balancing and data partitioning.",
+    "subtopic": "scalability",
+    "concept": "Vertical is simpler; horizontal is unbounded. The complexity is the price.",
+    "hint": "Which one eventually runs out of headroom?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "SD-0007",
+    "body": "Why is a REST API usually designed to be stateless?",
+    "topic": "system-design-basics",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Any server can handle any request, which makes horizontal scaling straightforward",
+        "correct": true
+      },
+      {
+        "body": "It makes requests smaller",
+        "whyWrong": "Stateless requests are typically larger, since they carry their own context."
+      },
+      {
+        "body": "It removes the need for authentication",
+        "whyWrong": "Every request still authenticates — it just carries the credential each time."
+      },
+      {
+        "body": "It guarantees idempotency",
+        "whyWrong": "Idempotency is a property of the method, not of statelessness."
+      }
+    ],
+    "explanation": "With no server-side session, a load balancer can route a request anywhere and a server can restart without losing anyone’s progress. The cost is that each request must carry its context, typically a token.",
+    "subtopic": "api-design",
+    "concept": "Statelessness is what makes servers interchangeable.",
+    "hint": "What breaks if the load balancer sends the next request elsewhere?"
+  },
+  {
+    "id": "SD-0008",
+    "body": "What does database sharding do?",
+    "topic": "system-design-basics",
+    "difficulty": "hard",
+    "expectedSeconds": 80,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Splits rows across several databases by a shard key",
+        "correct": true
+      },
+      {
+        "body": "Copies the whole database to several servers",
+        "whyWrong": "That is replication, which addresses read load and availability rather than size."
+      },
+      {
+        "body": "Compresses the data",
+        "whyWrong": "Compression is unrelated to sharding."
+      },
+      {
+        "body": "Splits the columns of a table",
+        "whyWrong": "Splitting columns is vertical partitioning, a different technique."
+      }
+    ],
+    "explanation": "Each shard holds a disjoint subset, so writes and storage scale beyond one machine. The costs are real: cross-shard queries and transactions become hard, and a poorly chosen shard key creates hotspots that are painful to fix later.",
+    "subtopic": "db-sharding",
+    "concept": "Sharding scales writes; replication scales reads. They solve different problems.",
+    "hint": "What happens to a query that needs rows from every shard?"
+  },
+  {
+    "id": "SD-0009",
+    "body": "Which HTTP method should be idempotent?",
+    "topic": "system-design-basics",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "PUT",
+        "correct": true
+      },
+      {
+        "body": "POST",
+        "whyWrong": "POST is the conventional non-idempotent method — repeating it usually creates another resource."
+      },
+      {
+        "body": "PATCH",
+        "whyWrong": "PATCH is not required to be idempotent, though a given implementation may be."
+      },
+      {
+        "body": "CONNECT",
+        "whyWrong": "CONNECT establishes a tunnel and is not part of the resource semantics being asked about."
+      }
+    ],
+    "explanation": "PUT replaces a resource with the supplied representation, so sending it twice leaves the same state as sending it once. That matters because a client that times out cannot tell whether the request arrived, and idempotency makes retrying safe.",
+    "subtopic": "api-design",
+    "concept": "Idempotency is what makes a retry policy safe to implement.",
+    "hint": "What should a client do when it does not know whether its request landed?"
+  },
+  {
+    "id": "OS-0016",
+    "body": "What is the purpose of the TLB?",
+    "topic": "operating-systems",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "To cache recent virtual-to-physical address translations",
+        "correct": true
+      },
+      {
+        "body": "To cache recently used file blocks",
+        "whyWrong": "That is the page cache or buffer cache."
+      },
+      {
+        "body": "To store the process control block",
+        "whyWrong": "The PCB lives in kernel memory, not in a translation cache."
+      },
+      {
+        "body": "To hold instructions waiting to execute",
+        "whyWrong": "That is the instruction pipeline or prefetch buffer."
+      }
+    ],
+    "explanation": "Without it, every memory access would need an extra access to read the page table. The TLB is a small associative cache of translations, and a miss costs a page-table walk — which is why TLB flushes on context switch are expensive.",
+    "subtopic": "memory-management",
+    "concept": "Virtual memory needs a translation cache or the indirection would double every memory access.",
+    "hint": "What extra work does address translation add to each access?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "OS-0017",
+    "body": "What is the difference between preemptive and non-preemptive scheduling?",
+    "topic": "operating-systems",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Preemptive can interrupt a running process; non-preemptive waits for it to yield",
+        "correct": true
+      },
+      {
+        "body": "Preemptive is only used on multi-core systems",
+        "whyWrong": "Preemption predates multi-core and is used on single cores too."
+      },
+      {
+        "body": "Non-preemptive is always faster",
+        "whyWrong": "It avoids switching overhead but responds far worse to interactive work."
+      },
+      {
+        "body": "Preemptive requires more memory",
+        "whyWrong": "Memory use is not the distinction."
+      }
+    ],
+    "explanation": "Preemption lets the OS enforce fairness and responsiveness by taking the CPU back on a timer. Non-preemptive scheduling has lower overhead but one misbehaving process can hold the CPU indefinitely.",
+    "subtopic": "cpu-scheduling",
+    "concept": "Preemption buys responsiveness at the cost of context-switch overhead.",
+    "hint": "What happens if a process never yields?"
+  },
+  {
+    "id": "OS-0018",
+    "body": "What is a semaphore’s \"wait\" (P) operation?",
+    "topic": "operating-systems",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Decrement the counter, blocking while it would go negative",
+        "correct": true
+      },
+      {
+        "body": "Increment the counter and continue",
+        "whyWrong": "That is the signal or V operation."
+      },
+      {
+        "body": "Set the counter to zero",
+        "whyWrong": "No semaphore operation zeroes the counter."
+      },
+      {
+        "body": "Return the current counter value",
+        "whyWrong": "Reading the value without changing it is not P."
+      }
+    ],
+    "explanation": "P decrements and blocks if no permit is available; V increments and wakes a waiter. Both must be atomic — a non-atomic check-then-decrement reintroduces exactly the race the semaphore exists to prevent.",
+    "subtopic": "concurrency",
+    "concept": "The atomicity of P and V is what makes the primitive work at all.",
+    "hint": "What breaks if the check and the decrement are separate steps?"
+  },
+  {
+    "id": "OS-0019",
+    "body": "Why can a spinlock be better than a mutex in kernel code?",
+    "topic": "operating-systems",
+    "difficulty": "hard",
+    "expectedSeconds": 85,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "When the wait is very short, spinning avoids the cost of sleeping and waking",
+        "correct": true
+      },
+      {
+        "body": "Spinlocks never deadlock",
+        "whyWrong": "They deadlock just as readily, and worse, they burn CPU while doing it."
+      },
+      {
+        "body": "Spinlocks work across processes",
+        "whyWrong": "Both can be shared across processes given shared memory."
+      },
+      {
+        "body": "Spinlocks require no atomic instructions",
+        "whyWrong": "A spinlock is built from an atomic test-and-set."
+      }
+    ],
+    "explanation": "Blocking a thread costs two context switches. If the critical section is a handful of instructions, spinning is cheaper. It is a poor choice when the hold time is long or on a single core, where the spinner prevents the holder from running.",
+    "subtopic": "concurrency",
+    "concept": "Spin when the expected wait is shorter than the cost of a context switch.",
+    "hint": "What does putting a thread to sleep actually cost?"
+  },
+  {
+    "id": "OS-0020",
+    "body": "What is priority inversion?",
+    "topic": "operating-systems",
+    "difficulty": "hard",
+    "expectedSeconds": 85,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A high-priority task waits on a lock held by a low-priority task that cannot run",
+        "correct": true
+      },
+      {
+        "body": "The scheduler assigning priorities in the wrong order",
+        "whyWrong": "Priority assignment is a policy question, not this failure mode."
+      },
+      {
+        "body": "A task raising its own priority",
+        "whyWrong": "Self-elevation is a mechanism, not the problem."
+      },
+      {
+        "body": "Two tasks with equal priority alternating",
+        "whyWrong": "Equal-priority round-robin is normal operation."
+      }
+    ],
+    "explanation": "A medium-priority task can preempt the low-priority lock holder, so the high-priority task is blocked indefinitely. Priority inheritance — temporarily raising the holder’s priority — is the standard fix, and this bug famously afflicted the Mars Pathfinder.",
+    "subtopic": "concurrency",
+    "concept": "A lock can invert the priority order the scheduler is trying to enforce.",
+    "hint": "What stops the low-priority holder from finishing?"
+  },
+  {
+    "id": "OS-0021",
+    "body": "What does \"virtual memory\" allow beyond isolation?",
+    "topic": "operating-systems",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A process to use more memory than is physically installed",
+        "correct": true
+      },
+      {
+        "body": "Programs to run without an operating system",
+        "whyWrong": "Virtual memory is provided by the OS, not a replacement for it."
+      },
+      {
+        "body": "Memory access to become faster than physical RAM",
+        "whyWrong": "Translation adds overhead; it does not make memory faster."
+      },
+      {
+        "body": "Processes to share every page by default",
+        "whyWrong": "Sharing is possible but is not the default."
+      }
+    ],
+    "explanation": "Pages not currently needed can live on disk and be brought in on demand, so the address space can exceed physical memory. The cost is a page fault when an absent page is touched, and thrashing when the working set no longer fits.",
+    "subtopic": "memory-management",
+    "concept": "Demand paging trades disk latency for a larger apparent address space.",
+    "hint": "Where do pages live when they are not in RAM?"
+  },
+  {
+    "id": "OS-0022",
+    "body": "What is the difference between internal and external fragmentation?",
+    "topic": "operating-systems",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Internal is unused space inside an allocated block; external is unusable gaps between blocks",
+        "correct": true
+      },
+      {
+        "body": "Internal happens in RAM, external on disk",
+        "whyWrong": "Both occur in either medium."
+      },
+      {
+        "body": "Internal affects the kernel, external affects user processes",
+        "whyWrong": "Both affect any allocator."
+      },
+      {
+        "body": "They are two names for the same thing",
+        "whyWrong": "They have different causes and different remedies."
+      }
+    ],
+    "explanation": "Fixed-size allocation such as paging causes internal fragmentation — the last page is partly wasted. Variable-size allocation causes external fragmentation, where free memory exists but not contiguously. Paging trades the second for the first.",
+    "subtopic": "memory-management",
+    "concept": "Fixed-size blocks waste inside; variable-size blocks waste between.",
+    "hint": "Which kind does paging deliberately accept?"
+  },
+  {
+    "id": "OS-0023",
+    "body": "What happens on a system call?",
+    "topic": "operating-systems",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "The CPU switches to kernel mode and jumps to a fixed handler",
+        "correct": true
+      },
+      {
+        "body": "A new process is created",
+        "whyWrong": "Only fork and its relatives create processes; most system calls do not."
+      },
+      {
+        "body": "The current process is terminated",
+        "whyWrong": "Termination is one specific call, not what system calls do generally."
+      },
+      {
+        "body": "The scheduler always runs a different process",
+        "whyWrong": "A system call may block, but many return directly to the caller."
+      }
+    ],
+    "explanation": "User code cannot touch hardware directly, so it raises a trap that transfers control to a predetermined kernel entry point with elevated privilege. The kernel validates the arguments — never trusting a user pointer — and returns to user mode afterwards.",
+    "subtopic": "process-management",
+    "concept": "A system call is a controlled, one-way door into privileged code.",
+    "hint": "Why can user code not simply jump into the kernel?"
+  },
+  {
+    "id": "OS-0024",
+    "body": "In the producer-consumer problem, what does a bounded buffer require?",
+    "topic": "operating-systems",
+    "difficulty": "hard",
+    "expectedSeconds": 80,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Synchronisation for both \"buffer full\" and \"buffer empty\" conditions",
+        "correct": true
+      },
+      {
+        "body": "Only a lock around the buffer",
+        "whyWrong": "A lock alone gives mutual exclusion but no way to wait for space or for data."
+      },
+      {
+        "body": "One semaphore is sufficient",
+        "whyWrong": "Two counting semaphores plus a mutex are needed for the full and empty conditions."
+      },
+      {
+        "body": "No synchronisation if the buffer is large enough",
+        "whyWrong": "Size only delays the problem; the race remains."
+      }
+    ],
+    "explanation": "The producer must block when the buffer is full and the consumer when it is empty, which needs two counting semaphores plus mutual exclusion on the buffer itself. Handling only one direction is the classic incomplete solution.",
+    "subtopic": "concurrency",
+    "concept": "Bounded buffers need both mutual exclusion and condition synchronisation.",
+    "hint": "What should the producer do when there is no space?"
+  },
+  {
+    "id": "OS-0025",
+    "body": "What is a zombie process?",
+    "topic": "operating-systems",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A finished process whose exit status has not yet been collected by its parent",
+        "correct": true
+      },
+      {
+        "body": "A process consuming all the CPU",
+        "whyWrong": "That is a runaway process, not a zombie."
+      },
+      {
+        "body": "A process with no parent",
+        "whyWrong": "That is an orphan, which init adopts."
+      },
+      {
+        "body": "A process stuck waiting on I/O",
+        "whyWrong": "That is simply a blocked process."
+      }
+    ],
+    "explanation": "A terminated child stays in the process table until the parent calls wait to read its status. It uses no CPU or memory beyond that entry, but a parent that never reaps its children can exhaust the table — which is why long-running daemons handle SIGCHLD.",
+    "subtopic": "process-management",
+    "concept": "A zombie is bookkeeping waiting to be collected, not a running process.",
+    "hint": "What is the parent supposed to do after a child exits?"
+  },
+  {
+    "id": "CN-0007",
+    "body": "What does the three-way handshake establish?",
+    "topic": "computer-networks",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Initial sequence numbers and agreement to open a connection in both directions",
+        "correct": true
+      },
+      {
+        "body": "The encryption keys for the session",
+        "whyWrong": "TLS negotiates keys after the TCP connection is already open."
+      },
+      {
+        "body": "The route the packets will take",
+        "whyWrong": "Routing is decided hop by hop by the network layer."
+      },
+      {
+        "body": "The maximum bandwidth available",
+        "whyWrong": "Bandwidth is discovered by congestion control over time."
+      }
+    ],
+    "explanation": "SYN, SYN-ACK and ACK let each side announce its starting sequence number and confirm the other side received it. Random initial sequence numbers also make blind connection spoofing much harder.",
+    "concept": "TCP’s reliability rests on sequence numbers, which the handshake bootstraps.",
+    "hint": "What does each side need to know before it can detect a lost byte?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "CN-0008",
+    "body": "Why is UDP preferred for live video calls?",
+    "topic": "computer-networks",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A retransmitted frame would arrive too late to be useful",
+        "correct": true
+      },
+      {
+        "body": "UDP is encrypted by default",
+        "whyWrong": "UDP provides no encryption; that comes from a layer above."
+      },
+      {
+        "body": "UDP guarantees ordering",
+        "whyWrong": "UDP guarantees neither ordering nor delivery."
+      },
+      {
+        "body": "UDP has a larger payload limit",
+        "whyWrong": "Payload limits are governed by the path MTU, not the transport choice."
+      }
+    ],
+    "explanation": "In real-time media, latency matters more than completeness — a frame that arrives after its moment is useless, and TCP’s retransmission plus head-of-line blocking would stall everything behind it. Applications add their own concealment for lost packets.",
+    "concept": "Choose the transport by whether late data is still valuable.",
+    "hint": "What would you do with a video frame that arrives a second late?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "CN-0009",
+    "body": "What does DNS do?",
+    "topic": "computer-networks",
+    "difficulty": "easy",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Resolves domain names to IP addresses",
+        "correct": true
+      },
+      {
+        "body": "Encrypts traffic between browser and server",
+        "whyWrong": "That is TLS."
+      },
+      {
+        "body": "Routes packets between networks",
+        "whyWrong": "Routing is the job of IP and routing protocols."
+      },
+      {
+        "body": "Assigns IP addresses to devices on a LAN",
+        "whyWrong": "That is DHCP."
+      }
+    ],
+    "explanation": "DNS is a distributed hierarchy from root to TLD to authoritative servers, with caching at every level to keep lookups fast. It is also why a stale cached record can send traffic to an old server after a migration.",
+    "concept": "DNS is a lookup layer, and its caching is both its strength and its trap.",
+    "hint": "What has to happen before your browser can open a TCP connection?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "CN-0010",
+    "body": "What is the difference between HTTP status 401 and 403?",
+    "topic": "computer-networks",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "401 means not authenticated; 403 means authenticated but not permitted",
+        "correct": true
+      },
+      {
+        "body": "401 is a client error and 403 a server error",
+        "whyWrong": "Both are client errors in the 4xx range."
+      },
+      {
+        "body": "403 means the resource does not exist",
+        "whyWrong": "That is 404."
+      },
+      {
+        "body": "They are interchangeable",
+        "whyWrong": "They convey different situations, and the difference guides what the client should do next."
+      }
+    ],
+    "explanation": "401 invites the client to authenticate and should carry a WWW-Authenticate header; 403 says the identity is known and still not allowed, so retrying with the same credentials is pointless. Some APIs deliberately return 404 instead of 403 to avoid revealing that a resource exists.",
+    "concept": "The status code tells the client whether retrying with credentials could help.",
+    "hint": "Would logging in fix the problem?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "CN-0011",
+    "body": "What is the purpose of an ARP request?",
+    "topic": "computer-networks",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "To find the MAC address matching a known IP address on the local network",
+        "correct": true
+      },
+      {
+        "body": "To find the IP address for a domain name",
+        "whyWrong": "That is DNS."
+      },
+      {
+        "body": "To assign an IP address to a new device",
+        "whyWrong": "That is DHCP."
+      },
+      {
+        "body": "To test whether a host is reachable",
+        "whyWrong": "That is ping, using ICMP."
+      }
+    ],
+    "explanation": "Ethernet frames are addressed by MAC, so a host with an IP destination on its own subnet must first discover the hardware address. ARP broadcasts the question to the local segment; the trust it places in any reply is what makes ARP spoofing possible.",
+    "concept": "IP addresses route between networks; MAC addresses deliver within one.",
+    "hint": "What address does an Ethernet frame actually carry?"
+  },
+  {
+    "id": "CN-0012",
+    "body": "What does a subnet mask determine?",
+    "topic": "computer-networks",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Which part of an IP address identifies the network and which the host",
+        "correct": true
+      },
+      {
+        "body": "The maximum speed of the network",
+        "whyWrong": "Speed is a property of the physical link."
+      },
+      {
+        "body": "Which protocol is in use",
+        "whyWrong": "The mask says nothing about protocols."
+      },
+      {
+        "body": "The default gateway address",
+        "whyWrong": "The gateway is configured separately."
+      }
+    ],
+    "explanation": "The mask marks the leading network bits, so a host can tell whether a destination is on its own subnet — deliverable directly — or must be sent to the gateway. A wrong mask makes local hosts unreachable while the internet still works, or the reverse.",
+    "concept": "The mask answers one question: is this destination local or remote?",
+    "hint": "How does a host decide whether to use the gateway?"
+  },
+  {
+    "id": "CN-0013",
+    "body": "Why does TCP use a sliding window?",
+    "topic": "computer-networks",
+    "difficulty": "hard",
+    "expectedSeconds": 80,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "To send several segments before waiting for acknowledgement, while bounding the receiver’s load",
+        "correct": true
+      },
+      {
+        "body": "To encrypt data in blocks",
+        "whyWrong": "Windowing has nothing to do with encryption."
+      },
+      {
+        "body": "To split large files into packets",
+        "whyWrong": "Segmentation is separate from flow control."
+      },
+      {
+        "body": "To choose the fastest route",
+        "whyWrong": "Routes are not TCP’s concern."
+      }
+    ],
+    "explanation": "Stop-and-wait would cap throughput at one segment per round trip. The window allows several segments in flight, and the receiver advertises its size so a fast sender cannot overwhelm a slow receiver. Congestion control adds a second, network-driven limit.",
+    "concept": "Flow control protects the receiver; congestion control protects the network.",
+    "hint": "What limits throughput if you must wait for every ACK?"
+  },
+  {
+    "id": "CN-0014",
+    "body": "What layer of the OSI model does a router primarily operate at?",
+    "topic": "computer-networks",
+    "difficulty": "easy",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Network",
+        "correct": true
+      },
+      {
+        "body": "Data link",
+        "whyWrong": "Switches operate at the data-link layer using MAC addresses."
+      },
+      {
+        "body": "Transport",
+        "whyWrong": "Transport is TCP and UDP, above routing."
+      },
+      {
+        "body": "Application",
+        "whyWrong": "Application-layer devices are proxies and gateways."
+      }
+    ],
+    "explanation": "A router forwards packets between networks using IP addresses, which is layer 3. A switch works within one network using MAC addresses at layer 2 — the distinction that decides which device you need.",
+    "subtopic": "osi-tcpip",
+    "concept": "Layer 2 delivers within a network; layer 3 moves between networks.",
+    "hint": "Which address does the device examine to make its decision?"
+  },
+  {
+    "id": "CN-0015",
+    "body": "What problem does HTTPS solve that HTTP does not?",
+    "topic": "computer-networks",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Confidentiality and integrity of traffic, plus server identity",
+        "correct": true
+      },
+      {
+        "body": "Faster page loads",
+        "whyWrong": "HTTPS adds a handshake, though HTTP/2 over TLS often ends up faster overall."
+      },
+      {
+        "body": "Better compression",
+        "whyWrong": "Compression is negotiated independently of TLS."
+      },
+      {
+        "body": "Guaranteed delivery",
+        "whyWrong": "Delivery guarantees come from TCP beneath it."
+      }
+    ],
+    "explanation": "TLS encrypts the traffic, detects tampering, and authenticates the server via a certificate chain. Without it, anyone on the path can read and modify the exchange — which is why certificate warnings should never be clicked past.",
+    "concept": "TLS provides confidentiality, integrity and authentication — three properties, not one.",
+    "hint": "What can someone on the same Wi-Fi see over plain HTTP?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "CN-0016",
+    "body": "What is the difference between a switch and a hub?",
+    "topic": "computer-networks",
+    "difficulty": "easy",
+    "expectedSeconds": 55,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A switch forwards a frame only to the port with the destination MAC; a hub repeats it everywhere",
+        "correct": true
+      },
+      {
+        "body": "A hub is faster",
+        "whyWrong": "Repeating to every port wastes bandwidth and causes collisions."
+      },
+      {
+        "body": "A switch works only with fibre",
+        "whyWrong": "Both work over copper or fibre."
+      },
+      {
+        "body": "A hub operates at layer 3",
+        "whyWrong": "A hub is a layer-1 repeater with no addressing at all."
+      }
+    ],
+    "explanation": "A switch learns which MAC lives behind each port and forwards selectively, so several conversations proceed at once. A hub is an electrical repeater, putting every device in one collision domain — which is why hubs disappeared.",
+    "concept": "Selective forwarding is what lets a switch give each port its own bandwidth.",
+    "hint": "What happens when two devices transmit at once on a hub?"
+  },
+  {
+    "id": "CN-0017",
+    "body": "What does a load balancer’s health check accomplish?",
+    "topic": "computer-networks",
+    "difficulty": "medium",
+    "expectedSeconds": 65,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "It stops traffic being sent to instances that are failing",
+        "correct": true
+      },
+      {
+        "body": "It measures CPU usage for billing",
+        "whyWrong": "Billing is unrelated to health checking."
+      },
+      {
+        "body": "It encrypts traffic to the backend",
+        "whyWrong": "Encryption is a separate configuration."
+      },
+      {
+        "body": "It caches responses",
+        "whyWrong": "Caching is a distinct function."
+      }
+    ],
+    "explanation": "The balancer polls each backend and removes failing ones from rotation, so users are not routed to a broken instance. A check that only tests whether the port is open will happily keep sending traffic to a process that has stopped serving correctly.",
+    "concept": "A health check is only as good as the thing it actually tests.",
+    "hint": "Is an open port the same as a working service?"
+  },
+  {
+    "id": "CN-0018",
+    "body": "Why is idempotency important when a client retries a request over an unreliable network?",
+    "topic": "computer-networks",
+    "difficulty": "medium",
+    "expectedSeconds": 70,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "The client cannot tell whether a timed-out request was processed, so a repeat must be safe",
+        "correct": true
+      },
+      {
+        "body": "Retries are always faster than the original",
+        "whyWrong": "Speed is not the concern."
+      },
+      {
+        "body": "Idempotent requests skip the network stack",
+        "whyWrong": "Every request goes over the network."
+      },
+      {
+        "body": "Non-idempotent requests cannot time out",
+        "whyWrong": "Any request can time out."
+      }
+    ],
+    "explanation": "A timeout means the response was lost, which may or may not mean the request was. If the operation is idempotent, retrying is harmless. If not — a payment, say — you need an idempotency key so the server recognises the duplicate.",
+    "concept": "Design for the case where the client does not know what happened.",
+    "hint": "What might have happened to a request that timed out?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0101",
+    "body": "In the edit-distance DP between two strings, what does dp[i][j] hold?",
+    "topic": "dynamic-programming",
+    "difficulty": "medium",
+    "expectedSeconds": 80,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "The minimum edits to turn the first i characters of one string into the first j of the other",
+        "correct": true
+      },
+      {
+        "body": "Whether the two prefixes are equal",
+        "whyWrong": "A boolean cannot express a minimum cost."
+      },
+      {
+        "body": "The length of their longest common subsequence",
+        "whyWrong": "That is a different recurrence with a different meaning."
+      },
+      {
+        "body": "The number of differing characters",
+        "whyWrong": "Simple mismatch counting only works for equal-length strings and ignores insertions."
+      }
+    ],
+    "explanation": "When the characters match the cost carries over from dp[i−1][j−1]; otherwise it is one plus the cheapest of insert, delete or replace. Defining the state over prefix pairs is what makes the recurrence close.",
+    "subtopic": "dp-strings",
+    "concept": "Most two-string DP problems index by a prefix of each string.",
+    "hint": "What are the two things a subproblem depends on here?",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0102",
+    "body": "The longest palindromic substring DP fills its table in what order, and why?",
+    "topic": "dynamic-programming",
+    "difficulty": "hard",
+    "expectedSeconds": 85,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "By increasing substring length, because a longer substring depends on a shorter inner one",
+        "correct": true
+      },
+      {
+        "body": "Left to right by starting index",
+        "whyWrong": "A left-to-right sweep can reach a cell before the inner substring it needs is computed."
+      },
+      {
+        "body": "In any order, since the cells are independent",
+        "whyWrong": "The cells are not independent — that dependence is what makes it DP."
+      },
+      {
+        "body": "From the end backwards by character",
+        "whyWrong": "Character order alone does not respect the dependency."
+      }
+    ],
+    "explanation": "dp[i][j] is true when the characters at i and j match and dp[i+1][j−1] is already true. That inner substring is two characters shorter, so filling by increasing length guarantees it is ready when needed.",
+    "subtopic": "dp-strings",
+    "concept": "Fill order must follow the dependency direction of the recurrence.",
+    "hint": "Which cell must already be computed before dp[i][j] can be?"
   }
 ]

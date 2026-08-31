@@ -62,23 +62,28 @@ Every templated company carries that caveat as a `community_reported` insight,
 shown as a banner on its roadmap tab. Nothing generic is ever presented as
 verified company policy — see [Company data is marked with its provenance](#company-data-is-marked-with-its-provenance).
 
-**184 questions**: 168 MCQs across aptitude, reasoning, verbal, DSA theory, OOPS,
-DBMS, SQL, OS, networks, programming fundamentals, system design and HR
+**403 questions**: 387 MCQs across aptitude, reasoning, verbal, DSA theory,
+OOPS, DBMS, SQL, OS, networks, programming fundamentals, system design and HR
 behaviour, plus **16 coding problems** with 106 machine-verified test cases.
-Every MCQ carries an explanation, and most carry a per-option "why this is wrong"
-note that is revealed only for the option the student actually picked.
+Every MCQ carries an explanation and a per-option "why this is wrong" note,
+revealed only for the option the student actually picked — a test fails the
+build if any distractor is missing one.
+
+The bank lives in JSON under `server/src/db/seed/data/`, schema-checked on load
+so a malformed question fails the seed rather than reaching a student. Every
+topic that appears on any company's roadmap has questions, and **all 1,922 mock
+tests now fill their full question count** — the shortfall was 89 papers before
+this bank was grown.
 
 **1,922 mock tests**, generated per company as four tiers: a full company
 simulation, one mock per round, one per section, and a 12-question quick mock.
 Papers are assembled from the shared bank at start time, so a templated
 company's mock is drawn from the same verified questions as a researched one.
 
-The catalogue is deliberately far larger than the bank: 1,922 papers draw on
-184 questions. `npm run audit:mocks` starts every one of them against a copy of
-the database — all 1,922 assemble, and 90 of them come up short of their
-nominal question count (the worst fills 13 of 18). That is a content gap to
-fill by importing more questions, not a broken paper; the seeded companies and
-rounds are the structure, and the bank is what an admin grows over time.
+`npm run audit:mocks` starts all 1,922 papers against a copy of the database:
+every one assembles and every one now fills completely. Growing the bank
+further still pays off — more questions mean less repetition across repeated
+sittings — but no paper is short any more.
 
 **Eligibility** is checked against the student's own branch, batch and CGPA, and
 explains itself ("Open to Mechanical, Civil, EEE — not CSE") rather than
@@ -121,7 +126,7 @@ see [What is deliberately not automated](#what-is-deliberately-not-automated).
 | `npm run dev` | API + client with hot reload |
 | `npm run build` | Type-check and build both workspaces |
 | `npm start` | Run the built server (also serves the client) |
-| `npm test` | Engine, catalogue and API tests (134 tests) |
+| `npm test` | Engine, catalogue and API tests (138 tests) |
 | `npm run typecheck` | Type-check both workspaces |
 | `npm run audit:mocks` | Start all 1,922 mock tests against a copy of the DB and report any that fail to assemble |
 | `npm run measure:repeats` | Sit each of three mocks three times and report how much the paper repeats — the practical read on bank pressure |

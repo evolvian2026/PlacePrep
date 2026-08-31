@@ -227,3 +227,54 @@ test('a database seeded by an older build is detected as stale', async (t) => {
 
   db.close();
 });
+
+test('the question bank covers what the roadmaps ask for', async (t) => {
+  const db = createTestDb();
+  seed(db);
+
+  await t.test('every topic a roadmap references has questions', () => {
+    const empty = db
+      .prepare<[], { name: string; rounds: number }>(
+        `SELECT t.name,
+                (SELECT COUNT(*) FROM round_topics rt WHERE rt.topic_id = t.id) AS rounds
+           FROM topics t
+          WHERE rounds > 0
+            AND NOT EXISTS (
+              SELECT 1 FROM questions q
+               WHERE (q.topic_id = t.id OR q.subtopic_id = t.id) AND q.status = 'published')`,
+      )
+      .all();
+    assert.deepEqual(
+      empty.map((row) => row.name),
+      [],
+      'a topic on a roadmap with no questions produces a section nothing can fill',
+    );
+  });
+
+  await t.test('every mcq has exactly one correct option', () => {
+    const broken = db
+      .prepare<[], { public_id: string; n: number }>(
+        `SELECT q.public_id, COUNT(o.id) AS n
+           FROM questions q JOIN question_options o ON o.question_id = q.id AND o.is_correct = 1
+          WHERE q.question_type = 'mcq'
+          GROUP BY q.id HAVING n <> 1`,
+      )
+      .all();
+    assert.deepEqual(broken, []);
+  });
+
+  await t.test('every distractor explains why it is wrong', () => {
+    // The per-option feedback is what makes practice teach rather than score.
+    const silent = db
+      .prepare<[], { public_id: string }>(
+        `SELECT DISTINCT q.public_id FROM questions q
+           JOIN question_options o ON o.question_id = q.id
+          WHERE q.question_type IN ('mcq', 'multi_select')
+            AND o.is_correct = 0 AND (o.why_wrong IS NULL OR o.why_wrong = '')`,
+      )
+      .all();
+    assert.deepEqual(silent.map((row) => row.public_id), []);
+  });
+
+  db.close();
+});
