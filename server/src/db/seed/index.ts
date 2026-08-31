@@ -9,12 +9,13 @@ import { COMPANIES, type CompanySeed, type RoundSeed } from './companies.js';
 import { EXTENDED_COMPANIES } from './companies-extended.js';
 import { sectorFor } from './sectors.js';
 import { loadMcqBank } from './load-questions.js';
-import { CODING_PROBLEMS } from './questions-coding.js';
+import { loadCodingProblems } from './load-coding.js';
 import { BADGES, CHALLENGES } from './gamification.js';
 import { INTERVIEW_PROMPTS } from './interview-prompts.js';
 import type { McqSeed } from './types.js';
 
 const ALL_MCQ: McqSeed[] = loadMcqBank();
+const CODING_PROBLEMS = loadCodingProblems();
 
 // The hand-researched catalogue plus the archetype-templated one. Extended
 // entries carry an insight saying their rounds come from a template, so the

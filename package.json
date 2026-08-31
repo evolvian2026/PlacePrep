@@ -22,6 +22,8 @@
     "test": "npm --workspace server run test",
     "verify:questions": "npm --workspace server run verify:questions",
     "verify:numeric": "npm --workspace server run verify:numeric",
+    "build:coding": "npm --workspace server run build:coding",
+    "verify:coding": "npm --workspace server run verify:coding",
     "audit:mocks": "npm --workspace server run audit:mocks",
     "audit:db": "npm --workspace server run audit:db",
     "measure:repeats": "npm --workspace server run measure:repeats",

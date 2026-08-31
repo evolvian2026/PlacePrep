@@ -62,9 +62,9 @@ Every templated company carries that caveat as a `community_reported` insight,
 shown as a banner on its roadmap tab. Nothing generic is ever presented as
 verified company policy — see [Company data is marked with its provenance](#company-data-is-marked-with-its-provenance).
 
-**403 questions**: 387 MCQs across aptitude, reasoning, verbal, DSA theory,
+**487 questions**: 387 MCQs across aptitude, reasoning, verbal, DSA theory,
 OOPS, DBMS, SQL, OS, networks, programming fundamentals, system design and HR
-behaviour, plus **16 coding problems** with 106 machine-verified test cases.
+behaviour, plus **100 coding problems** with 582 machine-verified test cases.
 Every MCQ carries an explanation and a per-option "why this is wrong" note,
 revealed only for the option the student actually picked — a test fails the
 build if any distractor is missing one.
@@ -129,6 +129,7 @@ see [What is deliberately not automated](#what-is-deliberately-not-automated).
 | `npm test` | Engine, catalogue and API tests (138 tests) |
 | `npm run typecheck` | Type-check both workspaces |
 | `npm run verify:questions` | Structural checks over the MCQ bank: one correct option, per-option feedback, valid topic slugs, no explanation that contradicts its answer |
+| `npm run build:coding` | Generate every coding test case's expected output from its reference solution, cross-checking against a brute force where one exists |
 | `npm run verify:numeric` | Recompute every numeric aptitude answer from first principles and compare with the marked option |
 | `npm run audit:mocks` | Start all 1,922 mock tests against a copy of the DB and report any that fail to assemble |
 | `npm run measure:repeats` | Sit each of three mocks three times and report how much the paper repeats — the practical read on bank pressure |
@@ -258,6 +259,21 @@ Capgemini is the one company with no coding round, and that is deliberate — it
 researched process runs on pseudocode and a game-based stage rather than a live
 editor. Inventing a round to make the numbers tidy would be a lie about a real
 employer; its students still reach the coding workspace from the Coding page.
+
+### Coding answers are generated, not authored
+
+A coding problem carries a reference solution and a list of *inputs*.
+`npm run build:coding` runs the reference to produce every expected output.
+Hand-written expected values are a second place for the answer to live, and the
+two drift — three of the original sixteen problems shipped with wrong ones for
+exactly that reason.
+
+That moves the risk rather than removing it: a wrong reference would generate
+confidently wrong outputs. So 44 of the 100 problems also carry a
+`bruteForcePython` — a slow but obviously-correct solution — and both are run on
+every case and must agree. 256 of the 582 cases are cross-checked that way; the
+script reports how many are not, rather than implying the whole set is
+double-verified.
 
 ### What is deliberately not automated
 

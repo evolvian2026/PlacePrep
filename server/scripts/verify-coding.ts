@@ -8,7 +8,9 @@
  * otherwise mark correct student submissions as failures.
  */
 import { spawnSync } from 'node:child_process';
-import { CODING_PROBLEMS } from '../src/db/seed/questions-coding.js';
+import { loadCodingProblems } from '../src/db/seed/load-coding.js';
+
+const CODING_PROBLEMS = loadCodingProblems();
 
 const PYTHON = process.env.PP_PYTHON ?? 'python3';
 
