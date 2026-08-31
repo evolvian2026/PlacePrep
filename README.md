@@ -128,6 +128,8 @@ see [What is deliberately not automated](#what-is-deliberately-not-automated).
 | `npm start` | Run the built server (also serves the client) |
 | `npm test` | Engine, catalogue and API tests (138 tests) |
 | `npm run typecheck` | Type-check both workspaces |
+| `npm run verify:questions` | Structural checks over the MCQ bank: one correct option, per-option feedback, valid topic slugs, no explanation that contradicts its answer |
+| `npm run verify:numeric` | Recompute every numeric aptitude answer from first principles and compare with the marked option |
 | `npm run audit:mocks` | Start all 1,922 mock tests against a copy of the DB and report any that fail to assemble |
 | `npm run measure:repeats` | Sit each of three mocks three times and report how much the paper repeats — the practical read on bank pressure |
 | `npm run audit:db` | Whole-database consistency check: SQLite integrity, foreign keys, required fields, orphans, and per-company completeness across rounds, roadmap, mocks, practice and coding |
