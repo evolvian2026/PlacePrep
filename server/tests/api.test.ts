@@ -611,3 +611,41 @@ describe('behavioural answer builder', () => {
     assert.equal(response.status, 404);
   });
 });
+
+describe('malformed requests are the client’s fault, not the server’s', () => {
+  it('answers a broken JSON body with 400, not 500', async () => {
+    // body-parser throws before any route handler runs, so this exercises the
+    // error middleware directly rather than a zod schema.
+    const response = await fetch(`${base}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: '{"email":"a@b.c","password":}',
+    });
+    const body = (await response.json()) as { error: { code: string; message: string } };
+
+    assert.equal(response.status, 400, 'a malformed body is a client error');
+    assert.equal(body.error.code, 'bad_request');
+    assert.match(body.error.message, /not valid JSON/i);
+  });
+
+  it('does not echo the offending body back to the client', async () => {
+    // The parser's own message quotes the body, which could carry a password.
+    const response = await fetch(`${base}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: '{"password":"hunter2-should-not-appear",}',
+    });
+    const text = JSON.stringify(await response.json());
+
+    assert.equal(response.status, 400);
+    assert.ok(!text.includes('hunter2'), 'a rejected body must not be reflected in the response');
+  });
+
+  it('still reports a genuine server fault as 500', async () => {
+    // A route that does not exist is a 404, not a 500 — the point here is that
+    // the new client-error branch has not swallowed the 5xx path.
+    const response = await call<{ error: { code: string } }>('GET', '/no-such-route');
+    assert.equal(response.status, 404);
+    assert.equal(response.body.error.code, 'not_found');
+  });
+});

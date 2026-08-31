@@ -14,6 +14,22 @@ export const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
     return;
   }
 
+  // Middleware upstream of our handlers raises errors that already carry a
+  // status — body-parser sets 400 with type 'entity.parse.failed' for a
+  // malformed JSON body, for example. Reporting those as 500 blames the server
+  // for the client's mistake, and logging them as unhandled buries genuine
+  // faults in noise that any client can generate at will.
+  const status = clientErrorStatus(error);
+  if (status !== null) {
+    res.status(status).json({
+      error: {
+        code: status === 400 ? 'bad_request' : 'request_rejected',
+        message: describeClientError(error),
+      },
+    });
+    return;
+  }
+
   // Unexpected: log it server-side, return something safe to the client.
   console.error('[unhandled]', error);
   res.status(500).json({
@@ -24,6 +40,30 @@ export const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
     },
   });
 };
+
+/**
+ * Reads the status off an error thrown by upstream middleware, but only when it
+ * is a client error. A 5xx from middleware is still a genuine fault and must
+ * keep its logging.
+ */
+function clientErrorStatus(error: unknown): number | null {
+  if (typeof error !== 'object' || error === null) return null;
+  const status = (error as { status?: unknown; statusCode?: unknown }).status
+    ?? (error as { statusCode?: unknown }).statusCode;
+  if (typeof status !== 'number' || status < 400 || status >= 500) return null;
+  return status;
+}
+
+/**
+ * A short, safe description. The parser's own message quotes the offending
+ * body back, which could echo a password or token into a response or a log.
+ */
+function describeClientError(error: unknown): string {
+  const type = (error as { type?: unknown }).type;
+  if (type === 'entity.parse.failed') return 'Request body is not valid JSON';
+  if (type === 'entity.too.large') return 'Request body is too large';
+  return 'The request could not be processed';
+}
 
 /**
  * Minimal in-memory rate limiter. Adequate for a single-process campus install;
