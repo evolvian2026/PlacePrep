@@ -2396,5 +2396,1176 @@
     "subtopic": "caselets",
     "concept": "Always compute the total before reading any single figure as a proportion.",
     "hint": "What do the four departments add up to?"
+  },
+  {
+    "id": "APT-0077",
+    "body": "Units sold ('000) by five stores over four quarters:\n\nStore   | Q1 | Q2 | Q3 | Q4\nNorth   | 42 | 38 | 55 | 61\nSouth   | 30 | 45 | 48 | 39\nEast    | 28 | 32 | 36 | 44\nWest    | 55 | 50 | 47 | 58\nCentral | 25 | 35 | 44 | 40\n\nWhich store recorded the highest total sales across the four quarters?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "West",
+        "correct": true
+      },
+      {
+        "body": "North",
+        "whyWrong": "North totals 196 thousand, below West."
+      },
+      {
+        "body": "South",
+        "whyWrong": "South totals only 162 thousand."
+      },
+      {
+        "body": "Central",
+        "whyWrong": "Central is the lowest but one, at 144 thousand."
+      }
+    ],
+    "explanation": "Annual totals: North 196, South 162, East 140, West 210, Central 144 (thousand units). West is highest at 210.",
+    "subtopic": "tables-and-charts"
+  },
+  {
+    "id": "APT-0078",
+    "body": "Units sold ('000) by five stores over four quarters:\n\nStore   | Q1 | Q2 | Q3 | Q4\nNorth   | 42 | 38 | 55 | 61\nSouth   | 30 | 45 | 48 | 39\nEast    | 28 | 32 | 36 | 44\nWest    | 55 | 50 | 47 | 58\nCentral | 25 | 35 | 44 | 40\n\nWhat were the total units sold by all five stores in Q3?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "230 thousand",
+        "correct": true
+      },
+      {
+        "body": "200 thousand",
+        "whyWrong": "That is the Q2 total."
+      },
+      {
+        "body": "242 thousand",
+        "whyWrong": "That is the Q4 total."
+      },
+      {
+        "body": "180 thousand",
+        "whyWrong": "That is the Q1 total."
+      }
+    ],
+    "explanation": "Q3 column: 55 + 48 + 36 + 47 + 44 = 230 thousand units.",
+    "subtopic": "tables-and-charts"
+  },
+  {
+    "id": "APT-0079",
+    "body": "Units sold ('000) by five stores over four quarters:\n\nStore   | Q1 | Q2 | Q3 | Q4\nNorth   | 42 | 38 | 55 | 61\nSouth   | 30 | 45 | 48 | 39\nEast    | 28 | 32 | 36 | 44\nWest    | 55 | 50 | 47 | 58\nCentral | 25 | 35 | 44 | 40\n\nEast's annual sales are approximately what percentage of the five stores' combined annual sales?",
+    "topic": "data-interpretation",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "16.4%",
+        "correct": true
+      },
+      {
+        "body": "14.0%",
+        "whyWrong": "That divides East by 1,000 rather than by the actual grand total of 852."
+      },
+      {
+        "body": "18.5%",
+        "whyWrong": "That is closer to South’s share (162/852)."
+      },
+      {
+        "body": "24.6%",
+        "whyWrong": "That is West’s share, not East’s."
+      }
+    ],
+    "explanation": "East sells 28 + 32 + 36 + 44 = 140. The grand total is 852. 140/852 x 100 = 16.43%.",
+    "subtopic": "tables-and-charts",
+    "hint": "Add East's four quarters first, then the whole table."
+  },
+  {
+    "id": "APT-0080",
+    "body": "Units sold ('000) by five stores over four quarters:\n\nStore   | Q1 | Q2 | Q3 | Q4\nNorth   | 42 | 38 | 55 | 61\nSouth   | 30 | 45 | 48 | 39\nEast    | 28 | 32 | 36 | 44\nWest    | 55 | 50 | 47 | 58\nCentral | 25 | 35 | 44 | 40\n\nBy what percentage did Central's sales grow from Q1 to Q4?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "60%",
+        "correct": true
+      },
+      {
+        "body": "37.5%",
+        "whyWrong": "That uses Q4 as the base instead of Q1."
+      },
+      {
+        "body": "15%",
+        "whyWrong": "That is the absolute rise in thousands, not a percentage."
+      },
+      {
+        "body": "75%",
+        "whyWrong": "That would need Q4 to reach 43.75."
+      }
+    ],
+    "explanation": "Central rose from 25 to 40. Growth = (40 - 25)/25 x 100 = 60%.",
+    "subtopic": "tables-and-charts"
+  },
+  {
+    "id": "APT-0081",
+    "body": "Units sold ('000) by five stores over four quarters:\n\nStore   | Q1 | Q2 | Q3 | Q4\nNorth   | 42 | 38 | 55 | 61\nSouth   | 30 | 45 | 48 | 39\nEast    | 28 | 32 | 36 | 44\nWest    | 55 | 50 | 47 | 58\nCentral | 25 | 35 | 44 | 40\n\nWhat were South's average quarterly sales?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "40.5 thousand",
+        "correct": true
+      },
+      {
+        "body": "45 thousand",
+        "whyWrong": "That is South’s best quarter, not its average."
+      },
+      {
+        "body": "162 thousand",
+        "whyWrong": "That is South’s annual total; divide by four."
+      },
+      {
+        "body": "39 thousand",
+        "whyWrong": "That is South’s Q4 figure."
+      }
+    ],
+    "explanation": "South sells 30 + 45 + 48 + 39 = 162 across four quarters, so the average is 162/4 = 40.5 thousand.",
+    "subtopic": "tables-and-charts"
+  },
+  {
+    "id": "APT-0082",
+    "body": "Units sold ('000) by five stores over four quarters:\n\nStore   | Q1 | Q2 | Q3 | Q4\nNorth   | 42 | 38 | 55 | 61\nSouth   | 30 | 45 | 48 | 39\nEast    | 28 | 32 | 36 | 44\nWest    | 55 | 50 | 47 | 58\nCentral | 25 | 35 | 44 | 40\n\nIn how many quarters did South sell more than East?",
+    "topic": "data-interpretation",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Three",
+        "correct": true
+      },
+      {
+        "body": "Four",
+        "whyWrong": "In Q4 East sold 44 against South’s 39."
+      },
+      {
+        "body": "Two",
+        "whyWrong": "South also leads in Q1 (30 against 28)."
+      },
+      {
+        "body": "One",
+        "whyWrong": "South leads in Q1, Q2 and Q3."
+      }
+    ],
+    "explanation": "Q1 30 > 28, Q2 45 > 32, Q3 48 > 36, but Q4 39 < 44. South leads in three of the four quarters.",
+    "subtopic": "tables-and-charts"
+  },
+  {
+    "id": "APT-0083",
+    "body": "Units sold ('000) by five stores over four quarters:\n\nStore   | Q1 | Q2 | Q3 | Q4\nNorth   | 42 | 38 | 55 | 61\nSouth   | 30 | 45 | 48 | 39\nEast    | 28 | 32 | 36 | 44\nWest    | 55 | 50 | 47 | 58\nCentral | 25 | 35 | 44 | 40\n\nWhich quarter saw the largest increase in total sales over the quarter before it?",
+    "topic": "data-interpretation",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Q3",
+        "correct": true
+      },
+      {
+        "body": "Q2",
+        "whyWrong": "Q2 rose 20 thousand over Q1, less than Q3’s rise."
+      },
+      {
+        "body": "Q4",
+        "whyWrong": "Q4 rose only 12 thousand over Q3."
+      },
+      {
+        "body": "Q1",
+        "whyWrong": "There is no earlier quarter to compare Q1 with."
+      }
+    ],
+    "explanation": "Quarter totals are 180, 200, 230, 242. The increases are +20, +30 and +12, so Q3 has the largest rise.",
+    "subtopic": "tables-and-charts"
+  },
+  {
+    "id": "APT-0084",
+    "body": "Units sold ('000) by five stores over four quarters:\n\nStore   | Q1 | Q2 | Q3 | Q4\nNorth   | 42 | 38 | 55 | 61\nSouth   | 30 | 45 | 48 | 39\nEast    | 28 | 32 | 36 | 44\nWest    | 55 | 50 | 47 | 58\nCentral | 25 | 35 | 44 | 40\n\nIf West's sales grow by 20% over its Q4 figure in the next quarter, how many units will it sell?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "69.6 thousand",
+        "correct": true
+      },
+      {
+        "body": "78 thousand",
+        "whyWrong": "That applies 20% to West’s Q1 figure of 55 plus 23."
+      },
+      {
+        "body": "58.2 thousand",
+        "whyWrong": "That adds 0.2 thousand rather than 20%."
+      },
+      {
+        "body": "60 thousand",
+        "whyWrong": "That is West’s Q2 figure of 50 raised by 20%."
+      }
+    ],
+    "explanation": "West's Q4 is 58 thousand. A 20% rise gives 58 x 1.2 = 69.6 thousand units.",
+    "subtopic": "tables-and-charts"
+  },
+  {
+    "id": "APT-0085",
+    "body": "Units sold ('000) by five stores over four quarters:\n\nStore   | Q1 | Q2 | Q3 | Q4\nNorth   | 42 | 38 | 55 | 61\nSouth   | 30 | 45 | 48 | 39\nEast    | 28 | 32 | 36 | 44\nWest    | 55 | 50 | 47 | 58\nCentral | 25 | 35 | 44 | 40\n\nWhat is the difference between the highest and the lowest annual store totals?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "70 thousand",
+        "correct": true
+      },
+      {
+        "body": "66 thousand",
+        "whyWrong": "That is West minus Central (210 - 144)."
+      },
+      {
+        "body": "48 thousand",
+        "whyWrong": "That is North minus Central."
+      },
+      {
+        "body": "14 thousand",
+        "whyWrong": "That is the gap between the two lowest stores."
+      }
+    ],
+    "explanation": "West is highest at 210 thousand and East lowest at 140 thousand, a difference of 70 thousand.",
+    "subtopic": "tables-and-charts"
+  },
+  {
+    "id": "APT-0086",
+    "body": "Units sold ('000) by five stores over four quarters:\n\nStore   | Q1 | Q2 | Q3 | Q4\nNorth   | 42 | 38 | 55 | 61\nSouth   | 30 | 45 | 48 | 39\nEast    | 28 | 32 | 36 | 44\nWest    | 55 | 50 | 47 | 58\nCentral | 25 | 35 | 44 | 40\n\nWhat is the ratio of North's Q4 sales to West's Q2 sales?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "61 : 50",
+        "correct": true
+      },
+      {
+        "body": "50 : 61",
+        "whyWrong": "The ratio is asked in the order North to West."
+      },
+      {
+        "body": "61 : 55",
+        "whyWrong": "That compares North’s Q4 with West’s Q1."
+      },
+      {
+        "body": "38 : 50",
+        "whyWrong": "That uses North’s Q2 instead of Q4."
+      }
+    ],
+    "explanation": "North's Q4 is 61 and West's Q2 is 50, so the ratio is 61 : 50, which has no common factor.",
+    "subtopic": "tables-and-charts"
+  },
+  {
+    "id": "APT-0087",
+    "body": "A company's annual budget of Rs 60 lakh is split as:\nSalaries 35%, Marketing 20%, Infrastructure 18%, R&D 15%, Miscellaneous 12%.\n\nHow much does the company spend on R&D?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Rs 9 lakh",
+        "correct": true
+      },
+      {
+        "body": "Rs 10.8 lakh",
+        "whyWrong": "That is the infrastructure spend (18%)."
+      },
+      {
+        "body": "Rs 12 lakh",
+        "whyWrong": "That is the marketing spend (20%)."
+      },
+      {
+        "body": "Rs 15 lakh",
+        "whyWrong": "That treats the 15% share as an amount in lakh."
+      }
+    ],
+    "explanation": "R&D takes 15% of Rs 60 lakh, which is 0.15 x 60 = Rs 9 lakh.",
+    "subtopic": "tables-and-charts"
+  },
+  {
+    "id": "APT-0088",
+    "body": "A company's annual budget of Rs 60 lakh is split as:\nSalaries 35%, Marketing 20%, Infrastructure 18%, R&D 15%, Miscellaneous 12%.\n\nBy how much does the salary spend exceed the infrastructure spend?",
+    "topic": "data-interpretation",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Rs 10.2 lakh",
+        "correct": true
+      },
+      {
+        "body": "Rs 17 lakh",
+        "whyWrong": "That treats the 17-percentage-point gap as an amount in lakh."
+      },
+      {
+        "body": "Rs 8.4 lakh",
+        "whyWrong": "That is the difference between salaries and marketing."
+      },
+      {
+        "body": "Rs 21 lakh",
+        "whyWrong": "That is the salary spend itself."
+      }
+    ],
+    "explanation": "Salaries are 35% and infrastructure 18%, a gap of 17 percentage points. 17% of Rs 60 lakh = Rs 10.2 lakh.",
+    "subtopic": "tables-and-charts"
+  },
+  {
+    "id": "APT-0089",
+    "body": "A company's annual budget of Rs 60 lakh is split as:\nSalaries 35%, Marketing 20%, Infrastructure 18%, R&D 15%, Miscellaneous 12%.\n\nIf this split were drawn as a pie chart, what would the central angle of the marketing slice be?",
+    "topic": "data-interpretation",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "72 degrees",
+        "correct": true
+      },
+      {
+        "body": "20 degrees",
+        "whyWrong": "That is the percentage share, not the angle."
+      },
+      {
+        "body": "126 degrees",
+        "whyWrong": "That is the salary slice (35% of 360)."
+      },
+      {
+        "body": "60 degrees",
+        "whyWrong": "That would correspond to a 16.67% share."
+      }
+    ],
+    "explanation": "A slice's angle is its share of 360 degrees. Marketing is 20%, so 0.20 x 360 = 72 degrees.",
+    "subtopic": "tables-and-charts"
+  },
+  {
+    "id": "APT-0090",
+    "body": "A company's annual budget of Rs 60 lakh is split as:\nSalaries 35%, Marketing 20%, Infrastructure 18%, R&D 15%, Miscellaneous 12%.\n\nIf the budget rises to Rs 75 lakh with the same proportions, what will the miscellaneous spend be?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Rs 9 lakh",
+        "correct": true
+      },
+      {
+        "body": "Rs 7.2 lakh",
+        "whyWrong": "That is the miscellaneous spend under the old Rs 60 lakh budget."
+      },
+      {
+        "body": "Rs 12 lakh",
+        "whyWrong": "That is 12% treated as an amount in lakh."
+      },
+      {
+        "body": "Rs 11.25 lakh",
+        "whyWrong": "That applies the 15% R&D share instead of the 12% miscellaneous share."
+      }
+    ],
+    "explanation": "Miscellaneous stays at 12%. 12% of Rs 75 lakh = 0.12 x 75 = Rs 9 lakh.",
+    "subtopic": "tables-and-charts"
+  },
+  {
+    "id": "APT-0091",
+    "body": "A company's annual budget of Rs 60 lakh is split as:\nSalaries 35%, Marketing 20%, Infrastructure 18%, R&D 15%, Miscellaneous 12%.\n\nWhat is the ratio of R&D spend to marketing spend?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "3 : 4",
+        "correct": true
+      },
+      {
+        "body": "4 : 3",
+        "whyWrong": "The ratio is asked R&D first, and R&D is the smaller share."
+      },
+      {
+        "body": "15 : 35",
+        "whyWrong": "That compares R&D with salaries."
+      },
+      {
+        "body": "5 : 6",
+        "whyWrong": "That does not reduce 15 : 20 correctly."
+      }
+    ],
+    "explanation": "R&D is 15% and marketing 20%. 15 : 20 divides by 5 to give 3 : 4.",
+    "subtopic": "tables-and-charts"
+  },
+  {
+    "id": "APT-0092",
+    "body": "In a campus drive 1,200 students registered. 25% of them were absent.\nOf those who appeared, 60% cleared the aptitude test. Of the students who cleared\naptitude, 45% cleared the technical interview, and two-thirds of those who cleared\nthe technical interview received an offer.\n\nHow many students actually appeared for the drive?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "900",
+        "correct": true
+      },
+      {
+        "body": "300",
+        "whyWrong": "That is the number who were absent."
+      },
+      {
+        "body": "1,200",
+        "whyWrong": "That is the number who registered, before absentees."
+      },
+      {
+        "body": "960",
+        "whyWrong": "That would be an 80% turnout, not 75%."
+      }
+    ],
+    "explanation": "25% of 1,200 were absent, so 75% appeared: 0.75 x 1,200 = 900 students.",
+    "subtopic": "caselets"
+  },
+  {
+    "id": "APT-0093",
+    "body": "In a campus drive 1,200 students registered. 25% of them were absent.\nOf those who appeared, 60% cleared the aptitude test. Of the students who cleared\naptitude, 45% cleared the technical interview, and two-thirds of those who cleared\nthe technical interview received an offer.\n\nHow many students cleared the aptitude test?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "540",
+        "correct": true
+      },
+      {
+        "body": "720",
+        "whyWrong": "That applies 60% to all 1,200 registrations rather than to the 900 who appeared."
+      },
+      {
+        "body": "360",
+        "whyWrong": "That is the number who appeared but failed aptitude."
+      },
+      {
+        "body": "243",
+        "whyWrong": "That is the number who cleared the technical interview."
+      }
+    ],
+    "explanation": "900 appeared and 60% cleared: 0.60 x 900 = 540 students.",
+    "subtopic": "caselets"
+  },
+  {
+    "id": "APT-0094",
+    "body": "In a campus drive 1,200 students registered. 25% of them were absent.\nOf those who appeared, 60% cleared the aptitude test. Of the students who cleared\naptitude, 45% cleared the technical interview, and two-thirds of those who cleared\nthe technical interview received an offer.\n\nHow many students cleared the technical interview?",
+    "topic": "data-interpretation",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "243",
+        "correct": true
+      },
+      {
+        "body": "297",
+        "whyWrong": "That is the number who cleared aptitude but failed the technical round."
+      },
+      {
+        "body": "405",
+        "whyWrong": "That applies 45% to the 900 who appeared instead of the 540 aptitude clears."
+      },
+      {
+        "body": "162",
+        "whyWrong": "That is the number who finally received an offer."
+      }
+    ],
+    "explanation": "540 cleared aptitude and 45% of them cleared the technical interview: 0.45 x 540 = 243.",
+    "subtopic": "caselets"
+  },
+  {
+    "id": "APT-0095",
+    "body": "In a campus drive 1,200 students registered. 25% of them were absent.\nOf those who appeared, 60% cleared the aptitude test. Of the students who cleared\naptitude, 45% cleared the technical interview, and two-thirds of those who cleared\nthe technical interview received an offer.\n\nHow many students received an offer?",
+    "topic": "data-interpretation",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "162",
+        "correct": true
+      },
+      {
+        "body": "243",
+        "whyWrong": "That is the number who cleared the technical interview, before the offer stage."
+      },
+      {
+        "body": "81",
+        "whyWrong": "That is one third of the technical clears, not two thirds."
+      },
+      {
+        "body": "121",
+        "whyWrong": "That halves the technical clears instead of taking two thirds."
+      }
+    ],
+    "explanation": "243 cleared the technical interview and two thirds received an offer: 243 x 2/3 = 162.",
+    "subtopic": "caselets"
+  },
+  {
+    "id": "APT-0096",
+    "body": "In a campus drive 1,200 students registered. 25% of them were absent.\nOf those who appeared, 60% cleared the aptitude test. Of the students who cleared\naptitude, 45% cleared the technical interview, and two-thirds of those who cleared\nthe technical interview received an offer.\n\nThe students who received an offer are what percentage of those who registered?",
+    "topic": "data-interpretation",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "13.5%",
+        "correct": true
+      },
+      {
+        "body": "18%",
+        "whyWrong": "That divides the 162 offers by the 900 who appeared, not by the 1,200 registered."
+      },
+      {
+        "body": "20.25%",
+        "whyWrong": "That uses the 243 technical clears as the numerator."
+      },
+      {
+        "body": "30%",
+        "whyWrong": "That is the aptitude clear rate against registrations."
+      }
+    ],
+    "explanation": "162 offers out of 1,200 registrations gives 162/1,200 x 100 = 13.5%.",
+    "subtopic": "caselets"
+  },
+  {
+    "id": "APT-0097",
+    "body": "In a campus drive 1,200 students registered. 25% of them were absent.\nOf those who appeared, 60% cleared the aptitude test. Of the students who cleared\naptitude, 45% cleared the technical interview, and two-thirds of those who cleared\nthe technical interview received an offer.\n\nHow many students cleared aptitude but did not clear the technical interview?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "297",
+        "correct": true
+      },
+      {
+        "body": "243",
+        "whyWrong": "That is the number who did clear the technical interview."
+      },
+      {
+        "body": "360",
+        "whyWrong": "That is the number who appeared but failed aptitude."
+      },
+      {
+        "body": "81",
+        "whyWrong": "That is the number who cleared the technical round but got no offer."
+      }
+    ],
+    "explanation": "540 cleared aptitude and 243 went on to clear the technical interview, so 540 - 243 = 297 did not.",
+    "subtopic": "caselets"
+  },
+  {
+    "id": "APT-0098",
+    "body": "A library holds 4,800 books: 30% fiction, 25% science, 20% history and the\nrest reference. 15% of the fiction titles and 8% of the science titles are on loan.\n\nHow many reference titles does the library hold?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "1,200",
+        "correct": true
+      },
+      {
+        "body": "960",
+        "whyWrong": "That is the history count (20%)."
+      },
+      {
+        "body": "1,440",
+        "whyWrong": "That is the fiction count (30%)."
+      },
+      {
+        "body": "1,320",
+        "whyWrong": "The remaining share is 25%, not 27.5%."
+      }
+    ],
+    "explanation": "Fiction, science and history take 30 + 25 + 20 = 75%, leaving 25% as reference: 0.25 x 4,800 = 1,200.",
+    "subtopic": "caselets"
+  },
+  {
+    "id": "APT-0099",
+    "body": "A library holds 4,800 books: 30% fiction, 25% science, 20% history and the\nrest reference. 15% of the fiction titles and 8% of the science titles are on loan.\n\nHow many fiction titles are on loan?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "216",
+        "correct": true
+      },
+      {
+        "body": "96",
+        "whyWrong": "That is the number of science titles on loan."
+      },
+      {
+        "body": "720",
+        "whyWrong": "That applies 15% to the whole collection rather than to fiction."
+      },
+      {
+        "body": "144",
+        "whyWrong": "That applies 10% to fiction instead of 15%."
+      }
+    ],
+    "explanation": "Fiction is 30% of 4,800 = 1,440 titles, and 15% of those are on loan: 0.15 x 1,440 = 216.",
+    "subtopic": "caselets"
+  },
+  {
+    "id": "APT-0100",
+    "body": "A library holds 4,800 books: 30% fiction, 25% science, 20% history and the\nrest reference. 15% of the fiction titles and 8% of the science titles are on loan.\n\nHow many titles from fiction and science together are on loan?",
+    "topic": "data-interpretation",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "312",
+        "correct": true
+      },
+      {
+        "body": "216",
+        "whyWrong": "That counts only the fiction titles on loan."
+      },
+      {
+        "body": "264",
+        "whyWrong": "That applies 8% to fiction and 15% to science, swapping the two rates."
+      },
+      {
+        "body": "528",
+        "whyWrong": "That adds 15% of fiction to 15% of science."
+      }
+    ],
+    "explanation": "Fiction on loan is 15% of 1,440 = 216 and science on loan is 8% of 1,200 = 96. Together 216 + 96 = 312.",
+    "subtopic": "caselets"
+  },
+  {
+    "id": "APT-0101",
+    "body": "A library holds 4,800 books: 30% fiction, 25% science, 20% history and the\nrest reference. 15% of the fiction titles and 8% of the science titles are on loan.\n\nWhat is the ratio of history titles to reference titles?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "4 : 5",
+        "correct": true
+      },
+      {
+        "body": "5 : 4",
+        "whyWrong": "History is the smaller of the two, so it cannot lead with the larger number."
+      },
+      {
+        "body": "1 : 1",
+        "whyWrong": "History is 20% and reference 25%, so they are not equal."
+      },
+      {
+        "body": "20 : 30",
+        "whyWrong": "That compares history with fiction."
+      }
+    ],
+    "explanation": "History is 20% and reference 25%, so the ratio is 20 : 25, which reduces to 4 : 5.",
+    "subtopic": "caselets"
+  },
+  {
+    "id": "APT-0102",
+    "body": "A household earns Rs 80,000 a month and saves 20% of it. Of the money left\nafter saving, 40% goes on rent, 25% on food, 15% on transport and the rest on other items.\n\nHow much does the household spend on rent each month?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Rs 25,600",
+        "correct": true
+      },
+      {
+        "body": "Rs 32,000",
+        "whyWrong": "That applies 40% to the full Rs 80,000 rather than to the Rs 64,000 left after saving."
+      },
+      {
+        "body": "Rs 16,000",
+        "whyWrong": "That is the monthly saving, and also the food spend."
+      },
+      {
+        "body": "Rs 24,000",
+        "whyWrong": "That would be 30% of the post-saving amount."
+      }
+    ],
+    "explanation": "Savings take 20% of Rs 80,000, leaving Rs 64,000. Rent is 40% of that: 0.40 x 64,000 = Rs 25,600.",
+    "subtopic": "caselets"
+  },
+  {
+    "id": "APT-0103",
+    "body": "A household earns Rs 80,000 a month and saves 20% of it. Of the money left\nafter saving, 40% goes on rent, 25% on food, 15% on transport and the rest on other items.\n\nHow much goes on other items each month?",
+    "topic": "data-interpretation",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Rs 12,800",
+        "correct": true
+      },
+      {
+        "body": "Rs 16,000",
+        "whyWrong": "That is the food spend."
+      },
+      {
+        "body": "Rs 9,600",
+        "whyWrong": "That is the transport spend."
+      },
+      {
+        "body": "Rs 20,000",
+        "whyWrong": "That applies the leftover 20% share to the full income instead of the post-saving amount."
+      }
+    ],
+    "explanation": "Rent, food and transport take 40 + 25 + 15 = 80% of the Rs 64,000 left after saving, so other items take the remaining 20%: 0.20 x 64,000 = Rs 12,800.",
+    "subtopic": "caselets"
+  },
+  {
+    "id": "APT-0104",
+    "body": "A household earns Rs 80,000 a month and saves 20% of it. Of the money left\nafter saving, 40% goes on rent, 25% on food, 15% on transport and the rest on other items.\n\nThe food spend is what percentage of the household's total income?",
+    "topic": "data-interpretation",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "20%",
+        "correct": true
+      },
+      {
+        "body": "25%",
+        "whyWrong": "That is food’s share of the post-saving amount, not of total income."
+      },
+      {
+        "body": "16%",
+        "whyWrong": "That confuses the Rs 16,000 figure with a percentage."
+      },
+      {
+        "body": "32%",
+        "whyWrong": "That would be Rs 25,600, the rent."
+      }
+    ],
+    "explanation": "Food is 25% of Rs 64,000 = Rs 16,000, and Rs 16,000 out of Rs 80,000 is 20% of total income.",
+    "subtopic": "caselets"
+  },
+  {
+    "id": "APT-0105",
+    "body": "A household earns Rs 80,000 a month and saves 20% of it. Of the money left\nafter saving, 40% goes on rent, 25% on food, 15% on transport and the rest on other items.\n\nIf the rent rises by 10% while savings and all other categories except 'other items' stay unchanged, what will be left for other items?",
+    "topic": "data-interpretation",
+    "difficulty": "hard",
+    "expectedSeconds": 120,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Rs 10,240",
+        "correct": true
+      },
+      {
+        "body": "Rs 12,800",
+        "whyWrong": "That is the current figure; the rent rise has to come out of it."
+      },
+      {
+        "body": "Rs 11,520",
+        "whyWrong": "That reduces other items by 10% instead of by the rent increase."
+      },
+      {
+        "body": "Rs 2,560",
+        "whyWrong": "That is the rent increase itself, not what remains."
+      }
+    ],
+    "explanation": "Rent rises from Rs 25,600 by 10%, an increase of Rs 2,560. With savings, food and transport fixed, that comes out of other items: 12,800 - 2,560 = Rs 10,240.",
+    "subtopic": "caselets"
+  },
+  {
+    "id": "APT-0106",
+    "body": "Headcount at the end of each year:\n2020: 480 | 2021: 600 | 2022: 690 | 2023: 828 | 2024: 952\n\nBy what percentage did headcount grow from 2020 to 2021?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "25%",
+        "correct": true
+      },
+      {
+        "body": "20%",
+        "whyWrong": "That uses 2021 as the base instead of 2020."
+      },
+      {
+        "body": "120%",
+        "whyWrong": "That is 2021 as a percentage of 2020, not the growth."
+      },
+      {
+        "body": "12%",
+        "whyWrong": "That halves the correct figure."
+      }
+    ],
+    "explanation": "Headcount went from 480 to 600, a rise of 120. 120/480 x 100 = 25%.",
+    "subtopic": "tables-and-charts"
+  },
+  {
+    "id": "APT-0107",
+    "body": "Headcount at the end of each year:\n2020: 480 | 2021: 600 | 2022: 690 | 2023: 828 | 2024: 952\n\nWhich year recorded the highest percentage growth over the year before it?",
+    "topic": "data-interpretation",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "2021",
+        "correct": true
+      },
+      {
+        "body": "2023",
+        "whyWrong": "2023 grew 20%, below 2021’s 25%."
+      },
+      {
+        "body": "2024",
+        "whyWrong": "2024 grew about 15%, the smallest of the four."
+      },
+      {
+        "body": "2022",
+        "whyWrong": "2022 grew 15%, well below 2021."
+      }
+    ],
+    "explanation": "Growth rates: 2021 120/480 = 25%, 2022 90/600 = 15%, 2023 138/690 = 20%, 2024 124/828 = 15%. 2021 is highest.",
+    "subtopic": "tables-and-charts"
+  },
+  {
+    "id": "APT-0108",
+    "body": "Headcount at the end of each year:\n2020: 480 | 2021: 600 | 2022: 690 | 2023: 828 | 2024: 952\n\nWhat was the average headcount over the five years shown?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "710",
+        "correct": true
+      },
+      {
+        "body": "690",
+        "whyWrong": "That is the 2022 figure, not the average."
+      },
+      {
+        "body": "3,550",
+        "whyWrong": "That is the sum of the five years; divide by five."
+      },
+      {
+        "body": "716",
+        "whyWrong": "That averages only the last four years."
+      }
+    ],
+    "explanation": "The five figures sum to 480 + 600 + 690 + 828 + 952 = 3,550, and 3,550/5 = 710.",
+    "subtopic": "tables-and-charts"
+  },
+  {
+    "id": "APT-0109",
+    "body": "Headcount at the end of each year:\n2020: 480 | 2021: 600 | 2022: 690 | 2023: 828 | 2024: 952\n\nBy what percentage did headcount grow across the whole period, from 2020 to 2024?",
+    "topic": "data-interpretation",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "About 98.3%",
+        "correct": true
+      },
+      {
+        "body": "About 49.6%",
+        "whyWrong": "That uses 2024 as the base instead of 2020."
+      },
+      {
+        "body": "About 198.3%",
+        "whyWrong": "That is 2024 as a percentage of 2020, not the growth."
+      },
+      {
+        "body": "About 75%",
+        "whyWrong": "That would put 2024 at 840."
+      }
+    ],
+    "explanation": "Headcount went from 480 to 952, a rise of 472. 472/480 x 100 = 98.33%.",
+    "subtopic": "tables-and-charts"
+  },
+  {
+    "id": "APT-0110",
+    "body": "Annual revenue (Rs crore) of two firms:\n\nYear | Firm A | Firm B\n2021 |   120  |    90\n2022 |   150  |   135\n2023 |   165  |   180\n2024 |   210  |   198\n\nIn which year was the gap between the two firms' revenues smallest?",
+    "topic": "data-interpretation",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "2024",
+        "correct": true
+      },
+      {
+        "body": "2023",
+        "whyWrong": "The 2023 gap is 15 crore, slightly wider than 2024’s."
+      },
+      {
+        "body": "2022",
+        "whyWrong": "The 2022 gap is 15 crore as well, still wider than 2024’s 12."
+      },
+      {
+        "body": "2021",
+        "whyWrong": "The 2021 gap of 30 crore is the widest."
+      }
+    ],
+    "explanation": "Gaps by year: 2021 30, 2022 15, 2023 15, 2024 12 (all in Rs crore). The smallest is 12 crore, in 2024.",
+    "subtopic": "tables-and-charts"
+  },
+  {
+    "id": "APT-0111",
+    "body": "Annual revenue (Rs crore) of two firms:\n\nYear | Firm A | Firm B\n2021 |   120  |    90\n2022 |   150  |   135\n2023 |   165  |   180\n2024 |   210  |   198\n\nWhat was Firm B's total revenue over the four years?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Rs 603 crore",
+        "correct": true
+      },
+      {
+        "body": "Rs 645 crore",
+        "whyWrong": "That is Firm A’s four-year total."
+      },
+      {
+        "body": "Rs 513 crore",
+        "whyWrong": "That omits Firm B’s 2022 revenue of 135 crore, roughly."
+      },
+      {
+        "body": "Rs 150.75 crore",
+        "whyWrong": "That is Firm B’s average year, not the total."
+      }
+    ],
+    "explanation": "Firm B earned 90 + 135 + 180 + 198 = Rs 603 crore over the four years.",
+    "subtopic": "tables-and-charts"
+  },
+  {
+    "id": "APT-0112",
+    "body": "Annual revenue (Rs crore) of two firms:\n\nYear | Firm A | Firm B\n2021 |   120  |    90\n2022 |   150  |   135\n2023 |   165  |   180\n2024 |   210  |   198\n\nIn which year did Firm B's revenue first exceed Firm A's?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "2023",
+        "correct": true
+      },
+      {
+        "body": "2024",
+        "whyWrong": "By 2024 Firm A is ahead again at 210 against 198."
+      },
+      {
+        "body": "2022",
+        "whyWrong": "In 2022 Firm A leads 150 to 135."
+      },
+      {
+        "body": "Firm B never overtakes Firm A",
+        "whyWrong": "Firm B leads 180 to 165 in 2023."
+      }
+    ],
+    "explanation": "Firm B trails in 2021 and 2022, then leads 180 to 165 in 2023 before falling behind again in 2024.",
+    "subtopic": "tables-and-charts"
+  },
+  {
+    "id": "APT-0113",
+    "body": "Annual revenue (Rs crore) of two firms:\n\nYear | Firm A | Firm B\n2021 |   120  |    90\n2022 |   150  |   135\n2023 |   165  |   180\n2024 |   210  |   198\n\nBy what percentage did Firm A's revenue grow from 2021 to 2024?",
+    "topic": "data-interpretation",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "75%",
+        "correct": true
+      },
+      {
+        "body": "42.9%",
+        "whyWrong": "That uses 2024 as the base instead of 2021."
+      },
+      {
+        "body": "90%",
+        "whyWrong": "That is the absolute rise in crore, not a percentage."
+      },
+      {
+        "body": "120%",
+        "whyWrong": "That would put 2024 revenue at 264 crore."
+      }
+    ],
+    "explanation": "Firm A went from 120 to 210 crore, a rise of 90. 90/120 x 100 = 75%.",
+    "subtopic": "tables-and-charts"
+  },
+  {
+    "id": "APT-0114",
+    "body": "Annual revenue (Rs crore) of two firms:\n\nYear | Firm A | Firm B\n2021 |   120  |    90\n2022 |   150  |   135\n2023 |   165  |   180\n2024 |   210  |   198\n\nWhat was the two firms' combined revenue in 2022?",
+    "topic": "data-interpretation",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Rs 285 crore",
+        "correct": true
+      },
+      {
+        "body": "Rs 210 crore",
+        "whyWrong": "That is the 2021 combined figure."
+      },
+      {
+        "body": "Rs 345 crore",
+        "whyWrong": "That is the 2023 combined figure."
+      },
+      {
+        "body": "Rs 408 crore",
+        "whyWrong": "That is the 2024 combined figure."
+      }
+    ],
+    "explanation": "In 2022 Firm A earned 150 and Firm B 135, so together 150 + 135 = Rs 285 crore.",
+    "subtopic": "tables-and-charts"
+  },
+  {
+    "id": "APT-0115",
+    "body": "Annual revenue (Rs crore) of two firms:\n\nYear | Firm A | Firm B\n2021 |   120  |    90\n2022 |   150  |   135\n2023 |   165  |   180\n2024 |   210  |   198\n\nWhat was Firm B's average annual revenue over the four years?",
+    "topic": "data-interpretation",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Rs 150.75 crore",
+        "correct": true
+      },
+      {
+        "body": "Rs 161.25 crore",
+        "whyWrong": "That is Firm A’s average."
+      },
+      {
+        "body": "Rs 603 crore",
+        "whyWrong": "That is Firm B’s four-year total; divide by four."
+      },
+      {
+        "body": "Rs 157.5 crore",
+        "whyWrong": "That averages only the middle two years."
+      }
+    ],
+    "explanation": "Firm B's four-year total is Rs 603 crore, so the average is 603/4 = Rs 150.75 crore.",
+    "subtopic": "tables-and-charts"
   }
 ]

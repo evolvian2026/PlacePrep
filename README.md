@@ -62,9 +62,9 @@ Every templated company carries that caveat as a `community_reported` insight,
 shown as a banner on its roadmap tab. Nothing generic is ever presented as
 verified company policy — see [Company data is marked with its provenance](#company-data-is-marked-with-its-provenance).
 
-**487 questions**: 387 MCQs across aptitude, reasoning, verbal, DSA theory,
+**793 questions**: 673 MCQs across aptitude, reasoning, verbal, DSA theory,
 OOPS, DBMS, SQL, OS, networks, programming fundamentals, system design and HR
-behaviour, plus **100 coding problems** with 582 machine-verified test cases.
+behaviour, plus **120 coding problems** with 680 machine-verified test cases.
 Every MCQ carries an explanation and a per-option "why this is wrong" note,
 revealed only for the option the student actually picked — a test fails the
 build if any distractor is missing one.
@@ -73,7 +73,10 @@ The bank lives in JSON under `server/src/db/seed/data/`, schema-checked on load
 so a malformed question fails the seed rather than reaching a student. Every
 topic that appears on any company's roadmap has questions, and **all 1,922 mock
 tests now fill their full question count** — the shortfall was 89 papers before
-this bank was grown.
+this bank was grown. Every section rule can now draw on at least **three times**
+the questions it asks for, so a student sitting the same mock twice sees a
+largely different paper; the tightest pool used to hold 11 questions for an ask
+of 10.
 
 **1,922 mock tests**, generated per company as four tiers: a full company
 simulation, one mock per round, one per section, and a 12-question quick mock.
@@ -83,7 +86,7 @@ company's mock is drawn from the same verified questions as a researched one.
 `npm run audit:mocks` starts all 1,922 papers against a copy of the database:
 every one assembles and every one now fills completely. Growing the bank
 further still pays off — more questions mean less repetition across repeated
-sittings — but no paper is short any more.
+sittings — but no paper is short any more, and no pool is thin any more.
 
 **Eligibility** is checked against the student's own branch, batch and CGPA, and
 explains itself ("Open to Mechanical, Civil, EEE — not CSE") rather than
@@ -271,7 +274,7 @@ exactly that reason.
 That moves the risk rather than removing it: a wrong reference would generate
 confidently wrong outputs, and re-running that same reference to verify them
 proves nothing. So **every** problem also carries a `bruteForcePython` — a
-slower solution written by a different method — and both are run on all 582
+slower solution written by a different method — and both are run on all 680
 cases and must agree. A mismatch fails the build and writes nothing.
 
 Different method is the point, not merely a second file: Kadane against summing

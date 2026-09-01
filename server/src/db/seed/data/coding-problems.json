@@ -5053,5 +5053,972 @@
     ],
     "frequentlyAsked": true,
     "bruteForcePython": "import sys\nsys.setrecursionlimit(10000)\nlines = sys.stdin.read().split(\"\\n\")\ns = lines[0].strip()\nn = int(lines[1])\nwords = set(lines[2:2+n])\nfrom functools import lru_cache\n@lru_cache(None)\ndef can(i):\n    if i == len(s): return True\n    for j in range(i + 1, len(s) + 1):\n        if s[i:j] in words and can(j): return True\n    return False\nprint(\"YES\" if can(0) else \"NO\")\n"
+  },
+  {
+    "id": "COD-0101",
+    "title": "Print a Right-Angled Star Triangle",
+    "body": "Print a right-angled triangle of stars with N rows, where row i contains i stars.",
+    "topic": "programming-fundamentals",
+    "difficulty": "easy",
+    "expectedSeconds": 300,
+    "inputFormat": "A single line containing N.",
+    "outputFormat": "N lines forming the triangle.",
+    "constraints": "1 ≤ N ≤ 100",
+    "samples": [
+      {
+        "input": "4\n",
+        "expected": "*\n**\n***\n****",
+        "explanation": "Rows of 1, 2, 3 and 4 stars."
+      },
+      {
+        "input": "1\n",
+        "expected": "*",
+        "explanation": "A single star."
+      }
+    ],
+    "hidden": [
+      {
+        "input": "2\n",
+        "expected": "*\n**"
+      },
+      {
+        "input": "5\n",
+        "expected": "*\n**\n***\n****\n*****"
+      },
+      {
+        "input": "10\n",
+        "expected": "*\n**\n***\n****\n*****\n******\n*******\n********\n*********\n**********"
+      }
+    ],
+    "referencePython": "n = int(input())\nfor i in range(1, n + 1):\n    print(\"*\" * i)\n",
+    "editorial": "The row index gives the star count directly. Pattern questions are a staple of service-company assessments because they check loop control and exact output formatting rather than any algorithm.",
+    "bruteForcePython": "n = int(input())\nout = []\nfor i in range(1, n+1):\n    s = \"\"\n    for _ in range(i): s += \"*\"\n    out.append(s)\nprint(\"\\n\".join(out))\n",
+    "concept": "Getting the loop bounds and the trailing newline exactly right is most of the marks.",
+    "hint": "How many stars does row i have?",
+    "companies": [
+      "tcs",
+      "infosys",
+      "wipro",
+      "capgemini",
+      "cognizant",
+      "accenture"
+    ],
+    "frequentlyAsked": true
+  },
+  {
+    "id": "COD-0102",
+    "title": "Print a Pyramid Pattern",
+    "body": "Print a centred pyramid of stars with N rows. Row i has i stars preceded by N−i spaces.",
+    "topic": "programming-fundamentals",
+    "difficulty": "easy",
+    "expectedSeconds": 360,
+    "inputFormat": "A single line containing N.",
+    "outputFormat": "N lines forming the pyramid.",
+    "constraints": "1 ≤ N ≤ 100",
+    "samples": [
+      {
+        "input": "3\n",
+        "expected": "*\n **\n***",
+        "explanation": "Rows are \"  *\", \" **\", \"***\"."
+      },
+      {
+        "input": "1\n",
+        "expected": "*",
+        "explanation": "A single star with no leading spaces."
+      }
+    ],
+    "hidden": [
+      {
+        "input": "2\n",
+        "expected": "*\n**"
+      },
+      {
+        "input": "5\n",
+        "expected": "*\n   **\n  ***\n ****\n*****"
+      }
+    ],
+    "referencePython": "n = int(input())\nfor i in range(1, n + 1):\n    print(\" \" * (n - i) + \"*\" * i)\n",
+    "editorial": "Each row needs both the leading spaces and the stars. The trap is trailing whitespace — printing spaces after the stars looks identical on screen but fails an exact-match judge.",
+    "bruteForcePython": "n = int(input())\nrows = []\nfor i in range(1, n+1):\n    rows.append((\" \" * (n-i)) + (\"*\" * i))\nprint(\"\\n\".join(rows))\n",
+    "concept": "Exact output matters: invisible trailing spaces are a common cause of a failed submission.",
+    "hint": "What comes before the stars on each row?",
+    "companies": [
+      "tcs",
+      "infosys",
+      "wipro",
+      "capgemini",
+      "cognizant",
+      "accenture"
+    ]
+  },
+  {
+    "id": "COD-0103",
+    "title": "Multiplication Table",
+    "body": "Print the multiplication table of N from 1 to 10, one line per row in the form \"N x i = result\".",
+    "topic": "programming-fundamentals",
+    "difficulty": "easy",
+    "expectedSeconds": 300,
+    "inputFormat": "A single line containing N.",
+    "outputFormat": "Ten lines of the multiplication table.",
+    "constraints": "1 ≤ N ≤ 1000",
+    "samples": [
+      {
+        "input": "3\n",
+        "expected": "3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9\n3 x 4 = 12\n3 x 5 = 15\n3 x 6 = 18\n3 x 7 = 21\n3 x 8 = 24\n3 x 9 = 27\n3 x 10 = 30",
+        "explanation": "Rows from 3 x 1 = 3 up to 3 x 10 = 30."
+      },
+      {
+        "input": "1\n",
+        "expected": "1 x 1 = 1\n1 x 2 = 2\n1 x 3 = 3\n1 x 4 = 4\n1 x 5 = 5\n1 x 6 = 6\n1 x 7 = 7\n1 x 8 = 8\n1 x 9 = 9\n1 x 10 = 10",
+        "explanation": "The table of one."
+      }
+    ],
+    "hidden": [
+      {
+        "input": "12\n",
+        "expected": "12 x 1 = 12\n12 x 2 = 24\n12 x 3 = 36\n12 x 4 = 48\n12 x 5 = 60\n12 x 6 = 72\n12 x 7 = 84\n12 x 8 = 96\n12 x 9 = 108\n12 x 10 = 120"
+      },
+      {
+        "input": "1000\n",
+        "expected": "1000 x 1 = 1000\n1000 x 2 = 2000\n1000 x 3 = 3000\n1000 x 4 = 4000\n1000 x 5 = 5000\n1000 x 6 = 6000\n1000 x 7 = 7000\n1000 x 8 = 8000\n1000 x 9 = 9000\n1000 x 10 = 10000"
+      }
+    ],
+    "referencePython": "n = int(input())\nfor i in range(1, 11):\n    print(f\"{n} x {i} = {n * i}\")\n",
+    "editorial": "A direct loop. The point of the exercise is producing an exactly specified output format, which is where most failed submissions actually lose their marks.",
+    "bruteForcePython": "n = int(input())\nout = []\nfor i in range(1, 11):\n    out.append(str(n) + \" x \" + str(i) + \" = \" + str(n*i))\nprint(\"\\n\".join(out))\n",
+    "concept": "Read the required format character by character before writing the loop.",
+    "hint": "Note the spaces around the x and the equals sign.",
+    "companies": [
+      "tcs",
+      "infosys",
+      "wipro",
+      "capgemini",
+      "cognizant",
+      "accenture"
+    ]
+  },
+  {
+    "id": "COD-0104",
+    "title": "Sum of First N Natural Numbers",
+    "body": "Print the sum of the integers from 1 to N.",
+    "topic": "programming-fundamentals",
+    "difficulty": "easy",
+    "expectedSeconds": 240,
+    "inputFormat": "A single line containing N.",
+    "outputFormat": "The sum.",
+    "constraints": "1 ≤ N ≤ 10^9",
+    "samples": [
+      {
+        "input": "10\n",
+        "expected": "55",
+        "explanation": "1 + 2 + … + 10 = 55."
+      },
+      {
+        "input": "1\n",
+        "expected": "1",
+        "explanation": "The sum of a single number."
+      }
+    ],
+    "hidden": [
+      {
+        "input": "100\n",
+        "expected": "5050"
+      },
+      {
+        "input": "1000000000\n",
+        "expected": "500000000500000000"
+      }
+    ],
+    "referencePython": "n = int(input())\nprint(n * (n + 1) // 2)\n",
+    "editorial": "The closed form n(n+1)/2 is O(1); a loop to 10^9 would time out. Using integer division rather than floating point avoids a precision error at large N.",
+    "bruteForcePython": "n = int(input())\nif n > 2000000:\n    print(n * (n + 1) // 2)\nelse:\n    s = 0\n    for i in range(1, n+1): s += i\n    print(s)\n",
+    "concept": "Check the constraints before writing a loop — 10^9 rules one out.",
+    "hint": "What is the largest N, and how long would a loop take?",
+    "companies": [
+      "tcs",
+      "infosys",
+      "wipro",
+      "capgemini",
+      "cognizant",
+      "accenture"
+    ],
+    "frequentlyAsked": true
+  },
+  {
+    "id": "COD-0105",
+    "title": "Count Digits in a Number",
+    "body": "Print how many decimal digits N has. Treat 0 as having one digit.",
+    "topic": "programming-fundamentals",
+    "difficulty": "easy",
+    "expectedSeconds": 240,
+    "inputFormat": "A single line containing N.",
+    "outputFormat": "The digit count.",
+    "constraints": "0 ≤ N ≤ 10^18",
+    "samples": [
+      {
+        "input": "12345\n",
+        "expected": "5",
+        "explanation": "Five digits."
+      },
+      {
+        "input": "0\n",
+        "expected": "1",
+        "explanation": "Zero is written with one digit."
+      }
+    ],
+    "hidden": [
+      {
+        "input": "9\n",
+        "expected": "1"
+      },
+      {
+        "input": "1000000000000000000\n",
+        "expected": "19"
+      }
+    ],
+    "referencePython": "n = int(input())\nprint(len(str(n)))\n",
+    "editorial": "Repeated division by ten counts the digits arithmetically, but a while-loop that runs only while n > 0 emits zero for the input 0 — which is why the zero case has to be handled explicitly.",
+    "bruteForcePython": "n = int(input())\nif n == 0:\n    print(1)\nelse:\n    c = 0\n    while n > 0:\n        n //= 10; c += 1\n    print(c)\n",
+    "concept": "Zero is the edge case in almost every digit-manipulation problem.",
+    "hint": "What does a while-n-greater-than-zero loop count for 0?",
+    "companies": [
+      "tcs",
+      "infosys",
+      "wipro",
+      "capgemini",
+      "cognizant",
+      "accenture"
+    ]
+  },
+  {
+    "id": "COD-0106",
+    "title": "Leap Year Check",
+    "body": "Print YES if the year Y is a leap year and NO otherwise.",
+    "topic": "programming-fundamentals",
+    "difficulty": "easy",
+    "expectedSeconds": 300,
+    "inputFormat": "A single line containing Y.",
+    "outputFormat": "YES or NO.",
+    "constraints": "1 ≤ Y ≤ 10^5",
+    "samples": [
+      {
+        "input": "2024\n",
+        "expected": "YES",
+        "explanation": "Divisible by 4 and not a century year."
+      },
+      {
+        "input": "1900\n",
+        "expected": "NO",
+        "explanation": "Divisible by 100 but not by 400, so it is not a leap year."
+      }
+    ],
+    "hidden": [
+      {
+        "input": "2000\n",
+        "expected": "YES"
+      },
+      {
+        "input": "2023\n",
+        "expected": "NO"
+      },
+      {
+        "input": "1600\n",
+        "expected": "YES"
+      },
+      {
+        "input": "2100\n",
+        "expected": "NO"
+      }
+    ],
+    "referencePython": "y = int(input())\nprint(\"YES\" if (y % 4 == 0 and y % 100 != 0) or y % 400 == 0 else \"NO\")\n",
+    "editorial": "The rule has three parts: divisible by 4, except centuries, except centuries divisible by 400. Testing only divisibility by 4 passes 2024 and fails 1900, which is exactly what the hidden cases check.",
+    "bruteForcePython": "y = int(input())\nres = \"NO\"\nif y % 400 == 0: res = \"YES\"\nelif y % 100 == 0: res = \"NO\"\nelif y % 4 == 0: res = \"YES\"\nprint(res)\n",
+    "concept": "A rule with exceptions to its exceptions needs every branch tested.",
+    "hint": "Is 1900 a leap year?",
+    "companies": [
+      "tcs",
+      "infosys",
+      "wipro",
+      "capgemini",
+      "cognizant",
+      "accenture"
+    ],
+    "frequentlyAsked": true
+  },
+  {
+    "id": "COD-0107",
+    "title": "Fibonacci Term",
+    "body": "Print the Nth Fibonacci number modulo 1000000007, where the first two terms are both 1.",
+    "topic": "recursion",
+    "difficulty": "easy",
+    "expectedSeconds": 360,
+    "inputFormat": "A single line containing N.",
+    "outputFormat": "The Nth Fibonacci number, modulo 1000000007.",
+    "constraints": "1 ≤ N ≤ 10^6",
+    "samples": [
+      {
+        "input": "7\n",
+        "expected": "13",
+        "explanation": "The sequence is 1 1 2 3 5 8 13, so the seventh term is 13."
+      },
+      {
+        "input": "1\n",
+        "expected": "1",
+        "explanation": "The first term is 1."
+      }
+    ],
+    "hidden": [
+      {
+        "input": "2\n",
+        "expected": "1"
+      },
+      {
+        "input": "50\n",
+        "expected": "586268941"
+      },
+      {
+        "input": "1000000\n",
+        "expected": "918091266"
+      }
+    ],
+    "referencePython": "M = 10**9 + 7\nn = int(input())\na, b = 1, 1\nfor _ in range(n - 1):\n    a, b = b, (a + b) % M\nprint(a % M)\n",
+    "editorial": "Two rolling variables give O(n). Naive recursion recomputes the same terms exponentially and becomes unusable around n = 40, which is why this is the standard example for memoisation.",
+    "bruteForcePython": "M = 10**9 + 7\nn = int(input())\nif n > 3000:\n    a, b = 1, 1\n    for _ in range(n-1): a, b = b, (a+b) % M\n    print(a % M)\nelse:\n    memo = {1: 1, 2: 1}\n    for i in range(3, n+1): memo[i] = (memo[i-1] + memo[i-2]) % M\n    print(memo[n] % M)\n",
+    "concept": "Iterating bottom-up avoids both the recomputation and the stack depth.",
+    "hint": "How many distinct values does the recursion actually need?",
+    "companies": [
+      "tcs",
+      "infosys",
+      "wipro",
+      "capgemini",
+      "cognizant",
+      "accenture"
+    ],
+    "frequentlyAsked": true
+  },
+  {
+    "id": "COD-0108",
+    "title": "Tower of Hanoi Moves",
+    "body": "Print the minimum number of moves needed to solve Tower of Hanoi with N disks, modulo 1000000007.",
+    "topic": "recursion",
+    "difficulty": "medium",
+    "expectedSeconds": 420,
+    "inputFormat": "A single line containing N.",
+    "outputFormat": "The move count, modulo 1000000007.",
+    "constraints": "1 ≤ N ≤ 10^6",
+    "samples": [
+      {
+        "input": "3\n",
+        "expected": "7",
+        "explanation": "Seven moves are needed."
+      },
+      {
+        "input": "1\n",
+        "expected": "1",
+        "explanation": "A single disk takes one move."
+      }
+    ],
+    "hidden": [
+      {
+        "input": "2\n",
+        "expected": "3"
+      },
+      {
+        "input": "20\n",
+        "expected": "1048575"
+      },
+      {
+        "input": "1000000\n",
+        "expected": "235042058"
+      }
+    ],
+    "referencePython": "M = 10**9 + 7\nn = int(input())\nprint((pow(2, n, M) - 1) % M)\n",
+    "editorial": "Moving n disks means moving n−1 aside, moving the largest, then moving n−1 back: T(n) = 2·T(n−1) + 1, which solves to 2^n − 1. Modular exponentiation keeps it fast for large n.",
+    "bruteForcePython": "M = 10**9 + 7\nn = int(input())\nif n > 100000:\n    print((pow(2, n, M) - 1) % M)\nelse:\n    t = 0\n    for _ in range(n): t = (2*t + 1) % M\n    print(t % M)\n",
+    "concept": "Recognising a recurrence lets you replace simulation with a formula.",
+    "hint": "What does moving n disks reduce to?",
+    "companies": [
+      "tcs",
+      "infosys",
+      "wipro",
+      "capgemini",
+      "cognizant",
+      "accenture"
+    ]
+  },
+  {
+    "id": "COD-0109",
+    "title": "Recursive Power with Modulo",
+    "body": "Print A raised to the power B, modulo 1000000007.",
+    "topic": "recursion",
+    "difficulty": "medium",
+    "expectedSeconds": 480,
+    "inputFormat": "A single line containing A and B.",
+    "outputFormat": "A^B modulo 1000000007.",
+    "constraints": "0 ≤ A ≤ 10^9, 0 ≤ B ≤ 10^18",
+    "samples": [
+      {
+        "input": "2 10\n",
+        "expected": "1024",
+        "explanation": "2^10 = 1024."
+      },
+      {
+        "input": "5 0\n",
+        "expected": "1",
+        "explanation": "Any number to the power zero is 1."
+      }
+    ],
+    "hidden": [
+      {
+        "input": "0 5\n",
+        "expected": "0"
+      },
+      {
+        "input": "3 100\n",
+        "expected": "886041711"
+      },
+      {
+        "input": "1000000000 1000000000000000000\n",
+        "expected": "259616729"
+      }
+    ],
+    "referencePython": "M = 10**9 + 7\na, b = map(int, input().split())\nprint(pow(a, b, M))\n",
+    "editorial": "Fast exponentiation squares the base and halves the exponent, giving O(log B) multiplications. A loop multiplying B times would never finish for B = 10^18, and taking the modulus at each step keeps the intermediate values bounded.",
+    "bruteForcePython": "M = 10**9 + 7\na, b = map(int, input().split())\nr = 1\nbase = a % M\ne = b\nwhile e > 0:\n    if e & 1: r = r * base % M\n    base = base * base % M\n    e >>= 1\nprint(r % M)\n",
+    "concept": "Halving the exponent turns an impossible loop into twenty iterations.",
+    "hint": "How many times can you halve 10^18?",
+    "companies": [
+      "amazon",
+      "adobe",
+      "qualcomm"
+    ],
+    "frequentlyAsked": true
+  },
+  {
+    "id": "COD-0110",
+    "title": "Reverse a String Recursively",
+    "body": "Print the reverse of a string.",
+    "topic": "recursion",
+    "difficulty": "easy",
+    "expectedSeconds": 300,
+    "inputFormat": "A single line containing the string.",
+    "outputFormat": "The reversed string.",
+    "constraints": "1 ≤ |S| ≤ 10^5",
+    "samples": [
+      {
+        "input": "hello\n",
+        "expected": "olleh",
+        "explanation": "Reversed gives olleh."
+      },
+      {
+        "input": "a\n",
+        "expected": "a",
+        "explanation": "A single character is its own reverse."
+      }
+    ],
+    "hidden": [
+      {
+        "input": "ab\n",
+        "expected": "ba"
+      },
+      {
+        "input": "racecar\n",
+        "expected": "racecar"
+      },
+      {
+        "input": "abcdefghij\n",
+        "expected": "jihgfedcba"
+      }
+    ],
+    "referencePython": "import sys\ns = sys.stdin.readline().rstrip(\"\\n\")\nprint(s[::-1])\n",
+    "editorial": "Recursively, the reverse of a string is the reverse of its tail followed by its head — but that recurses once per character and overflows the stack on a long string, which is why the iterative form is used in practice.",
+    "bruteForcePython": "import sys\ns = sys.stdin.readline().rstrip(\"\\n\")\nout = []\nfor i in range(len(s) - 1, -1, -1):\n    out.append(s[i])\nprint(\"\".join(out))\n",
+    "concept": "A recursion whose depth equals the input length will not survive a large input.",
+    "hint": "How deep would the recursion go for 100,000 characters?",
+    "companies": [
+      "tcs",
+      "infosys",
+      "wipro",
+      "capgemini",
+      "cognizant",
+      "accenture"
+    ]
+  },
+  {
+    "id": "COD-0111",
+    "title": "Linear Search First Occurrence",
+    "body": "Print the 0-based index of the first occurrence of X in an array, or -1 if it is absent.",
+    "topic": "searching",
+    "difficulty": "easy",
+    "expectedSeconds": 300,
+    "inputFormat": "The first line contains N and X. The second line contains N space-separated integers.",
+    "outputFormat": "The index, or -1.",
+    "constraints": "1 ≤ N ≤ 10^5",
+    "samples": [
+      {
+        "input": "5 3\n1 3 5 3 7\n",
+        "expected": "1",
+        "explanation": "The first 3 is at index 1."
+      },
+      {
+        "input": "3 9\n1 2 3\n",
+        "expected": "-1",
+        "explanation": "9 is not present."
+      }
+    ],
+    "hidden": [
+      {
+        "input": "1 1\n1\n",
+        "expected": "0"
+      },
+      {
+        "input": "4 4\n4 4 4 4\n",
+        "expected": "0"
+      },
+      {
+        "input": "5 -2\n1 -2 3 -2 5\n",
+        "expected": "1"
+      }
+    ],
+    "referencePython": "import sys\nd = sys.stdin.read().split()\nn, x = int(d[0]), int(d[1])\na = list(map(int, d[2:2+n]))\nans = -1\nfor i in range(n):\n    if a[i] == x:\n        ans = i; break\nprint(ans)\n",
+    "editorial": "Linear search is the right tool when the array is unsorted — binary search would need sorting first, costing more than the scan itself for a single query. Stopping at the first match is what makes it \"first occurrence\".",
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn, x = int(d[0]), int(d[1])\na = list(map(int, d[2:2+n]))\nprint(a.index(x) if x in a else -1)\n",
+    "concept": "For one query on unsorted data, scanning beats sorting then searching.",
+    "hint": "Why not sort the array first?",
+    "companies": [
+      "tcs",
+      "infosys",
+      "wipro",
+      "capgemini",
+      "cognizant",
+      "accenture"
+    ]
+  },
+  {
+    "id": "COD-0112",
+    "title": "Count Occurrences in Sorted Array",
+    "body": "Print how many times X appears in a sorted array.",
+    "topic": "searching",
+    "difficulty": "medium",
+    "expectedSeconds": 540,
+    "inputFormat": "The first line contains N and X. The second line contains N sorted integers.",
+    "outputFormat": "The number of occurrences.",
+    "constraints": "1 ≤ N ≤ 10^5",
+    "samples": [
+      {
+        "input": "7 2\n1 2 2 2 3 4 5\n",
+        "expected": "3",
+        "explanation": "2 appears three times."
+      },
+      {
+        "input": "5 9\n1 2 3 4 5\n",
+        "expected": "0",
+        "explanation": "9 does not appear."
+      }
+    ],
+    "hidden": [
+      {
+        "input": "1 1\n1\n",
+        "expected": "1"
+      },
+      {
+        "input": "5 5\n5 5 5 5 5\n",
+        "expected": "5"
+      },
+      {
+        "input": "6 1\n1 1 2 3 4 5\n",
+        "expected": "2"
+      }
+    ],
+    "referencePython": "import bisect, sys\nd = sys.stdin.read().split()\nn, x = int(d[0]), int(d[1])\na = list(map(int, d[2:2+n]))\nprint(bisect.bisect_right(a, x) - bisect.bisect_left(a, x))\n",
+    "editorial": "Two binary searches find the first and last positions, and their difference is the count — O(log n) rather than the O(n) of counting directly. This is the standard use of lower and upper bound.",
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn, x = int(d[0]), int(d[1])\na = list(map(int, d[2:2+n]))\nc = 0\nfor v in a:\n    if v == x: c += 1\nprint(c)\n",
+    "concept": "Lower bound and upper bound turn \"how many\" into two searches.",
+    "hint": "Where does the run of X start, and where does it end?",
+    "companies": [
+      "amazon",
+      "microsoft",
+      "adobe"
+    ]
+  },
+  {
+    "id": "COD-0113",
+    "title": "Square Root Floor",
+    "body": "Print the integer part of the square root of N without using a square-root function.",
+    "topic": "searching",
+    "difficulty": "medium",
+    "expectedSeconds": 480,
+    "inputFormat": "A single line containing N.",
+    "outputFormat": "The floor of the square root of N.",
+    "constraints": "0 ≤ N ≤ 10^18",
+    "samples": [
+      {
+        "input": "10\n",
+        "expected": "3",
+        "explanation": "3 squared is 9 and 4 squared is 16, so the answer is 3."
+      },
+      {
+        "input": "16\n",
+        "expected": "4",
+        "explanation": "16 is a perfect square."
+      }
+    ],
+    "hidden": [
+      {
+        "input": "0\n",
+        "expected": "0"
+      },
+      {
+        "input": "1\n",
+        "expected": "1"
+      },
+      {
+        "input": "999999999999999999\n",
+        "expected": "999999999"
+      },
+      {
+        "input": "1000000000000000000\n",
+        "expected": "1000000000"
+      }
+    ],
+    "referencePython": "n = int(input())\nlo, hi, ans = 0, n, 0\nwhile lo <= hi:\n    mid = (lo + hi) // 2\n    if mid * mid <= n:\n        ans = mid; lo = mid + 1\n    else:\n        hi = mid - 1\nprint(ans)\n",
+    "editorial": "Binary search on the answer: the predicate \"mid squared is at most n\" is monotonic, so the largest mid satisfying it is the answer. Floating-point sqrt can be off by one at 10^18, which is why the integer search is the safe route.",
+    "bruteForcePython": "n = int(input())\nif n > 1000000:\n    lo, hi, ans = 0, n, 0\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        if mid * mid <= n: ans = mid; lo = mid + 1\n        else: hi = mid - 1\n    print(ans)\nelse:\n    i = 0\n    while (i+1) * (i+1) <= n: i += 1\n    print(i)\n",
+    "concept": "Binary search on the answer works whenever the check is monotonic.",
+    "hint": "Why not trust a floating-point square root at 10^18?",
+    "companies": [
+      "amazon",
+      "qualcomm",
+      "adobe"
+    ],
+    "frequentlyAsked": true
+  },
+  {
+    "id": "COD-0114",
+    "title": "Insert Into Sorted Linked List (array form)",
+    "body": "A sorted list is given as N values. Insert X keeping the order, and print the result.",
+    "topic": "linked-lists",
+    "difficulty": "easy",
+    "expectedSeconds": 420,
+    "inputFormat": "The first line contains N and X. The second line contains N sorted integers.",
+    "outputFormat": "The list after insertion, space-separated.",
+    "constraints": "1 ≤ N ≤ 10^5",
+    "samples": [
+      {
+        "input": "4 3\n1 2 4 5\n",
+        "expected": "1 2 3 4 5",
+        "explanation": "3 belongs between 2 and 4."
+      },
+      {
+        "input": "3 0\n1 2 3\n",
+        "expected": "0 1 2 3",
+        "explanation": "0 goes at the front."
+      }
+    ],
+    "hidden": [
+      {
+        "input": "1 5\n1\n",
+        "expected": "1 5"
+      },
+      {
+        "input": "3 10\n1 2 3\n",
+        "expected": "1 2 3 10"
+      },
+      {
+        "input": "4 2\n2 2 2 2\n",
+        "expected": "2 2 2 2 2"
+      }
+    ],
+    "referencePython": "import bisect, sys\nd = sys.stdin.read().split()\nn, x = int(d[0]), int(d[1])\na = list(map(int, d[2:2+n]))\nbisect.insort(a, x)\nprint(\" \".join(map(str, a)))\n",
+    "editorial": "On a real linked list you walk until the next node exceeds X, then splice in — the insertion itself is O(1) once the position is found, but finding it is O(n) because a list has no random access.",
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn, x = int(d[0]), int(d[1])\na = list(map(int, d[2:2+n]))\nout = []\nplaced = False\nfor v in a:\n    if not placed and x <= v:\n        out.append(x); placed = True\n    out.append(v)\nif not placed: out.append(x)\nprint(\" \".join(map(str, out)))\n",
+    "concept": "A linked list has cheap insertion but expensive search — the opposite of an array.",
+    "hint": "Why can you not binary-search a linked list?",
+    "companies": [
+      "tcs",
+      "amazon"
+    ]
+  },
+  {
+    "id": "COD-0115",
+    "title": "Middle of a Linked List (array form)",
+    "body": "A list is given as N values. Print the middle value; for an even count print the second of the two middles.",
+    "topic": "linked-lists",
+    "difficulty": "easy",
+    "expectedSeconds": 420,
+    "inputFormat": "The first line contains N. The second line contains N values.",
+    "outputFormat": "The middle value.",
+    "constraints": "1 ≤ N ≤ 10^5",
+    "samples": [
+      {
+        "input": "5\n1 2 3 4 5\n",
+        "expected": "3",
+        "explanation": "The middle of five values is the third."
+      },
+      {
+        "input": "4\n1 2 3 4\n",
+        "expected": "3",
+        "explanation": "With four values the second middle is 3."
+      }
+    ],
+    "hidden": [
+      {
+        "input": "1\n7\n",
+        "expected": "7"
+      },
+      {
+        "input": "2\n1 2\n",
+        "expected": "2"
+      },
+      {
+        "input": "6\n1 2 3 4 5 6\n",
+        "expected": "4"
+      }
+    ],
+    "referencePython": "import sys\nd = sys.stdin.read().split()\nn = int(d[0])\na = d[1:1+n]\nprint(a[n // 2])\n",
+    "editorial": "On a real linked list you cannot index, so the classic solution advances a slow pointer one node and a fast pointer two: when the fast one reaches the end, the slow one is at the middle. One pass, no length count needed.",
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn = int(d[0])\na = d[1:1+n]\nslow = 0\nfast = 0\nwhile fast < n and fast + 1 < n:\n    slow += 1; fast += 2\nprint(a[slow])\n",
+    "concept": "Two pointers at different speeds find the middle without knowing the length.",
+    "hint": "How would you do this without counting the nodes first?",
+    "companies": [
+      "amazon",
+      "microsoft"
+    ],
+    "frequentlyAsked": true
+  },
+  {
+    "id": "COD-0116",
+    "title": "Count Leaf Nodes",
+    "body": "A binary tree is given in level order with -1 for absent nodes. Print how many leaves it has.",
+    "topic": "trees",
+    "difficulty": "easy",
+    "expectedSeconds": 480,
+    "inputFormat": "The first line contains N. The second line contains N values in level order.",
+    "outputFormat": "The number of leaf nodes.",
+    "constraints": "1 ≤ N ≤ 10^5",
+    "samples": [
+      {
+        "input": "7\n1 2 3 4 5 6 7\n",
+        "expected": "4",
+        "explanation": "The four nodes on the bottom level are all leaves."
+      },
+      {
+        "input": "1\n5\n",
+        "expected": "1",
+        "explanation": "A single node is itself a leaf."
+      }
+    ],
+    "hidden": [
+      {
+        "input": "3\n1 2 -1\n",
+        "expected": "1"
+      },
+      {
+        "input": "7\n1 2 3 -1 -1 -1 -1\n",
+        "expected": "2"
+      },
+      {
+        "input": "5\n1 2 3 4 -1\n",
+        "expected": "2"
+      }
+    ],
+    "referencePython": "import sys\nd = sys.stdin.read().split()\nn = int(d[0])\na = d[1:1+n]\ndef real(i): return 0 <= i < n and a[i] != \"-1\"\nprint(sum(1 for i in range(n) if real(i) and not real(2*i+1) and not real(2*i+2)))\n",
+    "editorial": "A leaf is a real node with no real children. In the array form both children are index arithmetic, so one pass answers it; on a linked tree the same check runs during any traversal.",
+    "bruteForcePython": "import sys\nfrom collections import deque\nd = sys.stdin.read().split()\nn = int(d[0])\na = d[1:1+n]\nif n == 0 or a[0] == \"-1\":\n    print(0)\nelse:\n    c = 0\n    q = deque([0])\n    while q:\n        i = q.popleft()\n        kids = [k for k in (2*i+1, 2*i+2) if k < n and a[k] != \"-1\"]\n        if not kids: c += 1\n        q.extend(kids)\n    print(c)\n",
+    "concept": "\"No children\" is the definition of a leaf — check both sides.",
+    "hint": "What makes a node a leaf?",
+    "companies": [
+      "amazon",
+      "adobe"
+    ]
+  },
+  {
+    "id": "COD-0117",
+    "title": "Mirror a Binary Tree Check",
+    "body": "Two binary trees are given in level order. Print YES if the second is the mirror image of the first.",
+    "topic": "trees",
+    "difficulty": "medium",
+    "expectedSeconds": 660,
+    "inputFormat": "The first line contains N. The second line contains N values for tree A. The third contains N values for tree B.",
+    "outputFormat": "YES or NO.",
+    "constraints": "1 ≤ N ≤ 10^5",
+    "samples": [
+      {
+        "input": "3\n1 2 3\n1 3 2\n",
+        "expected": "YES",
+        "explanation": "The children are swapped, so B mirrors A."
+      },
+      {
+        "input": "3\n1 2 3\n1 2 3\n",
+        "expected": "NO",
+        "explanation": "The trees are identical, not mirrored."
+      }
+    ],
+    "hidden": [
+      {
+        "input": "1\n5\n5\n",
+        "expected": "YES"
+      },
+      {
+        "input": "1\n5\n6\n",
+        "expected": "NO"
+      },
+      {
+        "input": "7\n1 2 3 4 5 6 7\n1 3 2 7 6 5 4\n",
+        "expected": "YES"
+      }
+    ],
+    "referencePython": "import sys\nd = sys.stdin.read().split()\nn = int(d[0])\na = d[1:1+n]\nb = d[1+n:1+2*n]\ndef ok(i, j):\n    ai = a[i] if 0 <= i < n else \"-1\"\n    bj = b[j] if 0 <= j < n else \"-1\"\n    if ai == \"-1\" and bj == \"-1\": return True\n    if ai == \"-1\" or bj == \"-1\" or ai != bj: return False\n    return ok(2*i+1, 2*j+2) and ok(2*i+2, 2*j+1)\nsys.setrecursionlimit(300000)\nprint(\"YES\" if ok(0, 0) else \"NO\")\n",
+    "editorial": "Two trees mirror each other when their roots match and A’s left mirrors B’s right and vice versa. Comparing left with left would test equality instead, which is what the second sample distinguishes.",
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn = int(d[0])\na = d[1:1+n]\nb = d[1+n:1+2*n]\nstack = [(0, 0)]\nres = \"YES\"\nwhile stack:\n    i, j = stack.pop()\n    ai = a[i] if 0 <= i < n else \"-1\"\n    bj = b[j] if 0 <= j < n else \"-1\"\n    if ai == \"-1\" and bj == \"-1\": continue\n    if ai == \"-1\" or bj == \"-1\" or ai != bj:\n        res = \"NO\"; break\n    stack.append((2*i+1, 2*j+2))\n    stack.append((2*i+2, 2*j+1))\nprint(res)\n",
+    "concept": "Mirroring pairs left with right, which is the only change from an equality check.",
+    "hint": "Which subtree of B should A’s left subtree be compared against?",
+    "companies": [
+      "amazon",
+      "microsoft"
+    ]
+  },
+  {
+    "id": "COD-0118",
+    "title": "Heap Sort Output",
+    "body": "Print N integers in ascending order using a heap-based method.",
+    "topic": "heaps",
+    "difficulty": "medium",
+    "expectedSeconds": 540,
+    "inputFormat": "The first line contains N. The second line contains N space-separated integers.",
+    "outputFormat": "The sorted values, space-separated.",
+    "constraints": "1 ≤ N ≤ 10^5",
+    "samples": [
+      {
+        "input": "5\n4 1 3 5 2\n",
+        "expected": "1 2 3 4 5",
+        "explanation": "Extracting the minimum repeatedly yields ascending order."
+      },
+      {
+        "input": "1\n9\n",
+        "expected": "9",
+        "explanation": "A single value is already sorted."
+      }
+    ],
+    "hidden": [
+      {
+        "input": "3\n3 3 3\n",
+        "expected": "3 3 3"
+      },
+      {
+        "input": "4\n-1 -5 0 2\n",
+        "expected": "-5 -1 0 2"
+      },
+      {
+        "input": "6\n6 5 4 3 2 1\n",
+        "expected": "1 2 3 4 5 6"
+      }
+    ],
+    "referencePython": "import heapq, sys\nd = sys.stdin.read().split()\nn = int(d[0])\na = list(map(int, d[1:1+n]))\nheapq.heapify(a)\nout = [heapq.heappop(a) for _ in range(n)]\nprint(\" \".join(map(str, out)))\n",
+    "editorial": "Heapifying is O(n) and each of the n extractions is O(log n), so heap sort is O(n log n) with O(1) extra space in the in-place form. Unlike merge sort it is not stable, which matters when sorting by a secondary key.",
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn = int(d[0])\nprint(\" \".join(map(str, sorted(map(int, d[1:1+n])))))\n",
+    "concept": "Heapify is linear; the log factor comes from the extractions.",
+    "hint": "What is the cost of building the heap versus emptying it?",
+    "companies": [
+      "amazon",
+      "adobe"
+    ]
+  },
+  {
+    "id": "COD-0119",
+    "title": "Kth Smallest Element",
+    "body": "Print the Kth smallest value of N integers, counting duplicates separately.",
+    "topic": "heaps",
+    "difficulty": "medium",
+    "expectedSeconds": 540,
+    "inputFormat": "The first line contains N and K. The second line contains N space-separated integers.",
+    "outputFormat": "The Kth smallest value.",
+    "constraints": "1 ≤ K ≤ N ≤ 10^5",
+    "samples": [
+      {
+        "input": "5 2\n7 10 4 3 20\n",
+        "expected": "4",
+        "explanation": "Sorted ascending gives 3 4 7 10 20, so the second smallest is 4."
+      },
+      {
+        "input": "3 3\n1 1 1\n",
+        "expected": "1",
+        "explanation": "All values are equal."
+      }
+    ],
+    "hidden": [
+      {
+        "input": "1 1\n5\n",
+        "expected": "5"
+      },
+      {
+        "input": "4 4\n4 3 2 1\n",
+        "expected": "4"
+      },
+      {
+        "input": "5 1\n-1 -2 -3 -4 -5\n",
+        "expected": "-5"
+      }
+    ],
+    "referencePython": "import heapq, sys\nd = sys.stdin.read().split()\nn, k = int(d[0]), int(d[1])\na = list(map(int, d[2:2+n]))\nprint(heapq.nsmallest(k, a)[-1])\n",
+    "editorial": "A max-heap of size K holds the K smallest seen so far, with its root being the largest of them — the one to evict. That gives O(n log k), better than sorting everything when K is small.",
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn, k = int(d[0]), int(d[1])\nprint(sorted(map(int, d[2:2+n]))[k-1])\n",
+    "concept": "For \"Kth smallest\", the heap holds the candidates and its root is the next to drop.",
+    "hint": "Which of your K candidates would you evict first?",
+    "companies": [
+      "amazon",
+      "google",
+      "adobe"
+    ]
+  },
+  {
+    "id": "COD-0120",
+    "title": "Bubble Sort Passes",
+    "body": "Print how many full passes bubble sort needs before an array of N integers is sorted, where a pass making no swap still counts as the final pass.",
+    "topic": "sorting",
+    "difficulty": "medium",
+    "expectedSeconds": 540,
+    "inputFormat": "The first line contains N. The second line contains N space-separated integers.",
+    "outputFormat": "The number of passes.",
+    "constraints": "1 ≤ N ≤ 2000",
+    "samples": [
+      {
+        "input": "5\n5 1 4 2 8\n",
+        "expected": "3",
+        "explanation": "Three passes are needed before a pass makes no swaps."
+      },
+      {
+        "input": "3\n1 2 3\n",
+        "expected": "1",
+        "explanation": "Already sorted, so a single pass confirms it."
+      }
+    ],
+    "hidden": [
+      {
+        "input": "1\n1\n",
+        "expected": "1"
+      },
+      {
+        "input": "4\n4 3 2 1\n",
+        "expected": "4"
+      },
+      {
+        "input": "5\n2 1 2 1 2\n",
+        "expected": "3"
+      }
+    ],
+    "referencePython": "import sys\nd = sys.stdin.read().split()\nn = int(d[0])\na = list(map(int, d[1:1+n]))\npasses = 0\nwhile True:\n    passes += 1\n    swapped = False\n    for i in range(n - 1):\n        if a[i] > a[i+1]:\n            a[i], a[i+1] = a[i+1], a[i]; swapped = True\n    if not swapped: break\nprint(passes)\n",
+    "editorial": "The early-exit flag is what makes bubble sort O(n) on already-sorted input rather than always O(n²). Counting passes makes that adaptivity visible, which is the point of the exercise.",
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn = int(d[0])\na = list(map(int, d[1:1+n]))\np = 0\nwhile a != sorted(a):\n    p += 1\n    for i in range(n-1):\n        if a[i] > a[i+1]: a[i], a[i+1] = a[i+1], a[i]\nprint(p + 1)\n",
+    "concept": "The swapped flag is what makes bubble sort adaptive.",
+    "hint": "What happens on a pass that makes no swaps?",
+    "companies": [
+      "tcs",
+      "infosys",
+      "wipro",
+      "capgemini",
+      "cognizant",
+      "accenture"
+    ]
   }
 ]

@@ -6523,5 +6523,3554 @@
     "subtopic": "dp-strings",
     "concept": "Fill order must follow the dependency direction of the recurrence.",
     "hint": "Which cell must already be computed before dp[i][j] can be?"
+  },
+  {
+    "id": "DBM-0012",
+    "body": "A table stores (student_id, course_id, student_name, course_fee). Which normal form does it violate first?",
+    "topic": "dbms",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Second normal form, because student_name depends on only part of the composite key",
+        "correct": true
+      },
+      {
+        "body": "First normal form, because a column holds multiple values",
+        "whyWrong": "Every column here holds a single atomic value, so 1NF is satisfied."
+      },
+      {
+        "body": "Third normal form, because of a transitive dependency",
+        "whyWrong": "A partial dependency on the composite key breaks 2NF first, before any 3NF question arises."
+      },
+      {
+        "body": "Boyce-Codd normal form, because of an overlapping candidate key",
+        "whyWrong": "BCNF violations are considered only once 3NF holds."
+      }
+    ],
+    "explanation": "The key is (student_id, course_id). student_name depends on student_id alone and course_fee on course_id alone — both partial dependencies, which is exactly what 2NF forbids.",
+    "subtopic": "normalization",
+    "concept": "Partial dependency on part of a composite key = 2NF violation.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DBM-0013",
+    "body": "A relation has key emp_id and columns dept_id and dept_head, where dept_head is determined by dept_id. Which normal form is violated?",
+    "topic": "dbms",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Third normal form, because dept_head depends transitively on the key",
+        "correct": true
+      },
+      {
+        "body": "Second normal form",
+        "whyWrong": "The key is a single attribute, so no partial dependency is possible and 2NF holds."
+      },
+      {
+        "body": "First normal form",
+        "whyWrong": "All values are atomic, so 1NF holds."
+      },
+      {
+        "body": "No normal form is violated",
+        "whyWrong": "A non-key attribute determining another non-key attribute is precisely a 3NF violation."
+      }
+    ],
+    "explanation": "emp_id determines dept_id, and dept_id determines dept_head, so dept_head depends on the key only transitively. 3NF forbids exactly that.",
+    "subtopic": "normalization",
+    "concept": "Non-key attribute determining another non-key attribute = 3NF violation."
+  },
+  {
+    "id": "DBM-0014",
+    "body": "What does the isolation level READ COMMITTED prevent that READ UNCOMMITTED does not?",
+    "topic": "dbms",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Dirty reads — seeing rows written by a transaction that has not yet committed",
+        "correct": true
+      },
+      {
+        "body": "Non-repeatable reads",
+        "whyWrong": "READ COMMITTED still allows a row to change between two reads in the same transaction."
+      },
+      {
+        "body": "Phantom reads",
+        "whyWrong": "Phantoms are prevented only at SERIALIZABLE (or with range locks)."
+      },
+      {
+        "body": "Lost updates",
+        "whyWrong": "Lost updates are not addressed by moving from READ UNCOMMITTED to READ COMMITTED."
+      }
+    ],
+    "explanation": "READ COMMITTED guarantees every row you read was committed at the moment you read it, eliminating dirty reads. Rows can still change between two reads in the same transaction.",
+    "subtopic": "transactions-acid",
+    "concept": "Dirty read → READ COMMITTED. Non-repeatable read → REPEATABLE READ. Phantom → SERIALIZABLE.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DBM-0015",
+    "body": "Two transactions each read a row and then write it back with an increment. Both start from the same value. What anomaly is this?",
+    "topic": "dbms",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A lost update — one increment overwrites the other",
+        "correct": true
+      },
+      {
+        "body": "A dirty read",
+        "whyWrong": "Neither transaction reads uncommitted data; both read a committed value."
+      },
+      {
+        "body": "A phantom read",
+        "whyWrong": "Phantoms concern rows appearing in a repeated range query, not a single row."
+      },
+      {
+        "body": "A deadlock",
+        "whyWrong": "Nothing here forces either transaction to wait on the other."
+      }
+    ],
+    "explanation": "Both read the same starting value and both write value+1, so the second write silently discards the first increment. The fix is an atomic update, SELECT FOR UPDATE, or optimistic version checking.",
+    "subtopic": "transactions-acid",
+    "concept": "Read-modify-write without locking or an atomic UPDATE loses one of the writes."
+  },
+  {
+    "id": "DBM-0016",
+    "body": "What is the durability guarantee in ACID?",
+    "topic": "dbms",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Once a transaction commits, its effects survive a crash or power loss",
+        "correct": true
+      },
+      {
+        "body": "A transaction sees a consistent snapshot for its whole duration",
+        "whyWrong": "That describes isolation, not durability."
+      },
+      {
+        "body": "All of a transaction's statements succeed or none do",
+        "whyWrong": "That is atomicity."
+      },
+      {
+        "body": "The database never violates its declared constraints",
+        "whyWrong": "That is consistency."
+      }
+    ],
+    "explanation": "Durability means a committed transaction is on stable storage — typically because the write-ahead log entry was flushed before the commit was acknowledged.",
+    "subtopic": "transactions-acid",
+    "concept": "Durability is what the write-ahead log buys you: commit acknowledged means recoverable."
+  },
+  {
+    "id": "DBM-0017",
+    "body": "A query filters on a low-cardinality column such as gender over a 50-million-row table. Why may an index not help?",
+    "topic": "dbms",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Each value matches a large fraction of the table, so the planner prefers a sequential scan over many random row lookups",
+        "correct": true
+      },
+      {
+        "body": "Indexes cannot be built on low-cardinality columns",
+        "whyWrong": "They can; the question is whether the planner will use them."
+      },
+      {
+        "body": "The index would be larger than the table",
+        "whyWrong": "A single-column index is far smaller than a wide table."
+      },
+      {
+        "body": "Low-cardinality columns cannot be compared with equality",
+        "whyWrong": "Equality comparison works regardless of cardinality."
+      }
+    ],
+    "explanation": "An index is worthwhile when it eliminates most rows. If a value matches, say, half the table, following the index means millions of random heap lookups — usually slower than reading the table sequentially.",
+    "subtopic": "indexing",
+    "concept": "Indexes pay off at low selectivity ratios; a scan wins when a predicate matches a large share of rows."
+  },
+  {
+    "id": "DBM-0018",
+    "body": "A composite index exists on (last_name, first_name). Which query can use it effectively?",
+    "topic": "dbms",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "WHERE last_name = 'Rao' AND first_name = 'Asha'",
+        "correct": true
+      },
+      {
+        "body": "WHERE first_name = 'Asha'",
+        "whyWrong": "A composite index cannot be seeked on its second column alone; the leading column must be constrained."
+      },
+      {
+        "body": "WHERE UPPER(last_name) = 'RAO'",
+        "whyWrong": "Wrapping the column in a function prevents an index seek unless an expression index exists."
+      },
+      {
+        "body": "WHERE last_name LIKE '%ao'",
+        "whyWrong": "A leading wildcard makes the prefix unknown, so no range can be located."
+      }
+    ],
+    "explanation": "A B-tree composite index is ordered by its leading column first. Queries must constrain that leading column — and must leave it unwrapped by functions — for a seek to be possible.",
+    "subtopic": "indexing",
+    "concept": "Leftmost-prefix rule: constrain columns from the left, and never wrap the column in a function.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DBM-0019",
+    "body": "What is the practical difference between a clustered and a non-clustered index?",
+    "topic": "dbms",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A clustered index determines the physical order of the rows, so a table can have only one",
+        "correct": true
+      },
+      {
+        "body": "A clustered index is always faster for every query",
+        "whyWrong": "Clustering helps range scans on the clustering key; it does not help all queries."
+      },
+      {
+        "body": "A non-clustered index cannot be unique",
+        "whyWrong": "Non-clustered indexes can certainly enforce uniqueness."
+      },
+      {
+        "body": "A clustered index stores only the key, not the row",
+        "whyWrong": "It is the opposite: the clustered index holds the full rows at its leaves."
+      }
+    ],
+    "explanation": "The clustered index is the table: its leaf level holds the actual rows in key order. Since rows can be stored in only one order, there is at most one clustered index per table.",
+    "subtopic": "indexing",
+    "concept": "Clustered index = the table itself, in key order. Everything else points into it."
+  },
+  {
+    "id": "DBM-0020",
+    "body": "In an ER diagram, how is a many-to-many relationship between Student and Course implemented relationally?",
+    "topic": "dbms",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "With a junction table holding student_id and course_id as a composite key",
+        "correct": true
+      },
+      {
+        "body": "With a foreign key from Course to Student",
+        "whyWrong": "A single foreign key can only express many-to-one."
+      },
+      {
+        "body": "With a foreign key from Student to Course",
+        "whyWrong": "This has the same limitation in the other direction."
+      },
+      {
+        "body": "With a repeating course_id column on Student",
+        "whyWrong": "Repeating groups violate first normal form and cap the relationship arbitrarily."
+      }
+    ],
+    "explanation": "Relational tables cannot express many-to-many directly. The standard resolution is an associative (junction) table whose primary key is the pair of foreign keys.",
+    "subtopic": "er-modelling",
+    "concept": "Every M:N relationship becomes a third table.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DBM-0021",
+    "body": "What distinguishes a weak entity in an ER model?",
+    "topic": "dbms",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "It has no key of its own and is identified only in combination with its owner entity",
+        "correct": true
+      },
+      {
+        "body": "It has fewer attributes than other entities",
+        "whyWrong": "Attribute count has nothing to do with weakness."
+      },
+      {
+        "body": "It participates in no relationships",
+        "whyWrong": "A weak entity necessarily participates in an identifying relationship."
+      },
+      {
+        "body": "It can be deleted without affecting other entities",
+        "whyWrong": "The opposite holds: deleting the owner removes the weak entity."
+      }
+    ],
+    "explanation": "A weak entity lacks a sufficient key of its own — an OrderLine is identified only as line n of order m — so its primary key includes the owner's key.",
+    "subtopic": "er-modelling",
+    "concept": "Weak entity: partial key + owner key = primary key."
+  },
+  {
+    "id": "DBM-0022",
+    "body": "What does ON DELETE CASCADE do on a foreign key?",
+    "topic": "dbms",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Deleting the parent row automatically deletes the child rows that reference it",
+        "correct": true
+      },
+      {
+        "body": "It prevents the parent row from being deleted while children exist",
+        "whyWrong": "That is ON DELETE RESTRICT or NO ACTION."
+      },
+      {
+        "body": "It sets the child's foreign key to NULL when the parent is deleted",
+        "whyWrong": "That is ON DELETE SET NULL."
+      },
+      {
+        "body": "It deletes the parent when the last child is deleted",
+        "whyWrong": "No referential action works in that direction."
+      }
+    ],
+    "explanation": "CASCADE propagates the delete downward from parent to children, keeping referential integrity without an application-level cleanup step.",
+    "concept": "CASCADE deletes downward; RESTRICT blocks; SET NULL orphans the child."
+  },
+  {
+    "id": "DBM-0023",
+    "body": "Why does a database use a write-ahead log?",
+    "topic": "dbms",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "So a commit can be acknowledged after a small sequential log write, with the data pages flushed later",
+        "correct": true
+      },
+      {
+        "body": "To keep a readable history of all queries executed",
+        "whyWrong": "The WAL records page changes for recovery, not a query audit trail."
+      },
+      {
+        "body": "To compress the data files",
+        "whyWrong": "Compression is unrelated to the WAL's purpose."
+      },
+      {
+        "body": "To allow queries to run without acquiring any locks",
+        "whyWrong": "Some engines use the log for MVCC snapshots, but that is not why the WAL exists."
+      }
+    ],
+    "explanation": "Writing a small sequential log record is far cheaper than flushing scattered data pages. The log makes the commit durable immediately, and recovery replays it to rebuild any pages lost in a crash.",
+    "concept": "WAL turns many random writes into one sequential write, and makes crash recovery replayable."
+  },
+  {
+    "id": "DBM-0024",
+    "body": "What is the difference between DELETE and TRUNCATE?",
+    "topic": "dbms",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "DELETE removes rows one at a time and can be filtered; TRUNCATE removes all rows as a single operation",
+        "correct": true
+      },
+      {
+        "body": "TRUNCATE can be rolled back but DELETE cannot",
+        "whyWrong": "Both are transactional in most engines; the claim is reversed for those where it differs."
+      },
+      {
+        "body": "DELETE removes the table structure as well",
+        "whyWrong": "That is DROP TABLE."
+      },
+      {
+        "body": "TRUNCATE accepts a WHERE clause",
+        "whyWrong": "TRUNCATE has no WHERE clause — that is its main limitation."
+      }
+    ],
+    "explanation": "DELETE is a normal DML statement: row by row, filterable, and fires row triggers. TRUNCATE deallocates the storage wholesale, which is much faster but all-or-nothing.",
+    "concept": "DELETE = filtered and per-row. TRUNCATE = whole table, no WHERE.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DBM-0025",
+    "body": "A stored procedure and a view are both used to encapsulate a query. What is the key difference?",
+    "topic": "dbms",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A view is referenced like a table in a query; a procedure is invoked and can contain control flow and multiple statements",
+        "correct": true
+      },
+      {
+        "body": "A view always stores its results physically",
+        "whyWrong": "Only a materialised view does; an ordinary view is a stored query definition."
+      },
+      {
+        "body": "A procedure cannot take parameters",
+        "whyWrong": "Parameters are one of a procedure's main features."
+      },
+      {
+        "body": "A view can modify data but a procedure cannot",
+        "whyWrong": "Procedures routinely modify data; views are updatable only in restricted cases."
+      }
+    ],
+    "explanation": "A view is a named query you can select from and join against. A procedure is executable code — parameters, branching, loops, several statements — invoked rather than queried.",
+    "concept": "View = a virtual table. Procedure = a callable routine."
+  },
+  {
+    "id": "DBM-0026",
+    "body": "What problem does a materialised view solve that a normal view does not?",
+    "topic": "dbms",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "It stores the computed result, so an expensive aggregation is not recomputed on every read",
+        "correct": true
+      },
+      {
+        "body": "It guarantees the result is always current",
+        "whyWrong": "A materialised view is only as fresh as its last refresh — that is its main trade-off."
+      },
+      {
+        "body": "It allows joins across databases",
+        "whyWrong": "Cross-database access is unrelated to materialisation."
+      },
+      {
+        "body": "It enforces referential integrity",
+        "whyWrong": "Integrity is enforced by constraints, not by views."
+      }
+    ],
+    "explanation": "A materialised view trades freshness for speed: the result is persisted and refreshed on a schedule or on demand, so heavy aggregations are paid for once instead of per query.",
+    "concept": "Materialised view = a cached query result, with staleness as the price."
+  },
+  {
+    "id": "DBM-0027",
+    "body": "Which situation makes a NoSQL document store a better fit than a relational database?",
+    "topic": "dbms",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Records with varying, evolving shapes that are almost always read whole by their own id",
+        "correct": true
+      },
+      {
+        "body": "Data requiring multi-row transactions across several entity types",
+        "whyWrong": "That is the classic strength of a relational engine."
+      },
+      {
+        "body": "Data queried mainly through ad-hoc joins across many tables",
+        "whyWrong": "Joins are exactly what document stores handle poorly."
+      },
+      {
+        "body": "Any dataset larger than a few gigabytes",
+        "whyWrong": "Relational databases handle far larger datasets routinely; size alone decides nothing."
+      }
+    ],
+    "explanation": "Document stores suit self-contained aggregates with irregular fields fetched by key. Once your access pattern is ad-hoc joins or cross-entity transactions, a relational engine is usually the better tool.",
+    "concept": "Choose by access pattern, not by data volume."
+  },
+  {
+    "id": "SQL-0015",
+    "body": "Which join returns every row from the left table, with NULLs where the right table has no match?",
+    "topic": "sql",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "LEFT OUTER JOIN",
+        "correct": true
+      },
+      {
+        "body": "INNER JOIN",
+        "whyWrong": "An inner join drops left rows that have no match."
+      },
+      {
+        "body": "RIGHT OUTER JOIN",
+        "whyWrong": "That preserves the right table instead."
+      },
+      {
+        "body": "CROSS JOIN",
+        "whyWrong": "A cross join pairs every left row with every right row and has no match condition."
+      }
+    ],
+    "explanation": "A LEFT OUTER JOIN preserves all rows of the left table; unmatched right-side columns come back as NULL.",
+    "subtopic": "joins",
+    "concept": "LEFT JOIN keeps the left side whole. Filtering the right side in WHERE silently turns it back into an inner join.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "SQL-0016",
+    "body": "A LEFT JOIN is written and then filtered with \"WHERE right_table.status = 'active'\". What happens?",
+    "topic": "sql",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "The join behaves as an inner join, because the NULL rows fail the WHERE predicate",
+        "correct": true
+      },
+      {
+        "body": "Nothing changes; the outer join still preserves all left rows",
+        "whyWrong": "Unmatched rows have NULL in status, and NULL = 'active' is not true, so they are filtered out."
+      },
+      {
+        "body": "It raises an error because NULLs cannot be compared",
+        "whyWrong": "Comparing NULL is legal; it simply yields unknown."
+      },
+      {
+        "body": "Only rows with status IS NULL are returned",
+        "whyWrong": "The predicate selects 'active', so NULL rows are excluded rather than selected."
+      }
+    ],
+    "explanation": "Predicates on the right table belong in the ON clause of an outer join. Placed in WHERE, they run after the join and discard the very NULL-extended rows the outer join produced.",
+    "subtopic": "joins",
+    "concept": "Filter the outer table in ON; filter the preserved table in WHERE."
+  },
+  {
+    "id": "SQL-0017",
+    "body": "What does a SELF JOIN accomplish?",
+    "topic": "sql",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "It relates rows of a table to other rows of the same table, such as employees to their managers",
+        "correct": true
+      },
+      {
+        "body": "It duplicates every row in the table",
+        "whyWrong": "That would be a cross join to itself without a predicate — a symptom, not the purpose."
+      },
+      {
+        "body": "It joins a table to its own index",
+        "whyWrong": "Indexes are not join operands."
+      },
+      {
+        "body": "It joins a table to a copy stored in another schema",
+        "whyWrong": "A self join uses one table with two aliases, not a copy."
+      }
+    ],
+    "explanation": "A self join lists the table twice under different aliases so that hierarchical or comparative relationships within one table can be expressed as an ordinary join.",
+    "subtopic": "joins",
+    "concept": "Self join = one table, two aliases, joined on a relationship within the data."
+  },
+  {
+    "id": "SQL-0018",
+    "body": "What is the difference between WHERE and HAVING?",
+    "topic": "sql",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "WHERE filters rows before grouping; HAVING filters groups after aggregation",
+        "correct": true
+      },
+      {
+        "body": "HAVING is faster than WHERE",
+        "whyWrong": "Performance is not the distinction; the stage at which they run is."
+      },
+      {
+        "body": "WHERE cannot be used with GROUP BY",
+        "whyWrong": "WHERE is used with GROUP BY routinely, to filter the input rows."
+      },
+      {
+        "body": "HAVING works only with COUNT",
+        "whyWrong": "HAVING works with any aggregate expression."
+      }
+    ],
+    "explanation": "WHERE runs before rows are grouped, so it cannot reference an aggregate. HAVING runs after grouping and is the only place an aggregate can be filtered.",
+    "subtopic": "aggregations",
+    "concept": "Filter rows in WHERE, filter aggregates in HAVING — put what you can in WHERE, it is cheaper.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "SQL-0019",
+    "body": "What does COUNT(column) return for rows where that column is NULL?",
+    "topic": "sql",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Those rows are not counted; COUNT(column) counts non-NULL values only",
+        "correct": true
+      },
+      {
+        "body": "They are counted as zero values",
+        "whyWrong": "COUNT does not substitute a value for NULL; it skips the row."
+      },
+      {
+        "body": "The whole result becomes NULL",
+        "whyWrong": "A NULL input does not poison COUNT."
+      },
+      {
+        "body": "It raises an error",
+        "whyWrong": "Counting a nullable column is perfectly legal."
+      }
+    ],
+    "explanation": "COUNT(*) counts rows; COUNT(column) counts rows where that column is not NULL. The gap between the two is a quick way to count missing values.",
+    "subtopic": "aggregations",
+    "concept": "COUNT(*) = rows. COUNT(col) = non-NULL values of col."
+  },
+  {
+    "id": "SQL-0020",
+    "body": "A table has salaries 100, 200, NULL and 300. What does AVG(salary) return?",
+    "topic": "sql",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "200, because NULL is excluded from both the sum and the count",
+        "correct": true
+      },
+      {
+        "body": "150, because the NULL counts as zero",
+        "whyWrong": "Aggregates ignore NULL entirely rather than treating it as zero."
+      },
+      {
+        "body": "NULL, because one input is NULL",
+        "whyWrong": "Only if every input were NULL would AVG return NULL."
+      },
+      {
+        "body": "600, which is the sum rather than the average",
+        "whyWrong": "AVG returns the mean, not the total."
+      }
+    ],
+    "explanation": "AVG sums the non-NULL values (600) and divides by their count (3), giving 200. To treat NULL as zero you must write AVG(COALESCE(salary, 0)), which would give 150.",
+    "subtopic": "aggregations",
+    "concept": "Aggregates skip NULL. Use COALESCE if a missing value should count as zero."
+  },
+  {
+    "id": "SQL-0021",
+    "body": "Which clause must accompany a window function such as ROW_NUMBER()?",
+    "topic": "sql",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "OVER, which defines the partitioning and ordering of the window",
+        "correct": true
+      },
+      {
+        "body": "GROUP BY",
+        "whyWrong": "Window functions deliberately avoid collapsing rows, which is what GROUP BY does."
+      },
+      {
+        "body": "HAVING",
+        "whyWrong": "HAVING filters groups and is unrelated to window definitions."
+      },
+      {
+        "body": "DISTINCT",
+        "whyWrong": "DISTINCT deduplicates the result and is not required by window functions."
+      }
+    ],
+    "explanation": "Every window function needs an OVER clause. It specifies PARTITION BY (which rows form each window) and ORDER BY (the order within it).",
+    "subtopic": "window-functions",
+    "concept": "Window function = function + OVER (PARTITION BY ... ORDER BY ...).",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "SQL-0022",
+    "body": "How do RANK() and DENSE_RANK() differ when there is a tie?",
+    "topic": "sql",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "RANK leaves a gap after the tied rows; DENSE_RANK does not",
+        "correct": true
+      },
+      {
+        "body": "RANK breaks the tie arbitrarily; DENSE_RANK keeps them tied",
+        "whyWrong": "Both keep tied rows at the same rank."
+      },
+      {
+        "body": "DENSE_RANK leaves a gap; RANK does not",
+        "whyWrong": "This reverses the two."
+      },
+      {
+        "body": "They are identical except for performance",
+        "whyWrong": "The numbering after a tie genuinely differs."
+      }
+    ],
+    "explanation": "With values 90, 90, 80: RANK gives 1, 1, 3 while DENSE_RANK gives 1, 1, 2. ROW_NUMBER would give 1, 2, 3 and break the tie arbitrarily.",
+    "subtopic": "window-functions",
+    "concept": "RANK skips, DENSE_RANK does not, ROW_NUMBER never ties."
+  },
+  {
+    "id": "SQL-0023",
+    "body": "Why can a window function not be referenced in the WHERE clause of the same SELECT?",
+    "topic": "sql",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Window functions are evaluated after WHERE, so the value does not exist yet at filter time",
+        "correct": true
+      },
+      {
+        "body": "Window functions return multiple values per row",
+        "whyWrong": "They return exactly one value per row."
+      },
+      {
+        "body": "WHERE only accepts columns, not expressions",
+        "whyWrong": "WHERE accepts arbitrary expressions."
+      },
+      {
+        "body": "It is allowed in every major database",
+        "whyWrong": "It is not — the standard evaluation order forbids it."
+      }
+    ],
+    "explanation": "Logical evaluation order runs FROM, WHERE, GROUP BY, HAVING, then window functions, then SELECT. To filter on a window result, wrap the query in a subquery or CTE and filter outside it.",
+    "subtopic": "window-functions",
+    "concept": "To filter a window result, compute it in a CTE and filter in the outer query."
+  },
+  {
+    "id": "SQL-0024",
+    "body": "What is the difference between a correlated and a non-correlated subquery?",
+    "topic": "sql",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A correlated subquery references a column from the outer query, so it is conceptually evaluated per outer row",
+        "correct": true
+      },
+      {
+        "body": "A correlated subquery always returns a single value",
+        "whyWrong": "Correlation concerns the reference to the outer row, not the shape of the result."
+      },
+      {
+        "body": "A non-correlated subquery cannot appear in WHERE",
+        "whyWrong": "It appears in WHERE routinely, typically with IN or a comparison."
+      },
+      {
+        "body": "A correlated subquery cannot use aggregates",
+        "whyWrong": "Correlated subqueries use aggregates frequently."
+      }
+    ],
+    "explanation": "A non-correlated subquery is independent and can be evaluated once. A correlated one depends on the current outer row, so it is logically re-evaluated for each — often the reason such a query is slow.",
+    "subtopic": "subqueries",
+    "concept": "If the inner query mentions the outer alias, it is correlated.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "SQL-0025",
+    "body": "Why can \"NOT IN (SELECT col FROM t)\" return no rows unexpectedly?",
+    "topic": "sql",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "If the subquery returns any NULL, every NOT IN comparison evaluates to unknown and no rows qualify",
+        "correct": true
+      },
+      {
+        "body": "NOT IN cannot be used with a subquery",
+        "whyWrong": "It can; the NULL behaviour is the pitfall."
+      },
+      {
+        "body": "NOT IN requires the subquery to be sorted",
+        "whyWrong": "No ordering requirement exists."
+      },
+      {
+        "body": "NOT IN silently converts to an inner join",
+        "whyWrong": "No such conversion occurs."
+      }
+    ],
+    "explanation": "x NOT IN (1, NULL) asks whether x <> 1 AND x <> NULL. The second comparison is unknown, so the whole predicate is never true. Use NOT EXISTS, or filter the NULLs out of the subquery.",
+    "subtopic": "subqueries",
+    "concept": "A single NULL in a NOT IN list empties the result. Prefer NOT EXISTS."
+  },
+  {
+    "id": "SQL-0026",
+    "body": "What does EXISTS return compared with IN when the subquery result is large?",
+    "topic": "sql",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "EXISTS can stop at the first matching row, so it often performs better and is NULL-safe",
+        "correct": true
+      },
+      {
+        "body": "EXISTS materialises the full subquery result first",
+        "whyWrong": "EXISTS is defined to short-circuit on the first match."
+      },
+      {
+        "body": "IN is always faster than EXISTS",
+        "whyWrong": "Neither is universally faster; EXISTS avoids the NULL trap and can short-circuit."
+      },
+      {
+        "body": "EXISTS requires the subquery to select exactly one column",
+        "whyWrong": "EXISTS ignores the select list entirely."
+      }
+    ],
+    "explanation": "EXISTS asks only whether at least one row matches, so it can stop immediately, and it is unaffected by NULLs in the subquery — the two reasons it is usually preferred to NOT IN.",
+    "subtopic": "subqueries",
+    "concept": "EXISTS: short-circuits and is NULL-safe. IN: convenient for small, NULL-free lists."
+  },
+  {
+    "id": "SQL-0027",
+    "body": "What does UNION do that UNION ALL does not?",
+    "topic": "sql",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "It removes duplicate rows from the combined result, at the cost of a sort or hash",
+        "correct": true
+      },
+      {
+        "body": "It combines results from more tables",
+        "whyWrong": "Both combine exactly the queries you write."
+      },
+      {
+        "body": "It preserves the order of the inputs",
+        "whyWrong": "Neither guarantees order without an ORDER BY."
+      },
+      {
+        "body": "It allows the inputs to have different column counts",
+        "whyWrong": "Both require matching column counts and compatible types."
+      }
+    ],
+    "explanation": "UNION deduplicates and therefore must compare every row against the others. UNION ALL just concatenates, so prefer it whenever duplicates are impossible or acceptable.",
+    "concept": "UNION ALL unless you genuinely need deduplication.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "SQL-0028",
+    "body": "Which query finds the second-highest distinct salary reliably, including when there are ties?",
+    "topic": "sql",
+    "difficulty": "hard",
+    "expectedSeconds": 120,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "SELECT MAX(salary) FROM emp WHERE salary < (SELECT MAX(salary) FROM emp)",
+        "correct": true
+      },
+      {
+        "body": "SELECT salary FROM emp ORDER BY salary DESC LIMIT 1 OFFSET 1",
+        "whyWrong": "With a tie at the top this returns the highest salary again, not the second distinct one."
+      },
+      {
+        "body": "SELECT MAX(salary) FROM emp WHERE salary <> MAX(salary)",
+        "whyWrong": "An aggregate cannot appear in WHERE; this does not parse."
+      },
+      {
+        "body": "SELECT TOP 2 salary FROM emp ORDER BY salary DESC",
+        "whyWrong": "This returns two rows rather than the second distinct value, and has the same tie problem."
+      }
+    ],
+    "explanation": "Taking the maximum of everything strictly below the overall maximum gives the second distinct value regardless of how many employees share the top salary. A DENSE_RANK() = 2 filter also works.",
+    "concept": "\"Second distinct\" means max of the values below the max — OFFSET counts rows, not distinct values.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "SQL-0029",
+    "body": "A CTE is defined with WITH and referenced twice in the main query. What does the standard guarantee about evaluation?",
+    "topic": "sql",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Nothing about how many times it is evaluated — engines may inline it, so it is not a caching mechanism",
+        "correct": true
+      },
+      {
+        "body": "It is always evaluated exactly once and the result reused",
+        "whyWrong": "Several engines inline a CTE into each reference, evaluating it more than once."
+      },
+      {
+        "body": "It is always evaluated once per reference",
+        "whyWrong": "Some engines do materialise it once; the behaviour is engine-specific."
+      },
+      {
+        "body": "It is evaluated lazily and only if a row is requested",
+        "whyWrong": "Lazy evaluation is not a property CTEs guarantee."
+      }
+    ],
+    "explanation": "CTEs are primarily a readability construct. Whether one is materialised or inlined varies by engine and version, so never rely on a CTE to memoise an expensive subquery — some engines offer an explicit MATERIALIZED hint for that.",
+    "concept": "A CTE names a query; it does not promise to compute it only once."
+  },
+  {
+    "id": "SQL-0030",
+    "body": "Which statement about GROUP BY is correct in standard SQL?",
+    "topic": "sql",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Every non-aggregated column in the SELECT list must appear in the GROUP BY clause",
+        "correct": true
+      },
+      {
+        "body": "Any column may appear in SELECT regardless of GROUP BY",
+        "whyWrong": "Some engines permit this in a relaxed mode, but it is not standard and gives an arbitrary value."
+      },
+      {
+        "body": "GROUP BY must be accompanied by HAVING",
+        "whyWrong": "HAVING is optional."
+      },
+      {
+        "body": "GROUP BY sorts the result by the grouping columns",
+        "whyWrong": "Some engines happen to, but no ordering is guaranteed without ORDER BY."
+      }
+    ],
+    "explanation": "The rule exists because a group collapses many rows into one: a column not grouped and not aggregated has no single well-defined value for the group.",
+    "subtopic": "aggregations",
+    "concept": "Every SELECT column must be grouped or aggregated."
+  },
+  {
+    "id": "OOP-0011",
+    "body": "What distinguishes method overloading from method overriding?",
+    "topic": "oops",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Overloading resolves on the signature at compile time; overriding replaces a base implementation and resolves at run time",
+        "correct": true
+      },
+      {
+        "body": "Overloading happens in subclasses; overriding happens in the same class",
+        "whyWrong": "This reverses the two: overriding is what happens across a class hierarchy."
+      },
+      {
+        "body": "Overloading changes the return type only",
+        "whyWrong": "Return type alone is not enough to overload a method in Java or C++."
+      },
+      {
+        "body": "Overriding requires a different parameter list",
+        "whyWrong": "A different parameter list makes it an overload, not an override."
+      }
+    ],
+    "explanation": "Overloading is several methods with the same name and different parameter lists, chosen by the compiler. Overriding is a subclass replacing an inherited implementation, chosen by the object's actual type at run time.",
+    "subtopic": "polymorphism",
+    "concept": "Overload = compile-time, by signature. Override = run-time, by object type.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "OOP-0012",
+    "body": "Why is composition often preferred to inheritance?",
+    "topic": "oops",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "It couples classes only through a narrow interface, and the relationship can change at run time",
+        "correct": true
+      },
+      {
+        "body": "It always performs better than inheritance",
+        "whyWrong": "Performance is essentially the same; the argument is about coupling."
+      },
+      {
+        "body": "Inheritance is deprecated in modern languages",
+        "whyWrong": "Inheritance remains a normal and useful tool."
+      },
+      {
+        "body": "Composition requires less code",
+        "whyWrong": "Composition often requires more code — delegating methods explicitly."
+      }
+    ],
+    "explanation": "Inheritance exposes the base class's internals to every subclass and fixes the relationship at compile time. Composition depends only on the collaborator's public interface and can be swapped at run time.",
+    "subtopic": "inheritance",
+    "concept": "Inherit for genuine \"is-a\"; compose for \"has-a\" and for anything you may want to swap.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "OOP-0013",
+    "body": "A Square class extends Rectangle and overrides setWidth to also set the height. Which principle does this violate?",
+    "topic": "oops",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "The Liskov substitution principle, because code written against Rectangle breaks when given a Square",
+        "correct": true
+      },
+      {
+        "body": "The single responsibility principle",
+        "whyWrong": "Square still has one responsibility; the problem is substitutability."
+      },
+      {
+        "body": "The interface segregation principle",
+        "whyWrong": "No client is being forced to depend on methods it does not use."
+      },
+      {
+        "body": "The dependency inversion principle",
+        "whyWrong": "Nothing here concerns depending on abstractions rather than concretions."
+      }
+    ],
+    "explanation": "Code that sets width to 5 and height to 4 and expects an area of 20 gets 16 from a Square. A subtype must honour the contract callers rely on, which this one does not.",
+    "subtopic": "solid-principles",
+    "concept": "A subtype must be usable anywhere the base type is, without surprising the caller."
+  },
+  {
+    "id": "OOP-0014",
+    "body": "What does the single responsibility principle actually assert?",
+    "topic": "oops",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A class should have only one reason to change — one group of stakeholders driving its modification",
+        "correct": true
+      },
+      {
+        "body": "A class should contain only one public method",
+        "whyWrong": "Method count is not what the principle constrains."
+      },
+      {
+        "body": "A class should do only one thing at a time",
+        "whyWrong": "Concurrency is unrelated to the principle."
+      },
+      {
+        "body": "A class should have only one field",
+        "whyWrong": "Field count is irrelevant."
+      }
+    ],
+    "explanation": "The principle is about the sources of change. A class that formats a report and also persists it changes when either the report layout or the storage changes, so it has two reasons to change.",
+    "subtopic": "solid-principles",
+    "concept": "Count the reasons a class would need editing, not the number of its methods."
+  },
+  {
+    "id": "OOP-0015",
+    "body": "What does the open-closed principle recommend?",
+    "topic": "oops",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "New behaviour should be addable by extension — a new implementation — rather than by editing existing tested code",
+        "correct": true
+      },
+      {
+        "body": "Classes should never be modified after release",
+        "whyWrong": "Bug fixes obviously require modification; the principle concerns adding behaviour."
+      },
+      {
+        "body": "All fields should be public for extensibility",
+        "whyWrong": "Public fields work against encapsulation and the principle alike."
+      },
+      {
+        "body": "Every class should be marked final",
+        "whyWrong": "Making everything final prevents the extension the principle recommends."
+      }
+    ],
+    "explanation": "A long if-else over payment types must be edited for every new type. Replacing it with a PaymentMethod interface lets a new type arrive as a new class, leaving the tested dispatch code untouched.",
+    "subtopic": "solid-principles",
+    "concept": "If adding a case means editing a switch, an interface probably belongs there.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "OOP-0016",
+    "body": "What does the interface segregation principle warn against?",
+    "topic": "oops",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Fat interfaces that force implementers to provide methods they have no use for",
+        "correct": true
+      },
+      {
+        "body": "Using interfaces instead of abstract classes",
+        "whyWrong": "The choice between the two is not what the principle addresses."
+      },
+      {
+        "body": "Having more than one interface per class",
+        "whyWrong": "Implementing several small interfaces is exactly what the principle encourages."
+      },
+      {
+        "body": "Defining interfaces without documentation",
+        "whyWrong": "Documentation is good practice but not this principle."
+      }
+    ],
+    "explanation": "A Printer interface with print, scan and fax forces a print-only device to implement two methods that throw. Splitting it into focused interfaces lets each implementer take only what applies.",
+    "subtopic": "solid-principles",
+    "concept": "Many small interfaces beat one large one — clients should depend only on what they use."
+  },
+  {
+    "id": "OOP-0017",
+    "body": "What does dependency inversion mean in practice?",
+    "topic": "oops",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "High-level policy depends on an abstraction, and the low-level detail implements that abstraction",
+        "correct": true
+      },
+      {
+        "body": "Dependencies are injected through a framework container",
+        "whyWrong": "Dependency injection is one mechanism; the principle is about the direction of the dependency."
+      },
+      {
+        "body": "Low-level modules should not depend on anything",
+        "whyWrong": "Low-level modules depend on plenty; the principle constrains direction, not existence."
+      },
+      {
+        "body": "Classes should be instantiated as late as possible",
+        "whyWrong": "Lazy instantiation is a separate concern."
+      }
+    ],
+    "explanation": "An OrderService should define the Repository interface it needs, and SqlRepository should implement it. The dependency arrow then points from the database code toward the business rule, not the other way round.",
+    "subtopic": "solid-principles",
+    "concept": "The abstraction belongs to the caller, not to the implementer."
+  },
+  {
+    "id": "OOP-0018",
+    "body": "What is the difference between an abstract class and an interface?",
+    "topic": "oops",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "An abstract class can hold state and partial implementation; an interface principally declares a contract",
+        "correct": true
+      },
+      {
+        "body": "An interface can have no methods",
+        "whyWrong": "Declaring methods is what an interface is for."
+      },
+      {
+        "body": "An abstract class cannot have constructors",
+        "whyWrong": "Abstract classes have constructors, called by their subclasses."
+      },
+      {
+        "body": "A class can extend many abstract classes",
+        "whyWrong": "Most languages allow only single class inheritance."
+      }
+    ],
+    "explanation": "Use an abstract class when subclasses genuinely share state and behaviour; use an interface to declare a capability that unrelated classes can each provide, since a class can implement many.",
+    "concept": "Abstract class = shared implementation and state. Interface = a capability contract.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "OOP-0019",
+    "body": "What does encapsulation buy you beyond making fields private?",
+    "topic": "oops",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "The freedom to change the internal representation without breaking any caller",
+        "correct": true
+      },
+      {
+        "body": "Protection against all invalid data",
+        "whyWrong": "Validation must still be written; privacy alone guarantees nothing about values."
+      },
+      {
+        "body": "Faster field access",
+        "whyWrong": "Access modifiers have no run-time performance effect."
+      },
+      {
+        "body": "Automatic thread safety",
+        "whyWrong": "Private fields are no more thread-safe than public ones."
+      }
+    ],
+    "explanation": "Encapsulation is about maintaining an invariant and reserving the right to change how the object stores its data. Getters and setters that mirror every field one-for-one give up most of that benefit.",
+    "subtopic": "encapsulation-abstraction",
+    "concept": "Encapsulation protects the invariant, not merely the field."
+  },
+  {
+    "id": "OOP-0020",
+    "body": "What is the difference between abstraction and encapsulation?",
+    "topic": "oops",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Abstraction decides what to expose; encapsulation hides how it is implemented",
+        "correct": true
+      },
+      {
+        "body": "They are two names for the same idea",
+        "whyWrong": "They are related but distinct: one is about the model, the other about concealment."
+      },
+      {
+        "body": "Abstraction applies to classes and encapsulation to methods",
+        "whyWrong": "Neither is restricted to a particular construct."
+      },
+      {
+        "body": "Encapsulation is a design idea and abstraction a language feature",
+        "whyWrong": "Both are design ideas supported by language features."
+      }
+    ],
+    "explanation": "Abstraction is a modelling decision — a Stack offers push and pop. Encapsulation is the enforcement — the array or linked list behind it is private and can be replaced.",
+    "subtopic": "encapsulation-abstraction",
+    "concept": "Abstraction chooses the interface; encapsulation defends it."
+  },
+  {
+    "id": "OOP-0021",
+    "body": "Why is a virtual destructor needed in a C++ base class that is deleted through a base pointer?",
+    "topic": "oops",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Without it only the base destructor runs, so the derived class's resources leak",
+        "correct": true
+      },
+      {
+        "body": "Without it the object cannot be constructed",
+        "whyWrong": "Construction is unaffected by destructor virtuality."
+      },
+      {
+        "body": "It makes destruction faster",
+        "whyWrong": "Virtual dispatch adds a small cost; it does not save time."
+      },
+      {
+        "body": "It is required for the class to have any virtual methods",
+        "whyWrong": "Other methods may be virtual regardless of the destructor."
+      }
+    ],
+    "explanation": "Deleting through a base pointer with a non-virtual destructor is undefined behaviour in practice: the derived destructor never runs, so anything it owned is leaked.",
+    "subtopic": "polymorphism",
+    "concept": "Any class meant to be deleted polymorphically needs a virtual destructor."
+  },
+  {
+    "id": "OOP-0022",
+    "body": "What is the diamond problem in multiple inheritance?",
+    "topic": "oops",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A class inherits the same base twice through two paths, so the base state and method resolution become ambiguous",
+        "correct": true
+      },
+      {
+        "body": "Two classes inherit from each other",
+        "whyWrong": "Circular inheritance is a different, and generally illegal, situation."
+      },
+      {
+        "body": "A class has too many levels of inheritance",
+        "whyWrong": "Depth alone does not create the ambiguity."
+      },
+      {
+        "body": "A subclass overrides a method it should not",
+        "whyWrong": "Improper overriding is unrelated to the diamond shape."
+      }
+    ],
+    "explanation": "With D inheriting from B and C, which both inherit from A, D can end up with two copies of A's state. C++ addresses this with virtual inheritance; Java avoids it by disallowing multiple class inheritance.",
+    "subtopic": "inheritance",
+    "concept": "Two paths to one base = ambiguous state and dispatch."
+  },
+  {
+    "id": "OOP-0023",
+    "body": "What is the essential rule when overriding equals() in Java?",
+    "topic": "oops",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "hashCode() must be overridden consistently, so equal objects produce equal hash codes",
+        "correct": true
+      },
+      {
+        "body": "equals() must be declared final",
+        "whyWrong": "Finality is not required."
+      },
+      {
+        "body": "equals() must compare fields with ==",
+        "whyWrong": "Reference comparison is usually exactly what you must avoid."
+      },
+      {
+        "body": "equals() must return false for null",
+        "whyWrong": "It must, but that follows from the contract rather than being the essential paired obligation."
+      }
+    ],
+    "explanation": "Hash-based collections locate a bucket by hashCode and only then call equals. If two equal objects hash differently, a HashMap lookup will miss an entry that is present.",
+    "concept": "Override equals and hashCode together, or hash-based collections break silently.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "OOP-0024",
+    "body": "What problem does the strategy pattern solve?",
+    "topic": "oops",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "It lets an algorithm be selected and swapped at run time behind a common interface",
+        "correct": true
+      },
+      {
+        "body": "It ensures only one instance of a class exists",
+        "whyWrong": "That is the singleton pattern."
+      },
+      {
+        "body": "It creates objects without naming the concrete class",
+        "whyWrong": "That is the factory pattern."
+      },
+      {
+        "body": "It adds behaviour to an object without subclassing",
+        "whyWrong": "That is the decorator pattern."
+      }
+    ],
+    "explanation": "Strategy replaces a conditional over algorithm variants with a set of interchangeable implementations, so adding a variant means adding a class rather than editing the conditional.",
+    "concept": "Strategy turns \"which algorithm\" from a branch into a dependency."
+  },
+  {
+    "id": "OOP-0025",
+    "body": "Why is the singleton pattern often criticised?",
+    "topic": "oops",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "It introduces global mutable state that callers depend on implicitly, which makes testing and reasoning harder",
+        "correct": true
+      },
+      {
+        "body": "It uses more memory than ordinary objects",
+        "whyWrong": "A singleton uses less memory, not more."
+      },
+      {
+        "body": "It cannot be implemented thread-safely",
+        "whyWrong": "Thread-safe singletons are entirely achievable."
+      },
+      {
+        "body": "It is not supported in most languages",
+        "whyWrong": "It is a pattern, not a language feature, and works anywhere."
+      }
+    ],
+    "explanation": "A singleton is a global variable with an object interface. Its callers do not declare the dependency, so substituting a test double usually means changing static state.",
+    "concept": "The problem is the hidden global dependency, not the single instance."
+  },
+  {
+    "id": "OOP-0026",
+    "body": "What is the difference between a shallow copy and a deep copy?",
+    "topic": "oops",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A shallow copy duplicates the top-level object but shares the referenced objects; a deep copy duplicates the whole graph",
+        "correct": true
+      },
+      {
+        "body": "A shallow copy is always faster and otherwise equivalent",
+        "whyWrong": "They differ in semantics, not just speed — mutation of a shared child is visible through both copies."
+      },
+      {
+        "body": "A deep copy copies only primitive fields",
+        "whyWrong": "A deep copy copies references by recreating what they point to."
+      },
+      {
+        "body": "A shallow copy cannot copy primitives",
+        "whyWrong": "Primitives are copied by value in both cases."
+      }
+    ],
+    "explanation": "After a shallow copy, mutating a nested object through one copy is visible through the other. A deep copy recursively duplicates the referenced objects so the two graphs are independent.",
+    "concept": "Shallow copies share children; deep copies do not."
+  },
+  {
+    "id": "OOP-0027",
+    "body": "What makes a class immutable, and why does it help in concurrent code?",
+    "topic": "oops",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "All state is set at construction and never changes, so no thread can observe a partially updated object",
+        "correct": true
+      },
+      {
+        "body": "All methods are synchronized",
+        "whyWrong": "Synchronisation is what immutability lets you avoid."
+      },
+      {
+        "body": "The class has no methods",
+        "whyWrong": "Immutable classes have methods; they simply return new instances."
+      },
+      {
+        "body": "The class is marked final",
+        "whyWrong": "Final on the class prevents subclass mutation but is not sufficient on its own."
+      }
+    ],
+    "explanation": "An immutable object has no state transitions to race over, so it can be shared freely across threads without locks. Fields must be final and any mutable component must be defensively copied.",
+    "concept": "No mutation means no race. Copy mutable components in and out.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "OOP-0028",
+    "body": "What is the practical difference between an interface with default methods and an abstract class?",
+    "topic": "oops",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A class can implement several interfaces with default methods but extend only one abstract class, and interfaces still hold no instance state",
+        "correct": true
+      },
+      {
+        "body": "There is no longer any difference",
+        "whyWrong": "Instance state and the single-inheritance limit remain genuine differences."
+      },
+      {
+        "body": "Default methods cannot be overridden",
+        "whyWrong": "They can be overridden like any other method."
+      },
+      {
+        "body": "Abstract classes cannot have concrete methods",
+        "whyWrong": "Concrete methods in abstract classes have always been allowed."
+      }
+    ],
+    "explanation": "Default methods let an interface ship behaviour, closing part of the gap. What remains is that interfaces carry no instance fields, and multiple interfaces can be implemented while only one class can be extended.",
+    "concept": "Default methods add behaviour to interfaces, not state."
+  },
+  {
+    "id": "SD-0010",
+    "body": "What is the main reason to put a load balancer in front of a service?",
+    "topic": "system-design-basics",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "To spread requests across instances and route around one that becomes unhealthy",
+        "correct": true
+      },
+      {
+        "body": "To make each individual request faster",
+        "whyWrong": "A load balancer adds a hop; individual latency does not improve."
+      },
+      {
+        "body": "To cache responses",
+        "whyWrong": "Some load balancers can cache, but that is not their purpose."
+      },
+      {
+        "body": "To encrypt traffic",
+        "whyWrong": "TLS termination is a common add-on, not the reason for the component."
+      }
+    ],
+    "explanation": "A load balancer provides horizontal scale and availability: it distributes load and stops sending traffic to instances that fail their health check.",
+    "subtopic": "scalability",
+    "concept": "Load balancer = distribution plus health-based routing.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "SD-0011",
+    "body": "What does \"stateless service\" mean, and why does it matter for scaling?",
+    "topic": "system-design-basics",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "No request depends on data held in a particular instance's memory, so any instance can serve any request",
+        "correct": true
+      },
+      {
+        "body": "The service stores no data anywhere",
+        "whyWrong": "The data lives in a database or cache — outside the instance, not nowhere."
+      },
+      {
+        "body": "The service has no variables",
+        "whyWrong": "Local variables within a request are entirely normal."
+      },
+      {
+        "body": "The service does not use a database",
+        "whyWrong": "Statelessness is about instance-local state, not about avoiding databases."
+      }
+    ],
+    "explanation": "When session state lives in an external store rather than instance memory, instances become interchangeable — which is what makes adding, removing or replacing them safe.",
+    "subtopic": "scalability",
+    "concept": "Push state out of the instance and horizontal scaling becomes trivial."
+  },
+  {
+    "id": "SD-0012",
+    "body": "What is the difference between vertical and horizontal scaling?",
+    "topic": "system-design-basics",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Vertical adds capacity to one machine; horizontal adds more machines",
+        "correct": true
+      },
+      {
+        "body": "Vertical adds more machines; horizontal adds capacity to one",
+        "whyWrong": "This reverses the two terms."
+      },
+      {
+        "body": "Vertical applies to databases and horizontal to application servers",
+        "whyWrong": "Both apply to either tier."
+      },
+      {
+        "body": "Vertical scaling has no upper limit",
+        "whyWrong": "The size of the largest available machine is a hard ceiling."
+      }
+    ],
+    "explanation": "Vertical scaling is simple but bounded by the largest machine you can buy and leaves a single point of failure. Horizontal scaling has no such ceiling but requires the service to tolerate distribution.",
+    "subtopic": "scalability",
+    "concept": "Vertical: bigger box, hard ceiling. Horizontal: more boxes, distribution problems."
+  },
+  {
+    "id": "SD-0013",
+    "body": "What is a cache stampede, and how is it usually mitigated?",
+    "topic": "system-design-basics",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Many requests miss simultaneously when a hot key expires, all hitting the database; a lock or early refresh prevents it",
+        "correct": true
+      },
+      {
+        "body": "The cache fills with entries nobody reads; eviction policies fix it",
+        "whyWrong": "That is cache pollution, a different problem."
+      },
+      {
+        "body": "The cache returns stale data after a write; write-through fixes it",
+        "whyWrong": "That is a coherence problem, not a stampede."
+      },
+      {
+        "body": "The cache runs out of memory; a larger instance fixes it",
+        "whyWrong": "Memory pressure causes eviction, not a stampede."
+      }
+    ],
+    "explanation": "When a popular key expires, every concurrent request misses at once and the database receives a spike. Mitigations include a per-key lock so one request refills, probabilistic early expiry, or serving stale data while refreshing.",
+    "subtopic": "caching",
+    "concept": "One expiry, thousands of misses. Let one request refill and have the rest wait or serve stale."
+  },
+  {
+    "id": "SD-0014",
+    "body": "What is the difference between a write-through and a write-back cache?",
+    "topic": "system-design-basics",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Write-through writes to cache and store together; write-back writes to cache first and flushes later",
+        "correct": true
+      },
+      {
+        "body": "Write-through is only for reads",
+        "whyWrong": "A write policy by definition concerns writes."
+      },
+      {
+        "body": "Write-back guarantees no data loss",
+        "whyWrong": "Write-back is precisely the policy that can lose data on a crash before the flush."
+      },
+      {
+        "body": "They differ only in performance, not in guarantees",
+        "whyWrong": "The durability guarantee genuinely differs."
+      }
+    ],
+    "explanation": "Write-through keeps the store consistent at the cost of write latency. Write-back is faster but leaves a window in which acknowledged writes exist only in the cache.",
+    "subtopic": "caching",
+    "concept": "Write-through: safe and slower. Write-back: fast with a loss window."
+  },
+  {
+    "id": "SD-0015",
+    "body": "What problem does consistent hashing solve in a sharded cache?",
+    "topic": "system-design-basics",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Adding or removing a node remaps only a small fraction of keys instead of nearly all of them",
+        "correct": true
+      },
+      {
+        "body": "It guarantees every shard holds exactly the same number of keys",
+        "whyWrong": "Distribution is approximately even, and virtual nodes are needed even for that."
+      },
+      {
+        "body": "It removes the need for replication",
+        "whyWrong": "Replication is an orthogonal concern."
+      },
+      {
+        "body": "It makes hashing faster",
+        "whyWrong": "Hash computation speed is not what it addresses."
+      }
+    ],
+    "explanation": "With hash(key) mod N, changing N moves almost every key. Consistent hashing places nodes on a ring so a node change disturbs only the keys in its immediate arc.",
+    "subtopic": "db-sharding",
+    "concept": "mod N remaps everything when N changes; the ring remaps one arc.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "SD-0016",
+    "body": "What is the main drawback of sharding a database by a hash of the primary key?",
+    "topic": "system-design-basics",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Range queries must be sent to every shard, since related keys are deliberately scattered",
+        "correct": true
+      },
+      {
+        "body": "Hash sharding produces uneven distribution",
+        "whyWrong": "Even distribution is exactly what hash sharding provides."
+      },
+      {
+        "body": "Hash sharding cannot support secondary indexes",
+        "whyWrong": "Per-shard secondary indexes work; they are simply local."
+      },
+      {
+        "body": "Hash sharding requires all shards to be the same size",
+        "whyWrong": "Weighted schemes handle unequal shards."
+      }
+    ],
+    "explanation": "Hashing gives an even spread but destroys locality. A query for \"all orders in March\" has no single shard to visit, so it fans out to all of them and merges.",
+    "subtopic": "db-sharding",
+    "concept": "Hash sharding: even load, no locality. Range sharding: locality, hotspot risk."
+  },
+  {
+    "id": "SD-0017",
+    "body": "In an HTTP API, which status code should a successful request that creates a resource return?",
+    "topic": "system-design-basics",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "201 Created, with a Location header pointing at the new resource",
+        "correct": true
+      },
+      {
+        "body": "200 OK with the resource in the body",
+        "whyWrong": "200 is acceptable but 201 with Location communicates creation precisely."
+      },
+      {
+        "body": "204 No Content",
+        "whyWrong": "204 means success with nothing to return, which is wrong when a resource was created."
+      },
+      {
+        "body": "202 Accepted",
+        "whyWrong": "202 means the request was accepted for later processing, not that creation completed."
+      }
+    ],
+    "explanation": "201 states that a new resource now exists, and the Location header tells the client where to find it — the difference between 201 and 202 is whether creation has actually happened.",
+    "subtopic": "api-design",
+    "concept": "201 = created now. 202 = will be created. 204 = done, nothing to say.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "SD-0018",
+    "body": "Why should a payment API endpoint be idempotent?",
+    "topic": "system-design-basics",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A client that retries after a timeout must not create a second charge",
+        "correct": true
+      },
+      {
+        "body": "Idempotency makes the endpoint faster",
+        "whyWrong": "Idempotency has no inherent performance benefit."
+      },
+      {
+        "body": "It is required by the HTTP specification for POST",
+        "whyWrong": "POST is explicitly not required to be idempotent."
+      },
+      {
+        "body": "It removes the need for authentication",
+        "whyWrong": "The two concerns are unrelated."
+      }
+    ],
+    "explanation": "A network timeout leaves the client unsure whether the charge went through. With an idempotency key, the retry returns the original result rather than charging again.",
+    "subtopic": "api-design",
+    "concept": "Any operation a client may retry needs an idempotency key."
+  },
+  {
+    "id": "SD-0019",
+    "body": "What does a 429 status code tell a client, and what should the client do?",
+    "topic": "system-design-basics",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "It has been rate-limited and should back off, ideally honouring the Retry-After header",
+        "correct": true
+      },
+      {
+        "body": "The request was malformed and should be corrected",
+        "whyWrong": "That is 400."
+      },
+      {
+        "body": "The server failed and the request should be retried immediately",
+        "whyWrong": "Immediate retry is exactly what worsens a rate-limit situation."
+      },
+      {
+        "body": "The resource does not exist",
+        "whyWrong": "That is 404."
+      }
+    ],
+    "explanation": "429 means too many requests. The correct client behaviour is exponential backoff with jitter, respecting Retry-After when the server supplies it.",
+    "subtopic": "api-design",
+    "concept": "429 → back off with jitter, never retry in a tight loop."
+  },
+  {
+    "id": "SD-0020",
+    "body": "When is a message queue the right component to add between two services?",
+    "topic": "system-design-basics",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "When the producer must not block on the consumer and a delay before processing is acceptable",
+        "correct": true
+      },
+      {
+        "body": "When the caller needs the result immediately",
+        "whyWrong": "A queue is asynchronous, so it is the wrong choice when the result is needed in the response."
+      },
+      {
+        "body": "When you want to reduce the total amount of work done",
+        "whyWrong": "A queue moves work in time; it does not remove it."
+      },
+      {
+        "body": "Whenever two services communicate",
+        "whyWrong": "Direct synchronous calls remain appropriate for request-response interactions."
+      }
+    ],
+    "explanation": "Queues decouple producer and consumer rates, absorb bursts and let the consumer fail and retry independently — at the cost of eventual rather than immediate processing.",
+    "concept": "Queue when you can tolerate delay and want the producer insulated from the consumer."
+  },
+  {
+    "id": "SD-0021",
+    "body": "What does the CAP theorem actually claim?",
+    "topic": "system-design-basics",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "When a network partition occurs, a distributed system must choose between consistency and availability",
+        "correct": true
+      },
+      {
+        "body": "A system can have only two of consistency, availability and partition tolerance at all times",
+        "whyWrong": "The choice arises during a partition; with no partition a system can be both consistent and available."
+      },
+      {
+        "body": "Distributed systems cannot be consistent",
+        "whyWrong": "Strongly consistent distributed systems exist and are common."
+      },
+      {
+        "body": "Availability always matters more than consistency",
+        "whyWrong": "CAP prescribes no preference; the choice depends on the application."
+      }
+    ],
+    "explanation": "CAP is a statement about behaviour during a partition: with the network split, a system either refuses requests to stay consistent, or answers from possibly stale state to stay available.",
+    "concept": "CAP bites only during a partition — the rest of the time it is a choice you do not have to make.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "PRG-0013",
+    "body": "In C, what does the expression sizeof(arr)/sizeof(arr[0]) give inside the function that declared arr as a local array?",
+    "topic": "programming-fundamentals",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "The number of elements in the array",
+        "correct": true
+      },
+      {
+        "body": "The number of bytes the array occupies",
+        "whyWrong": "That is sizeof(arr) alone, before the division."
+      },
+      {
+        "body": "Always 1, because arrays decay to pointers",
+        "whyWrong": "Decay happens when the array is passed to a function, not in its declaring scope."
+      },
+      {
+        "body": "The size of one element",
+        "whyWrong": "That is sizeof(arr[0]), the divisor."
+      }
+    ],
+    "explanation": "In the scope where the array is declared, sizeof yields the whole array's size, so dividing by one element's size gives the count. Pass the array to a function and it decays to a pointer, making the idiom return the pointer size divided by the element size.",
+    "subtopic": "pointers-memory",
+    "concept": "The idiom works only where the array type is still visible — never after a function parameter.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "PRG-0014",
+    "body": "What is a dangling pointer?",
+    "topic": "programming-fundamentals",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A pointer that still holds the address of memory that has already been freed",
+        "correct": true
+      },
+      {
+        "body": "A pointer that has never been assigned a value",
+        "whyWrong": "That is an uninitialised, or wild, pointer."
+      },
+      {
+        "body": "A pointer set explicitly to NULL",
+        "whyWrong": "A NULL pointer is well defined and safe to test."
+      },
+      {
+        "body": "A pointer to a pointer",
+        "whyWrong": "That is simply a double pointer, and is not an error."
+      }
+    ],
+    "explanation": "After free(p), p still holds the old address. Dereferencing it is undefined behaviour, which is why setting the pointer to NULL immediately after freeing is a common defensive habit.",
+    "subtopic": "pointers-memory",
+    "concept": "Free then NULL — the address survives the deallocation otherwise."
+  },
+  {
+    "id": "PRG-0015",
+    "body": "What is the difference between a memory leak and a dangling pointer?",
+    "topic": "programming-fundamentals",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A leak is memory still allocated with no pointer to it; a dangling pointer is a pointer to memory no longer allocated",
+        "correct": true
+      },
+      {
+        "body": "They are two names for the same defect",
+        "whyWrong": "They are precise opposites in terms of what is lost."
+      },
+      {
+        "body": "A leak crashes the program immediately",
+        "whyWrong": "A leak typically causes gradual growth rather than an immediate crash."
+      },
+      {
+        "body": "A dangling pointer is harmless",
+        "whyWrong": "Dereferencing one is undefined behaviour and a common source of exploitable bugs."
+      }
+    ],
+    "explanation": "The two failures are mirror images: a leak has allocation without a reference, and a dangling pointer has a reference without allocation.",
+    "subtopic": "pointers-memory",
+    "concept": "Leak: memory with no pointer. Dangling: pointer with no memory."
+  },
+  {
+    "id": "PRG-0016",
+    "body": "In C, what does passing a pointer to a function allow that passing by value does not?",
+    "topic": "programming-fundamentals",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "The function can modify the caller's variable",
+        "correct": true
+      },
+      {
+        "body": "The function runs faster for all types",
+        "whyWrong": "For a small type, passing a pointer can be slower due to the indirection."
+      },
+      {
+        "body": "The function receives a copy of the data",
+        "whyWrong": "Pass by value is what copies the data."
+      },
+      {
+        "body": "The function can return multiple values directly",
+        "whyWrong": "Output parameters simulate this, but the return statement still yields one value."
+      }
+    ],
+    "explanation": "C passes everything by value. Passing an address means the copy is of the address, so dereferencing it reaches the caller's original object.",
+    "subtopic": "pointers-memory",
+    "concept": "C is always pass-by-value; passing a pointer copies the address, not the target."
+  },
+  {
+    "id": "PRG-0017",
+    "body": "What is stored on the stack rather than the heap in a typical C program?",
+    "topic": "programming-fundamentals",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Local variables and function call frames, freed automatically when the function returns",
+        "correct": true
+      },
+      {
+        "body": "Everything returned by malloc",
+        "whyWrong": "malloc allocations live on the heap."
+      },
+      {
+        "body": "Global and static variables",
+        "whyWrong": "Those live in a separate static data segment."
+      },
+      {
+        "body": "String literals",
+        "whyWrong": "String literals typically live in a read-only data segment."
+      }
+    ],
+    "explanation": "The stack holds each call's frame: parameters, locals and the return address. It unwinds automatically on return, which is why returning the address of a local is a bug.",
+    "subtopic": "pointers-memory",
+    "concept": "Stack: automatic lifetime, tied to the call. Heap: manual lifetime, tied to free()."
+  },
+  {
+    "id": "PRG-0018",
+    "body": "What does this C snippet print?\n\nint i = 5;\nprintf(\"%d %d\", i++, ++i);",
+    "topic": "programming-fundamentals",
+    "difficulty": "hard",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "The behaviour is undefined — the result depends on the compiler",
+        "correct": true
+      },
+      {
+        "body": "5 7",
+        "whyWrong": "This is one plausible output, but the standard does not guarantee it."
+      },
+      {
+        "body": "5 6",
+        "whyWrong": "Another plausible output that the standard does not guarantee."
+      },
+      {
+        "body": "6 7",
+        "whyWrong": "Also compiler-dependent rather than defined."
+      }
+    ],
+    "explanation": "Modifying the same object twice without an intervening sequence point is undefined behaviour in C. Different compilers and optimisation levels legitimately produce different results.",
+    "subtopic": "output-prediction",
+    "concept": "Two side effects on one variable in one expression = undefined behaviour, not a puzzle to solve.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "PRG-0019",
+    "body": "What does this Java snippet print?\n\nString a = \"hello\";\nString b = \"hello\";\nSystem.out.println(a == b);",
+    "topic": "programming-fundamentals",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "true, because both literals refer to the same interned string",
+        "correct": true
+      },
+      {
+        "body": "false, because == compares references and these are different objects",
+        "whyWrong": "Identical compile-time literals are interned to the same object, so the references match."
+      },
+      {
+        "body": "It does not compile",
+        "whyWrong": "The code compiles; == is legal between references."
+      },
+      {
+        "body": "It throws a NullPointerException",
+        "whyWrong": "Neither reference is null."
+      }
+    ],
+    "explanation": "String literals are interned in a shared pool, so both variables point at one object and == is true. Written as new String(\"hello\"), b would be a distinct object and == would be false.",
+    "subtopic": "output-prediction",
+    "concept": "Literals are interned; new String is not. Always compare content with equals()."
+  },
+  {
+    "id": "PRG-0020",
+    "body": "What does this Python snippet print?\n\ndef f(x, acc=[]):\n    acc.append(x)\n    return acc\nprint(f(1))\nprint(f(2))",
+    "topic": "programming-fundamentals",
+    "difficulty": "hard",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "[1] then [1, 2], because the default list is created once and shared across calls",
+        "correct": true
+      },
+      {
+        "body": "[1] then [2], because each call gets a fresh list",
+        "whyWrong": "A default argument is evaluated once at definition time, not per call."
+      },
+      {
+        "body": "[1] then [1], because append does not persist",
+        "whyWrong": "append mutates the list in place, and that list persists."
+      },
+      {
+        "body": "It raises a TypeError on the second call",
+        "whyWrong": "The call is perfectly valid."
+      }
+    ],
+    "explanation": "Default arguments are evaluated once when the function is defined. A mutable default therefore accumulates across calls — the standard fix is a default of None and creating the list inside.",
+    "subtopic": "output-prediction",
+    "concept": "Never use a mutable default argument; use None and build it in the body.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "PRG-0021",
+    "body": "What does this C snippet print?\n\nchar s[] = \"abc\";\nprintf(\"%zu\", sizeof(s));",
+    "topic": "programming-fundamentals",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "4, because the array includes the terminating null byte",
+        "correct": true
+      },
+      {
+        "body": "3, the number of visible characters",
+        "whyWrong": "sizeof measures the array, which includes the terminator."
+      },
+      {
+        "body": "8, the size of a pointer",
+        "whyWrong": "s is an array here, not a pointer, so it does not decay in sizeof."
+      },
+      {
+        "body": "It is undefined",
+        "whyWrong": "The value is fully determined."
+      }
+    ],
+    "explanation": "A string literal initialiser sizes the array to the characters plus the terminating \\0, so sizeof is 4 while strlen is 3.",
+    "subtopic": "output-prediction",
+    "concept": "sizeof counts the null terminator; strlen does not."
+  },
+  {
+    "id": "PRG-0022",
+    "body": "What does this Java snippet print?\n\nint[] a = {1,2,3};\nint[] b = a;\nb[0] = 99;\nSystem.out.println(a[0]);",
+    "topic": "programming-fundamentals",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "99, because both variables reference the same array object",
+        "correct": true
+      },
+      {
+        "body": "1, because the assignment copies the array",
+        "whyWrong": "Assigning an array variable copies the reference, not the elements."
+      },
+      {
+        "body": "0, because the array is reinitialised",
+        "whyWrong": "No reinitialisation occurs."
+      },
+      {
+        "body": "It does not compile",
+        "whyWrong": "The code is valid Java."
+      }
+    ],
+    "explanation": "Arrays are objects in Java. b = a copies the reference, so both names denote one array and a write through either is visible through the other. Use Arrays.copyOf for an independent copy.",
+    "subtopic": "output-prediction",
+    "concept": "Assignment copies references for objects and arrays, never contents."
+  },
+  {
+    "id": "PRG-0023",
+    "body": "Which of these C declarations reads as \"pointer to a constant integer\"?",
+    "topic": "programming-fundamentals",
+    "difficulty": "hard",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "const int *p",
+        "correct": true
+      },
+      {
+        "body": "int * const p",
+        "whyWrong": "That is a constant pointer to a mutable integer."
+      },
+      {
+        "body": "const int * const p",
+        "whyWrong": "That is a constant pointer to a constant integer — both are const."
+      },
+      {
+        "body": "int const * const p",
+        "whyWrong": "This is the same as the previous option, with the qualifiers written in a different order."
+      }
+    ],
+    "explanation": "Read the declaration right to left from the identifier. In \"const int *p\", p is a pointer to an int that is const: *p cannot be assigned, but p can be repointed.",
+    "subtopic": "pointers-memory",
+    "concept": "Read declarations right to left from the name; const binds to what is on its left, unless nothing is."
+  },
+  {
+    "id": "PRG-0024",
+    "body": "Which error would a compiler catch rather than leaving to run time?",
+    "topic": "programming-fundamentals",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Assigning a string to a variable declared as int in a statically typed language",
+        "correct": true
+      },
+      {
+        "body": "Dividing by a variable that happens to be zero",
+        "whyWrong": "The divisor's value is generally unknown until run time."
+      },
+      {
+        "body": "Indexing an array beyond its bounds using a computed index",
+        "whyWrong": "The index value is usually determined at run time."
+      },
+      {
+        "body": "Dereferencing a pointer that is null at run time",
+        "whyWrong": "Nullness generally cannot be established at compile time."
+      }
+    ],
+    "explanation": "Type mismatches are structural and visible in the source. Value-dependent faults — a zero divisor, an out-of-range index, a null reference — depend on data the compiler does not have.",
+    "subtopic": "error-identification",
+    "concept": "Compilers catch shape errors; tests and assertions catch value errors."
+  },
+  {
+    "id": "PRG-0025",
+    "body": "A loop is written as \"for (int i = 0; i <= n; i++) sum += arr[i];\" for an array of n elements. What is wrong?",
+    "topic": "programming-fundamentals",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "It reads one element past the end, because valid indices stop at n-1",
+        "correct": true
+      },
+      {
+        "body": "It skips the first element",
+        "whyWrong": "It starts at 0, which is the first valid index."
+      },
+      {
+        "body": "It never terminates",
+        "whyWrong": "i increments each pass, so the loop terminates."
+      },
+      {
+        "body": "It should start at 1",
+        "whyWrong": "Zero-based indexing is correct here; the fault is the upper bound."
+      }
+    ],
+    "explanation": "For n elements the valid indices are 0 to n-1, so the condition must be i < n. As written, the final iteration reads arr[n], which is out of bounds.",
+    "subtopic": "error-identification",
+    "concept": "Zero-based indexing with n elements always ends at i < n.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "PRG-0026",
+    "body": "Which change is most likely to fix an off-by-one error in a binary search written as \"while (lo < hi)\" that misses the last element?",
+    "topic": "programming-fundamentals",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Examine whether the invariant should be \"while (lo <= hi)\" with hi initialised to n-1",
+        "correct": true
+      },
+      {
+        "body": "Change the midpoint to (lo + hi + 1) / 2",
+        "whyWrong": "Changing the midpoint rounding addresses infinite loops in a different variant, not a missed final element."
+      },
+      {
+        "body": "Start lo at 1 instead of 0",
+        "whyWrong": "That skips the first element instead of fixing the last."
+      },
+      {
+        "body": "Replace the loop with recursion",
+        "whyWrong": "Recursion reproduces the same boundary condition."
+      }
+    ],
+    "explanation": "Binary search has two consistent formulations: half-open with hi = n and \"lo < hi\", or closed with hi = n-1 and \"lo <= hi\". Mixing a closed initialisation with a half-open condition drops the final candidate.",
+    "subtopic": "error-identification",
+    "concept": "Pick one interval convention and keep the initialisation, condition and updates consistent with it."
+  },
+  {
+    "id": "DSA-0103",
+    "body": "What is the time complexity of inserting n elements one by one into a dynamic array that doubles when full?",
+    "topic": "complexity-analysis",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "O(n) overall, because the amortised cost of each insertion is constant",
+        "correct": true
+      },
+      {
+        "body": "O(n^2), because each resize copies every element",
+        "whyWrong": "Resizes are geometrically rare, so the copies sum to O(n) rather than O(n^2)."
+      },
+      {
+        "body": "O(n log n), because there are log n resizes",
+        "whyWrong": "There are log n resizes, but their costs form a geometric series summing to O(n)."
+      },
+      {
+        "body": "O(log n), because the array doubles",
+        "whyWrong": "Every insertion does at least constant work, so n insertions cannot be sub-linear."
+      }
+    ],
+    "explanation": "Doubling means the copies cost 1 + 2 + 4 + ... + n, a geometric series bounded by 2n. Spread across n insertions the amortised cost is O(1) each.",
+    "concept": "Geometric growth makes resizing amortised O(1); growing by a constant would make it O(n^2).",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0104",
+    "body": "A recurrence is T(n) = 2T(n/2) + O(n). What does it solve to?",
+    "topic": "complexity-analysis",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "O(n log n)",
+        "correct": true
+      },
+      {
+        "body": "O(n)",
+        "whyWrong": "The work per level is O(n) and there are log n levels, so the total is not O(n)."
+      },
+      {
+        "body": "O(n^2)",
+        "whyWrong": "That would require the combine step to be O(n) at each of n levels."
+      },
+      {
+        "body": "O(log n)",
+        "whyWrong": "Each level alone does O(n) work, so the total cannot be logarithmic."
+      }
+    ],
+    "explanation": "Each level of recursion does O(n) work across all its subproblems, and there are log n levels. This is the merge sort recurrence.",
+    "concept": "T(n) = 2T(n/2) + O(n) is the merge-sort recurrence: O(n log n)."
+  },
+  {
+    "id": "DSA-0105",
+    "body": "Why is amortised complexity different from average-case complexity?",
+    "topic": "complexity-analysis",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Amortised bounds hold for any sequence of operations; average-case bounds assume a distribution over inputs",
+        "correct": true
+      },
+      {
+        "body": "They are the same thing under different names",
+        "whyWrong": "They rest on quite different assumptions, one worst-case over sequences and one probabilistic."
+      },
+      {
+        "body": "Amortised applies only to sorting algorithms",
+        "whyWrong": "It applies to any sequence of operations on a data structure."
+      },
+      {
+        "body": "Average case is always the tighter bound",
+        "whyWrong": "Neither is systematically tighter; they measure different things."
+      }
+    ],
+    "explanation": "Amortised analysis is a worst-case guarantee spread over a sequence — no adversarial input can break it. Average-case analysis assumes inputs are drawn from a distribution, which an adversary may violate.",
+    "concept": "Amortised = worst case over a sequence. Average = expected over a distribution."
+  },
+  {
+    "id": "DSA-0106",
+    "body": "What is the space complexity of the recursive quicksort in the worst case?",
+    "topic": "complexity-analysis",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "O(n), because the recursion can degenerate to n nested calls",
+        "correct": true
+      },
+      {
+        "body": "O(1), because quicksort sorts in place",
+        "whyWrong": "In-place partitioning still leaves the call stack, which is the space being asked about."
+      },
+      {
+        "body": "O(n log n), matching its average time",
+        "whyWrong": "Stack depth cannot exceed the number of elements."
+      },
+      {
+        "body": "O(log n) in all cases",
+        "whyWrong": "That holds only when partitions are balanced or the recursion on the larger side is eliminated."
+      }
+    ],
+    "explanation": "With consistently unbalanced partitions the recursion nests n deep. Recursing on the smaller side and looping on the larger bounds the stack at O(log n).",
+    "concept": "In-place does not mean O(1) space — count the call stack."
+  },
+  {
+    "id": "DSA-0107",
+    "body": "Two algorithms are O(n) and O(n log n). For which inputs might the O(n log n) one be faster?",
+    "topic": "complexity-analysis",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Small inputs, where the constant factors hidden by the notation dominate",
+        "correct": true
+      },
+      {
+        "body": "Large inputs, where log n grows slowly",
+        "whyWrong": "Asymptotics favour the O(n) algorithm precisely as n grows."
+      },
+      {
+        "body": "Never — big-O ordering holds at every input size",
+        "whyWrong": "Big-O describes growth for sufficiently large n and says nothing about small inputs."
+      },
+      {
+        "body": "Only when the input is already sorted",
+        "whyWrong": "Sortedness is a property of specific algorithms, not of the asymptotic comparison."
+      }
+    ],
+    "explanation": "Big-O discards constants. An O(n) algorithm with a large constant can lose to an O(n log n) one until n is big enough for the growth rates to dominate — which is why library sorts switch to insertion sort on small subarrays.",
+    "concept": "Asymptotics describe large n; constants decide small n."
+  },
+  {
+    "id": "DSA-0108",
+    "body": "What does the two-pointer technique require of the input to work on a \"find a pair summing to k\" problem?",
+    "topic": "arrays",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "The array must be sorted, so a pointer can be moved based on whether the sum is too small or too large",
+        "correct": true
+      },
+      {
+        "body": "The array must contain only positive numbers",
+        "whyWrong": "The technique works with negatives too, provided the array is sorted."
+      },
+      {
+        "body": "The array must have no duplicates",
+        "whyWrong": "Duplicates are handled with a small adjustment and are not a barrier."
+      },
+      {
+        "body": "The array must have even length",
+        "whyWrong": "Length parity is irrelevant."
+      }
+    ],
+    "explanation": "Sortedness is what makes the pointer movement decidable: too small means advance the left pointer, too large means retreat the right one. On unsorted input a hash set is the usual alternative.",
+    "concept": "Two pointers need order; a hash set does not.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0109",
+    "body": "Kadane's algorithm finds the maximum subarray sum. What is its core recurrence?",
+    "topic": "arrays",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "best_ending_here = max(current element, best_ending_here + current element)",
+        "correct": true
+      },
+      {
+        "body": "best_ending_here = best_ending_here + current element",
+        "whyWrong": "Without the reset, a long negative prefix drags every later sum down."
+      },
+      {
+        "body": "best_ending_here = max(best_ending_here, current element)",
+        "whyWrong": "This omits the extension case and misses sums that build over several elements."
+      },
+      {
+        "body": "best_ending_here = sum of all elements so far",
+        "whyWrong": "A running total is not a maximum-subarray computation."
+      }
+    ],
+    "explanation": "At each element you either extend the previous best-ending-here or start fresh from the current element. The overall answer is the maximum of these values.",
+    "concept": "Extend or restart, and track the best seen so far."
+  },
+  {
+    "id": "DSA-0110",
+    "body": "Why does a hash table degrade to O(n) lookup in the worst case?",
+    "topic": "hashing",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "If every key hashes to the same bucket, the lookup becomes a linear scan of that bucket's chain",
+        "correct": true
+      },
+      {
+        "body": "Because the table must be resized on every insertion",
+        "whyWrong": "Resizes are geometrically rare and amortise away."
+      },
+      {
+        "body": "Because hashing itself is O(n)",
+        "whyWrong": "Hashing a fixed-size key is O(1); the cost is in collisions."
+      },
+      {
+        "body": "Because keys must be sorted before lookup",
+        "whyWrong": "Hash tables impose no ordering at all."
+      }
+    ],
+    "explanation": "O(1) is an average over a good hash distribution. Adversarial or pathological keys can collide into one bucket, at which point the structure behaves like a list. Some languages randomise the hash seed to prevent deliberate attacks.",
+    "concept": "Hash tables are O(1) on average and O(n) when everything collides.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0111",
+    "body": "What is the difference between open addressing and separate chaining?",
+    "topic": "hashing",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Chaining stores colliding entries in a structure per bucket; open addressing probes for another slot in the table itself",
+        "correct": true
+      },
+      {
+        "body": "Open addressing allows a load factor above 1",
+        "whyWrong": "Open addressing cannot exceed a load factor of 1 — chaining can."
+      },
+      {
+        "body": "Chaining requires a perfect hash function",
+        "whyWrong": "Chaining is precisely what tolerates an imperfect hash."
+      },
+      {
+        "body": "Open addressing cannot support deletion",
+        "whyWrong": "Deletion is possible with tombstone markers, though it is fiddlier."
+      }
+    ],
+    "explanation": "Chaining keeps a list or tree per bucket and tolerates load factors above 1. Open addressing keeps everything in one array, which gives better cache behaviour but degrades sharply as the table fills.",
+    "concept": "Chaining: flexible, pointer-heavy. Open addressing: cache-friendly, fills badly."
+  },
+  {
+    "id": "DSA-0112",
+    "body": "What is the time complexity of checking whether two strings of length n are anagrams using a character count?",
+    "topic": "strings",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "O(n), with O(1) extra space for a fixed alphabet",
+        "correct": true
+      },
+      {
+        "body": "O(n log n), because the strings must be sorted",
+        "whyWrong": "Sorting is one approach, but counting avoids it."
+      },
+      {
+        "body": "O(n^2), comparing every character against every other",
+        "whyWrong": "Counting requires only one pass over each string."
+      },
+      {
+        "body": "O(1), because only the lengths need comparing",
+        "whyWrong": "Equal lengths do not make two strings anagrams."
+      }
+    ],
+    "explanation": "One pass increments a count per character of the first string and decrements for the second; all counts ending at zero means anagram. For a fixed alphabet the count array is constant space.",
+    "concept": "Counting beats sorting for anagram checks: O(n) instead of O(n log n)."
+  },
+  {
+    "id": "DSA-0113",
+    "body": "Why is repeated string concatenation in a loop often O(n^2) in languages with immutable strings?",
+    "topic": "strings",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Each concatenation allocates a new string and copies everything accumulated so far",
+        "correct": true
+      },
+      {
+        "body": "Because string comparison is O(n)",
+        "whyWrong": "No comparison takes place during concatenation."
+      },
+      {
+        "body": "Because the garbage collector runs on every iteration",
+        "whyWrong": "Collection timing is not what produces the quadratic behaviour."
+      },
+      {
+        "body": "Because strings are stored as linked lists",
+        "whyWrong": "Immutable strings are contiguous, which is exactly why copying costs."
+      }
+    ],
+    "explanation": "Copying a prefix of growing length on each of n iterations sums to O(n^2). A StringBuilder, a list joined at the end, or a rope avoids the repeated copying.",
+    "concept": "Build into a mutable buffer and join once.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0114",
+    "body": "What is the sliding-window technique best suited to?",
+    "topic": "arrays",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Problems over contiguous subarrays or substrings where the window can be extended and shrunk incrementally",
+        "correct": true
+      },
+      {
+        "body": "Problems requiring every subset of the input",
+        "whyWrong": "Subsets are not contiguous and the technique does not apply."
+      },
+      {
+        "body": "Problems on sorted arrays only",
+        "whyWrong": "Many sliding-window problems run on unsorted input."
+      },
+      {
+        "body": "Problems that can be solved greedily in one pass regardless of structure",
+        "whyWrong": "Not every one-pass greedy problem has a window structure."
+      }
+    ],
+    "explanation": "A sliding window turns a nested-loop O(n^2) scan into O(n) by maintaining the answer for the current window incrementally as one end advances and the other catches up.",
+    "concept": "Contiguity plus an incrementally maintainable summary = sliding window."
+  },
+  {
+    "id": "DSA-0115",
+    "body": "What property makes a binary search tree degenerate to O(n) search?",
+    "topic": "trees",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Inserting keys in sorted order, which produces a tree shaped like a linked list",
+        "correct": true
+      },
+      {
+        "body": "Storing duplicate keys",
+        "whyWrong": "Duplicates can be handled without affecting the height."
+      },
+      {
+        "body": "Having an even number of nodes",
+        "whyWrong": "Node count parity has no bearing on shape."
+      },
+      {
+        "body": "Storing large values in the nodes",
+        "whyWrong": "Payload size does not change the tree structure."
+      }
+    ],
+    "explanation": "A BST's performance depends on its height. Sorted insertions place every new key on the same side, giving a height of n. Self-balancing variants such as AVL and red-black trees prevent this.",
+    "subtopic": "binary-search-trees",
+    "concept": "BST performance is O(height); balancing is what keeps height at log n.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0116",
+    "body": "Which traversal of a binary search tree visits the keys in ascending order?",
+    "topic": "trees",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "In-order",
+        "correct": true
+      },
+      {
+        "body": "Pre-order",
+        "whyWrong": "Pre-order visits the root before its subtrees, breaking the ordering."
+      },
+      {
+        "body": "Post-order",
+        "whyWrong": "Post-order visits the root last, which does not give sorted output."
+      },
+      {
+        "body": "Level-order",
+        "whyWrong": "Level-order follows the tree's shape rather than its key order."
+      }
+    ],
+    "explanation": "In-order traversal visits the left subtree, then the node, then the right subtree — which for a BST is exactly ascending key order.",
+    "subtopic": "tree-traversals",
+    "concept": "In-order on a BST = a sorted sequence."
+  },
+  {
+    "id": "DSA-0117",
+    "body": "What is the height of a complete binary tree with n nodes?",
+    "topic": "trees",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Approximately log base 2 of n",
+        "correct": true
+      },
+      {
+        "body": "Approximately n/2",
+        "whyWrong": "That would describe a nearly degenerate tree."
+      },
+      {
+        "body": "Approximately the square root of n",
+        "whyWrong": "No standard tree shape gives this height."
+      },
+      {
+        "body": "Exactly n - 1",
+        "whyWrong": "That is the height of a fully degenerate chain."
+      }
+    ],
+    "explanation": "A complete binary tree has every level filled except possibly the last, so level k holds 2^k nodes and the height is floor(log2 n).",
+    "concept": "Complete tree: n nodes packed into log2 n levels."
+  },
+  {
+    "id": "DSA-0118",
+    "body": "Why does Dijkstra's algorithm fail on graphs with negative edge weights?",
+    "topic": "graphs",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "It finalises a node's distance when first extracted, and a later negative edge could still reduce it",
+        "correct": true
+      },
+      {
+        "body": "It cannot represent negative numbers",
+        "whyWrong": "Representation is not the issue; the algorithm's greedy invariant is."
+      },
+      {
+        "body": "It loops forever on negative edges",
+        "whyWrong": "It terminates; it simply produces wrong distances."
+      },
+      {
+        "body": "It requires the graph to be undirected",
+        "whyWrong": "Dijkstra works on directed graphs."
+      }
+    ],
+    "explanation": "Dijkstra assumes that extending a path never shortens it, which lets it commit to a node's distance permanently. A negative edge breaks that assumption. Bellman-Ford handles negative weights at O(VE).",
+    "subtopic": "shortest-paths",
+    "concept": "Dijkstra needs non-negative weights; use Bellman-Ford otherwise.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0119",
+    "body": "When is BFS preferable to DFS for finding a path between two nodes?",
+    "topic": "graphs",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "When the shortest path in number of edges is required on an unweighted graph",
+        "correct": true
+      },
+      {
+        "body": "When memory is severely constrained",
+        "whyWrong": "BFS holds a whole frontier and generally uses more memory than DFS."
+      },
+      {
+        "body": "When the graph is very deep",
+        "whyWrong": "Depth favours BFS for correctness of shortest path but the question of preference is about the shortest-path guarantee."
+      },
+      {
+        "body": "When cycles must be detected",
+        "whyWrong": "Both traversals detect cycles with a visited set."
+      }
+    ],
+    "explanation": "BFS explores by distance, so the first time it reaches the target it has used the fewest edges. DFS gives no such guarantee.",
+    "subtopic": "bfs-dfs",
+    "concept": "Unweighted shortest path = BFS. Weighted = Dijkstra."
+  },
+  {
+    "id": "DSA-0120",
+    "body": "What does a topological sort require of the graph?",
+    "topic": "graphs",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "It must be a directed acyclic graph",
+        "correct": true
+      },
+      {
+        "body": "It must be connected",
+        "whyWrong": "A DAG with several components still has a valid topological order."
+      },
+      {
+        "body": "It must be undirected",
+        "whyWrong": "Edge direction is what defines the ordering."
+      },
+      {
+        "body": "It must have weighted edges",
+        "whyWrong": "Weights play no part in a topological sort."
+      }
+    ],
+    "explanation": "A topological order lists every node before all nodes it points to. A cycle makes that impossible, so the graph must be acyclic and directed. Failure to produce a full order is itself a cycle detector.",
+    "subtopic": "topological-sort",
+    "concept": "Topological sort exists exactly when the directed graph has no cycle."
+  },
+  {
+    "id": "DSA-0121",
+    "body": "What operation is a min-heap optimised for?",
+    "topic": "heaps",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Retrieving and removing the smallest element, in O(1) and O(log n) respectively",
+        "correct": true
+      },
+      {
+        "body": "Searching for an arbitrary element",
+        "whyWrong": "Arbitrary search in a heap is O(n); it is not ordered beyond the parent-child relation."
+      },
+      {
+        "body": "Returning elements in sorted order without removal",
+        "whyWrong": "Sorted output requires repeated extraction, not a single traversal."
+      },
+      {
+        "body": "Finding the largest element",
+        "whyWrong": "That is a max-heap; in a min-heap the largest is somewhere among the leaves."
+      }
+    ],
+    "explanation": "A min-heap keeps the smallest element at the root, so peeking is O(1) and extraction is O(log n) after the sift-down. It gives no help with arbitrary lookups.",
+    "concept": "Heaps give you the extreme cheaply and nothing else.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0122",
+    "body": "How do you find the k largest elements of n items efficiently when k is much smaller than n?",
+    "topic": "heaps",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Maintain a min-heap of size k, giving O(n log k)",
+        "correct": true
+      },
+      {
+        "body": "Sort the whole array, giving O(n log n)",
+        "whyWrong": "Correct but wasteful when k is small."
+      },
+      {
+        "body": "Maintain a max-heap of size k",
+        "whyWrong": "A max-heap of size k makes evicting the smallest of the k an O(k) operation rather than O(1)."
+      },
+      {
+        "body": "Scan k times for the maximum, giving O(nk)",
+        "whyWrong": "Worse than the heap approach for anything but tiny k."
+      }
+    ],
+    "explanation": "Keep a min-heap of the k best seen so far. Each new element is compared with the root and replaces it if larger, so the total is O(n log k) with O(k) space.",
+    "concept": "k largest → min-heap of size k. k smallest → max-heap of size k."
+  },
+  {
+    "id": "DSA-0123",
+    "body": "What two properties must a problem have for dynamic programming to apply?",
+    "topic": "dynamic-programming",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Optimal substructure and overlapping subproblems",
+        "correct": true
+      },
+      {
+        "body": "Optimal substructure and a greedy choice property",
+        "whyWrong": "A greedy choice property means a greedy algorithm suffices, without DP."
+      },
+      {
+        "body": "Overlapping subproblems and a sorted input",
+        "whyWrong": "Sortedness is not a requirement for DP."
+      },
+      {
+        "body": "A recursive formulation and a small input size",
+        "whyWrong": "A recursive formulation alone does not make DP applicable, and input size is irrelevant."
+      }
+    ],
+    "explanation": "Optimal substructure means an optimal solution is built from optimal solutions to subproblems. Overlapping subproblems means the same subproblem recurs, which is what memoisation exploits.",
+    "concept": "No overlap → divide and conquer. Greedy choice → greedy. Both DP properties → DP.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0124",
+    "body": "What is the difference between memoisation and tabulation?",
+    "topic": "dynamic-programming",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Memoisation is top-down and caches results of recursive calls; tabulation is bottom-up and fills a table iteratively",
+        "correct": true
+      },
+      {
+        "body": "Memoisation uses more time; tabulation uses more space",
+        "whyWrong": "Both usually store the same number of states; the difference is direction, not asymptotic cost."
+      },
+      {
+        "body": "Tabulation works only on one-dimensional problems",
+        "whyWrong": "Tabulation handles multi-dimensional states routinely."
+      },
+      {
+        "body": "Memoisation cannot handle recursive problems",
+        "whyWrong": "Recursion is exactly what memoisation caches."
+      }
+    ],
+    "explanation": "Memoisation only computes the states the recursion actually reaches, which can be fewer. Tabulation avoids recursion depth limits and often allows space to be reduced to a rolling row.",
+    "concept": "Top-down caches what it visits; bottom-up computes everything but avoids the stack."
+  },
+  {
+    "id": "DSA-0125",
+    "body": "What makes a greedy algorithm provably correct for a problem?",
+    "topic": "greedy",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "The greedy choice property — a locally optimal choice is part of some globally optimal solution",
+        "correct": true
+      },
+      {
+        "body": "That it runs faster than dynamic programming",
+        "whyWrong": "Speed says nothing about correctness."
+      },
+      {
+        "body": "That the input is sorted before processing",
+        "whyWrong": "Sorting is a common step but is not what makes greedy correct."
+      },
+      {
+        "body": "That it produces the same result as brute force on small inputs",
+        "whyWrong": "Agreement on small cases is evidence, not proof."
+      }
+    ],
+    "explanation": "A greedy algorithm is correct when you can prove an exchange argument: any optimal solution can be transformed to include the greedy choice without getting worse. Activity selection satisfies this; the 0/1 knapsack does not.",
+    "concept": "Greedy needs a proof — usually an exchange argument — not just a plausible heuristic."
+  },
+  {
+    "id": "DSA-0126",
+    "body": "Which sorting algorithm is stable and guarantees O(n log n) in the worst case?",
+    "topic": "sorting",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Merge sort",
+        "correct": true
+      },
+      {
+        "body": "Quicksort",
+        "whyWrong": "Quicksort is O(n^2) in the worst case and is not stable in its usual in-place form."
+      },
+      {
+        "body": "Heap sort",
+        "whyWrong": "Heap sort guarantees O(n log n) but is not stable."
+      },
+      {
+        "body": "Selection sort",
+        "whyWrong": "Selection sort is O(n^2) and not stable in its standard form."
+      }
+    ],
+    "explanation": "Merge sort is stable — equal elements keep their relative order — and its worst case matches its average at O(n log n), at the cost of O(n) auxiliary space.",
+    "concept": "Merge: stable, O(n log n) guaranteed, O(n) space. Heap: O(n log n) guaranteed, in place, unstable.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0127",
+    "body": "Why does binary search require random access rather than merely a sorted sequence?",
+    "topic": "searching",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "It jumps to the midpoint, which costs O(n) on a linked list and destroys the logarithmic bound",
+        "correct": true
+      },
+      {
+        "body": "It needs the elements to be numbers",
+        "whyWrong": "Any totally ordered type works."
+      },
+      {
+        "body": "It needs to modify the sequence",
+        "whyWrong": "Binary search is read-only."
+      },
+      {
+        "body": "It needs the length to be a power of two",
+        "whyWrong": "No such restriction exists."
+      }
+    ],
+    "explanation": "The algorithm depends on reaching the middle element in constant time. On a linked list, walking to the midpoint takes O(n) per step, making the whole search O(n).",
+    "subtopic": "binary-search",
+    "concept": "Binary search = sorted + O(1) indexing."
+  },
+  {
+    "id": "DSA-0128",
+    "body": "What is the standard way to detect a cycle in a singly linked list in O(1) space?",
+    "topic": "linked-lists",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Floyd's tortoise and hare — advance one pointer by one node and another by two until they meet",
+        "correct": true
+      },
+      {
+        "body": "Store every visited node in a hash set",
+        "whyWrong": "This works but uses O(n) space, which the question excludes."
+      },
+      {
+        "body": "Reverse the list and compare",
+        "whyWrong": "Reversal destroys the structure and does not detect a cycle reliably."
+      },
+      {
+        "body": "Count the nodes and compare with the known length",
+        "whyWrong": "The length is unknown, and a cycle makes counting non-terminating."
+      }
+    ],
+    "explanation": "If a cycle exists the fast pointer eventually laps the slow one inside it, so they meet. Without a cycle the fast pointer reaches the end. Both use constant extra space.",
+    "concept": "Two pointers at different speeds detect a cycle in O(n) time and O(1) space.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "DSA-0129",
+    "body": "Why is a stack the natural structure for checking balanced brackets?",
+    "topic": "stacks-queues",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "The most recently opened bracket must be the first one closed, which is exactly last-in-first-out order",
+        "correct": true
+      },
+      {
+        "body": "Because brackets must be counted",
+        "whyWrong": "Counting alone cannot distinguish \"([)]\" from \"([])\"."
+      },
+      {
+        "body": "Because a stack sorts its contents",
+        "whyWrong": "Stacks impose no ordering on values."
+      },
+      {
+        "body": "Because the input is read backwards",
+        "whyWrong": "The check runs left to right."
+      }
+    ],
+    "explanation": "Nesting is inherently LIFO. Pushing each opening bracket and matching each closing bracket against the top rejects both mismatched types and wrong nesting order.",
+    "concept": "Any nesting problem is a stack problem."
+  },
+  {
+    "id": "DSA-0130",
+    "body": "What is the base case failure that causes a stack overflow in a recursive function?",
+    "topic": "recursion",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "The recursion never reaches a condition that returns without recursing further",
+        "correct": true
+      },
+      {
+        "body": "The function allocates too much heap memory",
+        "whyWrong": "Heap exhaustion produces an out-of-memory error, not a stack overflow."
+      },
+      {
+        "body": "The function has too many parameters",
+        "whyWrong": "Parameter count affects frame size marginally, not termination."
+      },
+      {
+        "body": "The function returns the wrong value",
+        "whyWrong": "A wrong value is a logic bug, not an overflow."
+      }
+    ],
+    "explanation": "Every recursion needs a base case that the recursive calls provably approach. If the argument does not shrink toward it, the call stack grows without bound.",
+    "concept": "Check two things: a base case exists, and every call moves measurably toward it."
+  },
+  {
+    "id": "OS-0026",
+    "body": "What are the four Coffman conditions that must all hold for a deadlock?",
+    "topic": "operating-systems",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Mutual exclusion, hold and wait, no preemption, and circular wait",
+        "correct": true
+      },
+      {
+        "body": "Mutual exclusion, starvation, priority inversion, and circular wait",
+        "whyWrong": "Starvation and priority inversion are separate problems, not deadlock conditions."
+      },
+      {
+        "body": "Hold and wait, preemption, aging, and circular wait",
+        "whyWrong": "Preemption and aging prevent deadlock rather than causing it."
+      },
+      {
+        "body": "Race conditions, mutual exclusion, context switching, and no preemption",
+        "whyWrong": "Race conditions and context switching are not among the conditions."
+      }
+    ],
+    "explanation": "All four must hold simultaneously, which is why breaking any one prevents deadlock — for example imposing a global lock ordering removes circular wait.",
+    "subtopic": "deadlocks",
+    "concept": "Break any one of the four and deadlock becomes impossible.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "OS-0027",
+    "body": "What is the difference between deadlock and starvation?",
+    "topic": "operating-systems",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "In deadlock no process in the set can ever proceed; in starvation a process could proceed but is perpetually passed over",
+        "correct": true
+      },
+      {
+        "body": "They are the same condition under different names",
+        "whyWrong": "The distinction is whether progress is impossible or merely never granted."
+      },
+      {
+        "body": "Deadlock affects threads and starvation affects processes",
+        "whyWrong": "Both affect either."
+      },
+      {
+        "body": "Starvation always leads to deadlock",
+        "whyWrong": "Starvation can persist indefinitely without any deadlock."
+      }
+    ],
+    "explanation": "A deadlocked set is permanently blocked by a circular dependency. A starving process is runnable but keeps losing to others — a scheduling fairness problem, usually fixed with aging.",
+    "subtopic": "deadlocks",
+    "concept": "Deadlock: nobody can move. Starvation: somebody could, but never gets the chance."
+  },
+  {
+    "id": "OS-0028",
+    "body": "Why is a mutex not interchangeable with a semaphore initialised to 1?",
+    "topic": "operating-systems",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "A mutex has an owner and must be released by the locking thread; a binary semaphore can be signalled by any thread",
+        "correct": true
+      },
+      {
+        "body": "A semaphore cannot be used for mutual exclusion",
+        "whyWrong": "A binary semaphore can provide mutual exclusion, which is why the two are often confused."
+      },
+      {
+        "body": "A mutex allows several threads into the critical section",
+        "whyWrong": "A mutex admits exactly one."
+      },
+      {
+        "body": "A semaphore is always faster",
+        "whyWrong": "Relative speed depends on the implementation, not on the abstraction."
+      }
+    ],
+    "explanation": "Ownership is the practical difference. It lets a mutex support recursion checks and priority inheritance, and it makes releasing a lock you do not hold an error rather than a silent bug.",
+    "subtopic": "concurrency",
+    "concept": "Mutex = ownership and mutual exclusion. Semaphore = a counter for signalling."
+  },
+  {
+    "id": "OS-0029",
+    "body": "What problem does a condition variable solve that a mutex alone does not?",
+    "topic": "operating-systems",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Waiting for a state change without holding the lock or spinning, and being woken when it occurs",
+        "correct": true
+      },
+      {
+        "body": "Protecting shared data from concurrent access",
+        "whyWrong": "That is exactly what the mutex does."
+      },
+      {
+        "body": "Preventing deadlock automatically",
+        "whyWrong": "Condition variables can participate in deadlocks like any other primitive."
+      },
+      {
+        "body": "Making critical sections faster",
+        "whyWrong": "Speed is not what they address."
+      }
+    ],
+    "explanation": "A mutex protects the data but gives no way to wait for a predicate to become true. A condition variable releases the mutex atomically while waiting and reacquires it on wake — which is why waits must be in a loop that rechecks the predicate.",
+    "subtopic": "concurrency",
+    "concept": "Always wait on a condition variable inside a while loop rechecking the predicate."
+  },
+  {
+    "id": "OS-0030",
+    "body": "What is thrashing in a virtual memory system?",
+    "topic": "operating-systems",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "The system spends most of its time paging because the active working set exceeds physical memory",
+        "correct": true
+      },
+      {
+        "body": "The CPU switches between processes too frequently",
+        "whyWrong": "Excessive context switching is a different overhead problem."
+      },
+      {
+        "body": "The disk fragments over time",
+        "whyWrong": "Fragmentation is a file-system concern."
+      },
+      {
+        "body": "Cache lines are evicted by competing threads",
+        "whyWrong": "That is cache thrashing, at a different level of the hierarchy."
+      }
+    ],
+    "explanation": "When the combined working sets do not fit in RAM, every process faults on pages just evicted from another. Throughput collapses; the fix is to reduce the degree of multiprogramming or add memory.",
+    "subtopic": "memory-management",
+    "concept": "Thrashing = working set larger than RAM, so paging displaces useful work.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "OS-0031",
+    "body": "What is the key difference between paging and segmentation?",
+    "topic": "operating-systems",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Paging divides memory into fixed-size blocks; segmentation divides it into variable-size logical units",
+        "correct": true
+      },
+      {
+        "body": "Paging is done in hardware and segmentation in software",
+        "whyWrong": "Both are hardware-supported on architectures that provide them."
+      },
+      {
+        "body": "Paging causes external fragmentation",
+        "whyWrong": "Fixed-size pages eliminate external fragmentation; segmentation is what suffers from it."
+      },
+      {
+        "body": "Segmentation requires no address translation",
+        "whyWrong": "Segmentation translates addresses through a segment table."
+      }
+    ],
+    "explanation": "Fixed-size pages eliminate external fragmentation at the cost of some internal waste. Variable-size segments match program structure but leave unusable gaps as segments are loaded and removed.",
+    "subtopic": "memory-management",
+    "concept": "Paging: internal fragmentation. Segmentation: external fragmentation."
+  },
+  {
+    "id": "OS-0032",
+    "body": "Why can a process have many threads sharing one address space but not one file descriptor per thread by default?",
+    "topic": "operating-systems",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "technical_mcq",
+      "technical_interview"
+    ],
+    "options": [
+      {
+        "body": "Threads of a process share its resources — memory, file descriptors and signal handlers — by design",
+        "correct": true
+      },
+      {
+        "body": "File descriptors are too expensive to duplicate",
+        "whyWrong": "Cost is not the reason; sharing is the defining property of threads."
+      },
+      {
+        "body": "Threads cannot perform I/O",
+        "whyWrong": "Threads perform I/O routinely."
+      },
+      {
+        "body": "The kernel does not track threads individually",
+        "whyWrong": "The kernel schedules threads individually; it is the resources that are shared."
+      }
+    ],
+    "explanation": "A thread is a schedulable execution context within a process. Sharing the address space and descriptor table is what distinguishes threads from processes — and is why thread bugs corrupt shared state so readily.",
+    "subtopic": "process-management",
+    "concept": "Threads share everything but their stack and registers."
   }
 ]

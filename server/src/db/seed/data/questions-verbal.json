@@ -1086,5 +1086,1651 @@
     "subtopic": "synonyms-antonyms",
     "concept": "When three options share a meaning, the odd one out is very often the answer.",
     "hint": "Which option does not belong with the other three?"
+  },
+  {
+    "id": "VRB-0036",
+    "body": "Choose the grammatically correct sentence.",
+    "topic": "verbal-ability",
+    "difficulty": "easy",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Each of the applicants has submitted a portfolio.",
+        "correct": true
+      },
+      {
+        "body": "Each of the applicants have submitted a portfolio.",
+        "whyWrong": "\"Each\" is singular and takes \"has\", regardless of the plural noun that follows \"of\"."
+      },
+      {
+        "body": "Each of the applicant has submitted a portfolio.",
+        "whyWrong": "\"Of the\" requires the plural \"applicants\"."
+      },
+      {
+        "body": "Each of the applicants having submitted a portfolio.",
+        "whyWrong": "This is a fragment; it has no finite main verb."
+      }
+    ],
+    "explanation": "\"Each\" is a singular pronoun, so the verb is \"has\". The plural \"applicants\" sits inside a prepositional phrase and does not govern the verb.",
+    "subtopic": "sentence-correction",
+    "concept": "The subject is never inside a prepositional phrase: strike out \"of the ...\" and check agreement."
+  },
+  {
+    "id": "VRB-0037",
+    "body": "Choose the grammatically correct sentence.",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "The number of applications has risen sharply this year.",
+        "correct": true
+      },
+      {
+        "body": "The number of applications have risen sharply this year.",
+        "whyWrong": "\"The number\" is singular and takes \"has\"."
+      },
+      {
+        "body": "A number of applications has risen sharply this year.",
+        "whyWrong": "\"A number of\" is plural and would take \"have\"; the sentence also changes meaning."
+      },
+      {
+        "body": "The numbers of application has risen sharply this year.",
+        "whyWrong": "\"Application\" must be plural after \"numbers of\", and the agreement is still wrong."
+      }
+    ],
+    "explanation": "\"The number of X\" is singular (\"the number has risen\"), whereas \"a number of X\" means \"several\" and is plural (\"a number have risen\").",
+    "subtopic": "sentence-correction",
+    "concept": "\"The number\" = one figure, singular. \"A number of\" = several, plural.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "VRB-0038",
+    "body": "Choose the correct sentence.",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Having finished the report, she sent it to the client.",
+        "correct": true
+      },
+      {
+        "body": "Having finished the report, it was sent to the client.",
+        "whyWrong": "The participial phrase must describe the subject; \"it\" did not finish the report."
+      },
+      {
+        "body": "Having finished the report, the client received it.",
+        "whyWrong": "This says the client finished the report — a dangling modifier."
+      },
+      {
+        "body": "Having finished the report, sending it to the client.",
+        "whyWrong": "This is a fragment with no main clause."
+      }
+    ],
+    "explanation": "A leading participial phrase attaches to the subject of the main clause. Only \"she\" can have finished the report, so only the first sentence avoids a dangling modifier.",
+    "subtopic": "sentence-correction",
+    "concept": "After a leading \"-ing\" or \"having\" phrase, the very next noun must be the doer.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "VRB-0039",
+    "body": "Choose the correct sentence.",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "The committee is divided over the proposal, and its members meet again on Friday.",
+        "correct": true
+      },
+      {
+        "body": "The committee are divided over the proposal, and it's members meet again on Friday.",
+        "whyWrong": "\"It's\" is a contraction of \"it is\"; the possessive is \"its\"."
+      },
+      {
+        "body": "The committee is divided over the proposal, and their members meets again on Friday.",
+        "whyWrong": "\"Members\" is plural and takes \"meet\", not \"meets\"."
+      },
+      {
+        "body": "The committee were divided over the proposal, and its member meet again on Friday.",
+        "whyWrong": "\"Member\" must be plural to agree with \"meet\"."
+      }
+    ],
+    "explanation": "In standard usage \"committee\" takes a singular verb and the possessive \"its\". \"It's\" always expands to \"it is\" or \"it has\".",
+    "subtopic": "sentence-correction",
+    "concept": "Test \"its\" by expanding to \"it is\" — if that is nonsense, drop the apostrophe."
+  },
+  {
+    "id": "VRB-0040",
+    "body": "Choose the correct sentence.",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "She is one of those engineers who work late.",
+        "correct": true
+      },
+      {
+        "body": "She is one of those engineers who works late.",
+        "whyWrong": "The relative clause describes \"engineers\", which is plural, so the verb is \"work\"."
+      },
+      {
+        "body": "She is one of those engineer who work late.",
+        "whyWrong": "\"Those\" requires the plural \"engineers\"."
+      },
+      {
+        "body": "She is one of those engineers whom works late.",
+        "whyWrong": "\"Whom\" is an object pronoun and cannot be the subject of \"works\"."
+      }
+    ],
+    "explanation": "\"Who\" here refers back to \"those engineers\", not to \"one\", so the verb is plural: those engineers work late, and she is one of them.",
+    "subtopic": "sentence-correction",
+    "concept": "In \"one of those X who ...\", the relative clause modifies the plural X."
+  },
+  {
+    "id": "VRB-0041",
+    "body": "Choose the correct sentence.",
+    "topic": "verbal-ability",
+    "difficulty": "easy",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Between you and me, the deadline is unrealistic.",
+        "correct": true
+      },
+      {
+        "body": "Between you and I, the deadline is unrealistic.",
+        "whyWrong": "\"Between\" is a preposition and takes the object pronoun \"me\"."
+      },
+      {
+        "body": "Between you and myself, the deadline is unrealistic.",
+        "whyWrong": "\"Myself\" is reflexive and needs an earlier \"I\" in the same clause to refer back to."
+      },
+      {
+        "body": "Between yourself and I, the deadline is unrealistic.",
+        "whyWrong": "Both pronouns are wrong: the objects should be \"you and me\"."
+      }
+    ],
+    "explanation": "Prepositions take object pronouns. \"Between you and I\" is a hypercorrection; the test is to drop the other person — you would say \"between me\", not \"between I\".",
+    "subtopic": "sentence-correction",
+    "concept": "Remove the other person from the pair and the right pronoun becomes obvious.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "VRB-0042",
+    "body": "Choose the correct sentence.",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "If I were the hiring manager, I would shorten the process.",
+        "correct": true
+      },
+      {
+        "body": "If I was the hiring manager, I would shorten the process.",
+        "whyWrong": "A contrary-to-fact condition takes the subjunctive \"were\"."
+      },
+      {
+        "body": "If I were the hiring manager, I will shorten the process.",
+        "whyWrong": "The subjunctive condition pairs with \"would\", not \"will\"."
+      },
+      {
+        "body": "If I would be the hiring manager, I would shorten the process.",
+        "whyWrong": "\"Would\" does not belong in the if-clause of a conditional."
+      }
+    ],
+    "explanation": "For a hypothetical that is contrary to fact, English uses \"were\" in the if-clause and \"would\" in the main clause.",
+    "subtopic": "sentence-correction",
+    "concept": "Contrary to fact: \"If I were ... I would ...\". Never \"would\" in the if-clause."
+  },
+  {
+    "id": "VRB-0043",
+    "body": "Choose the correct sentence.",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "The data suggest that the model needs retraining.",
+        "correct": true
+      },
+      {
+        "body": "The data suggests that the model need retraining.",
+        "whyWrong": "Even taking \"data\" as singular, \"model\" is singular and requires \"needs\"."
+      },
+      {
+        "body": "The datas suggest that the model needs retraining.",
+        "whyWrong": "\"Data\" has no plural form \"datas\"."
+      },
+      {
+        "body": "The data suggesting that the model needs retraining.",
+        "whyWrong": "This is a fragment with no finite main verb."
+      }
+    ],
+    "explanation": "\"Data\" is treated as a plural in formal and scientific writing (\"the data suggest\"), and the subordinate clause needs the singular \"needs\" for \"model\".",
+    "subtopic": "sentence-correction",
+    "concept": "Formal register: data are, data suggest. Check every clause's own subject separately."
+  },
+  {
+    "id": "VRB-0044",
+    "body": "Choose the correct sentence.",
+    "topic": "verbal-ability",
+    "difficulty": "easy",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Neither the manager nor the engineers were informed.",
+        "correct": true
+      },
+      {
+        "body": "Neither the manager nor the engineers was informed.",
+        "whyWrong": "With \"neither ... nor\", the verb agrees with the nearer subject, which is the plural \"engineers\"."
+      },
+      {
+        "body": "Neither the manager or the engineers were informed.",
+        "whyWrong": "\"Neither\" pairs with \"nor\", not \"or\"."
+      },
+      {
+        "body": "Neither the managers nor the engineer were informed.",
+        "whyWrong": "Here the nearer subject is the singular \"engineer\", so \"were\" is wrong."
+      }
+    ],
+    "explanation": "In \"neither ... nor\" constructions the verb agrees with whichever subject is closer to it. \"Engineers\" is closer, so the plural \"were\" is correct.",
+    "subtopic": "sentence-correction",
+    "concept": "Proximity rule: with either/or and neither/nor, agree with the nearer subject.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "VRB-0045",
+    "body": "Choose the correct sentence.",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "He is taller than I am.",
+        "correct": true
+      },
+      {
+        "body": "He is taller than me am.",
+        "whyWrong": "\"Me\" cannot be the subject of \"am\"."
+      },
+      {
+        "body": "He is more taller than I am.",
+        "whyWrong": "\"Taller\" is already comparative; \"more taller\" is a double comparative."
+      },
+      {
+        "body": "He is tallest than I am.",
+        "whyWrong": "A comparison between two people takes the comparative \"taller\", not the superlative."
+      }
+    ],
+    "explanation": "Comparisons use the comparative form, and the pronoun after \"than\" takes the case it would have in the completed clause — \"than I am\", not \"than me am\".",
+    "subtopic": "sentence-correction",
+    "concept": "Finish the clause after \"than\" and the pronoun case follows."
+  },
+  {
+    "id": "VRB-0046",
+    "body": "Choose the correct sentence.",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "The report, along with its appendices, was circulated yesterday.",
+        "correct": true
+      },
+      {
+        "body": "The report, along with its appendices, were circulated yesterday.",
+        "whyWrong": "\"Along with\" does not create a compound subject; the singular \"report\" governs the verb."
+      },
+      {
+        "body": "The report, along with it's appendices, was circulated yesterday.",
+        "whyWrong": "\"It's\" means \"it is\"; the possessive is \"its\"."
+      },
+      {
+        "body": "The reports, along with its appendices, was circulated yesterday.",
+        "whyWrong": "The plural \"reports\" requires \"were\", and the possessive no longer matches."
+      }
+    ],
+    "explanation": "Phrases such as \"along with\", \"as well as\" and \"in addition to\" are parenthetical: they do not make a singular subject plural.",
+    "subtopic": "sentence-correction",
+    "concept": "Only \"and\" creates a compound subject. \"Along with\" does not."
+  },
+  {
+    "id": "VRB-0047",
+    "body": "Choose the correct sentence.",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "The professor gave a lecture on climate change to the students in the hall.",
+        "correct": true
+      },
+      {
+        "body": "The professor gave a lecture to the students on climate change in the hall.",
+        "whyWrong": "This reads as though the students were on climate change; the modifier is misplaced."
+      },
+      {
+        "body": "The professor in the hall gave a lecture to the students on climate change.",
+        "whyWrong": "It still attaches \"on climate change\" to the students rather than the lecture."
+      },
+      {
+        "body": "In the hall the professor gave to the students a lecture on climate change in it.",
+        "whyWrong": "\"In it\" is redundant and the word order is awkward."
+      }
+    ],
+    "explanation": "Modifiers belong next to what they modify. \"On climate change\" describes the lecture, so it must sit immediately after \"lecture\".",
+    "subtopic": "sentence-correction",
+    "concept": "Put every modifying phrase next to the word it describes."
+  },
+  {
+    "id": "VRB-0048",
+    "body": "Choose the correct sentence.",
+    "topic": "verbal-ability",
+    "difficulty": "easy",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "The team has fewer defects and less rework than last quarter.",
+        "correct": true
+      },
+      {
+        "body": "The team has less defects and fewer rework than last quarter.",
+        "whyWrong": "\"Fewer\" goes with countable nouns like defects; \"less\" with uncountable ones like rework."
+      },
+      {
+        "body": "The team has lesser defects and less rework than last quarter.",
+        "whyWrong": "\"Lesser\" means inferior in quality, not smaller in number."
+      },
+      {
+        "body": "The team has fewer defects and lesser rework than last quarter.",
+        "whyWrong": "\"Lesser rework\" is the wrong word; the comparative of quantity here is \"less\"."
+      }
+    ],
+    "explanation": "\"Fewer\" counts discrete items; \"less\" measures an uncountable quantity. Defects can be counted, rework generally cannot.",
+    "subtopic": "sentence-correction",
+    "concept": "If you can put a number in front of it, use \"fewer\".",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "VRB-0049",
+    "body": "Choose the correct sentence.",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "By the time the audit began, the team had already fixed the issue.",
+        "correct": true
+      },
+      {
+        "body": "By the time the audit began, the team already fixed the issue.",
+        "whyWrong": "The earlier of two past events takes the past perfect \"had fixed\"."
+      },
+      {
+        "body": "By the time the audit begins, the team had already fixed the issue.",
+        "whyWrong": "The tenses clash: a present \"begins\" cannot pair with a past perfect."
+      },
+      {
+        "body": "By the time the audit began, the team have already fixed the issue.",
+        "whyWrong": "\"Have\" is present perfect and does not fit a past narrative."
+      }
+    ],
+    "explanation": "When two past events are sequenced, the earlier one takes the past perfect. The fix preceded the audit, so \"had fixed\" is correct.",
+    "subtopic": "sentence-correction",
+    "concept": "Past perfect marks the earlier of two past events."
+  },
+  {
+    "id": "VRB-0050",
+    "body": "Choose the correct sentence.",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "The role requires you to write clean code, review pull requests and mentor juniors.",
+        "correct": true
+      },
+      {
+        "body": "The role requires you to write clean code, reviewing pull requests and mentoring juniors.",
+        "whyWrong": "The three items in the list must share the same grammatical form."
+      },
+      {
+        "body": "The role requires you to write clean code, review of pull requests and mentoring juniors.",
+        "whyWrong": "The list mixes an infinitive, a noun phrase and a gerund."
+      },
+      {
+        "body": "The role requires writing clean code, to review pull requests and mentorship of juniors.",
+        "whyWrong": "Again three different forms are used where one is needed."
+      }
+    ],
+    "explanation": "Items in a list must be parallel in form. Here all three are bare infinitives following \"to\": write, review, mentor.",
+    "subtopic": "sentence-correction",
+    "concept": "Read the list items back against the stem; each must fit the same way.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "VRB-0051",
+    "body": "Choose the correct sentence.",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "The company has operated in India since 1998.",
+        "correct": true
+      },
+      {
+        "body": "The company has operated in India for 1998.",
+        "whyWrong": "\"For\" introduces a duration, not a point in time."
+      },
+      {
+        "body": "The company operates in India since 1998.",
+        "whyWrong": "\"Since\" with an unbroken period requires the present perfect."
+      },
+      {
+        "body": "The company is operating in India since 1998.",
+        "whyWrong": "The present continuous does not combine with \"since\" for a period reaching the present."
+      }
+    ],
+    "explanation": "\"Since\" marks a starting point and pairs with the present perfect; \"for\" marks a duration (\"for 26 years\").",
+    "subtopic": "sentence-correction",
+    "concept": "Since + a point in time; for + a length of time; both with the present perfect."
+  },
+  {
+    "id": "VRB-0052",
+    "body": "Choose the correct sentence.",
+    "topic": "verbal-ability",
+    "difficulty": "hard",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Not only did the release slip, but the budget also overran.",
+        "correct": true
+      },
+      {
+        "body": "Not only the release slipped, but the budget also overran.",
+        "whyWrong": "A clause opening with \"not only\" requires subject-verb inversion: \"did the release slip\"."
+      },
+      {
+        "body": "Not only did the release slip, but also the budget overran it.",
+        "whyWrong": "\"Overran it\" introduces a stray object and breaks the parallel."
+      },
+      {
+        "body": "Not only did the release slipped, but the budget also overran.",
+        "whyWrong": "After the auxiliary \"did\", the main verb stays in its base form: \"slip\"."
+      }
+    ],
+    "explanation": "When a sentence opens with a negative adverbial such as \"not only\", the subject and auxiliary invert. The paired clause then carries \"but ... also\".",
+    "subtopic": "sentence-correction",
+    "concept": "Front a negative adverbial and you must invert: \"Not only did he ...\"."
+  },
+  {
+    "id": "VRB-0053",
+    "body": "Choose the correct sentence.",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Its performance improved after the cache was added.",
+        "correct": true
+      },
+      {
+        "body": "It's performance improved after the cache was added.",
+        "whyWrong": "\"It's\" expands to \"it is\", which is ungrammatical here."
+      },
+      {
+        "body": "Its' performance improved after the cache was added.",
+        "whyWrong": "\"Its'\" is not a word in English."
+      },
+      {
+        "body": "Its performance improved after the cache were added.",
+        "whyWrong": "\"Cache\" is singular and takes \"was\"."
+      }
+    ],
+    "explanation": "\"Its\" is the possessive determiner and never takes an apostrophe. The apostrophe form \"it's\" is only the contraction of \"it is\" or \"it has\".",
+    "subtopic": "sentence-correction",
+    "concept": "Possessive \"its\" has no apostrophe — it patterns with \"his\" and \"hers\"."
+  },
+  {
+    "id": "VRB-0054",
+    "body": "Choose the correct sentence.",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "He suggested that the deadline be extended by a week.",
+        "correct": true
+      },
+      {
+        "body": "He suggested that the deadline is extended by a week.",
+        "whyWrong": "After \"suggested that\", the verb takes the subjunctive base form \"be\"."
+      },
+      {
+        "body": "He suggested that the deadline was extended by a week.",
+        "whyWrong": "This reports a past fact rather than making a suggestion."
+      },
+      {
+        "body": "He suggested that the deadline will be extended by a week.",
+        "whyWrong": "\"Will\" turns the suggestion into a prediction."
+      }
+    ],
+    "explanation": "Verbs of demanding, recommending and suggesting take the subjunctive in the that-clause, using the bare form of the verb regardless of the subject.",
+    "subtopic": "sentence-correction",
+    "concept": "Suggest / recommend / insist / demand that + bare verb."
+  },
+  {
+    "id": "VRB-0055",
+    "body": "Choose the correct sentence.",
+    "topic": "verbal-ability",
+    "difficulty": "easy",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "There are three reasons why the migration was delayed.",
+        "correct": true
+      },
+      {
+        "body": "There is three reasons why the migration was delayed.",
+        "whyWrong": "The verb agrees with \"reasons\", which is plural."
+      },
+      {
+        "body": "There are three reason why the migration was delayed.",
+        "whyWrong": "\"Three\" requires the plural \"reasons\"."
+      },
+      {
+        "body": "Their are three reasons why the migration was delayed.",
+        "whyWrong": "\"Their\" is a possessive; the existential construction uses \"there\"."
+      }
+    ],
+    "explanation": "In \"there is / there are\", the verb agrees with the noun that follows it. \"Three reasons\" is plural, so \"there are\" is correct.",
+    "subtopic": "sentence-correction",
+    "concept": "In \"there + be\" sentences, look right of the verb for the real subject."
+  },
+  {
+    "id": "VRB-0056",
+    "body": "Read the passage and answer the question.\n\nFor decades Indian campus recruitment ran on a simple filter: an aptitude test,\na technical interview and an academic cut-off, usually 60% with no active backlogs.\nThe cut-off was never a claim about ability. It was a way of reducing an applicant\npool of several thousand to a number the interview panel could actually process in\ntwo days. As online assessment platforms made it cheap to test large numbers, several\nfirms began replacing the cut-off with a longer proctored test, arguing that a\ncandidate's performance on the test predicted on-the-job performance better than a\nmarks threshold did. Critics point out that this only shifts the filter rather than\nremoving it, and that a candidate who tests poorly under time pressure is excluded\njust as firmly as one who fell below the cut-off.\n\nAccording to the passage, why was the academic cut-off originally used?",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "To reduce a very large applicant pool to a size the interview panel could handle",
+        "correct": true
+      },
+      {
+        "body": "Because marks were shown to predict job performance well",
+        "whyWrong": "The passage says the cut-off \"was never a claim about ability\"."
+      },
+      {
+        "body": "Because online assessment platforms were not yet reliable",
+        "whyWrong": "The passage does not attribute the cut-off to the state of assessment technology."
+      },
+      {
+        "body": "To ensure candidates had no active backlogs",
+        "whyWrong": "The backlog rule is mentioned as part of the cut-off, not as its purpose."
+      }
+    ],
+    "explanation": "The passage states the cut-off was \"a way of reducing an applicant pool of several thousand to a number the interview panel could actually process in two days\" — a logistics measure, not an ability judgement.",
+    "subtopic": "reading-comprehension"
+  },
+  {
+    "id": "VRB-0057",
+    "body": "Read the passage and answer the question.\n\nFor decades Indian campus recruitment ran on a simple filter: an aptitude test,\na technical interview and an academic cut-off, usually 60% with no active backlogs.\nThe cut-off was never a claim about ability. It was a way of reducing an applicant\npool of several thousand to a number the interview panel could actually process in\ntwo days. As online assessment platforms made it cheap to test large numbers, several\nfirms began replacing the cut-off with a longer proctored test, arguing that a\ncandidate's performance on the test predicted on-the-job performance better than a\nmarks threshold did. Critics point out that this only shifts the filter rather than\nremoving it, and that a candidate who tests poorly under time pressure is excluded\njust as firmly as one who fell below the cut-off.\n\nWhat is the critics' objection to replacing the cut-off with a longer proctored test?",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "It relocates the filter rather than eliminating it, and still excludes some candidates firmly",
+        "correct": true
+      },
+      {
+        "body": "Proctored tests are too expensive to administer at scale",
+        "whyWrong": "The passage says the opposite: platforms made large-scale testing cheap."
+      },
+      {
+        "body": "Proctored tests cannot detect cheating reliably",
+        "whyWrong": "Cheating detection is not raised anywhere in the passage."
+      },
+      {
+        "body": "Firms have no evidence that marks predict performance",
+        "whyWrong": "That claim is attributed to the firms as an argument for the test, not to the critics."
+      }
+    ],
+    "explanation": "The final sentence gives the objection directly: the change \"only shifts the filter rather than removing it\", and poor test-takers are excluded as firmly as low scorers were.",
+    "subtopic": "reading-comprehension"
+  },
+  {
+    "id": "VRB-0058",
+    "body": "Read the passage and answer the question.\n\nFor decades Indian campus recruitment ran on a simple filter: an aptitude test,\na technical interview and an academic cut-off, usually 60% with no active backlogs.\nThe cut-off was never a claim about ability. It was a way of reducing an applicant\npool of several thousand to a number the interview panel could actually process in\ntwo days. As online assessment platforms made it cheap to test large numbers, several\nfirms began replacing the cut-off with a longer proctored test, arguing that a\ncandidate's performance on the test predicted on-the-job performance better than a\nmarks threshold did. Critics point out that this only shifts the filter rather than\nremoving it, and that a candidate who tests poorly under time pressure is excluded\njust as firmly as one who fell below the cut-off.\n\nWhich of these best describes the author's stance in the passage?",
+    "topic": "verbal-ability",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Descriptive — the author lays out both the firms' rationale and the criticism without endorsing either",
+        "correct": true
+      },
+      {
+        "body": "Strongly in favour of the longer proctored test",
+        "whyWrong": "The author reports the firms' argument but never endorses it."
+      },
+      {
+        "body": "Strongly in favour of retaining the academic cut-off",
+        "whyWrong": "The author explains the cut-off's origin without defending it."
+      },
+      {
+        "body": "Dismissive of campus recruitment as a whole",
+        "whyWrong": "Nothing in the passage rejects campus recruitment; it examines one mechanism within it."
+      }
+    ],
+    "explanation": "The passage presents the history, the firms' argument and the critics' response in turn, and closes on the criticism without adjudicating between the positions.",
+    "subtopic": "reading-comprehension"
+  },
+  {
+    "id": "VRB-0059",
+    "body": "Read the passage and answer the question.\n\nFor decades Indian campus recruitment ran on a simple filter: an aptitude test,\na technical interview and an academic cut-off, usually 60% with no active backlogs.\nThe cut-off was never a claim about ability. It was a way of reducing an applicant\npool of several thousand to a number the interview panel could actually process in\ntwo days. As online assessment platforms made it cheap to test large numbers, several\nfirms began replacing the cut-off with a longer proctored test, arguing that a\ncandidate's performance on the test predicted on-the-job performance better than a\nmarks threshold did. Critics point out that this only shifts the filter rather than\nremoving it, and that a candidate who tests poorly under time pressure is excluded\njust as firmly as one who fell below the cut-off.\n\nWhat does the passage imply about the relationship between marks and ability?",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "The cut-off was not intended as a measure of ability, whatever it may have been read as",
+        "correct": true
+      },
+      {
+        "body": "Marks are a reliable proxy for ability",
+        "whyWrong": "The passage explicitly denies that the cut-off made any claim about ability."
+      },
+      {
+        "body": "Marks are entirely unrelated to ability",
+        "whyWrong": "The passage makes no claim this strong; it addresses the purpose of the cut-off, not the value of marks."
+      },
+      {
+        "body": "Ability is best measured by a proctored test",
+        "whyWrong": "That is the firms' argument, reported rather than asserted by the author."
+      }
+    ],
+    "explanation": "The sentence \"The cut-off was never a claim about ability\" defines the passage's position: the threshold served a throughput purpose, and the passage takes no view on whether marks track ability.",
+    "subtopic": "reading-comprehension"
+  },
+  {
+    "id": "VRB-0060",
+    "body": "Read the passage and answer the question.\n\nA distributed system that adds a cache in front of its database will usually see its\nmedian response time fall sharply while its worst-case response time gets worse. The\nmedian improves because most requests now return from memory. The tail degrades because\na cache miss now costs a cache lookup plus a database read, and because the pattern of\nload reaching the database becomes burstier: misses cluster whenever a popular entry\nexpires. Teams that measure only averages therefore report an unambiguous success, while\nthe users who happen to fall in the slowest one percent experience a service that has\nbecome less predictable than it was before.\n\nAccording to the passage, why does the worst-case response time get worse after a cache is added?",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "A miss costs a lookup plus a database read, and misses arrive in bursts when popular entries expire",
+        "correct": true
+      },
+      {
+        "body": "The cache consumes memory the database needed",
+        "whyWrong": "Memory contention with the database is not mentioned in the passage."
+      },
+      {
+        "body": "Most requests now return from memory",
+        "whyWrong": "That is the reason the median improves, not the reason the tail degrades."
+      },
+      {
+        "body": "The database becomes slower over time",
+        "whyWrong": "The passage attributes the change to the load pattern, not to gradual database degradation."
+      }
+    ],
+    "explanation": "The passage gives two reasons for the worse tail: the added cost of a miss (lookup plus database read) and the burstiness caused by popular entries expiring together.",
+    "subtopic": "reading-comprehension"
+  },
+  {
+    "id": "VRB-0061",
+    "body": "Read the passage and answer the question.\n\nA distributed system that adds a cache in front of its database will usually see its\nmedian response time fall sharply while its worst-case response time gets worse. The\nmedian improves because most requests now return from memory. The tail degrades because\na cache miss now costs a cache lookup plus a database read, and because the pattern of\nload reaching the database becomes burstier: misses cluster whenever a popular entry\nexpires. Teams that measure only averages therefore report an unambiguous success, while\nthe users who happen to fall in the slowest one percent experience a service that has\nbecome less predictable than it was before.\n\nWhat is the passage's main criticism of teams that report the change as a success?",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "They measure averages, which hide the degradation experienced by the slowest requests",
+        "correct": true
+      },
+      {
+        "body": "They add caches without measuring anything at all",
+        "whyWrong": "The passage says they do measure — just the wrong statistic."
+      },
+      {
+        "body": "They fail to size the cache correctly",
+        "whyWrong": "Cache sizing is never discussed in the passage."
+      },
+      {
+        "body": "They ignore the cost of the additional infrastructure",
+        "whyWrong": "Cost is not among the concerns the passage raises."
+      }
+    ],
+    "explanation": "The closing sentence contrasts teams \"that measure only averages\" reporting \"unambiguous success\" with the experience of \"the slowest one percent\" — the criticism is about the choice of metric.",
+    "subtopic": "reading-comprehension"
+  },
+  {
+    "id": "VRB-0062",
+    "body": "Read the passage and answer the question.\n\nA distributed system that adds a cache in front of its database will usually see its\nmedian response time fall sharply while its worst-case response time gets worse. The\nmedian improves because most requests now return from memory. The tail degrades because\na cache miss now costs a cache lookup plus a database read, and because the pattern of\nload reaching the database becomes burstier: misses cluster whenever a popular entry\nexpires. Teams that measure only averages therefore report an unambiguous success, while\nthe users who happen to fall in the slowest one percent experience a service that has\nbecome less predictable than it was before.\n\nWhich conclusion is best supported by the passage?",
+    "topic": "verbal-ability",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "A change can improve typical performance and worsen predictability at the same time",
+        "correct": true
+      },
+      {
+        "body": "Caches should not be used in distributed systems",
+        "whyWrong": "The passage describes a trade-off, not an argument against caching."
+      },
+      {
+        "body": "The median is always a misleading statistic",
+        "whyWrong": "The passage faults reliance on averages alone, not the median as such."
+      },
+      {
+        "body": "Tail latency matters more than median latency",
+        "whyWrong": "The passage notes the tail is overlooked; it does not rank the two."
+      }
+    ],
+    "explanation": "The passage's substance is precisely the split outcome: the median falls sharply while the tail worsens, so a single change moves the two measures in opposite directions.",
+    "subtopic": "reading-comprehension"
+  },
+  {
+    "id": "VRB-0063",
+    "body": "Read the passage and answer the question.\n\nGig platforms in India describe their workers as partners rather than employees, and the\ndistinction is not merely rhetorical: it determines who bears the cost of a slow week.\nAn employee's income is smoothed by the employer, who absorbs fluctuations in demand. A\npartner absorbs them personally. Platforms argue in return that partners gain the freedom\nto choose their hours, and surveys do find that flexibility is the most cited reason\nworkers join. The same surveys, however, find that the workers who report valuing\nflexibility most are also those most likely to work more than sixty hours a week, which\nsuggests that the freedom being exercised is narrower than the word implies.\n\nWhat does the passage identify as the practical consequence of the partner classification?",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "The worker rather than the platform bears the income risk of a slow week",
+        "correct": true
+      },
+      {
+        "body": "Workers are paid less per hour than employees",
+        "whyWrong": "The passage discusses who absorbs fluctuation, not the hourly rate."
+      },
+      {
+        "body": "Workers lose the ability to choose their hours",
+        "whyWrong": "The passage says the opposite — flexibility is what platforms offer in return."
+      },
+      {
+        "body": "Platforms cannot terminate partners",
+        "whyWrong": "Termination rights are not discussed in the passage."
+      }
+    ],
+    "explanation": "The passage states the distinction \"determines who bears the cost of a slow week\": an employer smooths an employee's income, whereas a partner absorbs the fluctuation personally.",
+    "subtopic": "reading-comprehension"
+  },
+  {
+    "id": "VRB-0064",
+    "body": "Read the passage and answer the question.\n\nGig platforms in India describe their workers as partners rather than employees, and the\ndistinction is not merely rhetorical: it determines who bears the cost of a slow week.\nAn employee's income is smoothed by the employer, who absorbs fluctuations in demand. A\npartner absorbs them personally. Platforms argue in return that partners gain the freedom\nto choose their hours, and surveys do find that flexibility is the most cited reason\nworkers join. The same surveys, however, find that the workers who report valuing\nflexibility most are also those most likely to work more than sixty hours a week, which\nsuggests that the freedom being exercised is narrower than the word implies.\n\nWhy does the author consider the survey finding on flexibility ambiguous?",
+    "topic": "verbal-ability",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Those who most value flexibility are also those most likely to work over sixty hours a week",
+        "correct": true
+      },
+      {
+        "body": "The surveys were commissioned by the platforms themselves",
+        "whyWrong": "The passage does not say who commissioned the surveys."
+      },
+      {
+        "body": "Too few workers responded for the result to be meaningful",
+        "whyWrong": "Sample size is not raised in the passage."
+      },
+      {
+        "body": "Workers did not understand what flexibility meant",
+        "whyWrong": "The passage questions the scope of the freedom, not the workers' comprehension."
+      }
+    ],
+    "explanation": "The final sentence sets the two findings against each other: valuing flexibility correlates with sixty-hour weeks, which \"suggests that the freedom being exercised is narrower than the word implies\".",
+    "subtopic": "reading-comprehension"
+  },
+  {
+    "id": "VRB-0065",
+    "body": "Read the passage and answer the question.\n\nGig platforms in India describe their workers as partners rather than employees, and the\ndistinction is not merely rhetorical: it determines who bears the cost of a slow week.\nAn employee's income is smoothed by the employer, who absorbs fluctuations in demand. A\npartner absorbs them personally. Platforms argue in return that partners gain the freedom\nto choose their hours, and surveys do find that flexibility is the most cited reason\nworkers join. The same surveys, however, find that the workers who report valuing\nflexibility most are also those most likely to work more than sixty hours a week, which\nsuggests that the freedom being exercised is narrower than the word implies.\n\nThe phrase \"not merely rhetorical\" is used to signal that the classification",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "has concrete financial consequences beyond the choice of label",
+        "correct": true
+      },
+      {
+        "body": "is a legally settled matter",
+        "whyWrong": "The passage makes no claim about the legal status being settled."
+      },
+      {
+        "body": "was chosen deliberately to mislead workers",
+        "whyWrong": "The passage does not attribute an intention to deceive."
+      },
+      {
+        "body": "is unimportant to how the platforms operate",
+        "whyWrong": "This reverses the meaning of the phrase."
+      }
+    ],
+    "explanation": "The phrase introduces the point that follows: the label determines who absorbs income fluctuation, which is a material consequence rather than a matter of wording.",
+    "subtopic": "reading-comprehension"
+  },
+  {
+    "id": "VRB-0066",
+    "body": "Arrange the sentences into a coherent paragraph.\n\nA. The result was a backlog that took three sprints to clear.\nB. A single developer was reviewing every pull request in the team.\nC. Reviews therefore queued behind whatever else that person was doing.\nD. The team fixed it by rotating review duty weekly.\n\nWhich sequence is correct?",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "B, C, A, D",
+        "correct": true
+      },
+      {
+        "body": "B, A, C, D",
+        "whyWrong": "A states the consequence of the queuing described in C, so it cannot precede C."
+      },
+      {
+        "body": "A, B, C, D",
+        "whyWrong": "A opens with \"The result\", which needs a cause stated before it."
+      },
+      {
+        "body": "C, B, A, D",
+        "whyWrong": "C begins with \"therefore\", so it must follow the cause given in B."
+      }
+    ],
+    "explanation": "B introduces the situation, C draws the immediate consequence (\"therefore\"), A gives the outcome (\"The result\"), and D closes with the fix.",
+    "subtopic": "para-jumbles"
+  },
+  {
+    "id": "VRB-0067",
+    "body": "Arrange the sentences into a coherent paragraph.\n\nA. Most of them, however, never open it again after the first week.\nB. Learning apps report very high download numbers in India.\nC. That gap between installation and use is what advertisers rarely mention.\nD. Millions of students install at least one before an exam season.\n\nWhich sequence is correct?",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "B, D, A, C",
+        "correct": true
+      },
+      {
+        "body": "B, A, D, C",
+        "whyWrong": "A begins \"Most of them\", which must follow the plural group introduced in D."
+      },
+      {
+        "body": "D, B, A, C",
+        "whyWrong": "B is the general claim and belongs before the specific illustration in D."
+      },
+      {
+        "body": "B, D, C, A",
+        "whyWrong": "C refers to \"that gap\", which is only established once A has stated the drop-off."
+      }
+    ],
+    "explanation": "B makes the general claim, D gives the concrete scale, A introduces the contrast with \"however\", and C names the gap that A has just created.",
+    "subtopic": "para-jumbles"
+  },
+  {
+    "id": "VRB-0068",
+    "body": "Arrange the sentences into a coherent paragraph.\n\nA. Only then did the team discover that the two systems disagreed about time zones.\nB. The integration passed every unit test.\nC. It also passed the staging run, which used synthetic data.\nD. The first real customer order arrived on a Sunday evening.\n\nWhich sequence is correct?",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "B, C, D, A",
+        "correct": true
+      },
+      {
+        "body": "B, D, C, A",
+        "whyWrong": "C describes another pre-production check and belongs with B, before the live order in D."
+      },
+      {
+        "body": "D, B, C, A",
+        "whyWrong": "D is the turning point of the sequence and cannot open it."
+      },
+      {
+        "body": "B, C, A, D",
+        "whyWrong": "A begins \"Only then\", which requires the event in D to have happened."
+      }
+    ],
+    "explanation": "The paragraph escalates through the checks that passed (B, then C), reaches the live event (D), and closes with what it revealed (A, signalled by \"Only then\").",
+    "subtopic": "para-jumbles"
+  },
+  {
+    "id": "VRB-0069",
+    "body": "Arrange the sentences into a coherent paragraph.\n\nA. Its authors had assumed every address would fit a fixed format.\nB. The form rejected roughly one address in five.\nC. Rewriting the validation to accept free text cut the rejection rate to under two percent.\nD. India's address formats vary widely between states and cities.\n\nWhich sequence is correct?",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "B, A, D, C",
+        "correct": true
+      },
+      {
+        "body": "A, B, D, C",
+        "whyWrong": "A opens with \"Its authors\", which needs the form introduced first."
+      },
+      {
+        "body": "B, D, A, C",
+        "whyWrong": "A explains the assumption behind the failure in B and follows it directly."
+      },
+      {
+        "body": "D, B, A, C",
+        "whyWrong": "D is the underlying fact, but the paragraph is built around the form, which B introduces."
+      }
+    ],
+    "explanation": "B states the symptom, A gives the assumption behind it, D supplies the fact that assumption ignored, and C reports the fix and its effect.",
+    "subtopic": "para-jumbles"
+  },
+  {
+    "id": "VRB-0070",
+    "body": "Arrange the sentences into a coherent paragraph.\n\nA. Interviewers can then spend the hour on judgement rather than recall.\nB. Some companies now publish the topics their technical rounds will cover.\nC. Candidates arrive having revised the right material.\nD. The practice removes a source of noise from the process.\n\nWhich sequence is correct?",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "B, C, A, D",
+        "correct": true
+      },
+      {
+        "body": "B, D, C, A",
+        "whyWrong": "D summarises the whole effect and belongs at the end."
+      },
+      {
+        "body": "C, B, A, D",
+        "whyWrong": "C describes a consequence of the publication in B."
+      },
+      {
+        "body": "B, A, C, D",
+        "whyWrong": "A begins \"then\", which requires the candidate preparation in C."
+      }
+    ],
+    "explanation": "B introduces the practice, C gives its immediate effect on candidates, A gives the effect on interviewers (\"then\"), and D generalises to close.",
+    "subtopic": "para-jumbles"
+  },
+  {
+    "id": "VRB-0071",
+    "body": "Arrange the sentences into a coherent paragraph.\n\nA. The exception is code that runs on every request.\nB. Premature optimisation wastes effort on paths that rarely execute.\nC. There, even a small constant factor is multiplied by an enormous call count.\nD. Profiling first tells you which paths those are.\n\nWhich sequence is correct?",
+    "topic": "verbal-ability",
+    "difficulty": "hard",
+    "expectedSeconds": 120,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "B, D, A, C",
+        "correct": true
+      },
+      {
+        "body": "B, A, C, D",
+        "whyWrong": "D explains how to identify rare paths and belongs with B, before the exception is raised."
+      },
+      {
+        "body": "A, C, B, D",
+        "whyWrong": "A begins \"The exception\", which needs a general rule stated first."
+      },
+      {
+        "body": "B, D, C, A",
+        "whyWrong": "C begins \"There\", which refers to the code introduced in A."
+      }
+    ],
+    "explanation": "B states the rule, D gives the remedy, A introduces the exception, and C explains why that exception holds (\"There ...\").",
+    "subtopic": "para-jumbles"
+  },
+  {
+    "id": "VRB-0072",
+    "body": "Arrange the sentences into a coherent paragraph.\n\nA. Both figures come from the same dataset.\nB. A company reports that 70% of its engineers are promoted within three years.\nC. It also reports median tenure of eighteen months.\nD. Read together, they suggest the promotions are concentrated among the few who stay.\n\nWhich sequence is correct?",
+    "topic": "verbal-ability",
+    "difficulty": "hard",
+    "expectedSeconds": 120,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "B, C, A, D",
+        "correct": true
+      },
+      {
+        "body": "B, A, C, D",
+        "whyWrong": "A refers to \"both figures\", so it must come after the second figure in C."
+      },
+      {
+        "body": "B, C, D, A",
+        "whyWrong": "A supplies the fact that licenses the inference in D and belongs before it."
+      },
+      {
+        "body": "C, B, A, D",
+        "whyWrong": "B is the headline claim and opens the paragraph naturally."
+      }
+    ],
+    "explanation": "B and C present the two statistics, A establishes they are comparable, and D draws the inference that the comparison permits.",
+    "subtopic": "para-jumbles"
+  },
+  {
+    "id": "VRB-0073",
+    "body": "Arrange the sentences into a coherent paragraph.\n\nA. A single index turned the scan into a lookup.\nB. The query took eleven seconds on the production table.\nC. The same query returned instantly on a developer laptop.\nD. The difference was the row count: two thousand against forty million.\n\nWhich sequence is correct?",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "B, C, D, A",
+        "correct": true
+      },
+      {
+        "body": "B, D, C, A",
+        "whyWrong": "D explains a difference that C has not yet introduced."
+      },
+      {
+        "body": "C, B, D, A",
+        "whyWrong": "B establishes the problem and is the natural opening."
+      },
+      {
+        "body": "B, C, A, D",
+        "whyWrong": "A is the resolution and belongs after the cause in D."
+      }
+    ],
+    "explanation": "B states the problem, C sets up the puzzle, D resolves it by naming the cause, and A gives the fix.",
+    "subtopic": "para-jumbles"
+  },
+  {
+    "id": "VRB-0074",
+    "body": "Choose the word closest in meaning to MITIGATE.",
+    "topic": "verbal-ability",
+    "difficulty": "easy",
+    "expectedSeconds": 40,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Alleviate",
+        "correct": true
+      },
+      {
+        "body": "Aggravate",
+        "whyWrong": "This is the opposite: to make something worse."
+      },
+      {
+        "body": "Delegate",
+        "whyWrong": "This means to assign a task to someone else."
+      },
+      {
+        "body": "Illuminate",
+        "whyWrong": "This means to light up or to clarify."
+      }
+    ],
+    "explanation": "To mitigate is to make something less severe. \"Alleviate\" carries the same sense of easing or lessening.",
+    "subtopic": "synonyms-antonyms"
+  },
+  {
+    "id": "VRB-0075",
+    "body": "Choose the word closest in meaning to PRAGMATIC.",
+    "topic": "verbal-ability",
+    "difficulty": "easy",
+    "expectedSeconds": 40,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Practical",
+        "correct": true
+      },
+      {
+        "body": "Idealistic",
+        "whyWrong": "This is the contrasting outlook, guided by principle rather than by what works."
+      },
+      {
+        "body": "Pessimistic",
+        "whyWrong": "This means expecting bad outcomes, which is unrelated."
+      },
+      {
+        "body": "Dogmatic",
+        "whyWrong": "This means insisting on principles inflexibly — closer to the opposite."
+      }
+    ],
+    "explanation": "Pragmatic means dealing with things according to what actually works rather than according to theory, which is exactly \"practical\".",
+    "subtopic": "synonyms-antonyms"
+  },
+  {
+    "id": "VRB-0076",
+    "body": "Choose the word most nearly OPPOSITE in meaning to VERBOSE.",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Concise",
+        "correct": true
+      },
+      {
+        "body": "Eloquent",
+        "whyWrong": "Eloquent speech can be either long or short; it is not the opposite."
+      },
+      {
+        "body": "Fluent",
+        "whyWrong": "Fluency describes ease of expression, not brevity."
+      },
+      {
+        "body": "Ambiguous",
+        "whyWrong": "This means open to more than one interpretation."
+      }
+    ],
+    "explanation": "Verbose means using more words than necessary, so its opposite is concise — expressing much in few words.",
+    "subtopic": "synonyms-antonyms"
+  },
+  {
+    "id": "VRB-0077",
+    "body": "Choose the word closest in meaning to SCRUTINISE.",
+    "topic": "verbal-ability",
+    "difficulty": "easy",
+    "expectedSeconds": 40,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Examine closely",
+        "correct": true
+      },
+      {
+        "body": "Approve quickly",
+        "whyWrong": "Scrutiny is careful inspection, and implies no verdict."
+      },
+      {
+        "body": "Summarise",
+        "whyWrong": "A summary condenses; scrutiny inspects."
+      },
+      {
+        "body": "Criticise",
+        "whyWrong": "Scrutiny may lead to criticism but does not mean it."
+      }
+    ],
+    "explanation": "To scrutinise is to inspect something in careful detail. The word carries no built-in judgement, favourable or otherwise.",
+    "subtopic": "synonyms-antonyms"
+  },
+  {
+    "id": "VRB-0078",
+    "body": "Choose the word most nearly OPPOSITE in meaning to TRANSPARENT (as used of a process).",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Opaque",
+        "correct": true
+      },
+      {
+        "body": "Fragile",
+        "whyWrong": "This concerns how easily something breaks."
+      },
+      {
+        "body": "Complex",
+        "whyWrong": "A complex process can still be fully transparent."
+      },
+      {
+        "body": "Rigid",
+        "whyWrong": "Rigidity is about flexibility, not visibility."
+      }
+    ],
+    "explanation": "A transparent process is one whose workings can be seen. Its opposite is opaque — one whose workings are hidden.",
+    "subtopic": "synonyms-antonyms"
+  },
+  {
+    "id": "VRB-0079",
+    "body": "Choose the word closest in meaning to REDUNDANT (as used of code).",
+    "topic": "verbal-ability",
+    "difficulty": "easy",
+    "expectedSeconds": 40,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Superfluous",
+        "correct": true
+      },
+      {
+        "body": "Defective",
+        "whyWrong": "Redundant code may work perfectly; it is simply unnecessary."
+      },
+      {
+        "body": "Deprecated",
+        "whyWrong": "Deprecated means officially discouraged, which is a different judgement."
+      },
+      {
+        "body": "Obfuscated",
+        "whyWrong": "This means deliberately made hard to read."
+      }
+    ],
+    "explanation": "Redundant means more than is needed. \"Superfluous\" carries the same sense of being surplus to requirements.",
+    "subtopic": "synonyms-antonyms"
+  },
+  {
+    "id": "VRB-0080",
+    "body": "Choose the word most nearly OPPOSITE in meaning to ROBUST.",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Brittle",
+        "correct": true
+      },
+      {
+        "body": "Compact",
+        "whyWrong": "Compactness concerns size, not resilience."
+      },
+      {
+        "body": "Verbose",
+        "whyWrong": "This describes wordiness, not fragility."
+      },
+      {
+        "body": "Portable",
+        "whyWrong": "Portability concerns where something can run."
+      }
+    ],
+    "explanation": "A robust system withstands unexpected conditions. A brittle one fails abruptly when conditions change, which is the direct contrast.",
+    "subtopic": "synonyms-antonyms"
+  },
+  {
+    "id": "VRB-0081",
+    "body": "Choose the word closest in meaning to CANDID.",
+    "topic": "verbal-ability",
+    "difficulty": "easy",
+    "expectedSeconds": 40,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Frank",
+        "correct": true
+      },
+      {
+        "body": "Cautious",
+        "whyWrong": "A candid speaker is often the opposite of cautious."
+      },
+      {
+        "body": "Courteous",
+        "whyWrong": "Courtesy concerns manner; candour concerns openness."
+      },
+      {
+        "body": "Indifferent",
+        "whyWrong": "This means having no interest either way."
+      }
+    ],
+    "explanation": "Candid means open and straightforward, especially about something uncomfortable. \"Frank\" is its closest single-word equivalent.",
+    "subtopic": "synonyms-antonyms"
+  },
+  {
+    "id": "VRB-0082",
+    "body": "Choose the word that best completes the sentence: \"The two teams reached a ______ that gave each of them part of what they wanted.\"",
+    "topic": "verbal-ability",
+    "difficulty": "easy",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "compromise",
+        "correct": true
+      },
+      {
+        "body": "consensus",
+        "whyWrong": "A consensus is general agreement, not a split of competing demands."
+      },
+      {
+        "body": "concession",
+        "whyWrong": "A concession is what one side gives up, not the agreement itself."
+      },
+      {
+        "body": "convention",
+        "whyWrong": "A convention is an accepted practice or a large meeting."
+      }
+    ],
+    "explanation": "A compromise is an agreement reached by each side giving up part of its demand — precisely what the sentence describes.",
+    "subtopic": "vocabulary"
+  },
+  {
+    "id": "VRB-0083",
+    "body": "Choose the word that best completes the sentence: \"The outage was ______ to a single misconfigured router.\"",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "attributed",
+        "correct": true
+      },
+      {
+        "body": "contributed",
+        "whyWrong": "\"Contributed to\" means added to, and takes a different construction."
+      },
+      {
+        "body": "distributed",
+        "whyWrong": "Distribution concerns spreading something out."
+      },
+      {
+        "body": "attributed to being",
+        "whyWrong": "This is redundant and ungrammatical after \"was\"."
+      }
+    ],
+    "explanation": "\"Attributed to\" means assigned as the cause of. \"Contributed to\" would mean the outage added to the router, reversing the sense.",
+    "subtopic": "vocabulary"
+  },
+  {
+    "id": "VRB-0084",
+    "body": "Choose the word that best completes the sentence: \"Her account of the incident was ______ by the server logs.\"",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "corroborated",
+        "correct": true
+      },
+      {
+        "body": "collaborated",
+        "whyWrong": "To collaborate is to work jointly with someone; it takes no object like this."
+      },
+      {
+        "body": "coordinated",
+        "whyWrong": "Coordination concerns organising things to work together."
+      },
+      {
+        "body": "correlated",
+        "whyWrong": "Correlation is a statistical association, not confirmation by evidence."
+      }
+    ],
+    "explanation": "To corroborate is to confirm or support with additional evidence, which is what independent logs do for a personal account.",
+    "subtopic": "vocabulary"
+  },
+  {
+    "id": "VRB-0085",
+    "body": "Choose the word that best completes the sentence: \"The manager was ______ about the deadline, refusing every request to move it.\"",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "adamant",
+        "correct": true
+      },
+      {
+        "body": "ambivalent",
+        "whyWrong": "Ambivalence is holding mixed feelings, the opposite of refusing every request."
+      },
+      {
+        "body": "amenable",
+        "whyWrong": "Amenable means open to suggestion."
+      },
+      {
+        "body": "ambiguous",
+        "whyWrong": "Ambiguity is about unclear meaning, not firmness."
+      }
+    ],
+    "explanation": "Adamant means refusing to be persuaded or to change one's mind, which the second clause illustrates.",
+    "subtopic": "vocabulary"
+  },
+  {
+    "id": "VRB-0086",
+    "body": "Choose the word that best completes the sentence: \"The report was ______ : it repeated the same point in four different sections.\"",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "repetitive",
+        "correct": true
+      },
+      {
+        "body": "repetitious in nature",
+        "whyWrong": "The phrase is padded and awkward after a colon."
+      },
+      {
+        "body": "exhaustive",
+        "whyWrong": "Exhaustive means covering everything, not saying one thing repeatedly."
+      },
+      {
+        "body": "comprehensive",
+        "whyWrong": "Comprehensive is a compliment about coverage, not a criticism of repetition."
+      }
+    ],
+    "explanation": "Repetitive describes something that repeats, especially tediously. The clause after the colon defines exactly that.",
+    "subtopic": "vocabulary"
+  },
+  {
+    "id": "VRB-0087",
+    "body": "Choose the word that best completes the sentence: \"The vendor's claims were ______ ; none of them survived our benchmark.\"",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "spurious",
+        "correct": true
+      },
+      {
+        "body": "spontaneous",
+        "whyWrong": "Spontaneity is about acting without planning."
+      },
+      {
+        "body": "specious",
+        "whyWrong": "Specious is close, but it means superficially plausible; the sentence says the claims failed outright."
+      },
+      {
+        "body": "sporadic",
+        "whyWrong": "Sporadic means occurring at irregular intervals."
+      }
+    ],
+    "explanation": "Spurious means false or not genuine. The second clause — none survived testing — supports outright falsity rather than mere surface plausibility.",
+    "subtopic": "vocabulary"
+  },
+  {
+    "id": "VRB-0088",
+    "body": "Choose the word that best completes the sentence: \"The interviewer's questions became progressively more ______ as the candidate's answers grew vaguer.\"",
+    "topic": "verbal-ability",
+    "difficulty": "medium",
+    "expectedSeconds": 50,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "probing",
+        "correct": true
+      },
+      {
+        "body": "perfunctory",
+        "whyWrong": "Perfunctory means done without care or interest — the opposite of what vaguer answers would prompt."
+      },
+      {
+        "body": "peripheral",
+        "whyWrong": "Peripheral questions would move away from the point, not press on it."
+      },
+      {
+        "body": "protracted",
+        "whyWrong": "Protracted means drawn out in time, which does not follow from vagueness."
+      }
+    ],
+    "explanation": "Probing questions press for detail. Vague answers naturally invite more of them, which is the logic the sentence sets up.",
+    "subtopic": "vocabulary"
+  },
+  {
+    "id": "VRB-0089",
+    "body": "Choose the word that best completes the sentence: \"The two proposals are not ______ ; we can adopt both.\"",
+    "topic": "verbal-ability",
+    "difficulty": "hard",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "mutually exclusive",
+        "correct": true
+      },
+      {
+        "body": "mutually beneficial",
+        "whyWrong": "If they were mutually beneficial, adopting both would follow rather than be contrasted."
+      },
+      {
+        "body": "mutually intelligible",
+        "whyWrong": "This describes languages or parties that can understand each other."
+      },
+      {
+        "body": "mutually assured",
+        "whyWrong": "This is incomplete and does not fit the sense."
+      }
+    ],
+    "explanation": "Two options are mutually exclusive when adopting one rules out the other. Saying they are not mutually exclusive is exactly what licenses \"we can adopt both\".",
+    "subtopic": "vocabulary"
   }
 ]

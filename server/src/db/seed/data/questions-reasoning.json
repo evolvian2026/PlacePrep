@@ -1360,5 +1360,1185 @@
     "subtopic": "coding-decoding",
     "concept": "Split the digits so each group is a valid alphabet position between 1 and 26.",
     "hint": "Try splitting the digits into groups no larger than 26."
+  },
+  {
+    "id": "RSN-0045",
+    "body": "Find the next term: 3, 6, 11, 18, 27, ?",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "38",
+        "correct": true
+      },
+      {
+        "body": "36",
+        "whyWrong": "The differences grow by 2 each time, so the last gap is 11, not 9."
+      },
+      {
+        "body": "37",
+        "whyWrong": "This adds 10 rather than 11 to 27."
+      },
+      {
+        "body": "40",
+        "whyWrong": "This adds 13, skipping a step in the difference sequence."
+      }
+    ],
+    "explanation": "The differences are 3, 5, 7, 9 — consecutive odd numbers. The next difference is 11, so 27 + 11 = 38.",
+    "subtopic": "series-completion"
+  },
+  {
+    "id": "RSN-0046",
+    "body": "Find the next term: 2, 6, 12, 20, 30, ?",
+    "topic": "logical-reasoning",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "42",
+        "correct": true
+      },
+      {
+        "body": "40",
+        "whyWrong": "The differences increase by 2, so the next gap is 12, not 10."
+      },
+      {
+        "body": "44",
+        "whyWrong": "This adds 14 instead of 12."
+      },
+      {
+        "body": "36",
+        "whyWrong": "This is smaller than the required increase."
+      }
+    ],
+    "explanation": "Each term is n(n+1): 1x2, 2x3, 3x4, 4x5, 5x6. The next is 6x7 = 42. Equivalently the differences are 4, 6, 8, 10, then 12.",
+    "subtopic": "series-completion"
+  },
+  {
+    "id": "RSN-0047",
+    "body": "Find the missing term: 5, 11, 23, 47, ?",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "95",
+        "correct": true
+      },
+      {
+        "body": "94",
+        "whyWrong": "The rule is double and add one, giving 47x2 + 1 = 95."
+      },
+      {
+        "body": "93",
+        "whyWrong": "This doubles and subtracts one instead."
+      },
+      {
+        "body": "96",
+        "whyWrong": "This doubles and adds two."
+      }
+    ],
+    "explanation": "Each term is twice the previous plus one: 5 -> 11 -> 23 -> 47 -> 95.",
+    "subtopic": "series-completion"
+  },
+  {
+    "id": "RSN-0048",
+    "body": "Find the next term: 1, 4, 9, 16, 25, ?",
+    "topic": "logical-reasoning",
+    "difficulty": "easy",
+    "expectedSeconds": 45,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "36",
+        "correct": true
+      },
+      {
+        "body": "30",
+        "whyWrong": "The terms are perfect squares, and 30 is not one."
+      },
+      {
+        "body": "35",
+        "whyWrong": "This adds 10 rather than the required 11."
+      },
+      {
+        "body": "49",
+        "whyWrong": "That is 7 squared, skipping 6 squared."
+      }
+    ],
+    "explanation": "The series is the perfect squares 1, 2, 3, 4, 5 squared. The next is 6 squared = 36.",
+    "subtopic": "series-completion"
+  },
+  {
+    "id": "RSN-0049",
+    "body": "Find the next letter pair: AZ, CX, EV, GT, ?",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "IR",
+        "correct": true
+      },
+      {
+        "body": "IS",
+        "whyWrong": "The second letter moves back two places each time, from T to R."
+      },
+      {
+        "body": "HR",
+        "whyWrong": "The first letter moves forward two places each time, from G to I."
+      },
+      {
+        "body": "JQ",
+        "whyWrong": "Both letters would then have moved three places."
+      }
+    ],
+    "explanation": "The first letters advance by two (A, C, E, G, I) while the second letters retreat by two (Z, X, V, T, R), giving IR.",
+    "subtopic": "series-completion"
+  },
+  {
+    "id": "RSN-0050",
+    "body": "Find the odd one out: 8, 27, 64, 100, 125",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "100",
+        "correct": true
+      },
+      {
+        "body": "27",
+        "whyWrong": "27 is 3 cubed and fits the pattern."
+      },
+      {
+        "body": "64",
+        "whyWrong": "64 is 4 cubed and fits the pattern."
+      },
+      {
+        "body": "125",
+        "whyWrong": "125 is 5 cubed and fits the pattern."
+      }
+    ],
+    "explanation": "Every other number is a perfect cube: 2, 3, 4 and 5 cubed. 100 is a perfect square but not a cube.",
+    "subtopic": "series-completion"
+  },
+  {
+    "id": "RSN-0051",
+    "body": "If PAPER is coded as QBQFS, how is BOOK coded?",
+    "topic": "logical-reasoning",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "CPPL",
+        "correct": true
+      },
+      {
+        "body": "APPL",
+        "whyWrong": "B advances to C, not back to A."
+      },
+      {
+        "body": "CPOL",
+        "whyWrong": "Both Os advance to P."
+      },
+      {
+        "body": "CQQL",
+        "whyWrong": "O advances one place to P, not two to Q."
+      }
+    ],
+    "explanation": "Each letter moves one place forward in the alphabet. B->C, O->P, O->P, K->L gives CPPL.",
+    "subtopic": "coding-decoding"
+  },
+  {
+    "id": "RSN-0052",
+    "body": "If in a code MOUSE is written as NPVTF, what is the rule?",
+    "topic": "logical-reasoning",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Each letter is replaced by the next letter of the alphabet",
+        "correct": true
+      },
+      {
+        "body": "Each letter is replaced by the previous letter of the alphabet",
+        "whyWrong": "That would give LNTRD, not NPVTF."
+      },
+      {
+        "body": "Each letter is replaced by its mirror in the alphabet (A to Z, B to Y)",
+        "whyWrong": "The mirror of M is N only by coincidence; O would map to L, not P."
+      },
+      {
+        "body": "Only the vowels are shifted and the consonants are unchanged",
+        "whyWrong": "M, S and the other consonants all change, so every letter is shifted."
+      }
+    ],
+    "explanation": "M->N, O->P, U->V, S->T, E->F. Every letter advances exactly one place in the alphabet.",
+    "subtopic": "coding-decoding",
+    "concept": "Compare each letter pair by alphabet position before guessing at a rule."
+  },
+  {
+    "id": "RSN-0053",
+    "body": "If TEACHER is coded as VGCEJGT, how is STUDENT coded?",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "UVWFGPV",
+        "correct": true
+      },
+      {
+        "body": "UVWFGNV",
+        "whyWrong": "N must advance two places to P."
+      },
+      {
+        "body": "TUVEFOU",
+        "whyWrong": "That advances each letter by one, not two."
+      },
+      {
+        "body": "UVWFGPU",
+        "whyWrong": "The final T advances to V, not to U."
+      }
+    ],
+    "explanation": "Each letter advances two places. S->U, T->V, U->W, D->F, E->G, N->P, T->V gives UVWFGPV.",
+    "subtopic": "coding-decoding"
+  },
+  {
+    "id": "RSN-0054",
+    "body": "In a certain code, 7 means \"come\", 3 means \"here\" and 5 means \"now\". If \"come here now\" is 735, what is \"now come here\"?",
+    "topic": "logical-reasoning",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "573",
+        "correct": true
+      },
+      {
+        "body": "735",
+        "whyWrong": "That is the original order, not the reordered phrase."
+      },
+      {
+        "body": "537",
+        "whyWrong": "This puts \"here\" before \"come\"."
+      },
+      {
+        "body": "375",
+        "whyWrong": "This begins with \"here\" rather than \"now\"."
+      }
+    ],
+    "explanation": "Substituting each word gives now = 5, come = 7, here = 3, in that order: 573.",
+    "subtopic": "coding-decoding"
+  },
+  {
+    "id": "RSN-0055",
+    "body": "If FRIEND is coded as 6-18-9-5-14-4, how is MIND coded?",
+    "topic": "logical-reasoning",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "13-9-14-4",
+        "correct": true
+      },
+      {
+        "body": "12-9-14-4",
+        "whyWrong": "M is the thirteenth letter, not the twelfth."
+      },
+      {
+        "body": "13-8-14-4",
+        "whyWrong": "I is the ninth letter."
+      },
+      {
+        "body": "13-9-13-4",
+        "whyWrong": "N is the fourteenth letter, not the thirteenth."
+      }
+    ],
+    "explanation": "Each letter is replaced by its position in the alphabet. M=13, I=9, N=14, D=4.",
+    "subtopic": "coding-decoding"
+  },
+  {
+    "id": "RSN-0056",
+    "body": "If GARDEN is coded as NEDRAG, how is FLOWER coded?",
+    "topic": "logical-reasoning",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "REWOLF",
+        "correct": true
+      },
+      {
+        "body": "FLOWER",
+        "whyWrong": "The code reverses the letters."
+      },
+      {
+        "body": "REWOFL",
+        "whyWrong": "The reversal must keep every letter in exact reverse order."
+      },
+      {
+        "body": "ELWORF",
+        "whyWrong": "This transposes two letters incorrectly."
+      }
+    ],
+    "explanation": "The code simply reverses the word. FLOWER read backwards is REWOLF.",
+    "subtopic": "coding-decoding"
+  },
+  {
+    "id": "RSN-0057",
+    "body": "Statements: All engineers are graduates. Some graduates are managers.\nConclusions: (I) Some engineers are managers. (II) Some managers are graduates.",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Only conclusion II follows",
+        "correct": true
+      },
+      {
+        "body": "Only conclusion I follows",
+        "whyWrong": "Nothing forces any engineer to be among the graduates who are managers."
+      },
+      {
+        "body": "Both conclusions follow",
+        "whyWrong": "Conclusion I is a possibility, not a necessity."
+      },
+      {
+        "body": "Neither conclusion follows",
+        "whyWrong": "Conclusion II is simply the second statement converted, which is always valid for \"some\"."
+      }
+    ],
+    "explanation": "A \"some\" statement converts: some graduates are managers means some managers are graduates, so II follows. I does not, because the managerial graduates need not include any engineer.",
+    "subtopic": "syllogisms",
+    "concept": "\"Some A are B\" always converts to \"Some B are A\". \"All A are B\" does not.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "RSN-0058",
+    "body": "Statements: No cat is a dog. All dogs are animals.\nConclusions: (I) No cat is an animal. (II) Some animals are not cats.",
+    "topic": "logical-reasoning",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Only conclusion II follows",
+        "correct": true
+      },
+      {
+        "body": "Only conclusion I follows",
+        "whyWrong": "Cats may well be animals; the statements only separate cats from dogs."
+      },
+      {
+        "body": "Both conclusions follow",
+        "whyWrong": "Conclusion I over-extends the exclusion from dogs to all animals."
+      },
+      {
+        "body": "Neither conclusion follows",
+        "whyWrong": "Conclusion II follows: dogs are animals and no dog is a cat."
+      }
+    ],
+    "explanation": "Dogs are animals and no dog is a cat, so there exist animals that are not cats — II follows. Nothing bars cats from being animals, so I does not.",
+    "subtopic": "syllogisms"
+  },
+  {
+    "id": "RSN-0059",
+    "body": "Statements: All pens are books. All books are papers.\nConclusions: (I) All pens are papers. (II) Some papers are pens.",
+    "topic": "logical-reasoning",
+    "difficulty": "easy",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Both conclusions follow",
+        "correct": true
+      },
+      {
+        "body": "Only conclusion I follows",
+        "whyWrong": "II follows from I by conversion, since pens exist in this reading."
+      },
+      {
+        "body": "Only conclusion II follows",
+        "whyWrong": "I follows directly by transitivity."
+      },
+      {
+        "body": "Neither conclusion follows",
+        "whyWrong": "Both follow from the chain of universal statements."
+      }
+    ],
+    "explanation": "The two universals chain: all pens are books and all books are papers, so all pens are papers. That in turn gives some papers are pens.",
+    "subtopic": "syllogisms"
+  },
+  {
+    "id": "RSN-0060",
+    "body": "Statements: Some doctors are teachers. No teacher is a lawyer.\nConclusions: (I) Some doctors are not lawyers. (II) No doctor is a lawyer.",
+    "topic": "logical-reasoning",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Only conclusion I follows",
+        "correct": true
+      },
+      {
+        "body": "Only conclusion II follows",
+        "whyWrong": "Doctors outside the teacher group may still be lawyers."
+      },
+      {
+        "body": "Both conclusions follow",
+        "whyWrong": "II is too strong; nothing excludes non-teacher doctors from being lawyers."
+      },
+      {
+        "body": "Neither conclusion follows",
+        "whyWrong": "I follows: the doctors who are teachers cannot be lawyers."
+      }
+    ],
+    "explanation": "The doctors who are teachers are excluded from being lawyers, which gives I. The remaining doctors are unconstrained, so II does not follow.",
+    "subtopic": "syllogisms"
+  },
+  {
+    "id": "RSN-0061",
+    "body": "Statements: All squares are rectangles. Some rectangles are not squares.\nConclusions: (I) Some rectangles are squares. (II) All rectangles are squares.",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Only conclusion I follows",
+        "correct": true
+      },
+      {
+        "body": "Only conclusion II follows",
+        "whyWrong": "The second statement explicitly contradicts II."
+      },
+      {
+        "body": "Both conclusions follow",
+        "whyWrong": "II is directly contradicted by the second statement."
+      },
+      {
+        "body": "Neither conclusion follows",
+        "whyWrong": "I follows from converting the first statement."
+      }
+    ],
+    "explanation": "\"All squares are rectangles\" converts to \"some rectangles are squares\", giving I. The second statement rules out II outright.",
+    "subtopic": "syllogisms"
+  },
+  {
+    "id": "RSN-0062",
+    "body": "Statements: All A are B. No B is C.\nConclusions: (I) No A is C. (II) Some C are not B.",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Both conclusions follow",
+        "correct": true
+      },
+      {
+        "body": "Only conclusion I follows",
+        "whyWrong": "II follows too, since no C at all is a B."
+      },
+      {
+        "body": "Only conclusion II follows",
+        "whyWrong": "I follows by the chain: A is inside B, and B excludes C."
+      },
+      {
+        "body": "Neither conclusion follows",
+        "whyWrong": "Both follow from the universal statements given."
+      }
+    ],
+    "explanation": "Every A lies inside B, and B is entirely separate from C, so no A is C. And since no B is C, every C is outside B, which certainly makes some C not B.",
+    "subtopic": "syllogisms"
+  },
+  {
+    "id": "RSN-0063",
+    "body": "Five friends A, B, C, D and E finished a race. A finished before B but after C. D finished last. E finished before C. Who won?",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "E",
+        "correct": true
+      },
+      {
+        "body": "C",
+        "whyWrong": "E finished before C, so C cannot be first."
+      },
+      {
+        "body": "A",
+        "whyWrong": "A finished after C, who finished after E."
+      },
+      {
+        "body": "B",
+        "whyWrong": "B finished after A, who is already behind two others."
+      }
+    ],
+    "explanation": "The order is E, C, A, B, D: E before C, C before A, A before B, and D last.",
+    "subtopic": "puzzles"
+  },
+  {
+    "id": "RSN-0064",
+    "body": "In a queue of 40 people, Ravi is 12th from the front. What is his position from the back?",
+    "topic": "logical-reasoning",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "29th",
+        "correct": true
+      },
+      {
+        "body": "28th",
+        "whyWrong": "This forgets that Ravi occupies one of the positions being counted."
+      },
+      {
+        "body": "30th",
+        "whyWrong": "This subtracts 10 rather than 11 from the total."
+      },
+      {
+        "body": "27th",
+        "whyWrong": "This subtracts twice for Ravi's own place."
+      }
+    ],
+    "explanation": "Position from the back = total - position from front + 1 = 40 - 12 + 1 = 29.",
+    "subtopic": "puzzles",
+    "concept": "The +1 accounts for the person themselves, who is counted from both ends."
+  },
+  {
+    "id": "RSN-0065",
+    "body": "Three boxes contain apples, oranges and a mix. Every label is wrong. You may draw one fruit from one box. Which box should you pick from?",
+    "topic": "logical-reasoning",
+    "difficulty": "hard",
+    "expectedSeconds": 120,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "The one labelled \"mixed\", because it must contain only one kind and that identifies all three",
+        "correct": true
+      },
+      {
+        "body": "The one labelled \"apples\", because it could be oranges or mixed",
+        "whyWrong": "Two possibilities remain after the draw, so this does not resolve the puzzle."
+      },
+      {
+        "body": "The one labelled \"oranges\", for the same reason",
+        "whyWrong": "It leaves the same ambiguity as the apples box."
+      },
+      {
+        "body": "Any box works equally well",
+        "whyWrong": "Only the mixed label guarantees a unique deduction."
+      }
+    ],
+    "explanation": "Since every label is wrong, the box labelled \"mixed\" is not mixed, so whatever single fruit you draw is its whole content. The other two then follow, because each remaining label is also wrong.",
+    "subtopic": "puzzles"
+  },
+  {
+    "id": "RSN-0066",
+    "body": "A, B, C, D and E sit in a row. C is at one end. B is immediately right of C. A is somewhere right of B. D is not at an end. Who could be at the far right?",
+    "topic": "logical-reasoning",
+    "difficulty": "hard",
+    "expectedSeconds": 120,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "A or E",
+        "correct": true
+      },
+      {
+        "body": "Only A",
+        "whyWrong": "E could also occupy the far right, with A in the middle."
+      },
+      {
+        "body": "Only E",
+        "whyWrong": "A is explicitly allowed to be right of B, including at the end."
+      },
+      {
+        "body": "D",
+        "whyWrong": "D is stated not to be at an end."
+      }
+    ],
+    "explanation": "With C first and B second, the last three seats hold A, D and E in some order. D cannot be last, so the far right is either A or E.",
+    "subtopic": "puzzles"
+  },
+  {
+    "id": "RSN-0067",
+    "body": "If it takes 5 machines 5 minutes to make 5 widgets, how long do 100 machines take to make 100 widgets?",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "5 minutes",
+        "correct": true
+      },
+      {
+        "body": "100 minutes",
+        "whyWrong": "This assumes the machines work in sequence rather than in parallel."
+      },
+      {
+        "body": "20 minutes",
+        "whyWrong": "This divides incorrectly; the per-machine rate is unchanged."
+      },
+      {
+        "body": "1 minute",
+        "whyWrong": "More machines do not make each individual machine faster."
+      }
+    ],
+    "explanation": "Each machine makes one widget in 5 minutes. With 100 machines working simultaneously, 100 widgets still take 5 minutes.",
+    "subtopic": "puzzles",
+    "concept": "Find the per-unit rate first; scaling both sides equally leaves the time unchanged.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "RSN-0068",
+    "body": "Six people shake hands with every other person exactly once. How many handshakes occur?",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "15",
+        "correct": true
+      },
+      {
+        "body": "30",
+        "whyWrong": "This counts each handshake twice, once for each participant."
+      },
+      {
+        "body": "36",
+        "whyWrong": "That is 6 x 6, which counts self-handshakes and duplicates."
+      },
+      {
+        "body": "21",
+        "whyWrong": "That is the count for seven people."
+      }
+    ],
+    "explanation": "Each handshake is a pair, so the count is 6 choose 2 = (6 x 5)/2 = 15.",
+    "subtopic": "puzzles"
+  },
+  {
+    "id": "RSN-0069",
+    "body": "What is the angle between the hands of a clock at 3:30?",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "75 degrees",
+        "correct": true
+      },
+      {
+        "body": "90 degrees",
+        "whyWrong": "That is the angle at 3:00; the hour hand moves on by 3:30."
+      },
+      {
+        "body": "80 degrees",
+        "whyWrong": "The hour hand advances 15 degrees in half an hour, not 10."
+      },
+      {
+        "body": "60 degrees",
+        "whyWrong": "This under-counts the hour hand's position."
+      }
+    ],
+    "explanation": "At 3:30 the minute hand is at 180 degrees. The hour hand is at 3 x 30 + 30 x 0.5 = 105 degrees. The difference is 75 degrees.",
+    "subtopic": "clocks-calendars",
+    "concept": "Hour hand = 30H + 0.5M degrees; minute hand = 6M degrees.",
+    "frequentlyAsked": true
+  },
+  {
+    "id": "RSN-0070",
+    "body": "If 1 January 2024 was a Monday, what day was 1 March 2024?",
+    "topic": "logical-reasoning",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Friday",
+        "correct": true
+      },
+      {
+        "body": "Thursday",
+        "whyWrong": "2024 is a leap year, so February has 29 days."
+      },
+      {
+        "body": "Saturday",
+        "whyWrong": "This counts one day too many."
+      },
+      {
+        "body": "Wednesday",
+        "whyWrong": "This treats February as having 28 days and miscounts January."
+      }
+    ],
+    "explanation": "January has 31 days and February 29 in the leap year 2024, so 1 March is 60 days after 1 January. 60 mod 7 = 4, and Monday plus 4 days is Friday.",
+    "subtopic": "clocks-calendars"
+  },
+  {
+    "id": "RSN-0071",
+    "body": "How many times do the hands of a clock overlap in 24 hours?",
+    "topic": "logical-reasoning",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "22",
+        "correct": true
+      },
+      {
+        "body": "24",
+        "whyWrong": "The hands overlap slightly less often than once an hour, giving 22 rather than 24."
+      },
+      {
+        "body": "12",
+        "whyWrong": "That is the count for 12 hours, not 24."
+      },
+      {
+        "body": "23",
+        "whyWrong": "23 is the number of overlaps in 24 hours only if you miscount the 12-hour figure as 11.5."
+      }
+    ],
+    "explanation": "The hands coincide 11 times in every 12 hours — not 12, because the overlap near 11:00 and 12:00 is a single event. Over 24 hours that is 22.",
+    "subtopic": "clocks-calendars"
+  },
+  {
+    "id": "RSN-0072",
+    "body": "A clock gains 5 minutes every hour. If it is set correctly at 8:00 am, what will it show when the correct time is 2:00 pm?",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "2:30 pm",
+        "correct": true
+      },
+      {
+        "body": "2:05 pm",
+        "whyWrong": "The gain accumulates over all six hours, not just the last one."
+      },
+      {
+        "body": "2:25 pm",
+        "whyWrong": "Six hours at 5 minutes gives 30 minutes, not 25."
+      },
+      {
+        "body": "1:30 pm",
+        "whyWrong": "The clock gains time, so it runs ahead rather than behind."
+      }
+    ],
+    "explanation": "Six hours pass between 8:00 am and 2:00 pm, and the clock gains 5 minutes in each, so it is 30 minutes ahead: 2:30 pm.",
+    "subtopic": "clocks-calendars"
+  },
+  {
+    "id": "RSN-0073",
+    "body": "Which of these years is a leap year?",
+    "topic": "logical-reasoning",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "2000",
+        "correct": true
+      },
+      {
+        "body": "1900",
+        "whyWrong": "A century year must be divisible by 400, and 1900 is not."
+      },
+      {
+        "body": "2100",
+        "whyWrong": "2100 is divisible by 100 but not by 400, so it is not a leap year."
+      },
+      {
+        "body": "2023",
+        "whyWrong": "2023 is not divisible by 4."
+      }
+    ],
+    "explanation": "A year is a leap year if it is divisible by 4, except century years, which must additionally be divisible by 400. 2000 divides by 400 and qualifies.",
+    "subtopic": "clocks-calendars",
+    "concept": "Divisible by 4, but century years need divisibility by 400."
+  },
+  {
+    "id": "RSN-0074",
+    "body": "Pointing to a photograph, a man says \"She is the daughter of my grandfather's only son.\" How is she related to him?",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "His sister",
+        "correct": true
+      },
+      {
+        "body": "His daughter",
+        "whyWrong": "The grandfather's only son is the speaker's father, not the speaker."
+      },
+      {
+        "body": "His cousin",
+        "whyWrong": "A cousin would be the child of an uncle or aunt, but there is only one son."
+      },
+      {
+        "body": "His niece",
+        "whyWrong": "A niece would be his sibling's daughter, one generation further down."
+      }
+    ],
+    "explanation": "The grandfather's only son is the speaker's father. That man's daughter is therefore the speaker's sister.",
+    "subtopic": "blood-relations"
+  },
+  {
+    "id": "RSN-0075",
+    "body": "A is B's brother, C is A's mother, D is C's father, E is D's mother. How is A related to D?",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Grandson",
+        "correct": true
+      },
+      {
+        "body": "Son",
+        "whyWrong": "D is A's grandfather, being A's mother's father."
+      },
+      {
+        "body": "Great-grandson",
+        "whyWrong": "That would apply to E's generation, one step further back."
+      },
+      {
+        "body": "Nephew",
+        "whyWrong": "A nephew relationship would require D to be A's uncle."
+      }
+    ],
+    "explanation": "C is A's mother and D is C's father, so D is A's maternal grandfather and A is D's grandson.",
+    "subtopic": "blood-relations"
+  },
+  {
+    "id": "RSN-0076",
+    "body": "Introducing a woman, a man says \"Her mother is the only daughter of my mother.\" How is the woman related to him?",
+    "topic": "logical-reasoning",
+    "difficulty": "hard",
+    "expectedSeconds": 105,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "His niece",
+        "correct": true
+      },
+      {
+        "body": "His daughter",
+        "whyWrong": "The only daughter of his mother is his sister, not his wife."
+      },
+      {
+        "body": "His sister",
+        "whyWrong": "The woman is the daughter of his sister, one generation down."
+      },
+      {
+        "body": "His cousin",
+        "whyWrong": "A cousin would descend from an aunt or uncle, not from his own sister."
+      }
+    ],
+    "explanation": "The only daughter of the speaker's mother is his sister. The woman is that sister's daughter, so she is his niece.",
+    "subtopic": "blood-relations"
+  },
+  {
+    "id": "RSN-0077",
+    "body": "P is the father of Q. Q is the sister of R. R is the son of S. How is S related to P?",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Wife",
+        "correct": true
+      },
+      {
+        "body": "Sister",
+        "whyWrong": "S is the mother of Q and R, whose father is P."
+      },
+      {
+        "body": "Daughter",
+        "whyWrong": "S belongs to the parent generation, not the child generation."
+      },
+      {
+        "body": "Mother",
+        "whyWrong": "S is the mother of R, not of P."
+      }
+    ],
+    "explanation": "P fathers Q, Q and R are siblings, and S is R's mother. The mother of P's children is P's wife.",
+    "subtopic": "blood-relations"
+  },
+  {
+    "id": "RSN-0078",
+    "body": "X is the son of Y. Z is the brother of Y. W is the daughter of Z. How is W related to X?",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "Cousin",
+        "correct": true
+      },
+      {
+        "body": "Sister",
+        "whyWrong": "W is the daughter of X's uncle, not of X's own parent."
+      },
+      {
+        "body": "Aunt",
+        "whyWrong": "W is in the same generation as X."
+      },
+      {
+        "body": "Niece",
+        "whyWrong": "A niece would be the daughter of X's sibling."
+      }
+    ],
+    "explanation": "Z is X's uncle, being Y's brother. W, the daughter of that uncle, is X's cousin.",
+    "subtopic": "blood-relations"
+  },
+  {
+    "id": "RSN-0079",
+    "body": "A man walks 5 km north, then 3 km east, then 5 km south. How far is he from his starting point?",
+    "topic": "logical-reasoning",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "3 km",
+        "correct": true
+      },
+      {
+        "body": "13 km",
+        "whyWrong": "That adds all three legs rather than resolving them."
+      },
+      {
+        "body": "8 km",
+        "whyWrong": "The northward and southward legs cancel exactly."
+      },
+      {
+        "body": "5 km",
+        "whyWrong": "That is one leg, not the resultant displacement."
+      }
+    ],
+    "explanation": "The 5 km north and 5 km south cancel, leaving only the 3 km eastward leg.",
+    "subtopic": "direction-sense"
+  },
+  {
+    "id": "RSN-0080",
+    "body": "Facing north, a person turns 90 degrees clockwise, then 180 degrees anticlockwise. Which way is he facing?",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 75,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "West",
+        "correct": true
+      },
+      {
+        "body": "East",
+        "whyWrong": "The first turn reaches east, but the 180-degree turn moves on from there."
+      },
+      {
+        "body": "South",
+        "whyWrong": "A 180-degree turn from east gives west, not south."
+      },
+      {
+        "body": "North",
+        "whyWrong": "The two turns do not cancel: 90 clockwise then 180 anticlockwise leaves a net 90 anticlockwise."
+      }
+    ],
+    "explanation": "90 degrees clockwise from north is east. Turning 180 degrees from east reaches west.",
+    "subtopic": "direction-sense"
+  },
+  {
+    "id": "RSN-0081",
+    "body": "A walks 4 km east, turns left and walks 3 km, then turns left and walks 4 km. How far is he from the start and in which direction?",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "3 km north",
+        "correct": true
+      },
+      {
+        "body": "3 km south",
+        "whyWrong": "The first left turn from east faces north, so the net displacement is northward."
+      },
+      {
+        "body": "4 km west",
+        "whyWrong": "The two 4 km legs are in opposite directions and cancel."
+      },
+      {
+        "body": "11 km east",
+        "whyWrong": "That sums the distances walked rather than the displacement."
+      }
+    ],
+    "explanation": "Walking 4 km east, 3 km north, then 4 km west leaves him 3 km due north of the start.",
+    "subtopic": "direction-sense"
+  },
+  {
+    "id": "RSN-0082",
+    "body": "The sun rises in the east. If a man walks towards the sun in the early morning, then turns right and walks, which direction is he now heading?",
+    "topic": "logical-reasoning",
+    "difficulty": "easy",
+    "expectedSeconds": 60,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "South",
+        "correct": true
+      },
+      {
+        "body": "North",
+        "whyWrong": "Turning right from east gives south, not north."
+      },
+      {
+        "body": "West",
+        "whyWrong": "That would require a turn of 180 degrees."
+      },
+      {
+        "body": "East",
+        "whyWrong": "He has turned, so his direction has changed."
+      }
+    ],
+    "explanation": "Walking towards the rising sun means heading east. A right turn from east faces south.",
+    "subtopic": "direction-sense"
+  },
+  {
+    "id": "RSN-0083",
+    "body": "A person walks 6 km south, turns left and walks 8 km. How far is he from the starting point?",
+    "topic": "logical-reasoning",
+    "difficulty": "medium",
+    "expectedSeconds": 90,
+    "roundTypes": [
+      "aptitude"
+    ],
+    "options": [
+      {
+        "body": "10 km",
+        "correct": true
+      },
+      {
+        "body": "14 km",
+        "whyWrong": "That adds the legs; the two are perpendicular and need Pythagoras."
+      },
+      {
+        "body": "2 km",
+        "whyWrong": "That subtracts the legs, which applies only to opposite directions."
+      },
+      {
+        "body": "12 km",
+        "whyWrong": "This does not follow from either 6 or 8 as the legs of a right triangle."
+      }
+    ],
+    "explanation": "A left turn from south faces east, so the legs are 6 km and 8 km at right angles. The distance is the square root of 36 + 64 = 100, which is 10 km.",
+    "subtopic": "direction-sense",
+    "concept": "Perpendicular legs: the displacement is the hypotenuse."
   }
 ]
