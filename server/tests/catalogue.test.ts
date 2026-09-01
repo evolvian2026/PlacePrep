@@ -6,6 +6,7 @@ import { sectorFor } from '../src/db/seed/sectors.js';
 import { ARCHETYPES } from '../src/db/seed/company-archetypes.js';
 import { createTestDb } from '../src/db/index.js';
 import { CATALOGUE_KEY, isCatalogueStale, seed } from '../src/db/seed/index.js';
+import { loadCodingProblems } from '../src/db/seed/load-coding.js';
 
 const ALL = [...COMPANIES, ...EXTENDED_COMPANIES];
 
@@ -277,4 +278,39 @@ test('the question bank covers what the roadmaps ask for', async (t) => {
   });
 
   db.close();
+});
+
+test('every coding problem is cross-checked by a second solution', async (t) => {
+  const problems = loadCodingProblems();
+
+  await t.test('all 100 carry an independent brute force', () => {
+    // A generated expected output is only as trustworthy as the reference that
+    // produced it. Re-running that same reference to "verify" proves nothing,
+    // so every problem needs a second, independently written solution that
+    // build:coding requires to agree on every case.
+    const missing = problems
+      .filter((problem) => !(problem as { bruteForcePython?: string }).bruteForcePython)
+      .map((problem) => problem.id);
+    assert.deepEqual(missing, [], 'a problem without a brute force is verified only against itself');
+  });
+
+  await t.test('the brute force is not simply a copy of the reference', () => {
+    // Identical sources would pass the cross-check while proving nothing.
+    const identical = problems
+      .filter((problem) => {
+        const brute = (problem as { bruteForcePython?: string }).bruteForcePython;
+        return brute !== undefined && brute.trim() === problem.referencePython.trim();
+      })
+      .map((problem) => problem.id);
+    assert.deepEqual(identical, []);
+  });
+
+  await t.test('every test case has an expected output', () => {
+    const blank = problems
+      .filter((problem) =>
+        [...problem.samples, ...problem.hidden].some((testCase) => testCase.expected === null),
+      )
+      .map((problem) => problem.id);
+    assert.deepEqual(blank, []);
+  });
 });

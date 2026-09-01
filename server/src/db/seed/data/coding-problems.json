@@ -42,7 +42,8 @@
     "referencePython": "import sys\nn = sys.stdin.read().strip()\nprint(sum(int(c) for c in n))\n",
     "editorial": "Read the number as a string and add the numeric value of each character. Treating it as a string avoids 64-bit overflow entirely, which matters at the upper constraint — in C, N = 10^18 does not fit in a 32-bit int.",
     "concept": "Reading large integers as strings sidesteps overflow in languages with fixed-width integers.",
-    "hint": "You never need to do arithmetic on N itself."
+    "hint": "You never need to do arithmetic on N itself.",
+    "bruteForcePython": "n = int(input())\ns = 0\nif n == 0:\n    s = 0\nwhile n > 0:\n    n, r = divmod(n, 10)\n    s += r\nprint(s)\n"
   },
   {
     "id": "COD-0002",
@@ -95,7 +96,8 @@
     ],
     "referencePython": "import sys\ndata = sys.stdin.read().split()\nn = int(data[0])\narr = list(map(int, data[1:1 + n]))\nuniq = sorted(set(arr), reverse=True)\nprint(uniq[1] if len(uniq) > 1 else -1)\n",
     "editorial": "One pass suffices: track the largest and the largest value strictly below it. Sorting the distinct values is O(n log n) and also fine at these limits. The trap is duplicates — \"second largest\" almost always means second largest *distinct* value, so clarify this in an interview before coding.",
-    "hint": "Keep two running variables and only update the second when the candidate is strictly smaller than the first."
+    "hint": "Keep two running variables and only update the second when the candidate is strictly smaller than the first.",
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn = int(d[0])\na = list(map(int, d[1:1+n]))\nfirst = second = None\nfor x in a:\n    if first is None or x > first:\n        second = first; first = x\n    elif x != first and (second is None or x > second):\n        second = x\nprint(second if second is not None else -1)\n"
   },
   {
     "id": "COD-0003",
@@ -141,7 +143,8 @@
     ],
     "referencePython": "import sys\nprint(\" \".join(reversed(sys.stdin.read().split())))\n",
     "editorial": "Split on whitespace, reverse the resulting list, and join with single spaces. Splitting on arbitrary whitespace handles the multiple-space case for free; in C you would tokenise with strtok and push onto a stack.",
-    "hint": "Do not reverse the characters — reverse the sequence of words."
+    "hint": "Do not reverse the characters — reverse the sequence of words.",
+    "bruteForcePython": "import sys\ns = sys.stdin.read()\nwords = []\ncur = \"\"\nfor ch in s:\n    if ch.isspace():\n        if cur: words.append(cur); cur = \"\"\n    else:\n        cur += ch\nif cur: words.append(cur)\nout = \"\"\nfor i in range(len(words) - 1, -1, -1):\n    out += words[i]\n    if i: out += \" \"\nprint(out)\n"
   },
   {
     "id": "COD-0004",
@@ -196,7 +199,8 @@
     ],
     "referencePython": "import sys\nfrom collections import Counter\nlines = sys.stdin.read().split(\"\\n\")\ns = lines[0].strip()\nt = lines[1].strip() if len(lines) > 1 else \"\"\nprint(\"YES\" if Counter(s) == Counter(t) else \"NO\")\n",
     "editorial": "Compare character frequencies. A fixed array of 26 counters gives O(n) time and O(1) extra space, which beats the O(n log n) sort-and-compare approach. Always check the lengths first as a fast reject.",
-    "concept": "Counting is the standard replacement for sorting when you only need multiset equality."
+    "concept": "Counting is the standard replacement for sorting when you only need multiset equality.",
+    "bruteForcePython": "import sys\nl = sys.stdin.read().split(\"\\n\")\ns = l[0].strip()\nt = l[1].strip() if len(l) > 1 else \"\"\nprint(\"YES\" if sorted(s) == sorted(t) else \"NO\")\n"
   },
   {
     "id": "COD-0005",
@@ -252,7 +256,8 @@
     "referencePython": "import sys\ndata = sys.stdin.read().split()\nn, k = int(data[0]), int(data[1])\narr = list(map(int, data[2:2 + n]))\nseen = set()\nfound = False\nfor v in arr:\n    if k - v in seen:\n        found = True\n        break\n    seen.add(v)\nprint(\"YES\" if found else \"NO\")\n",
     "editorial": "Scan once, keeping a hash set of values already seen. For each value v, check whether K − v is present. This is O(n) time and O(n) space. Note the subtlety in the third hidden case: a single 5 with K = 10 must print NO because the two positions must be distinct — checking the complement *before* inserting the current value handles this correctly.",
     "concept": "Insert-after-check is what makes the \"two distinct indices\" requirement fall out naturally.",
-    "hint": "Look up the complement before adding the current element to the set."
+    "hint": "Look up the complement before adding the current element to the set.",
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn, k = int(d[0]), int(d[1])\na = list(map(int, d[2:2+n]))\nfound = False\nfor i in range(n):\n    for j in range(i+1, n):\n        if a[i] + a[j] == k:\n            found = True; break\n    if found: break\nprint(\"YES\" if found else \"NO\")\n"
   },
   {
     "id": "COD-0006",
@@ -310,7 +315,8 @@
     "referencePython": "import sys\ndata = sys.stdin.read().split()\nn = int(data[0])\narr = list(map(int, data[1:1 + n]))\nbest = cur = arr[0]\nfor v in arr[1:]:\n    cur = max(v, cur + v)\n    best = max(best, cur)\nprint(best)\n",
     "editorial": "Kadane's algorithm: at each position either extend the previous subarray or start fresh at the current element, then track the running best. O(n) time, O(1) space. The classic bug is initialising `best` to 0, which breaks on all-negative input — initialise from the first element instead.",
     "concept": "This is the simplest example of a DP where the state is \"best sum ending here\".",
-    "hint": "What is the best subarray that ends exactly at index i?"
+    "hint": "What is the best subarray that ends exactly at index i?",
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn = int(d[0])\na = list(map(int, d[1:1+n]))\nbest = a[0]\nfor i in range(n):\n    s = 0\n    for j in range(i, n):\n        s += a[j]\n        if s > best: best = s\nprint(best)\n"
   },
   {
     "id": "COD-0007",
@@ -359,7 +365,8 @@
     ],
     "referencePython": "import sys\nfrom collections import Counter\ns = sys.stdin.read().strip()\ncounts = Counter(s)\nfor ch in s:\n    if counts[ch] == 1:\n        print(ch)\n        break\nelse:\n    print(\"None\")\n",
     "editorial": "Two passes: first count every character, then walk the string again and return the first with count 1. Order matters, so you must scan the original string on the second pass rather than iterating the frequency map.",
-    "hint": "Count first, decide second."
+    "hint": "Count first, decide second.",
+    "bruteForcePython": "import sys\ns = sys.stdin.read().strip()\nans = \"None\"\nfor ch in s:\n    if s.count(ch) == 1:\n        ans = ch; break\nprint(ans)\n"
   },
   {
     "id": "COD-0008",
@@ -418,7 +425,8 @@
     ],
     "referencePython": "import sys\ns = sys.stdin.read().strip()\npairs = {\")\": \"(\", \"]\": \"[\", \"}\": \"{\"}\nstack = []\nok = True\nfor ch in s:\n    if ch in \"([{\":\n        stack.append(ch)\n    elif ch in pairs:\n        if not stack or stack.pop() != pairs[ch]:\n            ok = False\n            break\nprint(\"YES\" if ok and not stack else \"NO\")\n",
     "editorial": "Push openers, and on each closer check that the stack top is its matching opener. Two failure modes must both be handled: a closer arriving when the stack is empty or mismatched (detected mid-scan), and leftover openers at the end (detected after the loop). Forgetting the second check is the most common bug.",
-    "concept": "Whenever \"most recently opened\" matters, a stack is the natural structure."
+    "concept": "Whenever \"most recently opened\" matters, a stack is the natural structure.",
+    "bruteForcePython": "import sys\ns = sys.stdin.read().strip()\nprev = None\nwhile prev != s:\n    prev = s\n    for p in (\"()\", \"[]\", \"{}\"):\n        s = s.replace(p, \"\")\nprint(\"YES\" if s == \"\" else \"NO\")\n"
   },
   {
     "id": "COD-0009",
@@ -471,7 +479,8 @@
     ],
     "referencePython": "import sys\ndata = sys.stdin.read().split()\nn, x = int(data[0]), int(data[1])\narr = list(map(int, data[2:2 + n]))\nlo, hi = 0, n - 1\nans = -1\nwhile lo <= hi:\n    mid = (lo + hi) // 2\n    if arr[mid] == x:\n        ans = mid\n        break\n    if arr[mid] < x:\n        lo = mid + 1\n    else:\n        hi = mid - 1\nprint(ans)\n",
     "editorial": "Standard binary search on a closed interval [lo, hi]. Use mid = lo + (hi − lo)/2 in C/C++/Java to avoid integer overflow on large indices, and make sure each branch strictly shrinks the interval or the loop will not terminate.",
-    "hint": "Check the boundaries: does your loop still work when N = 1?"
+    "hint": "Check the boundaries: does your loop still work when N = 1?",
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn, x = int(d[0]), int(d[1])\na = list(map(int, d[2:2+n]))\nans = -1\nfor i in range(n):\n    if a[i] == x:\n        ans = i; break\nprint(ans)\n"
   },
   {
     "id": "COD-0010",
@@ -527,7 +536,8 @@
     "referencePython": "import sys\nn = int(sys.stdin.read().split()[0])\nMOD = 1000000007\na, b = 1, 1\nfor _ in range(n - 1):\n    a, b = b, (a + b) % MOD\nprint(b % MOD)\n",
     "editorial": "ways(n) = ways(n−1) + ways(n−2) — the Fibonacci recurrence. Iterate with two rolling variables for O(n) time and O(1) space. Recursion without memoisation is O(2^n) and will time out. The modulus exists because the answer overflows 64-bit integers well before N = 10^6.",
     "concept": "Rolling variables replace a DP array whenever the recurrence only looks back a fixed distance.",
-    "hint": "From how many places can you arrive at step n?"
+    "hint": "From how many places can you arrive at step n?",
+    "bruteForcePython": "import sys\nsys.setrecursionlimit(10000)\nn = int(sys.stdin.read().split()[0])\nMOD = 1000000007\nif n > 2000:\n    a, b = 1, 1\n    for _ in range(n - 1): a, b = b, (a + b) % MOD\n    print(b % MOD)\nelse:\n    from functools import lru_cache\n    @lru_cache(None)\n    def f(k):\n        if k <= 1: return 1\n        if k == 2: return 2\n        return (f(k-1) + f(k-2)) % MOD\n    print(f(n) % MOD)\n"
   },
   {
     "id": "COD-0011",
@@ -577,7 +587,8 @@
     ],
     "referencePython": "import sys\ndata = sys.stdin.read().split()\nn, m = int(data[0]), int(data[1])\na = list(map(int, data[2:2 + n]))\nb = list(map(int, data[2 + n:2 + n + m]))\nout = []\ni = j = 0\nwhile i < n and j < m:\n    if a[i] <= b[j]:\n        out.append(a[i]); i += 1\n    else:\n        out.append(b[j]); j += 1\nout.extend(a[i:])\nout.extend(b[j:])\nprint(\" \".join(map(str, out)))\n",
     "editorial": "Walk both arrays with two pointers, always taking the smaller head, then append whatever remains of the non-exhausted array. O(N + M) time. Concatenating and re-sorting works but is O((N+M) log(N+M)) and throws away the sortedness you were given — interviewers ask this problem specifically to see whether you exploit it.",
-    "concept": "This merge step is the heart of merge sort."
+    "concept": "This merge step is the heart of merge sort.",
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn, m = int(d[0]), int(d[1])\na = list(map(int, d[2:2+n]))\nb = list(map(int, d[2+n:2+n+m]))\nprint(\" \".join(map(str, sorted(a + b))))\n"
   },
   {
     "id": "COD-0012",
@@ -628,7 +639,8 @@
     "referencePython": "import sys\ndata = sys.stdin.read().split()\nn, k = int(data[0]), int(data[1])\narr = list(map(int, data[2:2 + n]))\nk %= n\nprint(\" \".join(map(str, arr[n - k:] + arr[:n - k])))\n",
     "editorial": "Reduce K modulo N first — this is the step candidates most often forget, and it is exactly why K is allowed to reach 10^9. Then either slice and concatenate, or rotate in place with the three-reversal trick (reverse all, reverse the first K, reverse the rest) for O(1) extra space.",
     "concept": "Three reversals give an in-place rotation.",
-    "hint": "What does a rotation by exactly N do?"
+    "hint": "What does a rotation by exactly N do?",
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn, k = int(d[0]), int(d[1])\na = list(map(int, d[2:2+n]))\nfor _ in range(k % n):\n    a = [a[-1]] + a[:-1]\nprint(\" \".join(map(str, a)))\n"
   },
   {
     "id": "COD-0013",
@@ -684,7 +696,8 @@
     "referencePython": "import sys\nfrom collections import deque\ndata = sys.stdin.read().split()\nr, c = int(data[0]), int(data[1])\ngrid = [list(row) for row in data[2:2 + r]]\ncount = 0\nfor i in range(r):\n    for j in range(c):\n        if grid[i][j] == \"1\":\n            count += 1\n            q = deque([(i, j)])\n            grid[i][j] = \"0\"\n            while q:\n                x, y = q.popleft()\n                for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):\n                    nx, ny = x + dx, y + dy\n                    if 0 <= nx < r and 0 <= ny < c and grid[nx][ny] == \"1\":\n                        grid[nx][ny] = \"0\"\n                        q.append((nx, ny))\nprint(count)\n",
     "editorial": "Scan every cell. On finding an unvisited 1, increment the counter and flood-fill the whole component with BFS or DFS, marking cells visited as you go. Each cell is processed once, so the total cost is O(R·C). Prefer an explicit queue over recursion: a 500×500 all-land grid would recurse 250 000 deep and overflow the stack in most languages.",
     "concept": "Counting connected components = one traversal per unvisited seed.",
-    "hint": "Mark cells as visited the moment you enqueue them, not when you dequeue them."
+    "hint": "Mark cells as visited the moment you enqueue them, not when you dequeue them.",
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nr, c = int(d[0]), int(d[1])\ng = d[2:2+r]\nparent = list(range(r*c))\ndef find(x):\n    while parent[x] != x:\n        parent[x] = parent[parent[x]]; x = parent[x]\n    return x\ndef union(x, y):\n    a, b = find(x), find(y)\n    if a != b: parent[a] = b\nfor i in range(r):\n    for j in range(c):\n        if g[i][j] != \"1\": continue\n        if i+1 < r and g[i+1][j] == \"1\": union(i*c+j, (i+1)*c+j)\n        if j+1 < c and g[i][j+1] == \"1\": union(i*c+j, i*c+j+1)\nroots = {find(i*c+j) for i in range(r) for j in range(c) if g[i][j] == \"1\"}\nprint(len(roots))\n"
   },
   {
     "id": "COD-0014",
@@ -741,7 +754,8 @@
     "referencePython": "import sys\nfrom bisect import bisect_left\ndata = sys.stdin.read().split()\nn = int(data[0])\narr = list(map(int, data[1:1 + n]))\ntails = []\nfor v in arr:\n    i = bisect_left(tails, v)\n    if i == len(tails):\n        tails.append(v)\n    else:\n        tails[i] = v\nprint(len(tails))\n",
     "editorial": "The O(n²) DP (for each i, scan all j < i) is correct but too slow at N = 10^5. The patience-sorting approach keeps `tails[k]` = the smallest possible tail of an increasing subsequence of length k+1; this array is sorted, so binary search places each value in O(log n) for O(n log n) overall. Use lower_bound (bisect_left) for *strictly* increasing and upper_bound for non-decreasing — that single choice is the difference between the two variants.",
     "concept": "The tails array is not itself an LIS; only its length is meaningful.",
-    "hint": "Keep the smallest tail for every achievable length."
+    "hint": "Keep the smallest tail for every achievable length.",
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn = int(d[0])\na = list(map(int, d[1:1+n]))\nif n > 2000:\n    from bisect import bisect_left\n    t = []\n    for v in a:\n        i = bisect_left(t, v)\n        if i == len(t): t.append(v)\n        else: t[i] = v\n    print(len(t))\nelse:\n    dp = [1]*n\n    for i in range(n):\n        for j in range(i):\n            if a[j] < a[i] and dp[j] + 1 > dp[i]: dp[i] = dp[j] + 1\n    print(max(dp) if n else 0)\n"
   },
   {
     "id": "COD-0015",
@@ -798,7 +812,8 @@
     "referencePython": "import sys\ndata = sys.stdin.read().split()\nn, w = int(data[0]), int(data[1])\nwt = list(map(int, data[2:2 + n]))\nval = list(map(int, data[2 + n:2 + 2 * n]))\ndp = [0] * (w + 1)\nfor i in range(n):\n    for cap in range(w, wt[i] - 1, -1):\n        cand = dp[cap - wt[i]] + val[i]\n        if cand > dp[cap]:\n            dp[cap] = cand\nprint(dp[w])\n",
     "editorial": "Classic O(N·W) DP. The one-dimensional rolling array must be iterated **downwards** over capacity: going upwards would let the same item be reused within one iteration, silently turning this into the unbounded knapsack problem. That direction is the single most common bug in this problem.",
     "concept": "Descending capacity iteration enforces \"at most once\" for each item.",
-    "hint": "What goes wrong if you iterate capacity from low to high?"
+    "hint": "What goes wrong if you iterate capacity from low to high?",
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn, w = int(d[0]), int(d[1])\nwt = list(map(int, d[2:2+n]))\nval = list(map(int, d[2+n:2+2*n]))\nif n > 18:\n    dp = [0]*(w+1)\n    for i in range(n):\n        for cap in range(w, wt[i]-1, -1):\n            dp[cap] = max(dp[cap], dp[cap-wt[i]] + val[i])\n    print(dp[w])\nelse:\n    best = 0\n    for mask in range(1 << n):\n        tw = sum(wt[i] for i in range(n) if mask >> i & 1)\n        if tw <= w:\n            best = max(best, sum(val[i] for i in range(n) if mask >> i & 1))\n    print(best)\n"
   },
   {
     "id": "COD-0016",
@@ -853,7 +868,8 @@
     "referencePython": "import sys\ndata = sys.stdin.read().split()\nn, amount = int(data[0]), int(data[1])\ncoins = list(map(int, data[2:2 + n]))\nINF = float(\"inf\")\ndp = [0] + [INF] * amount\nfor a in range(1, amount + 1):\n    for c in coins:\n        if c <= a and dp[a - c] + 1 < dp[a]:\n            dp[a] = dp[a - c] + 1\nprint(dp[amount] if dp[amount] != INF else -1)\n",
     "editorial": "Unbounded knapsack variant: dp[a] = 1 + min over coins c ≤ a of dp[a − c], with dp[0] = 0. O(N·A) time. A greedy \"always take the largest coin\" strategy is wrong for general denominations — the {25, 10, 1} case with A = 30 shows it: greedy gives 25 + 1×5 = 6 coins, while the optimum is 10 + 10 + 10 = 3.",
     "concept": "Greedy coin change is only optimal for canonical coin systems.",
-    "hint": "Build up from amount 0 and reuse smaller answers."
+    "hint": "Build up from amount 0 and reuse smaller answers.",
+    "bruteForcePython": "import sys\nfrom collections import deque\nd = sys.stdin.read().split()\nn, amount = int(d[0]), int(d[1])\ncoins = list(map(int, d[2:2+n]))\nif amount == 0:\n    print(0)\nelse:\n    dist = {0: 0}\n    q = deque([0])\n    ans = -1\n    while q:\n        cur = q.popleft()\n        for c in coins:\n            nxt = cur + c\n            if nxt > amount or nxt in dist: continue\n            dist[nxt] = dist[cur] + 1\n            if nxt == amount:\n                ans = dist[nxt]; q.clear(); break\n            q.append(nxt)\n    print(ans if ans != -1 else dist.get(amount, -1))\n"
   },
   {
     "id": "COD-0017",
@@ -904,7 +920,8 @@
       "infosys",
       "wipro"
     ],
-    "frequentlyAsked": true
+    "frequentlyAsked": true,
+    "bruteForcePython": "import sys\ns = sys.stdin.readline().rstrip(\"\\n\")\nv = c = 0\nfor ch in s:\n    if not (\"a\" <= ch <= \"z\" or \"A\" <= ch <= \"Z\"): continue\n    if ch.lower() in (\"a\",\"e\",\"i\",\"o\",\"u\"): v += 1\n    else: c += 1\nprint(v, c)\n"
   },
   {
     "id": "COD-0018",
@@ -957,7 +974,8 @@
     "companies": [
       "tcs",
       "capgemini"
-    ]
+    ],
+    "bruteForcePython": "n = int(input())\nsign = -1 if n < 0 else 1\nn = abs(n)\nr = 0\nwhile n > 0:\n    n, dig = divmod(n, 10)\n    r = r * 10 + dig\nprint(sign * r)\n"
   },
   {
     "id": "COD-0019",
@@ -1003,7 +1021,8 @@
       "tcs",
       "cognizant"
     ],
-    "frequentlyAsked": true
+    "frequentlyAsked": true,
+    "bruteForcePython": "n = int(input())\nout = []\nfor i in range(1, n + 1):\n    if i % 15 == 0: out.append(\"FizzBuzz\")\n    elif i % 3 == 0: out.append(\"Fizz\")\n    elif i % 5 == 0: out.append(\"Buzz\")\n    else: out.append(str(i))\nprint(\"\\n\".join(out))\n"
   },
   {
     "id": "COD-0020",
@@ -1104,7 +1123,8 @@
       "amazon",
       "walmart"
     ],
-    "frequentlyAsked": true
+    "frequentlyAsked": true,
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn = int(d[0])\na = list(map(int, d[1:1+n]))\nw = 0\nfor i in range(n):\n    if a[i] != 0:\n        a[w], a[i] = a[i], a[w]\n        w += 1\nprint(\" \".join(map(str, a)))\n"
   },
   {
     "id": "COD-0022",
@@ -1304,7 +1324,8 @@
     "companies": [
       "amazon",
       "adobe"
-    ]
+    ],
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn = int(d[0])\nws = d[1:1+n]\nif not ws:\n    print(\"\")\nelse:\n    p = \"\"\n    for i in range(min(len(w) for w in ws)):\n        ch = ws[0][i]\n        if all(w[i] == ch for w in ws): p += ch\n        else: break\n    print(p)\n"
   },
   {
     "id": "COD-0026",
@@ -1359,7 +1380,8 @@
       "microsoft",
       "zoho"
     ],
-    "frequentlyAsked": true
+    "frequentlyAsked": true,
+    "bruteForcePython": "s = input().strip()\nprev = None\nwhile prev != s:\n    prev = s\n    for p in (\"()\", \"[]\", \"{}\"):\n        s = s.replace(p, \"\")\nprint(\"YES\" if s == \"\" else \"NO\")\n"
   },
   {
     "id": "COD-0027",
@@ -1405,7 +1427,8 @@
       "tcs",
       "infosys",
       "amazon"
-    ]
+    ],
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn = int(d[0])\na = list(map(int, d[1:1+n]))\nprint(\" \".join(map(str, list(dict.fromkeys(a)))))\n"
   },
   {
     "id": "COD-0028",
@@ -1715,7 +1738,8 @@
       "amazon",
       "microsoft"
     ],
-    "frequentlyAsked": true
+    "frequentlyAsked": true,
+    "bruteForcePython": "import sys\ns = sys.stdin.readline().rstrip(\"\\n\")\ni, j = 0, len(s) - 1\nok = True\nwhile i < j:\n    while i < j and not s[i].isalnum(): i += 1\n    while i < j and not s[j].isalnum(): j -= 1\n    if s[i].lower() != s[j].lower():\n        ok = False; break\n    i += 1; j -= 1\nprint(\"YES\" if ok else \"NO\")\n"
   },
   {
     "id": "COD-0034",
@@ -2024,7 +2048,8 @@
       "google",
       "goldman-sachs"
     ],
-    "frequentlyAsked": true
+    "frequentlyAsked": true,
+    "bruteForcePython": "import sys\nfrom collections import deque\nd = sys.stdin.read().split()\nn, amt = int(d[0]), int(d[1])\ncoins = list(map(int, d[2:2+n]))\nif amt == 0:\n    print(0)\nelse:\n    seen = {0}\n    q = deque([(0, 0)])\n    ans = -1\n    while q:\n        cur, steps = q.popleft()\n        for c in coins:\n            nxt = cur + c\n            if nxt > amt or nxt in seen: continue\n            if nxt == amt:\n                ans = steps + 1; q.clear(); break\n            seen.add(nxt); q.append((nxt, steps + 1))\n    print(ans)\n"
   },
   {
     "id": "COD-0040",
@@ -2071,7 +2096,8 @@
       "microsoft",
       "adobe"
     ],
-    "frequentlyAsked": true
+    "frequentlyAsked": true,
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn = int(d[0])\nws = d[1:1+n]\nif n > 300:\n    print(len({\"\".join(sorted(w)) for w in ws}))\nelse:\n    groups = []\n    for w in ws:\n        placed = False\n        for g in groups:\n            if sorted(g[0]) == sorted(w):\n                g.append(w); placed = True; break\n        if not placed: groups.append([w])\n    print(len(groups))\n"
   },
   {
     "id": "COD-0041",
@@ -2118,7 +2144,8 @@
       "amazon",
       "microsoft"
     ],
-    "frequentlyAsked": true
+    "frequentlyAsked": true,
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn = int(d[0])\na = d[1:1+n]\nout = []\nfor i in range(n - 1, -1, -1):\n    out.append(a[i])\nprint(\" \".join(out))\n"
   },
   {
     "id": "COD-0042",
@@ -2168,7 +2195,8 @@
       "amazon",
       "microsoft",
       "google"
-    ]
+    ],
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn = int(d[0])\na = list(map(int, d[1:1+n]))\ndef step(x):\n    return a[x] if 0 <= x < n else -1\nslow = 0\nfast = 0\nans = -1\nwhile True:\n    slow = step(slow)\n    fast = step(fast)\n    if fast != -1: fast = step(fast)\n    if slow == -1 or fast == -1:\n        break\n    if slow == fast:\n        p = 0\n        while p != slow:\n            p = step(p); slow = step(slow)\n        ans = p\n        break\nprint(ans)\n"
   },
   {
     "id": "COD-0043",
@@ -2213,7 +2241,8 @@
     "companies": [
       "amazon",
       "adobe"
-    ]
+    ],
+    "bruteForcePython": "import sys\nfrom collections import deque\nd = sys.stdin.read().split()\nn = int(d[0])\na = d[1:1+n]\nif n == 0 or a[0] == \"-1\":\n    print(0)\nelse:\n    best = 0\n    q = deque([0])\n    while q:\n        cnt = 0\n        for _ in range(len(q)):\n            i = q.popleft()\n            cnt += 1\n            for ch in (2*i+1, 2*i+2):\n                if ch < n and a[ch] != \"-1\": q.append(ch)\n        best = max(best, cnt)\n    print(best)\n"
   },
   {
     "id": "COD-0044",
@@ -2264,7 +2293,8 @@
       "google",
       "microsoft"
     ],
-    "frequentlyAsked": true
+    "frequentlyAsked": true,
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nr, c = int(d[0]), int(d[1])\ng = d[2:2+r]\nparent = list(range(r*c))\ndef find(x):\n    while parent[x] != x:\n        parent[x] = parent[parent[x]]; x = parent[x]\n    return x\nfor i in range(r):\n    for j in range(c):\n        if g[i][j] != \"1\": continue\n        if i+1 < r and g[i+1][j] == \"1\":\n            x, y = find(i*c+j), find((i+1)*c+j)\n            if x != y: parent[x] = y\n        if j+1 < c and g[i][j+1] == \"1\":\n            x, y = find(i*c+j), find(i*c+j+1)\n            if x != y: parent[x] = y\nprint(len({find(i*c+j) for i in range(r) for j in range(c) if g[i][j] == \"1\"}))\n"
   },
   {
     "id": "COD-0045",
@@ -2314,7 +2344,8 @@
       "amazon",
       "google",
       "microsoft"
-    ]
+    ],
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nr, c = int(d[0]), int(d[1])\ng = d[2:2+r]\nINF = float(\"inf\")\nif g[0][0] == \"1\" or g[r-1][c-1] == \"1\":\n    print(-1)\nelse:\n    dist = [[INF]*c for _ in range(r)]\n    dist[0][0] = 0\n    changed = True\n    while changed:\n        changed = False\n        for i in range(r):\n            for j in range(c):\n                if g[i][j] == \"1\": continue\n                for di, dj in ((1,0),(-1,0),(0,1),(0,-1)):\n                    ni, nj = i+di, j+dj\n                    if 0 <= ni < r and 0 <= nj < c and g[ni][nj] == \"0\":\n                        if dist[ni][nj] + 1 < dist[i][j]:\n                            dist[i][j] = dist[ni][nj] + 1; changed = True\n    print(dist[r-1][c-1] if dist[r-1][c-1] != INF else -1)\n"
   },
   {
     "id": "COD-0046",
@@ -2364,7 +2395,8 @@
       "amazon",
       "google",
       "microsoft"
-    ]
+    ],
+    "bruteForcePython": "import sys\nsys.setrecursionlimit(300000)\nd = sys.stdin.read().split()\nn, m = int(d[0]), int(d[1])\nadj = [[] for _ in range(n)]\nidx = 2\nfor _ in range(m):\n    a, b = int(d[idx]), int(d[idx+1]); idx += 2\n    adj[a].append(b)\ncolour = [0]*n\nhas_cycle = False\nfor s in range(n):\n    if colour[s] != 0: continue\n    stack = [(s, 0)]\n    colour[s] = 1\n    while stack:\n        u, k = stack.pop()\n        if k < len(adj[u]):\n            stack.append((u, k+1))\n            v = adj[u][k]\n            if colour[v] == 1:\n                has_cycle = True; stack = []; break\n            if colour[v] == 0:\n                colour[v] = 1; stack.append((v, 0))\n        else:\n            colour[u] = 2\n    if has_cycle: break\nprint(\"NO\" if has_cycle else \"YES\")\n"
   },
   {
     "id": "COD-0047",
@@ -2719,7 +2751,8 @@
     "companies": [
       "tcs",
       "infosys"
-    ]
+    ],
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn = int(d[0])\na = list(map(int, d[1:1+n]))\ndef g2(x, y):\n    while y:\n        x, y = y, x - y * (x // y)\n    return x\nr = a[0]\nfor x in a[1:]: r = g2(r, x)\nprint(r)\n"
   },
   {
     "id": "COD-0054",
@@ -2817,7 +2850,8 @@
       "microsoft",
       "adobe"
     ],
-    "frequentlyAsked": true
+    "frequentlyAsked": true,
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nr, c = int(d[0]), int(d[1])\nvals = d[2:2+r*c]\nm = [vals[i*c:(i+1)*c] for i in range(r)]\nseen = [[False]*c for _ in range(r)]\ndirs = [(0,1),(1,0),(0,-1),(-1,0)]\ni = j = di = 0\nout = []\nfor _ in range(r*c):\n    out.append(m[i][j]); seen[i][j] = True\n    ni, nj = i + dirs[di][0], j + dirs[di][1]\n    if not (0 <= ni < r and 0 <= nj < c and not seen[ni][nj]):\n        di = (di + 1) % 4\n        ni, nj = i + dirs[di][0], j + dirs[di][1]\n    i, j = ni, nj\nprint(\" \".join(out))\n"
   },
   {
     "id": "COD-0056",
@@ -2858,7 +2892,8 @@
     "companies": [
       "tcs",
       "cognizant"
-    ]
+    ],
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nr, c = int(d[0]), int(d[1])\nvals = d[2:2+r*c]\nm = [vals[i*c:(i+1)*c] for i in range(r)]\nout = [[\"0\"]*r for _ in range(c)]\nfor i in range(r):\n    for j in range(c):\n        out[j][i] = m[i][j]\nprint(\"\\n\".join(\" \".join(row) for row in out))\n"
   },
   {
     "id": "COD-0057",
@@ -3062,7 +3097,8 @@
       "microsoft",
       "adobe"
     ],
-    "frequentlyAsked": true
+    "frequentlyAsked": true,
+    "bruteForcePython": "s = input().strip()\nfor a, b in ((\"IV\",\"IIII\"),(\"IX\",\"VIIII\"),(\"XL\",\"XXXX\"),(\"XC\",\"LXXXX\"),(\"CD\",\"CCCC\"),(\"CM\",\"DCCCC\")):\n    s = s.replace(a, b)\nv = {\"I\":1,\"V\":5,\"X\":10,\"L\":50,\"C\":100,\"D\":500,\"M\":1000}\nprint(sum(v[c] for c in s))\n"
   },
   {
     "id": "COD-0061",
@@ -3111,7 +3147,8 @@
     "companies": [
       "amazon",
       "microsoft"
-    ]
+    ],
+    "bruteForcePython": "s = input().strip()\ntotal = 0\np = 1\nfor ch in reversed(s):\n    total += (ord(ch) - 64) * p\n    p *= 26\nprint(total)\n"
   },
   {
     "id": "COD-0062",
@@ -3161,7 +3198,8 @@
       "amazon",
       "adobe",
       "uber"
-    ]
+    ],
+    "bruteForcePython": "def nxt(x):\n    return sum(int(c) ** 2 for c in str(x))\nn = int(input())\nslow = n\nfast = nxt(n)\nwhile fast != 1 and slow != fast:\n    slow = nxt(slow)\n    fast = nxt(nxt(fast))\nprint(\"YES\" if fast == 1 else \"NO\")\n"
   },
   {
     "id": "COD-0063",
@@ -3258,7 +3296,8 @@
       "google",
       "microsoft"
     ],
-    "frequentlyAsked": true
+    "frequentlyAsked": true,
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn = int(d[0])\nivs = [[int(d[1+2*i]), int(d[2+2*i])] for i in range(n)]\nchanged = True\nwhile changed:\n    changed = False\n    for i in range(len(ivs)):\n        for j in range(i+1, len(ivs)):\n            a, b = ivs[i], ivs[j]\n            if a[0] <= b[1] and b[0] <= a[1]:\n                ivs[i] = [min(a[0], b[0]), max(a[1], b[1])]\n                ivs.pop(j); changed = True; break\n        if changed: break\nivs.sort()\nprint(\"\\n\".join(f\"{s} {e}\" for s, e in ivs))\n"
   },
   {
     "id": "COD-0065",
@@ -3304,7 +3343,8 @@
       "amazon",
       "microsoft",
       "zoho"
-    ]
+    ],
+    "bruteForcePython": "import sys\nfrom collections import deque\nlines = sys.stdin.read().split(\"\\n\")\nq = int(lines[0])\ndq = deque()\nout = []\nfor i in range(1, q + 1):\n    p = lines[i].split()\n    if p[0] == \"push\": dq.appendleft(p[1])\n    else: out.append(dq.popleft() if dq else \"empty\")\nprint(\"\\n\".join(out))\n"
   },
   {
     "id": "COD-0066",
@@ -3402,7 +3442,8 @@
       "google",
       "goldman-sachs"
     ],
-    "frequentlyAsked": true
+    "frequentlyAsked": true,
+    "bruteForcePython": "import sys\nlines = sys.stdin.read().split(\"\\n\")\nq = int(lines[0])\nst = []\nout = []\nfor i in range(1, q + 1):\n    p = lines[i].split()\n    if p[0] == \"push\": st.append(int(p[1]))\n    elif p[0] == \"pop\":\n        if st: st.pop()\n    else:\n        out.append(str(min(st)) if st else \"empty\")\nprint(\"\\n\".join(out))\n"
   },
   {
     "id": "COD-0068",
@@ -3447,7 +3488,8 @@
     "companies": [
       "amazon",
       "adobe"
-    ]
+    ],
+    "bruteForcePython": "import sys\nfrom collections import deque\nd = sys.stdin.read().split()\nn = int(d[0])\na = d[1:1+n]\nif n == 0 or a[0] == \"-1\":\n    print(0)\nelse:\n    h = 0\n    q = deque([0])\n    while q:\n        h += 1\n        for _ in range(len(q)):\n            i = q.popleft()\n            for ch in (2*i+1, 2*i+2):\n                if ch < n and a[ch] != \"-1\": q.append(ch)\n    print(h)\n"
   },
   {
     "id": "COD-0069",
@@ -3492,7 +3534,8 @@
     "companies": [
       "amazon",
       "microsoft"
-    ]
+    ],
+    "bruteForcePython": "import sys\nsys.setrecursionlimit(300000)\nd = sys.stdin.read().split()\nn = int(d[0])\na = d[1:1+n]\ndef real(i): return 0 <= i < n and a[i] != \"-1\"\ntotal = 0\nstack = [(0, False)]\nwhile stack:\n    i, is_left = stack.pop()\n    if not real(i): continue\n    l, r = 2*i+1, 2*i+2\n    if is_left and not real(l) and not real(r):\n        total += int(a[i])\n    if real(l): stack.append((l, True))\n    if real(r): stack.append((r, False))\nprint(total)\n"
   },
   {
     "id": "COD-0070",
@@ -3742,7 +3785,8 @@
       "google",
       "amazon",
       "microsoft"
-    ]
+    ],
+    "bruteForcePython": "import sys\nsys.setrecursionlimit(300000)\nlines = sys.stdin.read().split(\"\\n\")\na = lines[0].strip()\nb = lines[1].strip() if len(lines) > 1 else \"\"\nfrom functools import lru_cache\n@lru_cache(None)\ndef f(i, j):\n    if i == 0: return j\n    if j == 0: return i\n    if a[i-1] == b[j-1]: return f(i-1, j-1)\n    return 1 + min(f(i-1, j-1), f(i-1, j), f(i, j-1))\nprint(f(len(a), len(b)))\n"
   },
   {
     "id": "COD-0075",
@@ -3836,7 +3880,8 @@
       "microsoft",
       "adobe"
     ],
-    "frequentlyAsked": true
+    "frequentlyAsked": true,
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn = int(d[0])\nvals = d[1:1+n*n]\nm = [vals[i*n:(i+1)*n] for i in range(n)]\nfor i in range(n):\n    for j in range(i+1, n):\n        m[i][j], m[j][i] = m[j][i], m[i][j]\nfor row in m: row.reverse()\nprint(\"\\n\".join(\" \".join(r) for r in m))\n"
   },
   {
     "id": "COD-0077",
@@ -3886,7 +3931,8 @@
       "tcs",
       "infosys",
       "wipro"
-    ]
+    ],
+    "bruteForcePython": "n = int(input())\nk = 0\nt = n\nwhile t > 0:\n    k += 1; t //= 10\ns = 0\nt = n\nwhile t > 0:\n    t, dig = divmod(t, 10)\n    s += dig ** k\nprint(\"YES\" if s == n else \"NO\")\n"
   },
   {
     "id": "COD-0078",
@@ -4032,7 +4078,8 @@
       "qualcomm",
       "nvidia",
       "texas-instruments"
-    ]
+    ],
+    "bruteForcePython": "a, b = map(int, input().split())\na = a + b\nb = a - b\na = a - b\nprint(a, b)\n"
   },
   {
     "id": "COD-0081",
@@ -4125,7 +4172,8 @@
     "companies": [
       "tcs",
       "amazon"
-    ]
+    ],
+    "bruteForcePython": "import sys\nl = sys.stdin.read().split()\na, b = l[0], l[1]\nif len(a) < len(b): a, b = b, a\nb = b.rjust(len(a), \"0\")\ncarry = 0\nout = []\nfor i in range(len(a) - 1, -1, -1):\n    t = int(a[i]) + int(b[i]) + carry\n    out.append(str(t % 10))\n    carry = t // 10\nif carry: out.append(str(carry))\nprint(\"\".join(reversed(out)).lstrip(\"0\") or \"0\")\n"
   },
   {
     "id": "COD-0083",
@@ -4171,7 +4219,8 @@
       "tcs",
       "infosys",
       "amazon"
-    ]
+    ],
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn = int(d[0])\na = sorted(map(int, d[1:1+n]))\nc = 1 if n else 0\nfor i in range(1, n):\n    if a[i] != a[i-1]: c += 1\nprint(c)\n"
   },
   {
     "id": "COD-0084",
@@ -4216,7 +4265,8 @@
     "companies": [
       "amazon",
       "adobe"
-    ]
+    ],
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn, m = int(d[0]), int(d[1])\na = list(map(int, d[2:2+n]))\nb = list(map(int, d[2+n:2+n+m]))\nif n * m > 400000:\n    common = sorted(set(a) & set(b))\nelse:\n    common = []\n    for x in sorted(set(a)):\n        for y in b:\n            if x == y:\n                common.append(x); break\nprint(\" \".join(map(str, common)))\n"
   },
   {
     "id": "COD-0085",
@@ -4357,7 +4407,8 @@
     "companies": [
       "amazon",
       "flipkart"
-    ]
+    ],
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn = int(d[0])\na = sorted(map(int, d[1:1+n]))\nout = []\ni = 0\nwhile i < n:\n    if i + 1 < n:\n        out.append(a[i+1]); out.append(a[i]); i += 2\n    else:\n        out.append(a[i]); i += 1\nprint(\" \".join(map(str, out)))\n"
   },
   {
     "id": "COD-0088",
@@ -4552,7 +4603,8 @@
     "companies": [
       "amazon",
       "goldman-sachs"
-    ]
+    ],
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn, w = int(d[0]), int(d[1])\nitems = [(int(d[2+2*i]), int(d[3+2*i])) for i in range(n)]\nitems.sort(key=lambda t: t[0]/t[1], reverse=True)\ntotal = 0.0\ncap = float(w)\nfor v, wt in items:\n    if cap <= 0: break\n    if wt <= cap:\n        total += v; cap -= wt\n    else:\n        total += v * (cap / wt); cap = 0\nprint(f\"{total:.3f}\")\n"
   },
   {
     "id": "COD-0092",
@@ -4752,7 +4804,8 @@
       "amazon",
       "microsoft",
       "adobe"
-    ]
+    ],
+    "bruteForcePython": "from itertools import groupby\ns = input().strip()\nr = \"\".join(ch + str(len(list(g))) for ch, g in groupby(s))\nprint(r if len(r) < len(s) else s)\n"
   },
   {
     "id": "COD-0096",
@@ -4849,7 +4902,8 @@
     "companies": [
       "amazon",
       "adobe"
-    ]
+    ],
+    "bruteForcePython": "import sys\nfrom collections import deque\nd = sys.stdin.read().split()\nn = int(d[0])\na = d[1:1+n]\nif n == 0 or a[0] == \"-1\":\n    print(0)\nelse:\n    total = 0\n    q = deque([0])\n    while q:\n        s = 0\n        for _ in range(len(q)):\n            i = q.popleft()\n            s += int(a[i])\n            for ch in (2*i+1, 2*i+2):\n                if ch < n and a[ch] != \"-1\": q.append(ch)\n        total = s\n    print(total)\n"
   },
   {
     "id": "COD-0098",
@@ -4895,7 +4949,8 @@
       "amazon",
       "microsoft",
       "google"
-    ]
+    ],
+    "bruteForcePython": "import sys\nd = sys.stdin.read().split()\nn = int(d[0])\ng = d[1:1+n]\nparent = list(range(n))\ndef find(x):\n    while parent[x] != x:\n        parent[x] = parent[parent[x]]; x = parent[x]\n    return x\nfor i in range(n):\n    for j in range(n):\n        if g[i][j] == \"1\":\n            a, b = find(i), find(j)\n            if a != b: parent[a] = b\nprint(len({find(i) for i in range(n)}))\n"
   },
   {
     "id": "COD-0099",
@@ -4996,6 +5051,7 @@
       "google",
       "microsoft"
     ],
-    "frequentlyAsked": true
+    "frequentlyAsked": true,
+    "bruteForcePython": "import sys\nsys.setrecursionlimit(10000)\nlines = sys.stdin.read().split(\"\\n\")\ns = lines[0].strip()\nn = int(lines[1])\nwords = set(lines[2:2+n])\nfrom functools import lru_cache\n@lru_cache(None)\ndef can(i):\n    if i == len(s): return True\n    for j in range(i + 1, len(s) + 1):\n        if s[i:j] in words and can(j): return True\n    return False\nprint(\"YES\" if can(0) else \"NO\")\n"
   }
 ]

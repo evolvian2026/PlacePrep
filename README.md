@@ -269,11 +269,16 @@ two drift — three of the original sixteen problems shipped with wrong ones for
 exactly that reason.
 
 That moves the risk rather than removing it: a wrong reference would generate
-confidently wrong outputs. So 44 of the 100 problems also carry a
-`bruteForcePython` — a slow but obviously-correct solution — and both are run on
-every case and must agree. 256 of the 582 cases are cross-checked that way; the
-script reports how many are not, rather than implying the whole set is
-double-verified.
+confidently wrong outputs, and re-running that same reference to verify them
+proves nothing. So **every** problem also carries a `bruteForcePython` — a
+slower solution written by a different method — and both are run on all 582
+cases and must agree. A mismatch fails the build and writes nothing.
+
+Different method is the point, not merely a second file: Kadane against summing
+every subarray, a stack against repeatedly deleting matching bracket pairs,
+BFS against union-find, bisect against the quadratic DP. Two copies of the same
+algorithm would agree while proving nothing, so a test rejects a brute force
+whose source matches its reference.
 
 ### What is deliberately not automated
 
